@@ -6,7 +6,7 @@ FISH Omics Format for Chromatin Tracing (FOF-CT) - LinkML schemas for Ball-and-S
 
 ## Documentation Website
 
-[https://4dn-dcic.github.io/fof-ct](https://4dn-dcic.github.io/fof-ct)
+[https://github.com/4dn-dcic/fish_omics_format](https://github.com/4dn-dcic/fish_omics_format)
 
 ## Repository Structure
 
