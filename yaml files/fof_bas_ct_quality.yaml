@@ -1,0 +1,142 @@
+id: https://w3id.org/fof-ct/quality
+name: fof_bas_ct_quality
+description: >-
+  FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT).
+  LinkML schema for the optional Spot Quality table (table 5). Stores quality
+  metrics associated with individual DNA bright Spots (e.g. signal-to-noise
+  ratio, localization uncertainty, fit quality). Indexed by Spot_ID. This
+  table MUST contain at least one user-defined optional column describing a
+  spot quality metric, declared via #^ header lines.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  SpotQualityRecord:
+    description: >-
+      A single row in the Spot Quality table. Each instance captures one or
+      more quality metrics for a specific DNA bright Spot identified by
+      Spot_ID. At least one user-defined quality metric column MUST be
+      present; users declare these via #^ header lines.
+    slots:
+      - spot_id
+    slot_usage:
+      spot_id:
+        required: true
+        identifier: true
+        description: >-
+          Unique integer identifier for the DNA bright Spot to which these
+          quality metrics belong. Links to the corresponding Spot record in
+          the core table (table 1). Must be unique within this table.
+    additional_properties: true
+
+  SpotQualityTable:
+    description: >-
+      The Spot Quality table of a FOF-bas-CT dataset (namespace:
+      4dn_FOF-CT_quality). This class represents the entire file: it holds
+      all dataset-level provenance metadata (recorded as header lines in the
+      TSV serialisation) together with the full collection of SpotQualityRecord
+      rows. Submission of this table is optional but recommended.
+    tree_root: true
+    slots:
+      # --- mandatory header fields ---
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - additional_tables
+      # --- conditional header fields ---
+      - softwares
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      # --- data rows ---
+      - spot_quality_records
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_quality
+        description: >-
+          Identifier for this table type. Must always be '4dn_FOF-CT_quality'.
+          Written as ##Table_Namespace= in the file header.
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      additional_tables:
+        required: true
+      softwares:
+        required: false
+        description: >-
+          One or more Software entries documenting every tool used to produce
+          or process data in this table. Required only when software was used;
+          omit the block entirely if no software was applied. Written as
+          repeating #Software_* blocks in the file header.
+      xyz_unit:
+        required: false
+        description: >-
+          Unit used for any spatial coordinate or distance metric reported in
+          user-defined columns. Conditionally required when any such metric
+          is present. Written as ##XYZ_Unit= in the file header.
+      time_unit:
+        required: false
+        description: >-
+          Unit used for any time metric reported in user-defined columns.
+          Conditionally required when any such metric is present. Written as
+          ##Time_Unit= in the file header.
+      intensity_unit:
+        required: false
+        description: >-
+          Unit used for any intensity metric reported in user-defined columns.
+          Conditionally required when any such metric is present. Written as
+          ##Intensity_Unit= in the file header.
+      intensity_measurement_method:
+        required: false
+        description: >-
+          Method used to perform intensity measurements. Conditionally required
+          when any intensity metric is present. Written as
+          #Intensity_Measurement_Method: in the file header.
+      spot_quality_records:
+        required: true
+
+# ---------------------------------------------------------------------------
+# Slots local to this schema
+# ---------------------------------------------------------------------------
+
+slots:
+
+  spot_quality_records:
+    description: >-
+      The complete collection of SpotQualityRecord rows constituting this
+      dataset. Each record corresponds to one data row in the TSV
+      serialisation and must include at least one user-defined quality
+      metric column.
+    domain: SpotQualityTable
+    range: SpotQualityRecord
+    multivalued: true
+    inlined_as_list: true

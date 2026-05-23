@@ -1,0 +1,427 @@
+id: https://w3id.org/fof-ct/common
+name: fof_bas_ct_common
+description: >-
+  Shared classes, slots, and enumerations reused across all FOF-bas-CT
+  table schemas. Each individual table schema imports this file to avoid
+  duplication and ensure consistency.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+
+# ---------------------------------------------------------------------------
+# Shared class
+# ---------------------------------------------------------------------------
+
+classes:
+
+  Software:
+    description: >-
+      Provenance metadata for a single software tool used to produce or
+      process data in a FOF-CT table. If more than one tool was used, a
+      separate Software entry must be provided for each. Written as a
+      repeating block of #Software_* fields in the file header.
+    slots:
+      - software_title
+      - software_type
+      - software_authors
+      - software_description
+      - software_repository
+      - software_preferred_citation_id
+
+# ---------------------------------------------------------------------------
+# Shared slots
+# ---------------------------------------------------------------------------
+
+slots:
+
+  # ---- Universal mandatory header slots -----------------------------------
+
+  fof_ct_version:
+    description: >-
+      Version of the FOF-CT format used in this file. Always the first
+      line of the file header (##FOF-CT_Version=).
+    range: string
+    pattern: "^v[0-9]+\\.[0-9]+"
+    examples:
+      - value: v1.0
+
+  table_namespace:
+    description: >-
+      Identifier for this table type. The required value is specific to
+      each table. Written as ##Table_Namespace= in the file header.
+    range: string
+
+  lab_name:
+    description: >-
+      Name of the laboratory where the experiment was performed.
+      Written as #Lab_Name: in the file header.
+    range: string
+    examples:
+      - value: Nobel
+
+  experimenter_name:
+    description: >-
+      Full name of the person who performed the experiment.
+      Written as #Experimenter_Name: in the file header.
+    range: string
+    examples:
+      - value: John Doe
+
+  experimenter_contact:
+    description: >-
+      Email address of the person who performed the experiment.
+      Written as #Experimenter_Contact: in the file header.
+    range: string
+    pattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+    examples:
+      - value: john.doe@email.com
+
+  description:
+    description: >-
+      Free-text description of the experiment and of the data recorded
+      in this table. Should provide sufficient detail for interpretation
+      and reproducibility. Written as #Description: in the file header.
+    range: string
+
+  additional_tables:
+    description: >-
+      List of additional FOF-CT table namespaces being submitted
+      alongside this table, separated by commas in the TSV header.
+      Written as #Additional_Tables: in the file header.
+    range: TableNamespaceEnum
+    multivalued: true
+
+  softwares:
+    description: >-
+      One or more Software entries documenting every tool used to
+      produce or process data in this table. Written as repeating
+      #Software_* blocks in the file header.
+    range: Software
+    multivalued: true
+    inlined_as_list: true
+
+  # ---- Conditional measurement-unit header slots --------------------------
+
+  xyz_unit:
+    description: >-
+      Unit used to represent X, Y, Z spatial coordinates or distances
+      in this table. Use 'micron' to avoid issues with Greek symbols.
+      Values should be drawn from SI units of length. Written as
+      ##XYZ_Unit= in the file header. Conditionally required when any
+      location or distance metric is reported.
+    range: XYZUnitEnum
+    examples:
+      - value: micron
+
+  time_unit:
+    description: >-
+      Unit used to represent time intervals in this table. Allowed
+      values are SI time units plus 'min' and 'hr'. Written as
+      ##Time_Unit= in the file header. Conditionally required when
+      any time metric is reported.
+    range: TimeUnitEnum
+    examples:
+      - value: sec
+
+  intensity_unit:
+    description: >-
+      Unit used to represent intensity measurements in this table.
+      Written as ##Intensity_Unit= in the file header. Conditionally
+      required when any intensity metric is reported.
+    range: string
+    examples:
+      - value: a.u.
+      - value: photons
+
+  intensity_measurement_method:
+    description: >-
+      Method used to perform intensity measurements, including how
+      digital signals were converted to photon counts. Written as
+      #Intensity_Measurement_Method: in the file header. Conditionally
+      required when any intensity metric is reported.
+    range: string
+    examples:
+      - value: Localization centroid intensity
+      - value: Mean Fluorescence Intensity
+
+  # ---- Spatial-coordinate slots (shared by core, demultiplexing, rna) -----
+
+  x:
+    description: >-
+      Sub-pixel X coordinate of this detected event (Spot or localisation) in
+      the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections (drift correction, chromatic
+      correction, etc.).
+    range: float
+    examples:
+      - value: "14.43"
+
+  y:
+    description: >-
+      Sub-pixel Y coordinate of this detected event (Spot or localisation) in
+      the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    range: float
+    examples:
+      - value: "41.43"
+
+  z:
+    description: >-
+      Sub-pixel Z coordinate of this detected event (Spot or localisation) in
+      the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    range: float
+    examples:
+      - value: "1.23"
+
+  # ---- Cross-table foreign-key slots --------------------------------------
+
+  spot_id:
+    description: >-
+      Unique identifier for a bright DNA Spot. Used as a primary key
+      in quality and biological data tables, and as a foreign key
+      linking localization events to their parent Spot in the
+      demultiplexing table.
+    range: integer
+    examples:
+      - value: "1"
+
+  trace_id:
+    description: >-
+      Unique identifier for a chromatin Trace. Used as a primary key
+      in the Trace Data table and as a foreign key in the RNA Spot
+      Data table.
+    range: integer
+    examples:
+      - value: "1"
+
+  sub_cell_roi_id:
+    description: >-
+      Unique identifier for a sub-cellular structure ROI (e.g., nucleus,
+      nucleolus). Links to the Sub-Cell ROI Data table.
+    range: integer
+    examples:
+      - value: "1"
+
+  cell_id:
+    description: >-
+      Unique identifier for a Cell. Links to the Cell Data table.
+    range: integer
+    examples:
+      - value: "1"
+
+  extra_cell_roi_id:
+    description: >-
+      Unique identifier for an extracellular structure ROI (e.g., tissue,
+      organoid). Links to the Extra-Cell ROI Data table.
+    range: integer
+    examples:
+      - value: "1"
+
+  rna_spot_id:
+    description: >-
+      Unique integer identifier for an RNA bright Spot, unique across the
+      entire dataset. Used as a primary key in the RNA Spot Data table
+      and as a foreign key in the RNA Quality and RNA Biological Data tables.
+    range: integer
+    examples:
+      - value: "1"
+
+  # ---- Genome / modification header slots (shared by core + rna) ----------
+
+  genome_assembly:
+    description: >-
+      Genome build used for Chrom, Chrom_Start and Chrom_End coordinates.
+      The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When
+      the genome under study contains an INSERTION or DELETION the value
+      must use the mandatory 'custom-build:' prefix followed by a descriptive
+      name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as
+      ##Genome_Assembly= in the file header.
+    range: string
+    examples:
+      - value: GRCh38
+      - value: custom-build:GRCm38+pJT039(insertion)
+
+  # ---- Cell / ROI type header slots (shared by cell, subcell, extracell, mapping) ----
+
+  cell_type:
+    description: >-
+      The type of cells present in this dataset, expressed using an ontology
+      term from the Experimental Factor Ontology (EFO). Examples include
+      "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the
+      file header.
+    range: string
+    examples:
+      - value: Cell in tissue
+      - value: Cell in organoid
+
+  extra_cell_roi_type:
+    description: >-
+      The type of extracellular structure ROI within which cells are embedded,
+      expressed using an EFO 'organism part' child term (e.g. Tissue,
+      Organoid). Conditionally required when extracellular structure ROIs are
+      identified and reported in a dedicated Extra-Cell ROI Data table. Written
+      as #Extra_Cell_ROI_Type: in the file header.
+    range: string
+    examples:
+      - value: Tissue
+      - value: Organoid
+
+  sub_cell_roi_type:
+    description: >-
+      The type of sub-cellular structure ROI documented in this table or
+      mapping file. It is recommended to use an EFO 'cellular_component'
+      child term. Examples include Nucleolus, NL (nuclear lamina), NPC
+      (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain.
+      Written as #Sub_Cell_ROI_Type: in the file header.
+    range: string
+    examples:
+      - value: Nucleolus
+      - value: NL
+      - value: NPC
+      - value: Chromosome_Domain
+
+  # ---- Software slots -----------------------------------------------------
+
+  software_title:
+    description: >-
+      Name of the software tool. Written as #Software_Title:.
+    range: string
+    required: true
+    examples:
+      - value: ChrTracer3
+
+  software_type:
+    description: >-
+      Functional category of the software tool. Written as
+      #Software_Type:.
+    range: SoftwareTypeEnum
+    required: true
+    examples:
+      - value: SpotLoc+Tracing
+
+  software_authors:
+    description: >-
+      Author name(s) in 'Surname, Firstname' format, multiple authors
+      separated by semicolons. Written as #Software_Authors:.
+    range: string
+    required: true
+    examples:
+      - value: "Mateo, LJ; Sinnott-Armstrong, N; Boettiger, AN"
+
+  software_description:
+    description: >-
+      Free-text description of the algorithm and analysis parameters,
+      sufficient to guarantee reproducibility. Written as
+      #Software_Description:.
+    range: string
+    required: true
+
+  software_repository:
+    description: >-
+      URL of the repository where the software release can be obtained.
+      Written as #Software_Repository:.
+    range: uri
+    required: true
+    examples:
+      - value: https://github.com/BoettigerLab/ORCA-public
+
+  software_preferred_citation_id:
+    description: >-
+      Unique identifier (DOI, PMCID, ArXiv ID, etc.) for the primary
+      publication describing this software. Written as
+      #Software_PreferredCitationID:.
+    range: uri
+    required: true
+    examples:
+      - value: https://doi.org/10.1038/s41596-020-00478-x
+
+# ---------------------------------------------------------------------------
+# Shared enumerations
+# ---------------------------------------------------------------------------
+
+enums:
+
+  XYZUnitEnum:
+    description: Allowed units for X, Y, Z spatial coordinates or distances.
+    permissible_values:
+      nm:
+        description: Nanometres
+      micron:
+        description: >-
+          Micrometres. Use 'micron' rather than the Greek symbol μm to
+          avoid encoding issues.
+      mm:
+        description: Millimetres
+
+  TimeUnitEnum:
+    description: Allowed units for time intervals.
+    permissible_values:
+      s:
+        description: Seconds (SI base unit)
+      sec:
+        description: Seconds (alternative spelling accepted by FOF-CT)
+      ms:
+        description: Milliseconds
+      min:
+        description: Minutes
+      hr:
+        description: Hours
+
+  SoftwareTypeEnum:
+    description: Allowed functional categories for software tools.
+    permissible_values:
+      SpotLoc:
+        description: Spot localisation software
+      Tracing:
+        description: Chromatin tracing software
+      SpotLoc+Tracing:
+        description: Combined spot localisation and tracing software
+      Segmentation:
+        description: Image segmentation software
+      QC:
+        description: Quality control software
+      Distance:
+        description: Distance calculation software
+      Other:
+        description: Other software type
+
+  TableNamespaceEnum:
+    description: >-
+      Allowed namespace identifiers for FOF-CT tables that may be listed
+      in the additional_tables field.
+    permissible_values:
+      4dn_FOF-CT_core:
+        description: DNA-Spot/Trace Data core table (table 1)
+      4dn_FOF-CT_demultiplexing:
+        description: Spot Demultiplexing table (table 2)
+      4dn_FOF-CT_trace:
+        description: Trace Data table (table 3)
+      4dn_FOF-CT_rna:
+        description: RNA Spot Data table (table 4)
+      4dn_FOF-CT_quality:
+        description: Spot Quality table (table 5)
+      4dn_FOF-CT_rna_quality:
+        description: RNA Spot Quality table (table 6)
+      4dn_FOF-CT_bio:
+        description: Spot Biological Data table (table 7)
+      4dn_FOF-CT_rna_bio:
+        description: RNA Spot Biological Data table (table 8)
+      4dn_FOF-CT_cell:
+        description: Cell Data table (table 9)
+      4dn_FOF-CT_extracell:
+        description: Extra-Cell ROI Data table (table 10)
+      4dn_FOF-CT_subcell:
+        description: Sub-Cell ROI Data table (table 11)
+      4dn_FOF-CT_mapping:
+        description: Cell/ROI Mapping table (table 12)

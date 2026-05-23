@@ -1,0 +1,521 @@
+# metamodel_version: 1.11.0
+# version: 1.0.0
+BASE <https://w3id.org/fof-ct/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX linkml: <https://w3id.org/linkml/>
+
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+<Cell> CLOSED {
+    (  $<Cell_tes> <extra_cell_roi_id> @linkml:Integer ? ;
+       rdf:type [ <Cell> ]
+    )
+}
+
+<CellTable> CLOSED {
+    (  $<CellTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <cell_type> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <extra_cell_roi_type> @linkml:String ? ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <cells> @<Cell> +
+       ) ;
+       rdf:type [ <CellTable> ] ?
+    )
+}
+
+<ExtraCellROI> CLOSED {
+    (  $<ExtraCellROI_tes> rdf:type . * ;
+       rdf:type [ <ExtraCellROI> ]
+    )
+}
+
+<ExtraCellROITable> CLOSED {
+    (  $<ExtraCellROITable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <extra_cell_roi_type> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <extra_cell_rois> @<ExtraCellROI> +
+       ) ;
+       rdf:type [ <ExtraCellROITable> ] ?
+    )
+}
+
+<Localization> CLOSED {
+    (  $<Localization_tes> (  <spot_id> @linkml:Integer ;
+          <x> @linkml:Float ;
+          <y> @linkml:Float ;
+          <z> @linkml:Float ;
+          <fluor> @linkml:String
+       ) ;
+       rdf:type [ <Localization> ]
+    )
+}
+
+<LocalizationTable> CLOSED {
+    (  $<LocalizationTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <localizations> @<Localization> +
+       ) ;
+       rdf:type [ <LocalizationTable> ] ?
+    )
+}
+
+<RNASpot> CLOSED {
+    (  $<RNASpot_tes> (  <rna_spot_id> @linkml:Integer ;
+          <x> @linkml:Float ;
+          <y> @linkml:Float ;
+          <z> @linkml:Float ;
+          <rna_name> @linkml:String ;
+          <gene_id> @linkml:String ;
+          <trace_id> @linkml:Integer ;
+          <transcript_id> @linkml:String ? ;
+          <sub_cell_roi_id> @linkml:Integer ? ;
+          <cell_id> @linkml:Integer ? ;
+          <extra_cell_roi_id> @linkml:Integer ?
+       ) ;
+       rdf:type [ <RNASpot> ] ?
+    )
+}
+
+<RNASpotBiologicalRecord> CLOSED {
+    (  $<RNASpotBiologicalRecord_tes> rdf:type . * ;
+       rdf:type [ <RNASpotBiologicalRecord> ]
+    )
+}
+
+<RNASpotBiologicalTable> CLOSED {
+    (  $<RNASpotBiologicalTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <rna_spot_biological_records> @<RNASpotBiologicalRecord> +
+       ) ;
+       rdf:type [ <RNASpotBiologicalTable> ] ?
+    )
+}
+
+<RNASpotQualityRecord> CLOSED {
+    (  $<RNASpotQualityRecord_tes> rdf:type . * ;
+       rdf:type [ <RNASpotQualityRecord> ]
+    )
+}
+
+<RNASpotQualityTable> CLOSED {
+    (  $<RNASpotQualityTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <rna_spot_quality_records> @<RNASpotQualityRecord> +
+       ) ;
+       rdf:type [ <RNASpotQualityTable> ] ?
+    )
+}
+
+<RNASpotTable> CLOSED {
+    (  $<RNASpotTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <genome_assembly> @linkml:String ;
+          <gene_id_type> @linkml:String ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <transcript_id_type> @linkml:String ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <rna_spots> @<RNASpot> +
+       ) ;
+       rdf:type [ <RNASpotTable> ] ?
+    )
+}
+
+<ROIMapping> CLOSED {
+    (  $<ROIMapping_tes> (  <sub_cell_roi_id> @linkml:Integer ? ;
+          <cell_id> @linkml:Integer ? ;
+          <extra_cell_roi_id> @linkml:Integer ? ;
+          <roi_boundaries> @linkml:String
+       ) ;
+       rdf:type [ <ROIMapping> ] ?
+    )
+}
+
+<ROIMappingTable> CLOSED {
+    (  $<ROIMappingTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <roi_boundaries_format> @linkml:String ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <cell_type> @linkml:String ? ;
+          <sub_cell_roi_type> @linkml:String ? ;
+          <extra_cell_roi_type> @linkml:String ? ;
+          <softwares> @<Software> * ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <roi_mappings> @<ROIMapping> +
+       ) ;
+       rdf:type [ <ROIMappingTable> ] ?
+    )
+}
+
+<Software> CLOSED {
+    (  $<Software_tes> (  <software_title> @linkml:String ;
+          <software_type> [ <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc> <https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing> <https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#QC> <https://w3id.org/fof-ct/SoftwareTypeEnum#Distance>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#Other> ] ;
+          <software_authors> @linkml:String ;
+          <software_description> @linkml:String ;
+          <software_repository> @linkml:Uri ;
+          <software_preferred_citation_id> @linkml:Uri
+       ) ;
+       rdf:type [ <Software> ] ?
+    )
+}
+
+<SpotBiologicalRecord> CLOSED {
+    (  $<SpotBiologicalRecord_tes> rdf:type . * ;
+       rdf:type [ <SpotBiologicalRecord> ]
+    )
+}
+
+<SpotBiologicalTable> CLOSED {
+    (  $<SpotBiologicalTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <spot_biological_records> @<SpotBiologicalRecord> +
+       ) ;
+       rdf:type [ <SpotBiologicalTable> ] ?
+    )
+}
+
+<SpotQualityRecord> CLOSED {
+    (  $<SpotQualityRecord_tes> rdf:type . * ;
+       rdf:type [ <SpotQualityRecord> ]
+    )
+}
+
+<SpotQualityTable> CLOSED {
+    (  $<SpotQualityTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <spot_quality_records> @<SpotQualityRecord> +
+       ) ;
+       rdf:type [ <SpotQualityTable> ] ?
+    )
+}
+
+<SubCellROI> CLOSED {
+    (  $<SubCellROI_tes> <cell_id> @linkml:Integer ? ;
+       rdf:type [ <SubCellROI> ]
+    )
+}
+
+<SubCellROITable> CLOSED {
+    (  $<SubCellROITable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <sub_cell_roi_type> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <cell_type> @linkml:String ? ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <sub_cell_rois> @<SubCellROI> +
+       ) ;
+       rdf:type [ <SubCellROITable> ] ?
+    )
+}
+
+<Trace> CLOSED {
+    (  $<Trace_tes> rdf:type . * ;
+       rdf:type [ <Trace> ]
+    )
+}
+
+<TraceTable> CLOSED {
+    (  $<TraceTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+          <softwares> @<Software> * ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
+             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <traces> @<Trace> +
+       ) ;
+       rdf:type [ <TraceTable> ] ?
+    )
+}

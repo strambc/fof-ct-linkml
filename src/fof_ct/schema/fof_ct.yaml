@@ -1,0 +1,51 @@
+---
+id: https://w3id.org/fof-ct
+name: fof_ct
+title: FISH Omics Format for Chromatin Tracing (FOF-CT)
+description: >-
+  Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick
+  modality (FOF-bas-CT). Imports all twelve table schemas that together constitute
+  the complete FOF-bas-CT data model. Each table schema in turn imports
+  fof_bas_ct_common for shared slots, the Software class, and enumerations.
+license: MIT
+version: 1.0.0
+see_also:
+  - https://4dn-dcic.github.io/fof-ct
+  - https://fish-omics-format.readthedocs.io/
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  # Shared foundation (must come first)
+  - fof_bas_ct_common
+  # Table 1  – DNA-Spot / Trace Data core table
+  - fof_bas_ct_core
+  # Table 2  – Spot Demultiplexing table
+  - fof_bas_ct_demultiplexing
+  # Table 3  – Trace Data table
+  - fof_bas_ct_trace
+  # Table 4  – RNA Spot Data table
+  - fof_bas_ct_rna
+  # Table 5  – Spot Quality table
+  - fof_bas_ct_quality
+  # Table 6  – RNA Spot Quality table
+  - fof_bas_ct_rna_quality
+  # Table 7  – Spot Biological Data table
+  - fof_bas_ct_bio
+  # Table 8  – RNA Spot Biological Data table
+  - fof_bas_ct_rna_bio
+  # Table 9  – Cell Data table
+  - fof_bas_ct_cell
+  # Table 10 – Extra-Cell ROI Data table
+  - fof_bas_ct_extracell
+  # Table 11 – Sub-Cell ROI Data table
+  - fof_bas_ct_subcell
+  # Table 12 – Cell/ROI Mapping table
+  - fof_bas_ct_mapping

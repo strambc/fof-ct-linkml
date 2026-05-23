@@ -1,0 +1,2726 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix fof_ct: <https://w3id.org/fof-ct/> .
+@prefix linkml: <https://w3id.org/linkml/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+fof_ct:CellTable a owl:Class ;
+    rdfs:label "CellTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:cells ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Cell ;
+            owl:onProperty fof_ct:cells ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_cell" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        linkml:ClassDefinition ;
+    skos:definition "The Cell Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_cell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Cells (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM." ;
+    skos:inScheme fof_ct:cell .
+
+fof_ct:ExtraCellROITable a owl:Class ;
+    rdfs:label "ExtraCellROITable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_rois ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:ExtraCellROI ;
+            owl:onProperty fof_ct:extra_cell_rois ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_extracell" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        linkml:ClassDefinition ;
+    skos:definition "The Extra-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_extracell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of extracellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM." ;
+    skos:inScheme fof_ct:extracell .
+
+fof_ct:LocalizationTable a owl:Class ;
+    rdfs:label "LocalizationTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Localization ;
+            owl:onProperty fof_ct:localizations ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_demultiplexing" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:localizations ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        linkml:ClassDefinition ;
+    skos:definition "The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments." ;
+    skos:inScheme fof_ct:demultiplexing .
+
+fof_ct:RNASpotBiologicalTable a owl:Class ;
+    rdfs:label "RNASpotBiologicalTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_biological_records ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:RNASpotBiologicalRecord ;
+            owl:onProperty fof_ct:rna_spot_biological_records ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_rna_bio" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        linkml:ClassDefinition ;
+    skos:definition "The RNA Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotBiologicalRecord rows. Submission of this table is optional but highly recommended." ;
+    skos:inScheme fof_ct:rna_bio .
+
+fof_ct:RNASpotQualityTable a owl:Class ;
+    rdfs:label "RNASpotQualityTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_quality_records ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:RNASpotQualityRecord ;
+            owl:onProperty fof_ct:rna_spot_quality_records ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_rna_quality" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        linkml:ClassDefinition ;
+    skos:definition "The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotQualityRecord rows. Submission of this table is optional but recommended." ;
+    skos:inScheme fof_ct:rna_quality .
+
+fof_ct:SpotBiologicalTable a owl:Class ;
+    rdfs:label "SpotBiologicalTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:SpotBiologicalRecord ;
+            owl:onProperty fof_ct:spot_biological_records ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_bio" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_biological_records ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        linkml:ClassDefinition ;
+    skos:definition "The Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotBiologicalRecord rows. Submission of this table is optional but highly recommended." ;
+    skos:inScheme fof_ct:bio .
+
+fof_ct:SpotQualityTable a owl:Class ;
+    rdfs:label "SpotQualityTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_quality" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_quality_records ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:SpotQualityRecord ;
+            owl:onProperty fof_ct:spot_quality_records ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        linkml:ClassDefinition ;
+    skos:definition "The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotQualityRecord rows. Submission of this table is optional but recommended." ;
+    skos:inScheme fof_ct:quality .
+
+fof_ct:SubCellROITable a owl:Class ;
+    rdfs:label "SubCellROITable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_subcell" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_rois ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:SubCellROI ;
+            owl:onProperty fof_ct:sub_cell_rois ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        linkml:ClassDefinition ;
+    skos:definition "The Sub-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_subcell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of sub-cellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM." ;
+    skos:inScheme fof_ct:subcell .
+
+fof_ct:TraceTable a owl:Class ;
+    rdfs:label "TraceTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Trace ;
+            owl:onProperty fof_ct:traces ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:traces ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_trace" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        linkml:ClassDefinition ;
+    skos:definition "The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Traces (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when trace-level properties are recorded." ;
+    skos:inScheme fof_ct:trace .
+
+fof_ct:Cell a owl:Class ;
+    rdfs:label "Cell" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single Cell identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Cell Data table. The cell_id field uniquely identifies each Cell and links to the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present per submission." ;
+    skos:inScheme fof_ct:cell .
+
+fof_ct:ExtraCellROI a owl:Class ;
+    rdfs:label "ExtraCellROI" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission." ;
+    skos:inScheme fof_ct:extracell .
+
+fof_ct:RNASpotBiologicalRecord a owl:Class ;
+    rdfs:label "RNASpotBiologicalRecord" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single row in the RNA Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined biological property column MUST be present; users declare these via #^ header lines." ;
+    skos:inScheme fof_ct:rna_bio .
+
+fof_ct:RNASpotQualityRecord a owl:Class ;
+    rdfs:label "RNASpotQualityRecord" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines." ;
+    skos:inScheme fof_ct:rna_quality .
+
+fof_ct:ROIMappingTable a owl:Class ;
+    rdfs:label "ROIMappingTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:roi_mappings ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_mapping" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:extra_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:ROIMapping ;
+            owl:onProperty fof_ct:roi_mappings ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:sub_cell_roi_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:roi_boundaries_format ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:cell_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:roi_boundaries_format ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:roi_boundaries_format ],
+        linkml:ClassDefinition ;
+    skos:definition "The Cell/ROI Mapping table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_mapping). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of ROI boundary records (recorded as data rows). This table is conditionally required whenever a Cell Data table, a Sub-Cell ROI Data table, or an Extra-Cell ROI Data table is deposited. Analogous to the MappingSet class in SSSOM." ;
+    skos:inScheme fof_ct:mapping .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#Distance> a owl:Class ;
+    rdfs:label "Distance" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Distance calculation software" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#Other> a owl:Class ;
+    rdfs:label "Other" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Other software type" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#QC> a owl:Class ;
+    rdfs:label "QC" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Quality control software" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation> a owl:Class ;
+    rdfs:label "Segmentation" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Image segmentation software" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc> a owl:Class ;
+    rdfs:label "SpotLoc" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Spot localisation software" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing> a owl:Class ;
+    rdfs:label "SpotLoc+Tracing" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Combined spot localisation and tracing software" .
+
+<https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing> a owl:Class ;
+    rdfs:label "Tracing" ;
+    rdfs:subClassOf fof_ct:SoftwareTypeEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Chromatin tracing software" .
+
+fof_ct:SpotBiologicalRecord a owl:Class ;
+    rdfs:label "SpotBiologicalRecord" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:spot_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single row in the Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific DNA bright Spot identified by Spot_ID. Spot_ID values must be unique across the dataset, linking to the corresponding Spot record in the core table (table 1). At least one user-defined biological property column MUST be present; users declare these via #^ header lines." ;
+    skos:inScheme fof_ct:bio .
+
+fof_ct:SpotQualityRecord a owl:Class ;
+    rdfs:label "SpotQualityRecord" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines." ;
+    skos:inScheme fof_ct:quality .
+
+fof_ct:SubCellROI a owl:Class ;
+    rdfs:label "SubCellROI" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single sub-cellular structure ROI (e.g. nucleolus, nuclear lamina, PML body, chromosome domain) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Sub-Cell ROI Data table. The sub_cell_roi_id field uniquely identifies each ROI and links to the core table, the Cell Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, ROI_Area). At least one such user-defined column MUST be present per submission." ;
+    skos:inScheme fof_ct:subcell .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_bio" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Spot Biological Data table (table 7)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_cell" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Cell Data table (table 9)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_core" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "DNA-Spot/Trace Data core table (table 1)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_demultiplexing" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Spot Demultiplexing table (table 2)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_extracell" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Extra-Cell ROI Data table (table 10)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_mapping" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Cell/ROI Mapping table (table 12)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_quality" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Spot Quality table (table 5)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_rna" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "RNA Spot Data table (table 4)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_rna_bio" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "RNA Spot Biological Data table (table 8)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_rna_quality" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "RNA Spot Quality table (table 6)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_subcell" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Sub-Cell ROI Data table (table 11)" .
+
+<https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace> a owl:Class ;
+    rdfs:label "4dn_FOF-CT_trace" ;
+    rdfs:subClassOf fof_ct:TableNamespaceEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Trace Data table (table 3)" .
+
+<https://w3id.org/fof-ct/TimeUnitEnum#hr> a owl:Class ;
+    rdfs:label "hr" ;
+    rdfs:subClassOf fof_ct:TimeUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Hours" .
+
+<https://w3id.org/fof-ct/TimeUnitEnum#min> a owl:Class ;
+    rdfs:label "min" ;
+    rdfs:subClassOf fof_ct:TimeUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Minutes" .
+
+<https://w3id.org/fof-ct/TimeUnitEnum#ms> a owl:Class ;
+    rdfs:label "ms" ;
+    rdfs:subClassOf fof_ct:TimeUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Milliseconds" .
+
+<https://w3id.org/fof-ct/TimeUnitEnum#s> a owl:Class ;
+    rdfs:label "s" ;
+    rdfs:subClassOf fof_ct:TimeUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Seconds (SI base unit)" .
+
+<https://w3id.org/fof-ct/TimeUnitEnum#sec> a owl:Class ;
+    rdfs:label "sec" ;
+    rdfs:subClassOf fof_ct:TimeUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Seconds (alternative spelling accepted by FOF-CT)" .
+
+fof_ct:Trace a owl:Class ;
+    rdfs:label "Trace" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema." ;
+    skos:inScheme fof_ct:trace .
+
+<https://w3id.org/fof-ct/XYZUnitEnum#micron> a owl:Class ;
+    rdfs:label "micron" ;
+    rdfs:subClassOf fof_ct:XYZUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Micrometres. Use 'micron' rather than the Greek symbol μm to avoid encoding issues." .
+
+<https://w3id.org/fof-ct/XYZUnitEnum#mm> a owl:Class ;
+    rdfs:label "mm" ;
+    rdfs:subClassOf fof_ct:XYZUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Millimetres" .
+
+<https://w3id.org/fof-ct/XYZUnitEnum#nm> a owl:Class ;
+    rdfs:label "nm" ;
+    rdfs:subClassOf fof_ct:XYZUnitEnum,
+        linkml:PermissibleValue ;
+    skos:definition "Nanometres" .
+
+fof_ct:cells a owl:ObjectProperty ;
+    rdfs:label "cells" ;
+    rdfs:domain fof_ct:CellTable ;
+    rdfs:range fof_ct:Cell ;
+    skos:definition "The complete collection of Cells constituting this dataset. Each Cell corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. Cell_Size, Cell_Volume) MUST be present in every submitted Cell Data table." ;
+    skos:inScheme fof_ct:cell .
+
+fof_ct:extra_cell_rois a owl:ObjectProperty ;
+    rdfs:label "extra_cell_rois" ;
+    rdfs:domain fof_ct:ExtraCellROITable ;
+    rdfs:range fof_ct:ExtraCellROI ;
+    skos:definition "The complete collection of extracellular ROIs constituting this dataset. Each ExtraCellROI corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. ROI_Volume, Cell_Count) MUST be present in every submitted Extra-Cell ROI Data table." ;
+    skos:inScheme fof_ct:extracell .
+
+fof_ct:localizations a owl:ObjectProperty ;
+    rdfs:label "localizations" ;
+    rdfs:domain fof_ct:LocalizationTable ;
+    rdfs:range fof_ct:Localization ;
+    skos:definition "The complete collection of Localization events constituting this dataset. Each Localization corresponds to one data row in the TSV serialisation." ;
+    skos:inScheme fof_ct:demultiplexing .
+
+fof_ct:rna_spot_biological_records a owl:ObjectProperty ;
+    rdfs:label "rna_spot_biological_records" ;
+    rdfs:domain fof_ct:RNASpotBiologicalTable ;
+    rdfs:range fof_ct:RNASpotBiologicalRecord ;
+    skos:definition "The complete collection of RNASpotBiologicalRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined biological property column." ;
+    skos:inScheme fof_ct:rna_bio .
+
+fof_ct:rna_spot_quality_records a owl:ObjectProperty ;
+    rdfs:label "rna_spot_quality_records" ;
+    rdfs:domain fof_ct:RNASpotQualityTable ;
+    rdfs:range fof_ct:RNASpotQualityRecord ;
+    skos:definition "The complete collection of RNASpotQualityRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined quality metric column." ;
+    skos:inScheme fof_ct:rna_quality .
+
+fof_ct:rna_spots a owl:ObjectProperty ;
+    rdfs:label "rna_spots" ;
+    rdfs:domain fof_ct:RNASpotTable ;
+    rdfs:range fof_ct:RNASpot ;
+    skos:definition "The complete collection of RNA Spots constituting this dataset. Each RNASpot corresponds to one data row in the TSV serialisation." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:roi_mappings a owl:ObjectProperty ;
+    rdfs:label "roi_mappings" ;
+    rdfs:domain fof_ct:ROIMappingTable ;
+    rdfs:range fof_ct:ROIMapping ;
+    skos:definition "The complete collection of ROI boundary records constituting this dataset. Each ROIMapping corresponds to one data row in the TSV serialisation." ;
+    skos:inScheme fof_ct:mapping .
+
+fof_ct:spot_biological_records a owl:ObjectProperty ;
+    rdfs:label "spot_biological_records" ;
+    rdfs:domain fof_ct:SpotBiologicalTable ;
+    rdfs:range fof_ct:SpotBiologicalRecord ;
+    skos:definition "The complete collection of SpotBiologicalRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined biological property column." ;
+    skos:inScheme fof_ct:bio .
+
+fof_ct:spot_quality_records a owl:ObjectProperty ;
+    rdfs:label "spot_quality_records" ;
+    rdfs:domain fof_ct:SpotQualityTable ;
+    rdfs:range fof_ct:SpotQualityRecord ;
+    skos:definition "The complete collection of SpotQualityRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined quality metric column." ;
+    skos:inScheme fof_ct:quality .
+
+fof_ct:spots a owl:ObjectProperty ;
+    rdfs:label "spots" ;
+    rdfs:domain fof_ct:SpotTable ;
+    rdfs:range fof_ct:Spot ;
+    skos:definition "The complete collection of Spots constituting this dataset. Each Spot corresponds to one data row in the TSV serialisation." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:sub_cell_rois a owl:ObjectProperty ;
+    rdfs:label "sub_cell_rois" ;
+    rdfs:domain fof_ct:SubCellROITable ;
+    rdfs:range fof_ct:SubCellROI ;
+    skos:definition "The complete collection of sub-cellular ROIs constituting this dataset. Each SubCellROI corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. ROI_Volume, ROI_Area) MUST be present in every submitted Sub-Cell ROI Data table." ;
+    skos:inScheme fof_ct:subcell .
+
+fof_ct:traces a owl:ObjectProperty ;
+    rdfs:label "traces" ;
+    rdfs:domain fof_ct:TraceTable ;
+    rdfs:range fof_ct:Trace ;
+    skos:definition "The complete collection of Traces constituting this dataset. Each Trace corresponds to one data row in the TSV serialisation." ;
+    skos:inScheme fof_ct:trace .
+
+fof_ct:RNASpotTable a owl:Class ;
+    rdfs:label "RNASpotTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:transcript_id_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:gene_id_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:transcript_id_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:gene_id_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:transcript_id_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_rna" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:gene_id_type ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:RNASpot ;
+            owl:onProperty fof_ct:rna_spots ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:intensity_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spots ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TimeUnitEnum ;
+            owl:onProperty fof_ct:time_unit ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:intensity_measurement_method ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        linkml:ClassDefinition ;
+    skos:definition "The RNA Spot Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of RNA Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when RNA data are collected alongside Chromatin Tracing." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:ROIMapping a owl:Class ;
+    rdfs:label "ROIMapping" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:roi_boundaries ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:roi_boundaries ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:roi_boundaries ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns." ;
+    skos:inScheme fof_ct:mapping .
+
+fof_ct:chrom a owl:DatatypeProperty ;
+    rdfs:label "chrom" ;
+    rdfs:domain fof_ct:Spot ;
+    rdfs:range xsd:string ;
+    skos:definition "Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random)." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:chrom_end a owl:DatatypeProperty ;
+    rdfs:label "chrom_end" ;
+    rdfs:domain fof_ct:Spot ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    skos:definition "Non-inclusive end coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:chrom_start a owl:DatatypeProperty ;
+    rdfs:label "chrom_start" ;
+    rdfs:domain fof_ct:Spot ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:integer [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:integer ;
+                        owl:withRestrictions ( [ xsd:minInclusive 0 ] ) ] ) ] ;
+    skos:definition "0-based start coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:fluor a owl:DatatypeProperty ;
+    rdfs:label "fluor" ;
+    rdfs:domain fof_ct:Localization ;
+    rdfs:range xsd:string ;
+    skos:definition "Fluorescent channel in which this individual localisation event was detected (e.g. DAPI, GFP, Cy5, Alexa647)." ;
+    skos:inScheme fof_ct:demultiplexing .
+
+fof_ct:gene_id a owl:DatatypeProperty ;
+    rdfs:label "gene_id" ;
+    rdfs:domain fof_ct:RNASpot ;
+    rdfs:range xsd:string ;
+    skos:definition "Official gene identifier corresponding to rna_name. The type of identifier used (e.g. Ensembl gene ID, NCBI Gene ID) must be declared in the gene_id_type header field." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:gene_id_type a owl:DatatypeProperty ;
+    rdfs:label "gene_id_type" ;
+    rdfs:domain fof_ct:RNASpotTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Type of gene identifier used in the gene_id column (e.g. Ensembl_V38, NCBI_Gene). Written as ##Gene_ID_Type= in the file header." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:loc_id a owl:DatatypeProperty ;
+    rdfs:label "loc_id" ;
+    rdfs:domain fof_ct:Localization ;
+    rdfs:range xsd:integer ;
+    skos:definition "A unique integer identifier for this individual localisation event. Loc_ID values are unique across the entire dataset." ;
+    skos:inScheme fof_ct:demultiplexing .
+
+fof_ct:modification a owl:DatatypeProperty ;
+    rdfs:label "modification" ;
+    rdfs:domain fof_ct:SpotTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:rna_name a owl:DatatypeProperty ;
+    rdfs:label "rna_name" ;
+    rdfs:domain fof_ct:RNASpot ;
+    rdfs:range xsd:string ;
+    skos:definition "Official name of the gene from which the targeted RNA is transcribed (e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:roi_boundaries a owl:DatatypeProperty ;
+    rdfs:label "roi_boundaries" ;
+    rdfs:domain fof_ct:ROIMapping ;
+    rdfs:range xsd:string ;
+    skos:definition "Boundary coordinates for this Cell or ROI, encoded in the format specified by roi_boundaries_format in the table header. For the OME ROI Polygon model, coordinates are provided as a space-separated list of \"x,y\" pairs (e.g. \"12.5,40.2 13.1,41.0 ...\"). For OBJ 3D mesh format, the field contains the vertex and face list for the boundary mesh." ;
+    skos:inScheme fof_ct:mapping .
+
+fof_ct:roi_boundaries_format a owl:DatatypeProperty ;
+    rdfs:label "roi_boundaries_format" ;
+    rdfs:domain fof_ct:ROIMappingTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Description of the coordinate format used to encode boundary data in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates as \"x1,y1 x2,y2 ...\") and the OBJ 3D mesh format (vertex and face lists). Must be sufficient for unambiguous parsing of all roi_boundaries values in this file. Written as #ROI_Boundaries_Format: in the file header." ;
+    skos:inScheme fof_ct:mapping .
+
+fof_ct:software_authors a owl:DatatypeProperty ;
+    rdfs:label "software_authors" ;
+    rdfs:range xsd:string ;
+    skos:definition "Author name(s) in 'Surname, Firstname' format, multiple authors separated by semicolons. Written as #Software_Authors:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:software_description a owl:DatatypeProperty ;
+    rdfs:label "software_description" ;
+    rdfs:range xsd:string ;
+    skos:definition "Free-text description of the algorithm and analysis parameters, sufficient to guarantee reproducibility. Written as #Software_Description:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:software_preferred_citation_id a owl:DatatypeProperty ;
+    rdfs:label "software_preferred_citation_id" ;
+    rdfs:range xsd:anyURI ;
+    skos:definition "Unique identifier (DOI, PMCID, ArXiv ID, etc.) for the primary publication describing this software. Written as #Software_PreferredCitationID:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:software_repository a owl:DatatypeProperty ;
+    rdfs:label "software_repository" ;
+    rdfs:range xsd:anyURI ;
+    skos:definition "URL of the repository where the software release can be obtained. Written as #Software_Repository:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:software_title a owl:DatatypeProperty ;
+    rdfs:label "software_title" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the software tool. Written as #Software_Title:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:software_type a owl:ObjectProperty ;
+    rdfs:label "software_type" ;
+    rdfs:range fof_ct:SoftwareTypeEnum ;
+    skos:definition "Functional category of the software tool. Written as #Software_Type:." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:transcript_id a owl:DatatypeProperty ;
+    rdfs:label "transcript_id" ;
+    rdfs:domain fof_ct:RNASpot ;
+    rdfs:range xsd:string ;
+    skos:definition "Official transcript identifier for the specific transcript targeted by the FISH probe. Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. The type of identifier used must be declared in the transcript_id_type header field." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:transcript_id_type a owl:DatatypeProperty ;
+    rdfs:label "transcript_id_type" ;
+    rdfs:domain fof_ct:RNASpotTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Type of transcript identifier used in the transcript_id column (e.g. Ensembl_V38, RefSeq). Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. Written as ##Transcript_ID_Type= in the file header." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:vcf_file_name a owl:DatatypeProperty ;
+    rdfs:label "vcf_file_name" ;
+    rdfs:domain fof_ct:SpotTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:vcf_version a owl:DatatypeProperty ;
+    rdfs:label "vcf_version" ;
+    rdfs:domain fof_ct:SpotTable ;
+    rdfs:range xsd:string ;
+    skos:definition "Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:Localization a owl:Class ;
+    rdfs:label "Localization" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:fluor ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:loc_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:loc_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fluor ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:loc_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fluor ],
+        linkml:ClassDefinition ;
+    skos:definition "A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality)." ;
+    skos:inScheme fof_ct:demultiplexing .
+
+fof_ct:SpotTable a owl:Class ;
+    rdfs:label "SpotTable" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:XYZUnitEnum ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:vcf_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Spot ;
+            owl:onProperty fof_ct:spots ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "4dn_FOF-CT_core" ] ) ] ) ] ;
+            owl:onProperty fof_ct:table_namespace ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:xyz_unit ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:vcf_version ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:Software ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:lab_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:experimenter_contact ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                                owl:onDatatype xsd:string ;
+                                owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:vcf_file_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spots ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:modification ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:genome_assembly ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:vcf_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:modification ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:experimenter_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:softwares ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:vcf_file_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:fof_ct_version ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:vcf_file_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:description ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:modification ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:TableNamespaceEnum ;
+            owl:onProperty fof_ct:additional_tables ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:table_namespace ],
+        linkml:ClassDefinition ;
+    skos:definition "The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:RNASpot a owl:Class ;
+    rdfs:label "RNASpot" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:gene_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:gene_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:transcript_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:transcript_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:gene_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:transcript_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:rna_name ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:rna_name ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:rna_spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:cell_id ],
+        linkml:ClassDefinition ;
+    skos:definition "A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema." ;
+    skos:inScheme fof_ct:rna .
+
+fof_ct:Spot a owl:Class ;
+    rdfs:label "Spot" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:chrom_end ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:chrom_start ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:chrom_start ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:extra_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:chrom ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:chrom ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:chrom_end ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:cell_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:chrom ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:minCardinality 0 ;
+            owl:onProperty fof_ct:sub_cell_roi_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:x ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:trace_id ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:chrom_start ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:integer ;
+            owl:onProperty fof_ct:chrom_end ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:spot_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:float ;
+            owl:onProperty fof_ct:y ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:z ],
+        linkml:ClassDefinition ;
+    skos:definition "A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace." ;
+    skos:inScheme <https://w3id.org/fof-ct> .
+
+fof_ct:genome_assembly a owl:DatatypeProperty ;
+    rdfs:label "genome_assembly" ;
+    rdfs:range xsd:string ;
+    skos:definition "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:sub_cell_roi_type a owl:DatatypeProperty ;
+    rdfs:label "sub_cell_roi_type" ;
+    rdfs:range xsd:string ;
+    skos:definition "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+<https://w3id.org/fof-ct> a owl:Ontology ;
+    rdfs:label "fof_ct" ;
+    dcterms:license "MIT" ;
+    dcterms:title "FISH Omics Format for Chromatin Tracing (FOF-CT)" ;
+    pav:version "1.0.0" ;
+    rdfs:seeAlso <https://4dn-dcic.github.io/fof-ct>,
+        <https://fish-omics-format.readthedocs.io/> ;
+    skos:definition "Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT). Imports all twelve table schemas that together constitute the complete FOF-bas-CT data model. Each table schema in turn imports fof_bas_ct_common for shared slots, the Software class, and enumerations." .
+
+fof_ct:SoftwareTypeEnum a owl:Class ;
+    rdfs:label "SoftwareTypeEnum" ;
+    rdfs:subClassOf linkml:EnumDefinition ;
+    owl:unionOf ( <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc> <https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing> <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing> <https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation> <https://w3id.org/fof-ct/SoftwareTypeEnum#QC> <https://w3id.org/fof-ct/SoftwareTypeEnum#Distance> <https://w3id.org/fof-ct/SoftwareTypeEnum#Other> ) ;
+    skos:definition "Allowed functional categories for software tools." ;
+    skos:inScheme fof_ct:common ;
+    linkml:permissible_values <https://w3id.org/fof-ct/SoftwareTypeEnum#Distance>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#Other>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#QC>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing>,
+        <https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing> .
+
+fof_ct:cell_type a owl:DatatypeProperty ;
+    rdfs:label "cell_type" ;
+    rdfs:range xsd:string ;
+    skos:definition "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:extra_cell_roi_type a owl:DatatypeProperty ;
+    rdfs:label "extra_cell_roi_type" ;
+    rdfs:range xsd:string ;
+    skos:definition "The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:rna_spot_id a owl:DatatypeProperty ;
+    rdfs:label "rna_spot_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:trace_id a owl:DatatypeProperty ;
+    rdfs:label "trace_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:x a owl:DatatypeProperty ;
+    rdfs:label "x" ;
+    rdfs:range xsd:float ;
+    skos:definition "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.)." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:y a owl:DatatypeProperty ;
+    rdfs:label "y" ;
+    rdfs:range xsd:float ;
+    skos:definition "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:z a owl:DatatypeProperty ;
+    rdfs:label "z" ;
+    rdfs:range xsd:float ;
+    skos:definition "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:spot_id a owl:DatatypeProperty ;
+    rdfs:label "spot_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:sub_cell_roi_id a owl:DatatypeProperty ;
+    rdfs:label "sub_cell_roi_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:Software a owl:Class ;
+    rdfs:label "Software" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:software_description ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_title ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_preferred_citation_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty fof_ct:software_repository ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_authors ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_type ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:software_authors ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_repository ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_repository ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_preferred_citation_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:anyURI ;
+            owl:onProperty fof_ct:software_preferred_citation_id ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom fof_ct:SoftwareTypeEnum ;
+            owl:onProperty fof_ct:software_type ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_authors ],
+        [ a owl:Restriction ;
+            owl:maxCardinality 1 ;
+            owl:onProperty fof_ct:software_description ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom xsd:string ;
+            owl:onProperty fof_ct:software_title ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_title ],
+        [ a owl:Restriction ;
+            owl:minCardinality 1 ;
+            owl:onProperty fof_ct:software_description ],
+        linkml:ClassDefinition ;
+    skos:definition "Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software_* fields in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:cell_id a owl:DatatypeProperty ;
+    rdfs:label "cell_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique identifier for a Cell. Links to the Cell Data table." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:extra_cell_roi_id a owl:DatatypeProperty ;
+    rdfs:label "extra_cell_roi_id" ;
+    rdfs:range xsd:integer ;
+    skos:definition "Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:XYZUnitEnum a owl:Class ;
+    rdfs:label "XYZUnitEnum" ;
+    rdfs:subClassOf linkml:EnumDefinition ;
+    owl:unionOf ( <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron> <https://w3id.org/fof-ct/XYZUnitEnum#mm> ) ;
+    skos:definition "Allowed units for X, Y, Z spatial coordinates or distances." ;
+    skos:inScheme fof_ct:common ;
+    linkml:permissible_values <https://w3id.org/fof-ct/XYZUnitEnum#micron>,
+        <https://w3id.org/fof-ct/XYZUnitEnum#mm>,
+        <https://w3id.org/fof-ct/XYZUnitEnum#nm> .
+
+fof_ct:TimeUnitEnum a owl:Class ;
+    rdfs:label "TimeUnitEnum" ;
+    rdfs:subClassOf linkml:EnumDefinition ;
+    owl:unionOf ( <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec> <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ) ;
+    skos:definition "Allowed units for time intervals." ;
+    skos:inScheme fof_ct:common ;
+    linkml:permissible_values <https://w3id.org/fof-ct/TimeUnitEnum#hr>,
+        <https://w3id.org/fof-ct/TimeUnitEnum#min>,
+        <https://w3id.org/fof-ct/TimeUnitEnum#ms>,
+        <https://w3id.org/fof-ct/TimeUnitEnum#s>,
+        <https://w3id.org/fof-ct/TimeUnitEnum#sec> .
+
+fof_ct:additional_tables a owl:ObjectProperty ;
+    rdfs:label "additional_tables" ;
+    rdfs:range fof_ct:TableNamespaceEnum ;
+    skos:definition "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:softwares a owl:ObjectProperty ;
+    rdfs:label "softwares" ;
+    rdfs:range fof_ct:Software ;
+    skos:definition "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:TableNamespaceEnum a owl:Class ;
+    rdfs:label "TableNamespaceEnum" ;
+    rdfs:subClassOf linkml:EnumDefinition ;
+    owl:unionOf ( <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell> <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ) ;
+    skos:definition "Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field." ;
+    skos:inScheme fof_ct:common ;
+    linkml:permissible_values <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>,
+        <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace> .
+
+fof_ct:intensity_measurement_method a owl:DatatypeProperty ;
+    rdfs:label "intensity_measurement_method" ;
+    rdfs:range xsd:string ;
+    skos:definition "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:intensity_unit a owl:DatatypeProperty ;
+    rdfs:label "intensity_unit" ;
+    rdfs:range xsd:string ;
+    skos:definition "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:time_unit a owl:ObjectProperty ;
+    rdfs:label "time_unit" ;
+    rdfs:range fof_ct:TimeUnitEnum ;
+    skos:definition "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:range xsd:string ;
+    skos:definition "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:experimenter_contact a owl:DatatypeProperty ;
+    rdfs:label "experimenter_contact" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ] ) ] ) ] ;
+    skos:definition "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:experimenter_name a owl:DatatypeProperty ;
+    rdfs:label "experimenter_name" ;
+    rdfs:range xsd:string ;
+    skos:definition "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:fof_ct_version a owl:DatatypeProperty ;
+    rdfs:label "fof_ct_version" ;
+    rdfs:range [ a rdfs:Datatype ;
+            owl:intersectionOf ( xsd:string [ a rdfs:Datatype ;
+                        owl:onDatatype xsd:string ;
+                        owl:withRestrictions ( [ xsd:pattern "^v[0-9]+\\.[0-9]+" ] ) ] ) ] ;
+    skos:definition "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=)." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:lab_name a owl:DatatypeProperty ;
+    rdfs:label "lab_name" ;
+    rdfs:range xsd:string ;
+    skos:definition "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:table_namespace a owl:DatatypeProperty ;
+    rdfs:label "table_namespace" ;
+    rdfs:range xsd:string ;
+    skos:definition "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header." ;
+    skos:inScheme fof_ct:common .
+
+fof_ct:xyz_unit a owl:ObjectProperty ;
+    rdfs:label "xyz_unit" ;
+    rdfs:range fof_ct:XYZUnitEnum ;
+    skos:definition "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported." ;
+    skos:inScheme fof_ct:common .
+

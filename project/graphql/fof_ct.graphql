@@ -1,0 +1,328 @@
+# metamodel_version: 1.11.0
+# version: 1.0.0
+enum SoftwareTypeEnum
+  {
+    SpotLoc
+    Tracing
+    SpotLoc__PLUS_SIGN__Tracing
+    Segmentation
+    QC
+    Distance
+    Other
+  }
+
+enum TableNamespaceEnum
+  {
+    __4dn_FOF__HYPHEN_MINUS__CT_core
+    __4dn_FOF__HYPHEN_MINUS__CT_demultiplexing
+    __4dn_FOF__HYPHEN_MINUS__CT_trace
+    __4dn_FOF__HYPHEN_MINUS__CT_rna
+    __4dn_FOF__HYPHEN_MINUS__CT_quality
+    __4dn_FOF__HYPHEN_MINUS__CT_rna_quality
+    __4dn_FOF__HYPHEN_MINUS__CT_bio
+    __4dn_FOF__HYPHEN_MINUS__CT_rna_bio
+    __4dn_FOF__HYPHEN_MINUS__CT_cell
+    __4dn_FOF__HYPHEN_MINUS__CT_extracell
+    __4dn_FOF__HYPHEN_MINUS__CT_subcell
+    __4dn_FOF__HYPHEN_MINUS__CT_mapping
+  }
+
+enum TimeUnitEnum
+  {
+    s
+    sec
+    ms
+    min
+    hr
+  }
+
+enum XYZUnitEnum
+  {
+    nm
+    micron
+    mm
+  }
+
+type Cell
+  {
+    cellId: Int!
+    extraCellRoiId: Int
+  }
+
+type CellTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    cellType: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    extraCellRoiType: String
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    cells: [Cell]!
+  }
+
+type ExtraCellROI
+  {
+    extraCellRoiId: Int!
+  }
+
+type ExtraCellROITable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    extraCellRoiType: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    extraCellRois: [ExtraCellROI]!
+  }
+
+type Localization
+  {
+    locId: Int!
+    spotId: Int!
+    x: Float!
+    y: Float!
+    z: Float!
+    fluor: String!
+  }
+
+type LocalizationTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    localizations: [Localization]!
+  }
+
+type RNASpot
+  {
+    rnaSpotId: Int!
+    x: Float!
+    y: Float!
+    z: Float!
+    rnaName: String!
+    geneId: String!
+    traceId: Int!
+    transcriptId: String
+    subCellRoiId: Int
+    cellId: Int
+    extraCellRoiId: Int
+  }
+
+type RNASpotBiologicalRecord
+  {
+    rnaSpotId: Int!
+  }
+
+type RNASpotBiologicalTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    rnaSpotBiologicalRecords: [RNASpotBiologicalRecord]!
+  }
+
+type RNASpotQualityRecord
+  {
+    rnaSpotId: Int!
+  }
+
+type RNASpotQualityTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    rnaSpotQualityRecords: [RNASpotQualityRecord]!
+  }
+
+type RNASpotTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    genomeAssembly: String!
+    geneIdType: String!
+    xyzUnit: XYZUnitEnum!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    transcriptIdType: String
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    rnaSpots: [RNASpot]!
+  }
+
+type ROIMapping
+  {
+    subCellRoiId: Int
+    cellId: Int
+    extraCellRoiId: Int
+    roiBoundaries: String!
+  }
+
+type ROIMappingTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    roiBoundariesFormat: String!
+    xyzUnit: XYZUnitEnum!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    cellType: String
+    subCellRoiType: String
+    extraCellRoiType: String
+    softwares: [Software]
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    roiMappings: [ROIMapping]!
+  }
+
+type Software
+  {
+    softwareTitle: String!
+    softwareType: SoftwareTypeEnum!
+    softwareAuthors: String!
+    softwareDescription: String!
+    softwareRepository: String!
+    softwarePreferredCitationId: String!
+  }
+
+type SpotBiologicalRecord
+  {
+    spotId: Int!
+  }
+
+type SpotBiologicalTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    spotBiologicalRecords: [SpotBiologicalRecord]!
+  }
+
+type SpotQualityRecord
+  {
+    spotId: Int!
+  }
+
+type SpotQualityTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    spotQualityRecords: [SpotQualityRecord]!
+  }
+
+type SubCellROI
+  {
+    subCellRoiId: Int!
+    cellId: Int
+  }
+
+type SubCellROITable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    subCellRoiType: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    cellType: String
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    subCellRois: [SubCellROI]!
+  }
+
+type Trace
+  {
+    traceId: Int!
+  }
+
+type TraceTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    additionalTables: [TableNamespaceEnum]!
+    softwares: [Software]
+    xyzUnit: XYZUnitEnum
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    traces: [Trace]!
+  }

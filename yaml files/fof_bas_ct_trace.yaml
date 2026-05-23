@@ -1,0 +1,112 @@
+id: https://w3id.org/fof-ct/trace
+name: fof_bas_ct_trace
+description: >-
+  FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT).
+  LinkML schema for the optional Trace Data table (table 3). Documents
+  properties globally associated with individual chromatin Traces rather than
+  with individual Spots (e.g., allele identity, RNA expression level, lamina
+  distance). Each row is one Trace. Modelled after the SSSOM pattern: a
+  row-level class (Trace) captures each Trace; a container class (TraceTable)
+  holds the full collection together with dataset-level provenance metadata
+  written in the FOF-CT file header.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  Trace:
+    description: >-
+      A single chromatin Trace representing global properties associated with
+      an entire polymeric trace rather than with individual Spots. Each instance
+      of this class corresponds to one row in the CSV data section of the
+      FOF-CT Trace Data table. The trace_id links each Trace to the core table
+      and to the RNA Spot Data table.
+      IMPORTANT: this class MUST contain at least one user-defined optional
+      column describing trace-level properties (e.g., Allele, RNA_Expression,
+      Lamina_Distance). User-defined columns are accommodated via
+      additional_properties: true.
+    additional_properties: true
+    slots:
+      - trace_id
+    slot_usage:
+      trace_id:
+        required: true
+        identifier: true
+
+  TraceTable:
+    description: >-
+      The Trace Data table of a FOF-bas-CT dataset (namespace:
+      4dn_FOF-CT_trace). This class represents the entire file: it holds all
+      dataset-level provenance metadata (recorded as header lines in the CSV
+      serialisation) together with the full collection of Traces (recorded as
+      data rows). Analogous to the MappingSet class in SSSOM. This table is
+      optional but recommended when trace-level properties are recorded.
+    tree_root: true
+    slots:
+      # --- mandatory header fields ---
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - additional_tables
+      # --- conditional header fields ---
+      - softwares
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      # --- data ---
+      - traces
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_trace
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      additional_tables:
+        required: true
+      traces:
+        required: true
+
+# ---------------------------------------------------------------------------
+# Slots
+# ---------------------------------------------------------------------------
+
+slots:
+
+  # ---- TraceTable-level (data) slot ---------------------------------------
+
+  traces:
+    description: >-
+      The complete collection of Traces constituting this dataset. Each Trace
+      corresponds to one data row in the TSV serialisation.
+    domain: TraceTable
+    range: Trace
+    multivalued: true
+    inlined_as_list: true

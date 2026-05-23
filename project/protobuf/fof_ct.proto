@@ -1,0 +1,288 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.11.0
+// version: 1.0.0
+// A single Cell identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Cell Data table. The cell_id field uniquely identifies each Cell and links to the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present per submission.
+message Cell
+ {
+  integer cellId = 0
+  integer extraCellRoiId = 0
+ }
+// The Cell Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_cell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Cells (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.
+message CellTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string cellType = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  string extraCellRoiType = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  cell cells = 0
+ }
+// A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission.
+message ExtraCellROI
+ {
+  integer extraCellRoiId = 0
+ }
+// The Extra-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_extracell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of extracellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.
+message ExtraCellROITable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string extraCellRoiType = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  extraCellROI extraCellRois = 0
+ }
+// A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
+message Localization
+ {
+  integer locId = 0
+  integer spotId = 0
+  float x = 0
+  float y = 0
+  float z = 0
+  string fluor = 0
+ }
+// The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.
+message LocalizationTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  localization localizations = 0
+ }
+// A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.
+message RNASpot
+ {
+  integer rnaSpotId = 0
+  float x = 0
+  float y = 0
+  float z = 0
+  string rnaName = 0
+  string geneId = 0
+  integer traceId = 0
+  string transcriptId = 0
+  integer subCellRoiId = 0
+  integer cellId = 0
+  integer extraCellRoiId = 0
+ }
+// A single row in the RNA Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.
+message RNASpotBiologicalRecord
+ {
+  integer rnaSpotId = 0
+ }
+// The RNA Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotBiologicalRecord rows. Submission of this table is optional but highly recommended.
+message RNASpotBiologicalTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  rNASpotBiologicalRecord rnaSpotBiologicalRecords = 0
+ }
+// A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
+message RNASpotQualityRecord
+ {
+  integer rnaSpotId = 0
+ }
+// The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotQualityRecord rows. Submission of this table is optional but recommended.
+message RNASpotQualityTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  rNASpotQualityRecord rnaSpotQualityRecords = 0
+ }
+// The RNA Spot Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of RNA Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when RNA data are collected alongside Chromatin Tracing.
+message RNASpotTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string genomeAssembly = 0
+  string geneIdType = 0
+  xYZUnitEnum xyzUnit = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  string transcriptIdType = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  rNASpot rnaSpots = 0
+ }
+// A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns.
+message ROIMapping
+ {
+  integer subCellRoiId = 0
+  integer cellId = 0
+  integer extraCellRoiId = 0
+  string roiBoundaries = 0
+ }
+// The Cell/ROI Mapping table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_mapping). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of ROI boundary records (recorded as data rows). This table is conditionally required whenever a Cell Data table, a Sub-Cell ROI Data table, or an Extra-Cell ROI Data table is deposited. Analogous to the MappingSet class in SSSOM.
+message ROIMappingTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string roiBoundariesFormat = 0
+  xYZUnitEnum xyzUnit = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  string cellType = 0
+  string subCellRoiType = 0
+  string extraCellRoiType = 0
+ repeated  software softwares = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  rOIMapping roiMappings = 0
+ }
+// Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software_* fields in the file header.
+message Software
+ {
+  string softwareTitle = 0
+  softwareTypeEnum softwareType = 0
+  string softwareAuthors = 0
+  string softwareDescription = 0
+  uri softwareRepository = 0
+  uri softwarePreferredCitationId = 0
+ }
+// A single row in the Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific DNA bright Spot identified by Spot_ID. Spot_ID values must be unique across the dataset, linking to the corresponding Spot record in the core table (table 1). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.
+message SpotBiologicalRecord
+ {
+  integer spotId = 0
+ }
+// The Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotBiologicalRecord rows. Submission of this table is optional but highly recommended.
+message SpotBiologicalTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  spotBiologicalRecord spotBiologicalRecords = 0
+ }
+// A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
+message SpotQualityRecord
+ {
+  integer spotId = 0
+ }
+// The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotQualityRecord rows. Submission of this table is optional but recommended.
+message SpotQualityTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  spotQualityRecord spotQualityRecords = 0
+ }
+// A single sub-cellular structure ROI (e.g. nucleolus, nuclear lamina, PML body, chromosome domain) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Sub-Cell ROI Data table. The sub_cell_roi_id field uniquely identifies each ROI and links to the core table, the Cell Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, ROI_Area). At least one such user-defined column MUST be present per submission.
+message SubCellROI
+ {
+  integer subCellRoiId = 0
+  integer cellId = 0
+ }
+// The Sub-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_subcell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of sub-cellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.
+message SubCellROITable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string subCellRoiType = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  string cellType = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  subCellROI subCellRois = 0
+ }
+// A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema.
+message Trace
+ {
+  integer traceId = 0
+ }
+// The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Traces (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when trace-level properties are recorded.
+message TraceTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+ repeated  software softwares = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  trace traces = 0
+ }

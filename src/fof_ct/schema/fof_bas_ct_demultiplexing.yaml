@@ -1,0 +1,154 @@
+id: https://w3id.org/fof-ct/demultiplexing
+name: fof_bas_ct_demultiplexing
+description: >-
+  FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT).
+  LinkML schema for the optional Spot Demultiplexing table (table 2). Used in
+  multiplexed FISH experiments (e.g. MERFISH) where the final localisation of a
+  bright Spot results from combining multiple individual localisation events.
+  Each row is one Localization event. Modelled after the SSSOM pattern: a
+  row-level class (Localization) captures each individual localisation event;
+  a container class (LocalizationTable) holds the full collection together
+  with dataset-level provenance metadata written in the FOF-CT file header.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  Localization:
+    description: >-
+      A single individual localisation event contributing to the final position
+      of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH).
+      Each instance of this class corresponds to one row in the CSV data section
+      of the FOF-CT Spot Demultiplexing table. The spot_id field links each
+      Localization to its parent Spot in the core table (or RNA Spot Data table);
+      it may be NA when the localisation could not be assigned to any Spot.
+      This class accepts additional user-defined optional columns (e.g. Hyb,
+      Brightness, Fit_Quality).
+    slots:
+      - loc_id
+      - spot_id
+      - x
+      - y
+      - z
+      - fluor
+    slot_usage:
+      loc_id:
+        required: true
+      spot_id:
+        required: true
+      x:
+        required: true
+      y:
+        required: true
+      z:
+        required: true
+      fluor:
+        required: true
+
+  LocalizationTable:
+    description: >-
+      The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace:
+      4dn_FOF-CT_demultiplexing). This class represents the entire file: it
+      holds all dataset-level provenance metadata (recorded as header lines
+      in the CSV serialisation) together with the full collection of
+      Localization events (recorded as data rows). Analogous to the MappingSet
+      class in SSSOM. This table is optional but recommended for multiplexed
+      FISH experiments.
+    tree_root: true
+    slots:
+      # --- mandatory header fields ---
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - softwares
+      - additional_tables
+      # --- conditional header fields ---
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      # --- data ---
+      - localizations
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_demultiplexing
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      softwares:
+        required: true
+        multivalued: true
+        range: Software
+      additional_tables:
+        required: true
+      localizations:
+        required: true
+
+# ---------------------------------------------------------------------------
+# Slots
+# ---------------------------------------------------------------------------
+
+slots:
+
+  # ---- Localization (row-level) slots -------------------------------------
+
+  loc_id:
+    description: >-
+      A unique integer identifier for this individual localisation event.
+      Loc_ID values are unique across the entire dataset.
+    domain: Localization
+    range: integer
+    identifier: true
+    examples:
+      - value: "1"
+
+
+
+
+  fluor:
+    description: >-
+      Fluorescent channel in which this individual localisation event was
+      detected (e.g. DAPI, GFP, Cy5, Alexa647).
+    domain: Localization
+    range: string
+    examples:
+      - value: Cy5
+      - value: Alexa647
+
+  # ---- LocalizationTable-level (data) slot --------------------------------
+
+  localizations:
+    description: >-
+      The complete collection of Localization events constituting this dataset.
+      Each Localization corresponds to one data row in the TSV serialisation.
+    domain: LocalizationTable
+    range: Localization
+    multivalued: true
+    inlined_as_list: true

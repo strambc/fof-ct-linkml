@@ -1,0 +1,257 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "fof_ct": "https://w3id.org/fof-ct/",
+      "linkml": "https://w3id.org/linkml/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "@vocab": "https://w3id.org/fof-ct/",
+      "additional_tables": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "additional_tables"
+      },
+      "cell_id": {
+         "@type": "xsd:integer",
+         "@id": "cell_id"
+      },
+      "cell_type": {
+         "@id": "cell_type"
+      },
+      "cells": {
+         "@type": "@id",
+         "@id": "cells"
+      },
+      "description": {
+         "@id": "description"
+      },
+      "experimenter_contact": {
+         "@id": "experimenter_contact"
+      },
+      "experimenter_name": {
+         "@id": "experimenter_name"
+      },
+      "extra_cell_roi_id": "@id",
+      "extra_cell_roi_type": {
+         "@id": "extra_cell_roi_type"
+      },
+      "extra_cell_rois": {
+         "@type": "@id",
+         "@id": "extra_cell_rois"
+      },
+      "fluor": {
+         "@id": "fluor"
+      },
+      "fof_ct_version": {
+         "@id": "fof_ct_version"
+      },
+      "gene_id": {
+         "@id": "gene_id"
+      },
+      "gene_id_type": {
+         "@id": "gene_id_type"
+      },
+      "genome_assembly": {
+         "@id": "genome_assembly"
+      },
+      "intensity_measurement_method": {
+         "@id": "intensity_measurement_method"
+      },
+      "intensity_unit": {
+         "@id": "intensity_unit"
+      },
+      "lab_name": {
+         "@id": "lab_name"
+      },
+      "loc_id": "@id",
+      "localizations": {
+         "@type": "@id",
+         "@id": "localizations"
+      },
+      "rna_name": {
+         "@id": "rna_name"
+      },
+      "rna_spot_biological_records": {
+         "@type": "@id",
+         "@id": "rna_spot_biological_records"
+      },
+      "rna_spot_id": "@id",
+      "rna_spot_quality_records": {
+         "@type": "@id",
+         "@id": "rna_spot_quality_records"
+      },
+      "rna_spots": {
+         "@type": "@id",
+         "@id": "rna_spots"
+      },
+      "roi_boundaries": {
+         "@id": "roi_boundaries"
+      },
+      "roi_boundaries_format": {
+         "@id": "roi_boundaries_format"
+      },
+      "roi_mappings": {
+         "@type": "@id",
+         "@id": "roi_mappings"
+      },
+      "software_authors": {
+         "@id": "software_authors"
+      },
+      "software_description": {
+         "@id": "software_description"
+      },
+      "software_preferred_citation_id": {
+         "@type": "xsd:anyURI",
+         "@id": "software_preferred_citation_id"
+      },
+      "software_repository": {
+         "@type": "xsd:anyURI",
+         "@id": "software_repository"
+      },
+      "software_title": {
+         "@id": "software_title"
+      },
+      "software_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "software_type"
+      },
+      "softwares": {
+         "@type": "@id",
+         "@id": "softwares"
+      },
+      "spot_biological_records": {
+         "@type": "@id",
+         "@id": "spot_biological_records"
+      },
+      "spot_id": "@id",
+      "spot_quality_records": {
+         "@type": "@id",
+         "@id": "spot_quality_records"
+      },
+      "sub_cell_roi_id": "@id",
+      "sub_cell_roi_type": {
+         "@id": "sub_cell_roi_type"
+      },
+      "sub_cell_rois": {
+         "@type": "@id",
+         "@id": "sub_cell_rois"
+      },
+      "table_namespace": {
+         "@id": "table_namespace"
+      },
+      "time_unit": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "time_unit"
+      },
+      "trace_id": "@id",
+      "traces": {
+         "@type": "@id",
+         "@id": "traces"
+      },
+      "transcript_id": {
+         "@id": "transcript_id"
+      },
+      "transcript_id_type": {
+         "@id": "transcript_id_type"
+      },
+      "x": {
+         "@type": "xsd:float",
+         "@id": "x"
+      },
+      "xyz_unit": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "xyz_unit"
+      },
+      "y": {
+         "@type": "xsd:float",
+         "@id": "y"
+      },
+      "z": {
+         "@type": "xsd:float",
+         "@id": "z"
+      },
+      "Cell": {
+         "@id": "Cell"
+      },
+      "CellTable": {
+         "@id": "CellTable"
+      },
+      "ExtraCellROI": {
+         "@id": "ExtraCellROI"
+      },
+      "ExtraCellROITable": {
+         "@id": "ExtraCellROITable"
+      },
+      "Localization": {
+         "@id": "Localization"
+      },
+      "LocalizationTable": {
+         "@id": "LocalizationTable"
+      },
+      "RNASpot": {
+         "@id": "RNASpot"
+      },
+      "RNASpotBiologicalRecord": {
+         "@id": "RNASpotBiologicalRecord"
+      },
+      "RNASpotBiologicalTable": {
+         "@id": "RNASpotBiologicalTable"
+      },
+      "RNASpotQualityRecord": {
+         "@id": "RNASpotQualityRecord"
+      },
+      "RNASpotQualityTable": {
+         "@id": "RNASpotQualityTable"
+      },
+      "RNASpotTable": {
+         "@id": "RNASpotTable"
+      },
+      "ROIMapping": {
+         "@id": "ROIMapping"
+      },
+      "ROIMappingTable": {
+         "@id": "ROIMappingTable"
+      },
+      "Software": {
+         "@id": "Software"
+      },
+      "SpotBiologicalRecord": {
+         "@id": "SpotBiologicalRecord"
+      },
+      "SpotBiologicalTable": {
+         "@id": "SpotBiologicalTable"
+      },
+      "SpotQualityRecord": {
+         "@id": "SpotQualityRecord"
+      },
+      "SpotQualityTable": {
+         "@id": "SpotQualityTable"
+      },
+      "SubCellROI": {
+         "@id": "SubCellROI"
+      },
+      "SubCellROITable": {
+         "@id": "SubCellROITable"
+      },
+      "Trace": {
+         "@id": "Trace"
+      },
+      "TraceTable": {
+         "@id": "TraceTable"
+      }
+   }
+}

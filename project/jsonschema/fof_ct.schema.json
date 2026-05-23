@@ -1,0 +1,1730 @@
+{
+    "$defs": {
+        "Cell": {
+            "additionalProperties": false,
+            "description": "A single Cell identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Cell Data table. The cell_id field uniquely identifies each Cell and links to the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present per submission.",
+            "properties": {
+                "cell_id": {
+                    "description": "Unique integer identifier for this Cell. Cell_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.",
+                    "type": "integer"
+                },
+                "extra_cell_roi_id": {
+                    "description": "Identifier of the extracellular structure ROI (e.g. tissue section, organoid) that contains this Cell. Conditionally required when this Cell can be associated with an extracellular ROI identified as part of this experiment and reported in a dedicated Extra-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "cell_id"
+            ],
+            "title": "Cell",
+            "type": "object"
+        },
+        "CellTable": {
+            "additionalProperties": false,
+            "description": "The Cell Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_cell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Cells (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "cell_type": {
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "type": "string"
+                },
+                "cells": {
+                    "description": "The complete collection of Cells constituting this dataset. Each Cell corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. Cell_Size, Cell_Volume) MUST be present in every submitted Cell Data table.",
+                    "items": {
+                        "$ref": "#/$defs/Cell"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "extra_cell_roi_type": {
+                    "description": "The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_cell",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "cell_type",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "cells"
+            ],
+            "title": "CellTable",
+            "type": "object"
+        },
+        "ExtraCellROI": {
+            "additionalProperties": false,
+            "description": "A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission.",
+            "properties": {
+                "extra_cell_roi_id": {
+                    "description": "Unique integer identifier for this extracellular structure ROI. Extra_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the RNA Spot Data table, and the Cell Data table.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "extra_cell_roi_id"
+            ],
+            "title": "ExtraCellROI",
+            "type": "object"
+        },
+        "ExtraCellROITable": {
+            "additionalProperties": false,
+            "description": "The Extra-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_extracell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of extracellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "extra_cell_roi_type": {
+                    "description": "The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.",
+                    "type": "string"
+                },
+                "extra_cell_rois": {
+                    "description": "The complete collection of extracellular ROIs constituting this dataset. Each ExtraCellROI corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. ROI_Volume, Cell_Count) MUST be present in every submitted Extra-Cell ROI Data table.",
+                    "items": {
+                        "$ref": "#/$defs/ExtraCellROI"
+                    },
+                    "type": "array"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_extracell",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "extra_cell_roi_type",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "extra_cell_rois"
+            ],
+            "title": "ExtraCellROITable",
+            "type": "object"
+        },
+        "Localization": {
+            "additionalProperties": false,
+            "description": "A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).",
+            "properties": {
+                "fluor": {
+                    "description": "Fluorescent channel in which this individual localisation event was detected (e.g. DAPI, GFP, Cy5, Alexa647).",
+                    "type": "string"
+                },
+                "loc_id": {
+                    "description": "A unique integer identifier for this individual localisation event. Loc_ID values are unique across the entire dataset.",
+                    "type": "integer"
+                },
+                "spot_id": {
+                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "loc_id",
+                "spot_id",
+                "x",
+                "y",
+                "z",
+                "fluor"
+            ],
+            "title": "Localization",
+            "type": "object"
+        },
+        "LocalizationTable": {
+            "additionalProperties": false,
+            "description": "The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "localizations": {
+                    "description": "The complete collection of Localization events constituting this dataset. Each Localization corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/Localization"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_demultiplexing",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "localizations"
+            ],
+            "title": "LocalizationTable",
+            "type": "object"
+        },
+        "RNASpot": {
+            "additionalProperties": false,
+            "description": "A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.",
+            "properties": {
+                "cell_id": {
+                    "description": "Unique identifier for a Cell. Links to the Cell Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "extra_cell_roi_id": {
+                    "description": "Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "gene_id": {
+                    "description": "Official gene identifier corresponding to rna_name. The type of identifier used (e.g. Ensembl gene ID, NCBI Gene ID) must be declared in the gene_id_type header field.",
+                    "type": "string"
+                },
+                "rna_name": {
+                    "description": "Official name of the gene from which the targeted RNA is transcribed (e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.",
+                    "type": "string"
+                },
+                "rna_spot_id": {
+                    "description": "Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.",
+                    "type": "integer"
+                },
+                "sub_cell_roi_id": {
+                    "description": "Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "trace_id": {
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "type": "integer"
+                },
+                "transcript_id": {
+                    "description": "Official transcript identifier for the specific transcript targeted by the FISH probe. Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. The type of identifier used must be declared in the transcript_id_type header field.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "x": {
+                    "description": "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "rna_spot_id",
+                "x",
+                "y",
+                "z",
+                "rna_name",
+                "gene_id",
+                "trace_id"
+            ],
+            "title": "RNASpot",
+            "type": "object"
+        },
+        "RNASpotBiologicalRecord": {
+            "additionalProperties": false,
+            "description": "A single row in the RNA Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.",
+            "properties": {
+                "rna_spot_id": {
+                    "description": "Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "rna_spot_id"
+            ],
+            "title": "RNASpotBiologicalRecord",
+            "type": "object"
+        },
+        "RNASpotBiologicalTable": {
+            "additionalProperties": false,
+            "description": "The RNA Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotBiologicalRecord rows. Submission of this table is optional but highly recommended.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "rna_spot_biological_records": {
+                    "description": "The complete collection of RNASpotBiologicalRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined biological property column.",
+                    "items": {
+                        "$ref": "#/$defs/RNASpotBiologicalRecord"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Required only when software was used; omit the block entirely if no software was applied. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_rna_bio",
+                    "description": "Identifier for this table type. Must always be '4dn_FOF-CT_rna_bio'. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "rna_spot_biological_records"
+            ],
+            "title": "RNASpotBiologicalTable",
+            "type": "object"
+        },
+        "RNASpotQualityRecord": {
+            "additionalProperties": false,
+            "description": "A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.",
+            "properties": {
+                "rna_spot_id": {
+                    "description": "Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "rna_spot_id"
+            ],
+            "title": "RNASpotQualityRecord",
+            "type": "object"
+        },
+        "RNASpotQualityTable": {
+            "additionalProperties": false,
+            "description": "The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotQualityRecord rows. Submission of this table is optional but recommended.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "rna_spot_quality_records": {
+                    "description": "The complete collection of RNASpotQualityRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined quality metric column.",
+                    "items": {
+                        "$ref": "#/$defs/RNASpotQualityRecord"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Required only when software was used; omit the block entirely if no software was applied. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_rna_quality",
+                    "description": "Identifier for this table type. Must always be '4dn_FOF-CT_rna_quality'. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "rna_spot_quality_records"
+            ],
+            "title": "RNASpotQualityTable",
+            "type": "object"
+        },
+        "RNASpotTable": {
+            "additionalProperties": false,
+            "description": "The RNA Spot Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of RNA Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when RNA data are collected alongside Chromatin Tracing.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "gene_id_type": {
+                    "description": "Type of gene identifier used in the gene_id column (e.g. Ensembl_V38, NCBI_Gene). Written as ##Gene_ID_Type= in the file header.",
+                    "type": "string"
+                },
+                "genome_assembly": {
+                    "description": "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "rna_spots": {
+                    "description": "The complete collection of RNA Spots constituting this dataset. Each RNASpot corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/RNASpot"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_rna",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "transcript_id_type": {
+                    "description": "Type of transcript identifier used in the transcript_id column (e.g. Ensembl_V38, RefSeq). Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. Written as ##Transcript_ID_Type= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "genome_assembly",
+                "gene_id_type",
+                "xyz_unit",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "rna_spots"
+            ],
+            "title": "RNASpotTable",
+            "type": "object"
+        },
+        "ROIMapping": {
+            "additionalProperties": false,
+            "description": "A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns.",
+            "properties": {
+                "cell_id": {
+                    "description": "Unique identifier for the Cell whose boundaries are described in this row. Conditionally required when this file contains Cell boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "extra_cell_roi_id": {
+                    "description": "Unique identifier for the extracellular structure ROI whose boundaries are described in this row. Conditionally required when this file contains Extra-Cell ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "roi_boundaries": {
+                    "description": "Boundary coordinates for this Cell or ROI, encoded in the format specified by roi_boundaries_format in the table header. For the OME ROI Polygon model, coordinates are provided as a space-separated list of \"x,y\" pairs (e.g. \"12.5,40.2 13.1,41.0 ...\"). For OBJ 3D mesh format, the field contains the vertex and face list for the boundary mesh.",
+                    "type": "string"
+                },
+                "sub_cell_roi_id": {
+                    "description": "Unique identifier for the Sub-Cell ROI whose boundaries are described in this row. Conditionally required when this file contains sub- cellular ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "roi_boundaries"
+            ],
+            "title": "ROIMapping",
+            "type": "object"
+        },
+        "ROIMappingTable": {
+            "additionalProperties": false,
+            "description": "The Cell/ROI Mapping table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_mapping). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of ROI boundary records (recorded as data rows). This table is conditionally required whenever a Cell Data table, a Sub-Cell ROI Data table, or an Extra-Cell ROI Data table is deposited. Analogous to the MappingSet class in SSSOM.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "cell_type": {
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "extra_cell_roi_type": {
+                    "description": "The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "roi_boundaries_format": {
+                    "description": "Description of the coordinate format used to encode boundary data in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates as \"x1,y1 x2,y2 ...\") and the OBJ 3D mesh format (vertex and face lists). Must be sufficient for unambiguous parsing of all roi_boundaries values in this file. Written as #ROI_Boundaries_Format: in the file header.",
+                    "type": "string"
+                },
+                "roi_mappings": {
+                    "description": "The complete collection of ROI boundary records constituting this dataset. Each ROIMapping corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/ROIMapping"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sub_cell_roi_type": {
+                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_mapping",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "roi_boundaries_format",
+                "xyz_unit",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "roi_mappings"
+            ],
+            "title": "ROIMappingTable",
+            "type": "object"
+        },
+        "Software": {
+            "additionalProperties": false,
+            "description": "Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software_* fields in the file header.",
+            "properties": {
+                "software_authors": {
+                    "description": "Author name(s) in 'Surname, Firstname' format, multiple authors separated by semicolons. Written as #Software_Authors:.",
+                    "type": "string"
+                },
+                "software_description": {
+                    "description": "Free-text description of the algorithm and analysis parameters, sufficient to guarantee reproducibility. Written as #Software_Description:.",
+                    "type": "string"
+                },
+                "software_preferred_citation_id": {
+                    "description": "Unique identifier (DOI, PMCID, ArXiv ID, etc.) for the primary publication describing this software. Written as #Software_PreferredCitationID:.",
+                    "format": "uri",
+                    "type": "string"
+                },
+                "software_repository": {
+                    "description": "URL of the repository where the software release can be obtained. Written as #Software_Repository:.",
+                    "format": "uri",
+                    "type": "string"
+                },
+                "software_title": {
+                    "description": "Name of the software tool. Written as #Software_Title:.",
+                    "type": "string"
+                },
+                "software_type": {
+                    "$ref": "#/$defs/SoftwareTypeEnum",
+                    "description": "Functional category of the software tool. Written as #Software_Type:."
+                }
+            },
+            "required": [
+                "software_title",
+                "software_type",
+                "software_authors",
+                "software_description",
+                "software_repository",
+                "software_preferred_citation_id"
+            ],
+            "title": "Software",
+            "type": "object"
+        },
+        "SoftwareTypeEnum": {
+            "description": "Allowed functional categories for software tools.",
+            "enum": [
+                "SpotLoc",
+                "Tracing",
+                "SpotLoc+Tracing",
+                "Segmentation",
+                "QC",
+                "Distance",
+                "Other"
+            ],
+            "title": "SoftwareTypeEnum",
+            "type": "string"
+        },
+        "Spot": {
+            "additionalProperties": false,
+            "description": "A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.",
+            "properties": {
+                "cell_id": {
+                    "description": "Unique identifier for a Cell. Links to the Cell Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "chrom": {
+                    "description": "Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random).",
+                    "type": "string"
+                },
+                "chrom_end": {
+                    "description": "Non-inclusive end coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "chrom_start": {
+                    "description": "0-based start coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "extra_cell_roi_id": {
+                    "description": "Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "spot_id": {
+                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.",
+                    "type": "integer"
+                },
+                "sub_cell_roi_id": {
+                    "description": "Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "trace_id": {
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "spot_id",
+                "trace_id",
+                "x",
+                "y",
+                "z",
+                "chrom",
+                "chrom_start",
+                "chrom_end"
+            ],
+            "title": "Spot",
+            "type": "object"
+        },
+        "SpotBiologicalRecord": {
+            "additionalProperties": false,
+            "description": "A single row in the Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific DNA bright Spot identified by Spot_ID. Spot_ID values must be unique across the dataset, linking to the corresponding Spot record in the core table (table 1). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.",
+            "properties": {
+                "spot_id": {
+                    "description": "Unique integer identifier for the DNA bright Spot to which these biological properties belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table and across the entire dataset.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "spot_id"
+            ],
+            "title": "SpotBiologicalRecord",
+            "type": "object"
+        },
+        "SpotBiologicalTable": {
+            "additionalProperties": false,
+            "description": "The Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_bio). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotBiologicalRecord rows. Submission of this table is optional but highly recommended.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Required only when software was used; omit the block entirely if no software was applied. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spot_biological_records": {
+                    "description": "The complete collection of SpotBiologicalRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined biological property column.",
+                    "items": {
+                        "$ref": "#/$defs/SpotBiologicalRecord"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_bio",
+                    "description": "Identifier for this table type. Must always be '4dn_FOF-CT_bio'. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "spot_biological_records"
+            ],
+            "title": "SpotBiologicalTable",
+            "type": "object"
+        },
+        "SpotQualityRecord": {
+            "additionalProperties": false,
+            "description": "A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.",
+            "properties": {
+                "spot_id": {
+                    "description": "Unique integer identifier for the DNA bright Spot to which these quality metrics belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "spot_id"
+            ],
+            "title": "SpotQualityRecord",
+            "type": "object"
+        },
+        "SpotQualityTable": {
+            "additionalProperties": false,
+            "description": "The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotQualityRecord rows. Submission of this table is optional but recommended.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Required only when software was used; omit the block entirely if no software was applied. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spot_quality_records": {
+                    "description": "The complete collection of SpotQualityRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation and must include at least one user-defined quality metric column.",
+                    "items": {
+                        "$ref": "#/$defs/SpotQualityRecord"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_quality",
+                    "description": "Identifier for this table type. Must always be '4dn_FOF-CT_quality'. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "spot_quality_records"
+            ],
+            "title": "SpotQualityTable",
+            "type": "object"
+        },
+        "SpotTable": {
+            "additionalProperties": false,
+            "description": "The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "genome_assembly": {
+                    "description": "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.",
+                    "type": "string"
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "modification": {
+                    "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "spots": {
+                    "description": "The complete collection of Spots constituting this dataset. Each Spot corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/Spot"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_core",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "vcf_file_name": {
+                    "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vcf_version": {
+                    "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "genome_assembly",
+                "xyz_unit",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "spots"
+            ],
+            "title": "SpotTable",
+            "type": "object"
+        },
+        "SubCellROI": {
+            "additionalProperties": false,
+            "description": "A single sub-cellular structure ROI (e.g. nucleolus, nuclear lamina, PML body, chromosome domain) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Sub-Cell ROI Data table. The sub_cell_roi_id field uniquely identifies each ROI and links to the core table, the Cell Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, ROI_Area). At least one such user-defined column MUST be present per submission.",
+            "properties": {
+                "cell_id": {
+                    "description": "Identifier of the Cell to which this sub-cellular ROI belongs. Conditionally required when this ROI can be associated with a Cell identified as part of this experiment and reported in a dedicated Cell Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "sub_cell_roi_id": {
+                    "description": "Unique integer identifier for this sub-cellular structure ROI. Sub_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Cell Data table, and the Cell/ROI Mapping table.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "sub_cell_roi_id"
+            ],
+            "title": "SubCellROI",
+            "type": "object"
+        },
+        "SubCellROITable": {
+            "additionalProperties": false,
+            "description": "The Sub-Cell ROI Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_subcell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of sub-cellular ROIs (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "cell_type": {
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sub_cell_roi_type": {
+                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
+                    "type": "string"
+                },
+                "sub_cell_rois": {
+                    "description": "The complete collection of sub-cellular ROIs constituting this dataset. Each SubCellROI corresponds to one data row in the TSV serialisation. At least one user-defined optional column (e.g. ROI_Volume, ROI_Area) MUST be present in every submitted Sub-Cell ROI Data table.",
+                    "items": {
+                        "$ref": "#/$defs/SubCellROI"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_subcell",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "sub_cell_roi_type",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "sub_cell_rois"
+            ],
+            "title": "SubCellROITable",
+            "type": "object"
+        },
+        "TableNamespaceEnum": {
+            "description": "Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field.",
+            "enum": [
+                "4dn_FOF-CT_core",
+                "4dn_FOF-CT_demultiplexing",
+                "4dn_FOF-CT_trace",
+                "4dn_FOF-CT_rna",
+                "4dn_FOF-CT_quality",
+                "4dn_FOF-CT_rna_quality",
+                "4dn_FOF-CT_bio",
+                "4dn_FOF-CT_rna_bio",
+                "4dn_FOF-CT_cell",
+                "4dn_FOF-CT_extracell",
+                "4dn_FOF-CT_subcell",
+                "4dn_FOF-CT_mapping"
+            ],
+            "title": "TableNamespaceEnum",
+            "type": "string"
+        },
+        "TimeUnitEnum": {
+            "description": "Allowed units for time intervals.",
+            "enum": [
+                "s",
+                "sec",
+                "ms",
+                "min",
+                "hr"
+            ],
+            "title": "TimeUnitEnum",
+            "type": "string"
+        },
+        "Trace": {
+            "additionalProperties": false,
+            "description": "A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema.",
+            "properties": {
+                "trace_id": {
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "trace_id"
+            ],
+            "title": "Trace",
+            "type": "object"
+        },
+        "TraceTable": {
+            "additionalProperties": false,
+            "description": "The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Traces (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when trace-level properties are recorded.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_trace",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                },
+                "traces": {
+                    "description": "The complete collection of Traces constituting this dataset. Each Trace corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/Trace"
+                    },
+                    "type": "array"
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "additional_tables",
+                "traces"
+            ],
+            "title": "TraceTable",
+            "type": "object"
+        },
+        "XYZUnitEnum": {
+            "description": "Allowed units for X, Y, Z spatial coordinates or distances.",
+            "enum": [
+                "nm",
+                "micron",
+                "mm"
+            ],
+            "title": "XYZUnitEnum",
+            "type": "string"
+        }
+    },
+    "$id": "https://w3id.org/fof-ct",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM.",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "additional_tables": {
+            "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+            "items": {
+                "$ref": "#/$defs/TableNamespaceEnum"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "description": {
+            "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+            "type": "string"
+        },
+        "experimenter_contact": {
+            "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+            "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+            "type": "string"
+        },
+        "experimenter_name": {
+            "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+            "type": "string"
+        },
+        "fof_ct_version": {
+            "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+            "pattern": "^v[0-9]+\\.[0-9]+",
+            "type": "string"
+        },
+        "genome_assembly": {
+            "description": "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.",
+            "type": "string"
+        },
+        "lab_name": {
+            "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+            "type": "string"
+        },
+        "modification": {
+            "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "softwares": {
+            "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+            "items": {
+                "$ref": "#/$defs/Software"
+            },
+            "type": "array"
+        },
+        "spots": {
+            "description": "The complete collection of Spots constituting this dataset. Each Spot corresponds to one data row in the TSV serialisation.",
+            "items": {
+                "$ref": "#/$defs/Spot"
+            },
+            "type": "array"
+        },
+        "table_namespace": {
+            "const": "4dn_FOF-CT_core",
+            "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+            "type": "string"
+        },
+        "vcf_file_name": {
+            "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "vcf_version": {
+            "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "xyz_unit": {
+            "$ref": "#/$defs/XYZUnitEnum",
+            "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+        }
+    },
+    "required": [
+        "fof_ct_version",
+        "table_namespace",
+        "genome_assembly",
+        "xyz_unit",
+        "lab_name",
+        "experimenter_name",
+        "experimenter_contact",
+        "description",
+        "softwares",
+        "spots"
+    ],
+    "title": "fof_ct",
+    "type": "object",
+    "version": "1.0.0"
+}

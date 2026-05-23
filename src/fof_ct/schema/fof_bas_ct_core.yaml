@@ -1,0 +1,202 @@
+id: https://w3id.org/fof-ct
+name: fof_bas_ct_core
+description: >-
+  FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT).
+  LinkML schema for the mandatory DNA-Spot/Trace Data core table (table 1 core).
+  Modelled after the SSSOM pattern: a row-level class (Spot) captures each
+  detected bright Spot; a container class (SpotTable) holds the full collection
+  of Spots together with the dataset-level provenance metadata that is written
+  in the FOF-CT file header.
+  Imports fof_bas_ct_common for all shared slots, the Software class, and enums.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+classes:
+
+  Spot:
+    description: >-
+      A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin
+      Tracing experiment. Each instance of this class corresponds to one row
+      in the TSV data section of the FOF-CT core table and represents a
+      specific genomic target sequence localised in 3D space and assigned to
+      a chromatin Trace.
+    slots:
+      - spot_id
+      - trace_id
+      - x
+      - y
+      - z
+      - chrom
+      - chrom_start
+      - chrom_end
+      - sub_cell_roi_id
+      - cell_id
+      - extra_cell_roi_id
+    slot_usage:
+      spot_id:
+        identifier: true
+        required: true
+      trace_id:
+        required: true
+      x:
+        required: true
+      y:
+        required: true
+      z:
+        required: true
+      chrom:
+        required: true
+      chrom_start:
+        required: true
+      chrom_end:
+        required: true
+
+  SpotTable:
+    description: >-
+      The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace:
+      4dn_FOF-CT_core). This class represents the entire file: it holds all
+      dataset-level provenance metadata (recorded as header lines in the TSV
+      serialisation) together with the full collection of Spots (recorded as
+      data rows). Analogous to the MappingSet class in SSSOM.
+    tree_root: true
+    slots:
+      # --- mandatory header fields (shared, from fof_bas_ct_common) ---
+      - fof_ct_version
+      - table_namespace
+      - genome_assembly
+      - xyz_unit
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - softwares
+      - additional_tables
+      - spots
+      # --- conditional header fields (genome modification, core-specific) ---
+      - modification
+      - vcf_file_name
+      - vcf_version
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_core
+      genome_assembly:
+        required: true
+      xyz_unit:
+        required: true
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      softwares:
+        required: true
+      spots:
+        required: true
+
+# ---------------------------------------------------------------------------
+# Slots unique to this table (not in fof_bas_ct_common)
+# ---------------------------------------------------------------------------
+
+slots:
+
+  # ---- SpotTable-level: genome / modification header slots ----------------
+
+
+  modification:
+    description: >-
+      Description of the nature and genomic position of a DNA insertion or
+      deletion in the genome under study. Conditionally required when
+      genome_assembly uses the 'custom-build:' prefix. Written as
+      ##Modification= in the file header.
+    domain: SpotTable
+    range: string
+    examples:
+      - value: "pJT039:chr3(insertion 0001-2500)"
+
+  vcf_file_name:
+    description: >-
+      Name of the Variant Call Format (VCF) file that must be submitted
+      alongside the dataset to describe the genome insertion or deletion.
+      Conditionally required when genome_assembly uses the 'custom-build:'
+      prefix. Written as ##VCF_File_Name= in the file header.
+    domain: SpotTable
+    range: string
+    examples:
+      - value: pJT039:chr3.vcf
+
+  vcf_version:
+    description: >-
+      Version of the VCF format used for the accompanying VCF file.
+      Conditionally required when genome_assembly uses the 'custom-build:'
+      prefix. Written as ##VCF_Version= in the file header.
+    domain: SpotTable
+    range: string
+    examples:
+      - value: v4.2
+
+  spots:
+    description: >-
+      The complete collection of Spots constituting this dataset. Each Spot
+      corresponds to one data row in the TSV serialisation.
+    domain: SpotTable
+    range: Spot
+    multivalued: true
+    inlined_as_list: true
+
+  # ---- Spot row-level slots -----------------------------------------------
+
+
+
+
+  chrom:
+    description: >-
+      Chromosome name using BED (Browser Extensible Data) convention
+      (e.g., chr3, chrY, chr2_random).
+    domain: Spot
+    range: string
+    examples:
+      - value: chr3
+      - value: chrY
+      - value: chr2_random
+
+  chrom_start:
+    description: >-
+      0-based start coordinate on the chromosome for the genomic target
+      sequence associated with this Spot, following BED convention.
+    domain: Spot
+    range: integer
+    minimum_value: 0
+    examples:
+      - value: "0"
+
+  chrom_end:
+    description: >-
+      Non-inclusive end coordinate on the chromosome for the genomic target
+      sequence associated with this Spot, following BED convention.
+    domain: Spot
+    range: integer
+    minimum_value: 0
+    examples:
+      - value: "1000"
