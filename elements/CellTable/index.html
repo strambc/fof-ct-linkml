@@ -184,6 +184,101 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-properties">
+<span class="md-ellipsis">
+      
+        Class Properties
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +287,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-celltable">Class: CellTable<a class="headerlink" href="#class-celltable" title="Permanent link">¶</a></h1>
 <p><em>The Cell Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_cell). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Cells (recorded as data rows). This table is optional but recommended. Analogous to the MappingSet class in SSSOM.</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/CellTable">fof_ct:CellTable</a></p>
 <pre class="mermaid"><code> classDiagram
     class CellTable
     click CellTable href "../CellTable/"
@@ -282,87 +369,170 @@ URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Class Properties
-
-| Property | Value |
-| --- | --- |
-| Tree Root | Yes |
-
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [fof_ct_version](fof_ct_version.md) | 1 <br/> [String](String.md) | Version of the FOF-CT format used in this file | direct |
-| [table_namespace](table_namespace.md) | 1 <br/> [String](String.md) | Identifier for this table type | direct |
-| [cell_type](cell_type.md) | 1 <br/> [String](String.md) | The type of cells present in this dataset, expressed using an ontology term f... | direct |
-| [lab_name](lab_name.md) | 1 <br/> [String](String.md) | Name of the laboratory where the experiment was performed | direct |
-| [experimenter_name](experimenter_name.md) | 1 <br/> [String](String.md) | Full name of the person who performed the experiment | direct |
-| [experimenter_contact](experimenter_contact.md) | 1 <br/> [String](String.md) | Email address of the person who performed the experiment | direct |
-| [description](description.md) | 1 <br/> [String](String.md) | Free-text description of the experiment and of the data recorded in this tabl... | direct |
-| [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
-| [extra_cell_roi_type](extra_cell_roi_type.md) | 0..1 <br/> [String](String.md) | The type of extracellular structure ROI within which cells are embedded, expr... | direct |
-| [softwares](softwares.md) | * <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
-| [xyz_unit](xyz_unit.md) | 0..1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
-| [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used to represent time intervals in this table | direct |
-| [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used to represent intensity measurements in this table | direct |
-| [intensity_measurement_method](intensity_measurement_method.md) | 0..1 <br/> [String](String.md) | Method used to perform intensity measurements, including how digital signals ... | direct |
-| [cells](cells.md) | 1..* <br/> [Cell](Cell.md) | The complete collection of Cells constituting this dataset | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [CellTable](CellTable.md) | [cells](cells.md) | domain | [CellTable](CellTable.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:CellTable |
-| native | fof_ct:CellTable |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="class-properties">Class Properties<a class="headerlink" href="#class-properties" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tree Root</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../fof_ct_version/">fof_ct_version</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Version of the FOF-CT format used in this file</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../table_namespace/">table_namespace</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Identifier for this table type</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../cell_type/">cell_type</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>The type of cells present in this dataset, expressed using an ontology term f...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../lab_name/">lab_name</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Name of the laboratory where the experiment was performed</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../experimenter_name/">experimenter_name</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Full name of the person who performed the experiment</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../experimenter_contact/">experimenter_contact</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Email address of the person who performed the experiment</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../description/">description</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Free-text description of the experiment and of the data recorded in this tabl...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../additional_tables/">additional_tables</a></td>
+<td>1..* <br/> <a href="../TableNamespaceEnum/">TableNamespaceEnum</a></td>
+<td>List of additional FOF-CT table namespaces being submitted alongside this tab...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../extra_cell_roi_type/">extra_cell_roi_type</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>The type of extracellular structure ROI within which cells are embedded, expr...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../softwares/">softwares</a></td>
+<td>* <br/> <a href="../Software/">Software</a></td>
+<td>One or more Software entries documenting every tool used to produce or proces...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../xyz_unit/">xyz_unit</a></td>
+<td>0..1 <br/> <a href="../XYZUnitEnum/">XYZUnitEnum</a></td>
+<td>Unit used to represent X, Y, Z spatial coordinates or distances in this table</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../time_unit/">time_unit</a></td>
+<td>0..1 <br/> <a href="../TimeUnitEnum/">TimeUnitEnum</a></td>
+<td>Unit used to represent time intervals in this table</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../intensity_unit/">intensity_unit</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Unit used to represent intensity measurements in this table</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../intensity_measurement_method/">intensity_measurement_method</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Method used to perform intensity measurements, including how digital signals ...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../cells/">cells</a></td>
+<td>1..* <br/> <a href="../Cell/">Cell</a></td>
+<td>The complete collection of Cells constituting this dataset</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./">CellTable</a></td>
+<td><a href="../cells/">cells</a></td>
+<td>domain</td>
+<td><a href="./">CellTable</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:CellTable</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:CellTable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">Cell</span><span class="nv"> </span><span class="s">Data</span><span class="nv"> </span><span class="s">table</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">FOF-bas-CT</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">(namespace:</span><span class="nv"> </span><span class="s">4dn_FOF-CT_cell).</span>
@@ -439,9 +609,7 @@ URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
 <a href="#__codelineno-0-73" id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="nt">tree_root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">Cell</span><span class="nv"> </span><span class="s">Data</span><span class="nv"> </span><span class="s">table</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">FOF-bas-CT</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">(namespace:</span><span class="nv"> </span><span class="s">4dn_FOF-CT_cell).</span>
@@ -849,7 +1017,8 @@ URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
 <a href="#__codelineno-1-404" id="__codelineno-1-404" name="__codelineno-1-404"></a><span class="w">    </span><span class="nt">inlined_as_list</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <a href="#__codelineno-1-405" id="__codelineno-1-405" name="__codelineno-1-405"></a><span class="nt">tree_root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

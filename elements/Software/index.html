@@ -184,6 +184,92 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +278,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-software">Class: Software<a class="headerlink" href="#class-software" title="Permanent link">¶</a></h1>
 <p><em>Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software</em>* fields in the file header._</p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/Software">fof_ct:Software</a></p>
 <pre class="mermaid"><code> classDiagram
     class Software
     click Software href "../Software/"
@@ -228,82 +306,167 @@ URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [software_title](software_title.md) | 1 <br/> [String](String.md) | Name of the software tool | direct |
-| [software_type](software_type.md) | 1 <br/> [SoftwareTypeEnum](SoftwareTypeEnum.md) | Functional category of the software tool | direct |
-| [software_authors](software_authors.md) | 1 <br/> [String](String.md) | Author name(s) in 'Surname, Firstname' format, multiple authors separated by ... | direct |
-| [software_description](software_description.md) | 1 <br/> [String](String.md) | Free-text description of the algorithm and analysis parameters, sufficient to... | direct |
-| [software_repository](software_repository.md) | 1 <br/> [Uri](Uri.md) | URL of the repository where the software release can be obtained | direct |
-| [software_preferred_citation_id](software_preferred_citation_id.md) | 1 <br/> [Uri](Uri.md) | Unique identifier (DOI, PMCID, ArXiv ID, etc | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [SpotTable](SpotTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [LocalizationTable](LocalizationTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [TraceTable](TraceTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [RNASpotTable](RNASpotTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [SpotQualityTable](SpotQualityTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [RNASpotQualityTable](RNASpotQualityTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [SpotBiologicalTable](SpotBiologicalTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [RNASpotBiologicalTable](RNASpotBiologicalTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [CellTable](CellTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [ExtraCellROITable](ExtraCellROITable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [SubCellROITable](SubCellROITable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-| [ROIMappingTable](ROIMappingTable.md) | [softwares](softwares.md) | range | [Software](Software.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:Software |
-| native | fof_ct:Software |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../software_title/">software_title</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Name of the software tool</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../software_type/">software_type</a></td>
+<td>1 <br/> <a href="../SoftwareTypeEnum/">SoftwareTypeEnum</a></td>
+<td>Functional category of the software tool</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../software_authors/">software_authors</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Author name(s) in 'Surname, Firstname' format, multiple authors separated by ...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../software_description/">software_description</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Free-text description of the algorithm and analysis parameters, sufficient to...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../software_repository/">software_repository</a></td>
+<td>1 <br/> <a href="../Uri/">Uri</a></td>
+<td>URL of the repository where the software release can be obtained</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../software_preferred_citation_id/">software_preferred_citation_id</a></td>
+<td>1 <br/> <a href="../Uri/">Uri</a></td>
+<td>Unique identifier (DOI, PMCID, ArXiv ID, etc</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../SpotTable/">SpotTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../LocalizationTable/">LocalizationTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../TraceTable/">TraceTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotTable/">RNASpotTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../SpotQualityTable/">SpotQualityTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotQualityTable/">RNASpotQualityTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../SpotBiologicalTable/">SpotBiologicalTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotBiologicalTable/">RNASpotBiologicalTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../CellTable/">CellTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../ExtraCellROITable/">ExtraCellROITable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../SubCellROITable/">SubCellROITable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+<tr>
+<td><a href="../ROIMappingTable/">ROIMappingTable</a></td>
+<td><a href="../softwares/">softwares</a></td>
+<td>range</td>
+<td><a href="./">Software</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:Software</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:Software</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Software</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'Provenance</span><span class="nv"> </span><span class="s">metadata</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">single</span><span class="nv"> </span><span class="s">software</span><span class="nv"> </span><span class="s">tool</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">produce</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">process</span>
@@ -320,9 +483,7 @@ URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
 <a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">software_preferred_citation_id</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Software</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'Provenance</span><span class="nv"> </span><span class="s">metadata</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">single</span><span class="nv"> </span><span class="s">software</span><span class="nv"> </span><span class="s">tool</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">produce</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">process</span>
@@ -406,7 +567,8 @@ URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
 <a href="#__codelineno-1-80" id="__codelineno-1-80" name="__codelineno-1-80"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uri</span>
 <a href="#__codelineno-1-81" id="__codelineno-1-81" name="__codelineno-1-81"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

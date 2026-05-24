@@ -358,6 +358,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#permissible-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Permissible Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identifier-and-mapping-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identifier and Mapping Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linkml-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -379,57 +448,76 @@
 
 <h1 id="enum-softwaretypeenum">Enum: SoftwareTypeEnum<a class="headerlink" href="#enum-softwaretypeenum" title="Permanent link">&para;</a></h1>
 <p><em>Allowed functional categories for software tools.</em></p>
-<div data-search-exclude markdown="1">
-
-URI: [fof_ct:SoftwareTypeEnum](https://w3id.org/fof-ct/SoftwareTypeEnum)
-
-## Permissible Values
-| Value | Meaning | Description |
-| --- | --- | --- |
-| SpotLoc | None | Spot localisation software |
-| Tracing | None | Chromatin tracing software |
-| SpotLoc+Tracing | None | Combined spot localisation and tracing software |
-| Segmentation | None | Image segmentation software |
-| QC | None | Quality control software |
-| Distance | None | Distance calculation software |
-| Other | None | Other software type |
-
-
-
-
-## Slots
-
-| Name | Description |
-| ---  | --- |
-| [software_type](software_type.md) | Functional category of the software tool |
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-
-
-## LinkML Source
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/SoftwareTypeEnum">fof_ct:SoftwareTypeEnum</a></p>
+<h2 id="permissible-values">Permissible Values<a class="headerlink" href="#permissible-values" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SpotLoc</td>
+<td>None</td>
+<td>Spot localisation software</td>
+</tr>
+<tr>
+<td>Tracing</td>
+<td>None</td>
+<td>Chromatin tracing software</td>
+</tr>
+<tr>
+<td>SpotLoc+Tracing</td>
+<td>None</td>
+<td>Combined spot localisation and tracing software</td>
+</tr>
+<tr>
+<td>Segmentation</td>
+<td>None</td>
+<td>Image segmentation software</td>
+</tr>
+<tr>
+<td>QC</td>
+<td>None</td>
+<td>Quality control software</td>
+</tr>
+<tr>
+<td>Distance</td>
+<td>None</td>
+<td>Distance calculation software</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>None</td>
+<td>Other software type</td>
+</tr>
+</tbody>
+</table>
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../software_type/">software_type</a></td>
+<td>Functional category of the software tool</td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">&para;</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">&para;</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">&para;</a></h2>
 <details>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SoftwareTypeEnum</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Allowed functional categories for software tools.</span>
@@ -459,7 +547,6 @@ URI: [fof_ct:SoftwareTypeEnum](https://w3id.org/fof-ct/SoftwareTypeEnum)
 <a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Other software type</span>
 </code></pre></div>
 </details>
-
 </div>
 
 

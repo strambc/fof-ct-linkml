@@ -184,6 +184,92 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +278,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-spotqualityrecord">Class: SpotQualityRecord<a class="headerlink" href="#class-spotqualityrecord" title="Permanent link">¶</a></h1>
 <p><em>A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:SpotQualityRecord](https://w3id.org/fof-ct/SpotQualityRecord)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/SpotQualityRecord">fof_ct:SpotQualityRecord</a></p>
 <pre class="mermaid"><code> classDiagram
     class SpotQualityRecord
     click SpotQualityRecord href "../SpotQualityRecord/"
@@ -209,66 +287,71 @@ URI: [fof_ct:SpotQualityRecord](https://w3id.org/fof-ct/SpotQualityRecord)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [spot_id](spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for the DNA bright Spot to which these quality metr... | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [SpotQualityTable](SpotQualityTable.md) | [spot_quality_records](spot_quality_records.md) | range | [SpotQualityRecord](SpotQualityRecord.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:SpotQualityRecord |
-| native | fof_ct:SpotQualityRecord |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../spot_id/">spot_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique integer identifier for the DNA bright Spot to which these quality metr...</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../SpotQualityTable/">SpotQualityTable</a></td>
+<td><a href="../spot_quality_records/">spot_quality_records</a></td>
+<td>range</td>
+<td><a href="./">SpotQualityRecord</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:SpotQualityRecord</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:SpotQualityRecord</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotQualityRecord</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'A</span><span class="nv"> </span><span class="s">single</span><span class="nv"> </span><span class="s">row</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Spot</span><span class="nv"> </span><span class="s">Quality</span><span class="nv"> </span><span class="s">table.</span><span class="nv"> </span><span class="s">Each</span><span class="nv"> </span><span class="s">instance</span><span class="nv"> </span><span class="s">captures</span><span class="nv"> </span><span class="s">one</span><span class="nv"> </span><span class="s">or</span>
@@ -288,9 +371,7 @@ URI: [fof_ct:SpotQualityRecord](https://w3id.org/fof-ct/SpotQualityRecord)
 <a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotQualityRecord</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'A</span><span class="nv"> </span><span class="s">single</span><span class="nv"> </span><span class="s">row</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Spot</span><span class="nv"> </span><span class="s">Quality</span><span class="nv"> </span><span class="s">table.</span><span class="nv"> </span><span class="s">Each</span><span class="nv"> </span><span class="s">instance</span><span class="nv"> </span><span class="s">captures</span><span class="nv"> </span><span class="s">one</span><span class="nv"> </span><span class="s">or</span>
@@ -326,7 +407,8 @@ URI: [fof_ct:SpotQualityRecord](https://w3id.org/fof-ct/SpotQualityRecord)
 <a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 <a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

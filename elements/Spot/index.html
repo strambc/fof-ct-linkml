@@ -184,6 +184,92 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +278,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-spot">Class: Spot<a class="headerlink" href="#class-spot" title="Permanent link">¶</a></h1>
 <p><em>A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/Spot">fof_ct:Spot</a></p>
 <pre class="mermaid"><code> classDiagram
     class Spot
     click Spot href "../Spot/"
@@ -229,79 +307,149 @@ URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [spot_id](spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for a bright DNA Spot | direct |
-| [trace_id](trace_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for a chromatin Trace | direct |
-| [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [z](z.md) | 1 <br/> [Float](Float.md) | Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [chrom](chrom.md) | 1 <br/> [String](String.md) | Chromosome name using BED (Browser Extensible Data) convention (e | direct |
-| [chrom_start](chrom_start.md) | 1 <br/> [Integer](Integer.md) | 0-based start coordinate on the chromosome for the genomic target sequence as... | direct |
-| [chrom_end](chrom_end.md) | 1 <br/> [Integer](Integer.md) | Non-inclusive end coordinate on the chromosome for the genomic target sequenc... | direct |
-| [sub_cell_roi_id](sub_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a sub-cellular structure ROI (e | direct |
-| [cell_id](cell_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a Cell | direct |
-| [extra_cell_roi_id](extra_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for an extracellular structure ROI (e | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [Spot](Spot.md) | [chrom](chrom.md) | domain | [Spot](Spot.md) |
-| [Spot](Spot.md) | [chrom_start](chrom_start.md) | domain | [Spot](Spot.md) |
-| [Spot](Spot.md) | [chrom_end](chrom_end.md) | domain | [Spot](Spot.md) |
-| [SpotTable](SpotTable.md) | [spots](spots.md) | range | [Spot](Spot.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:Spot |
-| native | fof_ct:Spot |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../spot_id/">spot_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a bright DNA Spot</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../trace_id/">trace_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a chromatin Trace</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../x/">x</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../y/">y</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../z/">z</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../chrom/">chrom</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Chromosome name using BED (Browser Extensible Data) convention (e</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../chrom_start/">chrom_start</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>0-based start coordinate on the chromosome for the genomic target sequence as...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../chrom_end/">chrom_end</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Non-inclusive end coordinate on the chromosome for the genomic target sequenc...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../sub_cell_roi_id/">sub_cell_roi_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a sub-cellular structure ROI (e</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../cell_id/">cell_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a Cell</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../extra_cell_roi_id/">extra_cell_roi_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for an extracellular structure ROI (e</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./">Spot</a></td>
+<td><a href="../chrom/">chrom</a></td>
+<td>domain</td>
+<td><a href="./">Spot</a></td>
+</tr>
+<tr>
+<td><a href="./">Spot</a></td>
+<td><a href="../chrom_start/">chrom_start</a></td>
+<td>domain</td>
+<td><a href="./">Spot</a></td>
+</tr>
+<tr>
+<td><a href="./">Spot</a></td>
+<td><a href="../chrom_end/">chrom_end</a></td>
+<td>domain</td>
+<td><a href="./">Spot</a></td>
+</tr>
+<tr>
+<td><a href="../SpotTable/">SpotTable</a></td>
+<td><a href="../spots/">spots</a></td>
+<td>range</td>
+<td><a href="./">Spot</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:Spot</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:Spot</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin</span>
@@ -349,9 +497,7 @@ URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
 <a href="#__codelineno-0-44" id="__codelineno-0-44" name="__codelineno-0-44"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin</span>
@@ -561,7 +707,8 @@ URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
 <a href="#__codelineno-1-206" id="__codelineno-1-206" name="__codelineno-1-206"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
 <a href="#__codelineno-1-207" id="__codelineno-1-207" name="__codelineno-1-207"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

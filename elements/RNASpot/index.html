@@ -184,6 +184,92 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +278,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-rnaspot">Class: RNASpot<a class="headerlink" href="#class-rnaspot" title="Permanent link">¶</a></h1>
 <p><em>A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:RNASpot](https://w3id.org/fof-ct/RNASpot)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/RNASpot">fof_ct:RNASpot</a></p>
 <pre class="mermaid"><code> classDiagram
     class RNASpot
     click RNASpot href "../RNASpot/"
@@ -229,79 +307,149 @@ URI: [fof_ct:RNASpot](https://w3id.org/fof-ct/RNASpot)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [rna_spot_id](rna_spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for an RNA bright Spot, unique across the entire da... | direct |
-| [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [z](z.md) | 1 <br/> [Float](Float.md) | Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [rna_name](rna_name.md) | 1 <br/> [String](String.md) | Official name of the gene from which the targeted RNA is transcribed (e | direct |
-| [gene_id](gene_id.md) | 1 <br/> [String](String.md) | Official gene identifier corresponding to rna_name | direct |
-| [trace_id](trace_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for a chromatin Trace | direct |
-| [transcript_id](transcript_id.md) | 0..1 <br/> [String](String.md) | Official transcript identifier for the specific transcript targeted by the FI... | direct |
-| [sub_cell_roi_id](sub_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a sub-cellular structure ROI (e | direct |
-| [cell_id](cell_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a Cell | direct |
-| [extra_cell_roi_id](extra_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for an extracellular structure ROI (e | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [RNASpot](RNASpot.md) | [rna_name](rna_name.md) | domain | [RNASpot](RNASpot.md) |
-| [RNASpot](RNASpot.md) | [gene_id](gene_id.md) | domain | [RNASpot](RNASpot.md) |
-| [RNASpot](RNASpot.md) | [transcript_id](transcript_id.md) | domain | [RNASpot](RNASpot.md) |
-| [RNASpotTable](RNASpotTable.md) | [rna_spots](rna_spots.md) | range | [RNASpot](RNASpot.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:RNASpot |
-| native | fof_ct:RNASpot |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../rna_spot_id/">rna_spot_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique integer identifier for an RNA bright Spot, unique across the entire da...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../x/">x</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../y/">y</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../z/">z</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../rna_name/">rna_name</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Official name of the gene from which the targeted RNA is transcribed (e</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../gene_id/">gene_id</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Official gene identifier corresponding to rna_name</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../trace_id/">trace_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a chromatin Trace</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../transcript_id/">transcript_id</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Official transcript identifier for the specific transcript targeted by the FI...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../sub_cell_roi_id/">sub_cell_roi_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a sub-cellular structure ROI (e</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../cell_id/">cell_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a Cell</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../extra_cell_roi_id/">extra_cell_roi_id</a></td>
+<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for an extracellular structure ROI (e</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./">RNASpot</a></td>
+<td><a href="../rna_name/">rna_name</a></td>
+<td>domain</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+<tr>
+<td><a href="./">RNASpot</a></td>
+<td><a href="../gene_id/">gene_id</a></td>
+<td>domain</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+<tr>
+<td><a href="./">RNASpot</a></td>
+<td><a href="../transcript_id/">transcript_id</a></td>
+<td>domain</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotTable/">RNASpotTable</a></td>
+<td><a href="../rna_spots/">rna_spots</a></td>
+<td>range</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:RNASpot</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:RNASpot</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single detected RNA bright Spot corresponding to one RNA transcript</span>
@@ -347,9 +495,7 @@ URI: [fof_ct:RNASpot](https://w3id.org/fof-ct/RNASpot)
 <a href="#__codelineno-0-42" id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single detected RNA bright Spot corresponding to one RNA transcript</span>
@@ -556,7 +702,8 @@ URI: [fof_ct:RNASpot](https://w3id.org/fof-ct/RNASpot)
 <a href="#__codelineno-1-203" id="__codelineno-1-203" name="__codelineno-1-203"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
 <a href="#__codelineno-1-204" id="__codelineno-1-204" name="__codelineno-1-204"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

@@ -184,6 +184,101 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-properties">
+<span class="md-ellipsis">
+      
+        Class Properties
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +287,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-spottable">Class: SpotTable<a class="headerlink" href="#class-spottable" title="Permanent link">¶</a></h1>
 <p><em>The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM.</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:SpotTable](https://w3id.org/fof-ct/SpotTable)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/SpotTable">fof_ct:SpotTable</a></p>
 <pre class="mermaid"><code> classDiagram
     class SpotTable
     click SpotTable href "../SpotTable/"
@@ -271,89 +358,182 @@ URI: [fof_ct:SpotTable](https://w3id.org/fof-ct/SpotTable)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Class Properties
-
-| Property | Value |
-| --- | --- |
-| Tree Root | Yes |
-
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [fof_ct_version](fof_ct_version.md) | 1 <br/> [String](String.md) | Version of the FOF-CT format used in this file | direct |
-| [table_namespace](table_namespace.md) | 1 <br/> [String](String.md) | Identifier for this table type | direct |
-| [genome_assembly](genome_assembly.md) | 1 <br/> [String](String.md) | Genome build used for Chrom, Chrom_Start and Chrom_End coordinates | direct |
-| [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
-| [lab_name](lab_name.md) | 1 <br/> [String](String.md) | Name of the laboratory where the experiment was performed | direct |
-| [experimenter_name](experimenter_name.md) | 1 <br/> [String](String.md) | Full name of the person who performed the experiment | direct |
-| [experimenter_contact](experimenter_contact.md) | 1 <br/> [String](String.md) | Email address of the person who performed the experiment | direct |
-| [description](description.md) | 1 <br/> [String](String.md) | Free-text description of the experiment and of the data recorded in this tabl... | direct |
-| [softwares](softwares.md) | 1..* <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
-| [additional_tables](additional_tables.md) | * <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
-| [spots](spots.md) | 1..* <br/> [Spot](Spot.md) | The complete collection of Spots constituting this dataset | direct |
-| [modification](modification.md) | 0..1 <br/> [String](String.md) | Description of the nature and genomic position of a DNA insertion or deletion... | direct |
-| [vcf_file_name](vcf_file_name.md) | 0..1 <br/> [String](String.md) | Name of the Variant Call Format (VCF) file that must be submitted alongside t... | direct |
-| [vcf_version](vcf_version.md) | 0..1 <br/> [String](String.md) | Version of the VCF format used for the accompanying VCF file | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [SpotTable](SpotTable.md) | [spots](spots.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [modification](modification.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [vcf_file_name](vcf_file_name.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [vcf_version](vcf_version.md) | domain | [SpotTable](SpotTable.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:SpotTable |
-| native | fof_ct:SpotTable |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="class-properties">Class Properties<a class="headerlink" href="#class-properties" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tree Root</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../fof_ct_version/">fof_ct_version</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Version of the FOF-CT format used in this file</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../table_namespace/">table_namespace</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Identifier for this table type</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../genome_assembly/">genome_assembly</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Genome build used for Chrom, Chrom_Start and Chrom_End coordinates</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../xyz_unit/">xyz_unit</a></td>
+<td>1 <br/> <a href="../XYZUnitEnum/">XYZUnitEnum</a></td>
+<td>Unit used to represent X, Y, Z spatial coordinates or distances in this table</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../lab_name/">lab_name</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Name of the laboratory where the experiment was performed</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../experimenter_name/">experimenter_name</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Full name of the person who performed the experiment</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../experimenter_contact/">experimenter_contact</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Email address of the person who performed the experiment</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../description/">description</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Free-text description of the experiment and of the data recorded in this tabl...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../softwares/">softwares</a></td>
+<td>1..* <br/> <a href="../Software/">Software</a></td>
+<td>One or more Software entries documenting every tool used to produce or proces...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../additional_tables/">additional_tables</a></td>
+<td>* <br/> <a href="../TableNamespaceEnum/">TableNamespaceEnum</a></td>
+<td>List of additional FOF-CT table namespaces being submitted alongside this tab...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../spots/">spots</a></td>
+<td>1..* <br/> <a href="../Spot/">Spot</a></td>
+<td>The complete collection of Spots constituting this dataset</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../modification/">modification</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Description of the nature and genomic position of a DNA insertion or deletion...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../vcf_file_name/">vcf_file_name</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Name of the Variant Call Format (VCF) file that must be submitted alongside t...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../vcf_version/">vcf_version</a></td>
+<td>0..1 <br/> <a href="../String/">String</a></td>
+<td>Version of the VCF format used for the accompanying VCF file</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./">SpotTable</a></td>
+<td><a href="../spots/">spots</a></td>
+<td>domain</td>
+<td><a href="./">SpotTable</a></td>
+</tr>
+<tr>
+<td><a href="./">SpotTable</a></td>
+<td><a href="../modification/">modification</a></td>
+<td>domain</td>
+<td><a href="./">SpotTable</a></td>
+</tr>
+<tr>
+<td><a href="./">SpotTable</a></td>
+<td><a href="../vcf_file_name/">vcf_file_name</a></td>
+<td>domain</td>
+<td><a href="./">SpotTable</a></td>
+</tr>
+<tr>
+<td><a href="./">SpotTable</a></td>
+<td><a href="../vcf_version/">vcf_version</a></td>
+<td>domain</td>
+<td><a href="./">SpotTable</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:SpotTable</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:SpotTable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotTable</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">DNA-Spot/Trace</span><span class="nv"> </span><span class="s">Data</span><span class="nv"> </span><span class="s">core</span><span class="nv"> </span><span class="s">table</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">FOF-bas-CT</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">(namespace:</span>
@@ -412,9 +592,7 @@ URI: [fof_ct:SpotTable](https://w3id.org/fof-ct/SpotTable)
 <a href="#__codelineno-0-55" id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="nt">tree_root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotTable</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">'The</span><span class="nv"> </span><span class="s">DNA-Spot/Trace</span><span class="nv"> </span><span class="s">Data</span><span class="nv"> </span><span class="s">core</span><span class="nv"> </span><span class="s">table</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">FOF-bas-CT</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">(namespace:</span>
@@ -753,7 +931,8 @@ URI: [fof_ct:SpotTable](https://w3id.org/fof-ct/SpotTable)
 <a href="#__codelineno-1-335" id="__codelineno-1-335" name="__codelineno-1-335"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <a href="#__codelineno-1-336" id="__codelineno-1-336" name="__codelineno-1-336"></a><span class="nt">tree_root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

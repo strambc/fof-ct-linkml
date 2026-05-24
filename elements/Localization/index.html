@@ -184,6 +184,92 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slots">
+<span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usages">
+<span class="md-ellipsis">
+      
+        Usages
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#identifier-and-mapping-information">
+<span class="md-ellipsis">
+      
+        Identifier and Mapping Information
+      
+    </span>
+</a>
+<nav aria-label="Identifier and Mapping Information" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#schema-source">
+<span class="md-ellipsis">
+      
+        Schema Source
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mappings">
+<span class="md-ellipsis">
+      
+        Mappings
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linkml-source">
+<span class="md-ellipsis">
+      
+        LinkML Source
+      
+    </span>
+</a>
+<nav aria-label="LinkML Source" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct">
+<span class="md-ellipsis">
+      
+        Direct
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#induced">
+<span class="md-ellipsis">
+      
+        Induced
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -192,16 +278,8 @@
 <article class="md-content__inner md-typeset">
 <h1 id="class-localization">Class: Localization<a class="headerlink" href="#class-localization" title="Permanent link">¶</a></h1>
 <p><em>A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).</em></p>
-<div data-search-exclude="" markdown="1">
-
-
-
-URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
-
-
-
-
-
+<div>
+<p>URI: <a href="https://w3id.org/fof-ct/Localization">fof_ct:Localization</a></p>
 <pre class="mermaid"><code> classDiagram
     class Localization
     click Localization href "../Localization/"
@@ -219,73 +297,113 @@ URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
 
 </code></pre>
 <!-- no inheritance hierarchy -->
-
-## Slots
-
-| Name | Cardinality and Range | Description | Inheritance |
-| ---  | --- | --- | --- |
-| [loc_id](loc_id.md) | 1 <br/> [Integer](Integer.md) | A unique integer identifier for this individual localisation event | direct |
-| [spot_id](spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for a bright DNA Spot | direct |
-| [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [z](z.md) | 1 <br/> [Float](Float.md) | Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [fluor](fluor.md) | 1 <br/> [String](String.md) | Fluorescent channel in which this individual localisation event was detected ... | direct |
-
-
-
-
-
-## Usages
-
-| used by | used in | type | used |
-| ---  | --- | --- | --- |
-| [Localization](Localization.md) | [loc_id](loc_id.md) | domain | [Localization](Localization.md) |
-| [Localization](Localization.md) | [fluor](fluor.md) | domain | [Localization](Localization.md) |
-| [LocalizationTable](LocalizationTable.md) | [localizations](localizations.md) | range | [Localization](Localization.md) |
-
-
-
-
-
-
-
-
-
-
-
-
-## Identifier and Mapping Information
-
-
-
-
-
-### Schema Source
-
-
-* from schema: https://w3id.org/fof-ct
-
-
-
-
-## Mappings
-
-| Mapping Type | Mapped Value |
-| ---  | ---  |
-| self | fof_ct:Localization |
-| native | fof_ct:Localization |
-
-
-
-
-
-
-## LinkML Source
-
+<h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Cardinality and Range</th>
+<th>Description</th>
+<th>Inheritance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../loc_id/">loc_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>A unique integer identifier for this individual localisation event</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../spot_id/">spot_id</a></td>
+<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>Unique identifier for a bright DNA Spot</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../x/">x</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../y/">y</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../z/">z</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
+<td>direct</td>
+</tr>
+<tr>
+<td><a href="../fluor/">fluor</a></td>
+<td>1 <br/> <a href="../String/">String</a></td>
+<td>Fluorescent channel in which this individual localisation event was detected ...</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usages">Usages<a class="headerlink" href="#usages" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>used by</th>
+<th>used in</th>
+<th>type</th>
+<th>used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./">Localization</a></td>
+<td><a href="../loc_id/">loc_id</a></td>
+<td>domain</td>
+<td><a href="./">Localization</a></td>
+</tr>
+<tr>
+<td><a href="./">Localization</a></td>
+<td><a href="../fluor/">fluor</a></td>
+<td>domain</td>
+<td><a href="./">Localization</a></td>
+</tr>
+<tr>
+<td><a href="../LocalizationTable/">LocalizationTable</a></td>
+<td><a href="../localizations/">localizations</a></td>
+<td>range</td>
+<td><a href="./">Localization</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="identifier-and-mapping-information">Identifier and Mapping Information<a class="headerlink" href="#identifier-and-mapping-information" title="Permanent link">¶</a></h2>
+<h3 id="schema-source">Schema Source<a class="headerlink" href="#schema-source" title="Permanent link">¶</a></h3>
+<ul>
+<li>from schema: https://w3id.org/fof-ct</li>
+</ul>
+<h2 id="mappings">Mappings<a class="headerlink" href="#mappings" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Mapping Type</th>
+<th>Mapped Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>self</td>
+<td>fof_ct:Localization</td>
+</tr>
+<tr>
+<td>native</td>
+<td>fof_ct:Localization</td>
+</tr>
+</tbody>
+</table>
+<h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">¶</a></h2>
 <!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
-
-### Direct
-
+<h3 id="direct">Direct<a class="headerlink" href="#direct" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Localization</span>
 <a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single individual localisation event contributing to the final position</span>
@@ -324,9 +442,7 @@ URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
 <a href="#__codelineno-0-35" id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 </details>
-
-### Induced
-
+<h3 id="induced">Induced<a class="headerlink" href="#induced" title="Permanent link">¶</a></h3>
 <details>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Localization</span>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single individual localisation event contributing to the final position</span>
@@ -454,7 +570,8 @@ URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
 <a href="#__codelineno-1-124" id="__codelineno-1-124" name="__codelineno-1-124"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 <a href="#__codelineno-1-125" id="__codelineno-1-125" name="__codelineno-1-125"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
-</details></div>
+</details>
+</div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
