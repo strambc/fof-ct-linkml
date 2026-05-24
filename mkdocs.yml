@@ -61,6 +61,7 @@ watch:
 nav:
   - Home: index.md
   - Schema: elements/index.md
+  - ER Diagram: erdiagram.md
   - About: about.md
 
 exclude_docs: |
