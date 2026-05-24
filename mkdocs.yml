@@ -32,6 +32,14 @@ plugins:
     # https://pypi.org/project/mkdocs-pymdownx-material-extras
 
 markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.superfences:
       # https://mkdocs-mermaid2.readthedocs.io/en/latest/superfences
       # custom code highlighting rules
