@@ -8,6 +8,11 @@ FISH Omics Format for Chromatin Tracing (FOF-CT) - LinkML schemas for the Ball-a
 
 [https://github.com/4dn-dcic/fish_omics_format](https://github.com/4dn-dcic/fish_omics_format)
 
+## Schema Website
+
+[https://strambc.github.io/fof-ct-linkml/](https://strambc.github.io/fof-ct-linkml/)
+
+
 ## Repository Structure
 
 * [docs/](docs/) - mkdocs-managed documentation
