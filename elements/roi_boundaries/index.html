@@ -377,7 +377,7 @@
   
 
 
-<h1 id="slot-roi_boundaries">Slot: roi_boundaries</h1>
+<h1 id="slot-roi_boundaries">Slot: roi_boundaries<a class="headerlink" href="#slot-roi_boundaries" title="Permanent link">&para;</a></h1>
 <p><em>Boundary coordinates for this Cell or ROI, encoded in the format specified by roi_boundaries_format in the table header. For the OME ROI Polygon model, coordinates are provided as a space-separated list of "x,y" pairs (e.g. "12.5,40.2 13.1,41.0 ..."). For OBJ 3D mesh format, the field contains the vertex and face list for the boundary mesh.</em></p>
 <div data-search-exclude markdown="1">
 
@@ -462,25 +462,25 @@ f 1 2 3 |
 ## LinkML Source
 
 <details>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roi_boundaries</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Boundary coordinates for this Cell or ROI, encoded in the format specified</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">by roi_boundaries_format in the table header. For the OME ROI Polygon model, coordinates</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">are provided as a space-separated list of &quot;x,y&quot; pairs (e.g. &quot;12.5,40.2 13.1,41.0</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...&quot;). For OBJ 3D mesh format, the field contains the vertex and face list for the</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">boundary mesh.</span>
-<span class="nt">examples</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12.5,40.2 13.1,41.0 14.0,40.5 13.5,39.8</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;v</span><span class="nv"> </span><span class="s">1.0</span><span class="nv"> </span><span class="s">2.0</span><span class="nv"> </span><span class="s">3.0</span>
-
-<span class="w">    </span><span class="s">v</span><span class="nv"> </span><span class="s">4.0</span><span class="nv"> </span><span class="s">5.0</span><span class="nv"> </span><span class="s">6.0</span>
-
-<span class="w">    </span><span class="s">f</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">3&#39;</span>
-<span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
-<span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<span class="nt">domain_of</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roi_boundaries</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Boundary coordinates for this Cell or ROI, encoded in the format specified</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">by roi_boundaries_format in the table header. For the OME ROI Polygon model, coordinates</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">are provided as a space-separated list of &quot;x,y&quot; pairs (e.g. &quot;12.5,40.2 13.1,41.0</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...&quot;). For OBJ 3D mesh format, the field contains the vertex and face list for the</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">boundary mesh.</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">examples</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12.5,40.2 13.1,41.0 14.0,40.5 13.5,39.8</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;v</span><span class="nv"> </span><span class="s">1.0</span><span class="nv"> </span><span class="s">2.0</span><span class="nv"> </span><span class="s">3.0</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="s">v</span><span class="nv"> </span><span class="s">4.0</span><span class="nv"> </span><span class="s">5.0</span><span class="nv"> </span><span class="s">6.0</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="s">f</span><span class="nv"> </span><span class="s">1</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">3&#39;</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nt">domain_of</span><span class="p">:</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 </code></pre></div>
 </details></div>
 

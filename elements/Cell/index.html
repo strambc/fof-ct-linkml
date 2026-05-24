@@ -190,7 +190,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="class-cell">Class: Cell</h1>
+<h1 id="class-cell">Class: Cell<a class="headerlink" href="#class-cell" title="Permanent link">¶</a></h1>
 <p><em>A single Cell identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Cell Data table. The cell_id field uniquely identifies each Cell and links to the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present per submission.</em></p>
 <div data-search-exclude="" markdown="1">
 
@@ -273,106 +273,106 @@ URI: [fof_ct:Cell](https://w3id.org/fof-ct/Cell)
 ### Direct
 
 <details>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single Cell identified in a FOF-bas-CT experiment. Each instance of</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">this class corresponds to one row in the TSV data section of the FOF-CT Cell Data</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">table. The cell_id field uniquely identifies each Cell and links to the core table,</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State,</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">per submission.</span>
-<span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
-<span class="nt">slots</span><span class="p">:</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<span class="nt">slot_usage</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
-<span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single Cell identified in a FOF-bas-CT experiment. Each instance of</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">this class corresponds to one row in the TSV data section of the FOF-CT Cell Data</span>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">table. The cell_id field uniquely identifies each Cell and links to the core table,</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State,</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">per submission.</span>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="nt">slots</span><span class="p">:</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="nt">slot_usage</span><span class="p">:</span>
+<a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
+<a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
+<a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
+<a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
+<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
+<a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
+<a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
+<a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
+<a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
+<a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
+<a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
+<a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 </details>
 
 ### Induced
 
 <details>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single Cell identified in a FOF-bas-CT experiment. Each instance of</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">this class corresponds to one row in the TSV data section of the FOF-CT Cell Data</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">table. The cell_id field uniquely identifies each Cell and links to the core table,</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State,</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">per submission.</span>
-<span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
-<span class="nt">slot_usage</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
-<span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">attributes</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
-<span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
-<span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
-<span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
-<span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A single Cell identified in a FOF-bas-CT experiment. Each instance of</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">this class corresponds to one row in the TSV data section of the FOF-CT Cell Data</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">table. The cell_id field uniquely identifies each Cell and links to the core table,</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State,</span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">per submission.</span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="nt">slot_usage</span><span class="p">:</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
+<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
+<a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
+<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
+<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
+<a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
+<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-27" id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="nt">attributes</span><span class="p">:</span>
+<a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
+<a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
+<a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for this Cell. Cell_ID values are unique</span>
+<a href="#__codelineno-1-31" id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">across the entire dataset, enabling unambiguous cross-referencing with the core</span>
+<a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.</span>
+<a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-34" id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-35" id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
+<a href="#__codelineno-1-36" id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-37" id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-38" id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-39" id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-40" id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
+<a href="#__codelineno-1-41" id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-42" id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-43" id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
+<a href="#__codelineno-1-44" id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a href="#__codelineno-1-45" id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-46" id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-47" id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
+<a href="#__codelineno-1-48" id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
+<a href="#__codelineno-1-49" id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Identifier of the extracellular structure ROI (e.g. tissue section,</span>
+<a href="#__codelineno-1-50" id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid) that contains this Cell. Conditionally required when this Cell can</span>
+<a href="#__codelineno-1-51" id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">be associated with an extracellular ROI identified as part of this experiment</span>
+<a href="#__codelineno-1-52" id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">and reported in a dedicated Extra-Cell ROI Data table.</span>
+<a href="#__codelineno-1-53" id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-54" id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-55" id="__codelineno-1-55" name="__codelineno-1-55"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct</span>
+<a href="#__codelineno-1-56" id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-57" id="__codelineno-1-57" name="__codelineno-1-57"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-58" id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-59" id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
+<a href="#__codelineno-1-60" id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-61" id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-62" id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
+<a href="#__codelineno-1-63" id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a href="#__codelineno-1-64" id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-65" id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 </details></div>
 </article>
