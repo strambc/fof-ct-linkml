@@ -57,8 +57,8 @@ nav:
 exclude_docs: |
   /templates-linkml/
 
-site_url: https://4dn-dcic.github.io/fof-ct
-repo_url: https://github.com/4dn-dcic/fof-ct
+site_url: https://strambc.github.io/fof-ct-linkml/
+repo_url: https://github.com/strambc/fof-ct-linkml
 
 # Uncomment this block to enable use of Google Analytics.
 # Replace the property value with your own ID.
