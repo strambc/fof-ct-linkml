@@ -1,0 +1,16 @@
+# Changes here will be overwritten by Copier
+_commit: v0.4.2
+_src_path: https://github.com/linkml/linkml-project-copier
+add_example: true
+copyright_year: '2024'
+email: caterina.strambio@umassmed.edu
+full_name: Caterina Strambio-De-Castillia
+gh_action_docs_preview: false
+gh_action_pypi: false
+github_org: 4dn-dcic
+license: MIT
+project_description: FISH Omics Format for Chromatin Tracing (FOF-CT) - LinkML schemas
+    for Ball-and-Stick modality
+project_name: fof-ct
+project_slug: fof_ct
+
