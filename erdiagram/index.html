@@ -10,7 +10,7 @@
 <link href="../about/" rel="next"/>
 <link href="../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>ER Diagram - fof-ct</title>
+<title>ER Diagrams - fof-ct</title>
 <link href="../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <script src="../assets/pymdownx-extras/material-extra-theme-2ek1P7jT.js" type="text/javascript"></script>
 <script src="../assets/pymdownx-extras/material-extra-3rdparty-BUCF4rjN.js" type="text/javascript"></script>
@@ -28,7 +28,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#entity-relationship-diagram">
+<a class="md-skip" href="#entity-relationship-diagrams">
           Skip to content
         </a>
 </div>
@@ -52,7 +52,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              ER Diagram
+              ER Diagrams
             
           </span>
 </div>
@@ -158,7 +158,7 @@
 <span class="md-ellipsis">
     
   
-    Schema
+    Schema (FOF-bas-CT + FOF-vol-CT)
   
 
     
@@ -171,7 +171,7 @@
 <span class="md-ellipsis">
     
   
-    ER Diagram
+    ER Diagrams
   
 
     
@@ -182,7 +182,7 @@
 <span class="md-ellipsis">
     
   
-    ER Diagram
+    ER Diagrams
   
 
     
@@ -195,19 +195,19 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#overview-tables-and-relationships-only">
+<a class="md-nav__link" href="#combined-overview-fof-ct-both-modalities">
 <span class="md-ellipsis">
       
-        Overview (tables and relationships only)
+        Combined overview — FOF-CT (both modalities)
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#full-diagram-with-all-attributes">
+<a class="md-nav__link" href="#fof-vol-ct-additions-tables-1315">
 <span class="md-ellipsis">
       
-        Full diagram (with all attributes)
+        FOF-vol-CT additions (tables 13–15)
       
     </span>
 </a>
@@ -242,19 +242,19 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#overview-tables-and-relationships-only">
+<a class="md-nav__link" href="#combined-overview-fof-ct-both-modalities">
 <span class="md-ellipsis">
       
-        Overview (tables and relationships only)
+        Combined overview — FOF-CT (both modalities)
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#full-diagram-with-all-attributes">
+<a class="md-nav__link" href="#fof-vol-ct-additions-tables-1315">
 <span class="md-ellipsis">
       
-        Full diagram (with all attributes)
+        FOF-vol-CT additions (tables 13–15)
       
     </span>
 </a>
@@ -266,16 +266,25 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="entity-relationship-diagram">Entity Relationship Diagram<a class="headerlink" href="#entity-relationship-diagram" title="Permanent link">¶</a></h1>
-<p>Entity-Relationship diagrams of the FOF-bas-CT schema, generated using <a href="https://linkml.io/linkml/generators/erdiagram.html">LinkML's ER Diagram generator</a>.</p>
+<h1 id="entity-relationship-diagrams">Entity Relationship Diagrams<a class="headerlink" href="#entity-relationship-diagrams" title="Permanent link">¶</a></h1>
+<p>Entity-Relationship diagrams generated using <a href="https://linkml.io/linkml/generators/erdiagram.html">LinkML's ER Diagram generator</a>.</p>
+<p>FOF-CT defines two complementary modalities:</p>
+<ul>
+<li><strong>FOF-bas-CT</strong> (ball-and-stick): The Spot and Trace are the mandatory primary data. The raw localizations from which Spots were extracted may optionally be reported in the Demultiplexing table.</li>
+<li><strong>FOF-vol-CT</strong> (volumetric): Individual SM Localizations and their quality metrics are the mandatory primary data. Spots and Traces (post-processing outputs) are optional.</li>
+</ul>
+<p>In both modalities the ID chain is identical: <code>Loc_ID</code> (n→1) <code>Spot_ID</code> (n→1) <code>Trace_ID</code>.</p>
 <hr/>
-<h2 id="overview-tables-and-relationships-only">Overview (tables and relationships only)<a class="headerlink" href="#overview-tables-and-relationships-only" title="Permanent link">¶</a></h2>
-<p>A high-level view showing the 12 FOF-bas-CT tables, their contained record classes, and the shared <code>Software</code> provenance class. Attributes are hidden for clarity.</p>
+<h2 id="combined-overview-fof-ct-both-modalities">Combined overview — FOF-CT (both modalities)<a class="headerlink" href="#combined-overview-fof-ct-both-modalities" title="Permanent link">¶</a></h2>
+<p>All 15 tables. Attributes hidden for clarity.</p>
 <pre class="mermaid"><code>erDiagram
 Cell {
 
 }
 CellTable {
+
+}
+DemultiplexingTable {
 
 }
 ExtraCellROI {
@@ -285,9 +294,6 @@ ExtraCellROITable {
 
 }
 Localization {
-
-}
-LocalizationTable {
 
 }
 RNASpot {
@@ -312,6 +318,18 @@ ROIMapping {
 
 }
 ROIMappingTable {
+
+}
+SMLocalization {
+
+}
+SMLocalizationQualityRecord {
+
+}
+SMLocalizationQualityTable {
+
+}
+SMLocalizationTable {
 
 }
 Software {
@@ -347,13 +365,19 @@ Trace {
 TraceTable {
 
 }
+UndecodedLocalization {
+
+}
+UndecodedLocalizationTable {
+
+}
 
 CellTable ||--}o Software : "softwares"
 CellTable ||--}| Cell : "cells"
+DemultiplexingTable ||--}| Localization : "localizations"
+DemultiplexingTable ||--}| Software : "softwares"
 ExtraCellROITable ||--}o Software : "softwares"
 ExtraCellROITable ||--}| ExtraCellROI : "extra_cell_rois"
-LocalizationTable ||--}| Localization : "localizations"
-LocalizationTable ||--}| Software : "softwares"
 RNASpotBiologicalTable ||--}o Software : "softwares"
 RNASpotBiologicalTable ||--}| RNASpotBiologicalRecord : "rna_spot_biological_records"
 RNASpotQualityTable ||--}o Software : "softwares"
@@ -362,6 +386,10 @@ RNASpotTable ||--}| RNASpot : "rna_spots"
 RNASpotTable ||--}| Software : "softwares"
 ROIMappingTable ||--}o Software : "softwares"
 ROIMappingTable ||--}| ROIMapping : "roi_mappings"
+SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
+SMLocalizationQualityTable ||--}| Software : "softwares"
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
 SpotBiologicalTable ||--}o Software : "softwares"
 SpotBiologicalTable ||--}| SpotBiologicalRecord : "spot_biological_records"
 SpotQualityTable ||--}o Software : "softwares"
@@ -371,279 +399,86 @@ SpotTable ||--}| Spot : "spots"
 SubCellROITable ||--}o Software : "softwares"
 SubCellROITable ||--}| SubCellROI : "sub_cell_rois"
 TraceTable ||--}o Software : "softwares"
-TraceTable ||--}| Trace : "traces"</code></pre>
+TraceTable ||--}| Trace : "traces"
+UndecodedLocalizationTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"</code></pre>
 <hr/>
-<h2 id="full-diagram-with-all-attributes">Full diagram (with all attributes)<a class="headerlink" href="#full-diagram-with-all-attributes" title="Permanent link">¶</a></h2>
-<p>A detailed view showing all slots for each class.</p>
+<h2 id="fof-vol-ct-additions-tables-1315">FOF-vol-CT additions (tables 13–15)<a class="headerlink" href="#fof-vol-ct-additions-tables-1315" title="Permanent link">¶</a></h2>
+<p>The three tables specific to the volumetric modality, shown with their attributes.</p>
 <pre class="mermaid"><code>erDiagram
-Cell {
-    integer cell_id  
-    integer extra_cell_roi_id  
+SMLocalization {
+    integer loc_id
+    float x
+    float y
+    float z
+    integer spot_id
+    integer trace_id
+    string chrom
+    integer chrom_start
+    integer chrom_end
+    integer sub_cell_roi_id
+    integer cell_id
+    integer extra_cell_roi_id
 }
-CellTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+SMLocalizationTable {
+    string fof_ct_version
+    string table_namespace
+    string genome_assembly
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
-ExtraCellROI {
-    integer extra_cell_roi_id  
+SMLocalizationQualityRecord {
+    integer loc_id
+    float x_precision
+    float y_precision
+    float z_precision
+    integer photon_count
+    float goodness_of_fit
 }
-ExtraCellROITable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+SMLocalizationQualityTable {
+    string fof_ct_version
+    string table_namespace
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
-Localization {
-    string fluor  
-    integer loc_id  
-    integer spot_id  
-    float x  
-    float y  
-    float z  
+UndecodedLocalization {
+    integer loc_id
+    float x
+    float y
+    float z
+    integer frame_id
+    string fluor
 }
-LocalizationTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpot {
-    integer cell_id  
-    integer extra_cell_roi_id  
-    string gene_id  
-    string rna_name  
-    integer rna_spot_id  
-    integer sub_cell_roi_id  
-    integer trace_id  
-    string transcript_id  
-    float x  
-    float y  
-    float z  
-}
-RNASpotBiologicalRecord {
-    integer rna_spot_id  
-}
-RNASpotBiologicalTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpotQualityRecord {
-    integer rna_spot_id  
-}
-RNASpotQualityTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpotTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string gene_id_type  
-    string genome_assembly  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    string transcript_id_type  
-    XYZUnitEnum xyz_unit  
-}
-ROIMapping {
-    integer cell_id  
-    integer extra_cell_roi_id  
-    string roi_boundaries  
-    integer sub_cell_roi_id  
-}
-ROIMappingTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string roi_boundaries_format  
-    string sub_cell_roi_type  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+UndecodedLocalizationTable {
+    string fof_ct_version
+    string table_namespace
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
 Software {
-    string software_authors  
-    string software_description  
-    uri software_preferred_citation_id  
-    uri software_repository  
-    string software_title  
-    SoftwareTypeEnum software_type  
-}
-Spot {
-    integer cell_id  
-    string chrom  
-    integer chrom_end  
-    integer chrom_start  
-    integer extra_cell_roi_id  
-    integer spot_id  
-    integer sub_cell_roi_id  
-    integer trace_id  
-    float x  
-    float y  
-    float z  
-}
-SpotBiologicalRecord {
-    integer spot_id  
-}
-SpotBiologicalTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-SpotQualityRecord {
-    integer spot_id  
-}
-SpotQualityTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-SpotTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string genome_assembly  
-    string lab_name  
-    string modification  
-    string table_namespace  
-    string vcf_file_name  
-    string vcf_version  
-    XYZUnitEnum xyz_unit  
-}
-SubCellROI {
-    integer cell_id  
-    integer sub_cell_roi_id  
-}
-SubCellROITable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string sub_cell_roi_type  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-Trace {
-    integer trace_id  
-}
-TraceTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+    string software_title
+    SoftwareTypeEnum software_type
+    string software_authors
+    string software_description
+    uri software_repository
+    uri software_preferred_citation_id
 }
 
-CellTable ||--}o Software : "softwares"
-CellTable ||--}| Cell : "cells"
-ExtraCellROITable ||--}o Software : "softwares"
-ExtraCellROITable ||--}| ExtraCellROI : "extra_cell_rois"
-LocalizationTable ||--}| Localization : "localizations"
-LocalizationTable ||--}| Software : "softwares"
-RNASpotBiologicalTable ||--}o Software : "softwares"
-RNASpotBiologicalTable ||--}| RNASpotBiologicalRecord : "rna_spot_biological_records"
-RNASpotQualityTable ||--}o Software : "softwares"
-RNASpotQualityTable ||--}| RNASpotQualityRecord : "rna_spot_quality_records"
-RNASpotTable ||--}| RNASpot : "rna_spots"
-RNASpotTable ||--}| Software : "softwares"
-ROIMappingTable ||--}o Software : "softwares"
-ROIMappingTable ||--}| ROIMapping : "roi_mappings"
-SpotBiologicalTable ||--}o Software : "softwares"
-SpotBiologicalTable ||--}| SpotBiologicalRecord : "spot_biological_records"
-SpotQualityTable ||--}o Software : "softwares"
-SpotQualityTable ||--}| SpotQualityRecord : "spot_quality_records"
-SpotTable ||--}| Software : "softwares"
-SpotTable ||--}| Spot : "spots"
-SubCellROITable ||--}o Software : "softwares"
-SubCellROITable ||--}| SubCellROI : "sub_cell_rois"
-TraceTable ||--}o Software : "softwares"
-TraceTable ||--}| Trace : "traces"</code></pre>
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
+SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
+SMLocalizationQualityTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
+UndecodedLocalizationTable ||--}| Software : "softwares"</code></pre>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
@@ -661,7 +496,7 @@ TraceTable ||--}| Trace : "traces"</code></pre>
 <span class="md-footer__direction">
                 Previous
               </span>
-              Schema
+              Schema (FOF-bas-CT + FOF-vol-CT)
             </div>
 </div>
 </a>

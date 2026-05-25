@@ -1,8 +1,9 @@
 name: fof_ct
-description: Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick
-  modality (FOF-bas-CT). Imports all twelve table schemas that together constitute
-  the complete FOF-bas-CT data model. Each table schema in turn imports fof_bas_ct_common
-  for shared slots, the Software class, and enumerations.
+description: "Root schema for the FISH Omics Format for Chromatin Tracing (FOF-CT).\
+  \ Covers both modalities: FOF-bas-CT (ball-and-stick, tables 1\u201312) and FOF-vol-CT\
+  \ (volumetric, tables 13\u201315). Imports all fifteen table schemas that together\
+  \ constitute the complete FOF-CT data model. Each table schema in turn imports fof_bas_ct_common\
+  \ for shared slots, the Software class, and enumerations."
 title: FISH Omics Format for Chromatin Tracing (FOF-CT)
 see_also:
 - https://4dn-dcic.github.io/fof-ct
@@ -24,6 +25,9 @@ imports:
 - fof_bas_ct_extracell
 - fof_bas_ct_subcell
 - fof_bas_ct_mapping
+- fof_vol_ct_core
+- fof_vol_ct_quality
+- fof_vol_ct_undecoded
 license: MIT
 prefixes:
   linkml:
@@ -414,6 +418,16 @@ enums:
       4dn_FOF-CT_mapping:
         text: 4dn_FOF-CT_mapping
         description: Cell/ROI Mapping table (table 12)
+      4dn_FOF-CT_vol_core:
+        text: 4dn_FOF-CT_vol_core
+        description: "SM Localization Data table \u2014 FOF-vol-CT (table 13)"
+      4dn_FOF-CT_vol_quality:
+        text: 4dn_FOF-CT_vol_quality
+        description: "SM Localization Quality table \u2014 FOF-vol-CT (table 14)"
+      4dn_FOF-CT_undecoded:
+        text: 4dn_FOF-CT_undecoded
+        description: "Undecoded SM Localization Data table \u2014 FOF-vol-CT (table\
+          \ 15)"
 slots:
   fof_ct_version:
     name: fof_ct_version
@@ -424,9 +438,9 @@ slots:
     - value: v1.0
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:fof_ct_version
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -437,6 +451,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
     pattern: ^v[0-9]+\.[0-9]+
   table_namespace:
@@ -446,9 +463,9 @@ slots:
       each table. Written as ##Table_Namespace= in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:table_namespace
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -459,6 +476,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   lab_name:
     name: lab_name
@@ -469,9 +489,9 @@ slots:
     - value: Nobel
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:lab_name
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -482,6 +502,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   experimenter_name:
     name: experimenter_name
@@ -492,9 +515,9 @@ slots:
     - value: John Doe
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:experimenter_name
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -505,6 +528,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   experimenter_contact:
     name: experimenter_contact
@@ -515,9 +541,9 @@ slots:
     - value: john.doe@email.com
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:experimenter_contact
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -528,6 +554,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
     pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
   description:
@@ -538,9 +567,9 @@ slots:
       Written as #Description: in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:description
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -551,6 +580,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   additional_tables:
     name: additional_tables
@@ -560,9 +592,9 @@ slots:
       in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:additional_tables
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -573,6 +605,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: TableNamespaceEnum
     multivalued: true
   softwares:
@@ -583,9 +618,9 @@ slots:
       file header.'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:softwares
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -596,6 +631,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: Software
     multivalued: true
     inlined: true
@@ -611,9 +649,9 @@ slots:
     - value: micron
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:xyz_unit
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -624,6 +662,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: XYZUnitEnum
   time_unit:
     name: time_unit
@@ -635,9 +676,9 @@ slots:
     - value: sec
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:time_unit
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -648,6 +689,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: TimeUnitEnum
   intensity_unit:
     name: intensity_unit
@@ -660,9 +704,9 @@ slots:
     - value: photons
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:intensity_unit
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -673,6 +717,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   intensity_measurement_method:
     name: intensity_measurement_method
@@ -685,9 +732,9 @@ slots:
     - value: Mean Fluorescence Intensity
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:intensity_measurement_method
-    owner: ROIMappingTable
+    owner: UndecodedLocalizationTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     - TraceTable
     - RNASpotTable
     - SpotQualityTable
@@ -698,6 +745,9 @@ slots:
     - ExtraCellROITable
     - SubCellROITable
     - ROIMappingTable
+    - SMLocalizationTable
+    - SMLocalizationQualityTable
+    - UndecodedLocalizationTable
     range: string
   x:
     name: x
@@ -712,7 +762,7 @@ slots:
     slot_uri: fof_ct:x
     owner: RNASpot
     domain_of:
-    - Localization
+    - LocalizationMixin
     - RNASpot
     range: float
   y:
@@ -727,7 +777,7 @@ slots:
     slot_uri: fof_ct:y
     owner: RNASpot
     domain_of:
-    - Localization
+    - LocalizationMixin
     - RNASpot
     range: float
   z:
@@ -742,9 +792,25 @@ slots:
     slot_uri: fof_ct:z
     owner: RNASpot
     domain_of:
-    - Localization
+    - LocalizationMixin
     - RNASpot
     range: float
+  loc_id:
+    name: loc_id
+    definition_uri: https://w3id.org/fof-ct/loc_id
+    description: A unique integer identifier for an individual localization event.
+      Loc_ID values are unique across the entire dataset. Serves as primary key in
+      the Spot Demultiplexing, SM Localization Data, and Undecoded SM Localization
+      tables, and as a foreign key in the SM Localization Quality table.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:loc_id
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - LocalizationMixin
+    - SMLocalizationQualityRecord
+    range: integer
   spot_id:
     name: spot_id
     definition_uri: https://w3id.org/fof-ct/spot_id
@@ -755,11 +821,12 @@ slots:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:spot_id
-    owner: SpotBiologicalRecord
+    owner: SMLocalization
     domain_of:
     - Localization
     - SpotQualityRecord
     - SpotBiologicalRecord
+    - SMLocalization
     range: integer
   trace_id:
     name: trace_id
@@ -770,10 +837,11 @@ slots:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:trace_id
-    owner: RNASpot
+    owner: SMLocalization
     domain_of:
     - Trace
     - RNASpot
+    - SMLocalization
     range: integer
   sub_cell_roi_id:
     name: sub_cell_roi_id
@@ -784,11 +852,12 @@ slots:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:sub_cell_roi_id
-    owner: ROIMapping
+    owner: SMLocalization
     domain_of:
     - RNASpot
     - SubCellROI
     - ROIMapping
+    - SMLocalization
     range: integer
   cell_id:
     name: cell_id
@@ -798,12 +867,13 @@ slots:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:cell_id
-    owner: ROIMapping
+    owner: SMLocalization
     domain_of:
     - RNASpot
     - Cell
     - SubCellROI
     - ROIMapping
+    - SMLocalization
     range: integer
   extra_cell_roi_id:
     name: extra_cell_roi_id
@@ -814,12 +884,13 @@ slots:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:extra_cell_roi_id
-    owner: ROIMapping
+    owner: SMLocalization
     domain_of:
     - RNASpot
     - Cell
     - ExtraCellROI
     - ROIMapping
+    - SMLocalization
     range: integer
   rna_spot_id:
     name: rna_spot_id
@@ -837,6 +908,111 @@ slots:
     - RNASpotQualityRecord
     - RNASpotBiologicalRecord
     range: integer
+  fluor:
+    name: fluor
+    definition_uri: https://w3id.org/fof-ct/fluor
+    description: Fluorescent channel in which this localization event was detected
+      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and
+      Undecoded SM Localization tables.
+    examples:
+    - value: Cy5
+    - value: Alexa647
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:fluor
+    owner: UndecodedLocalization
+    domain_of:
+    - Localization
+    - UndecodedLocalization
+    range: string
+  x_precision:
+    name: x_precision
+    definition_uri: https://w3id.org/fof-ct/x_precision
+    description: Metric quantifying the precision of the X-axis localization estimate.
+      Typically the Cramer-Rao lower bound or Thompson method estimate. Recommended
+      in the Spot Quality table; mandatory in the SM Localization Quality table. Must
+      be accompanied by a description in the file header.
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:x_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    - SMLocalizationQualityRecord
+    range: float
+  y_precision:
+    name: y_precision
+    definition_uri: https://w3id.org/fof-ct/y_precision
+    description: Metric quantifying the precision of the Y-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:y_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    - SMLocalizationQualityRecord
+    range: float
+  z_precision:
+    name: z_precision
+    definition_uri: https://w3id.org/fof-ct/z_precision
+    description: Metric quantifying the precision of the Z-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:z_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    - SMLocalizationQualityRecord
+    range: float
+  photon_count:
+    name: photon_count
+    definition_uri: https://w3id.org/fof-ct/photon_count
+    description: Number of photons detected for this localization event or Spot. Optional
+      (but standardised name) in the Spot Quality table; recommended in the SM Localization
+      Quality table.
+    examples:
+    - value: '1500'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:photon_count
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    - SMLocalizationQualityRecord
+    range: integer
+  goodness_of_fit:
+    name: goodness_of_fit
+    definition_uri: https://w3id.org/fof-ct/goodness_of_fit
+    description: Metric quantifying how well the fitted model matches the observed
+      signal (e.g. chi-squared, R-squared). Optional (but standardised name) in the
+      Spot Quality table; recommended in the SM Localization Quality table.
+    examples:
+    - value: '0.95'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:goodness_of_fit
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    - SMLocalizationQualityRecord
+    range: float
+  frame_id:
+    name: frame_id
+    definition_uri: https://w3id.org/fof-ct/frame_id
+    description: Unique integer identifier for the imaging frame in which this undecoded
+      localization event was detected. Used in the Undecoded SM Localization table.
+    examples:
+    - value: '42'
+    from_schema: https://w3id.org/fof-ct/common
+    slot_uri: fof_ct:frame_id
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    range: integer
   genome_assembly:
     name: genome_assembly
     definition_uri: https://w3id.org/fof-ct/genome_assembly
@@ -850,9 +1026,10 @@ slots:
     - value: custom-build:GRCm38+pJT039(insertion)
     from_schema: https://w3id.org/fof-ct/common
     slot_uri: fof_ct:genome_assembly
-    owner: RNASpotTable
+    owner: SMLocalizationTable
     domain_of:
     - RNASpotTable
+    - SMLocalizationTable
     range: string
   cell_type:
     name: cell_type
@@ -990,48 +1167,17 @@ slots:
     - Software
     range: uri
     required: true
-  loc_id:
-    name: loc_id
-    definition_uri: https://w3id.org/fof-ct/loc_id
-    description: A unique integer identifier for this individual localisation event.
-      Loc_ID values are unique across the entire dataset.
-    examples:
-    - value: '1'
-    from_schema: https://w3id.org/fof-ct/demultiplexing
-    domain: Localization
-    slot_uri: fof_ct:loc_id
-    identifier: true
-    owner: Localization
-    domain_of:
-    - Localization
-    range: integer
-    required: true
-  fluor:
-    name: fluor
-    definition_uri: https://w3id.org/fof-ct/fluor
-    description: Fluorescent channel in which this individual localisation event was
-      detected (e.g. DAPI, GFP, Cy5, Alexa647).
-    examples:
-    - value: Cy5
-    - value: Alexa647
-    from_schema: https://w3id.org/fof-ct/demultiplexing
-    domain: Localization
-    slot_uri: fof_ct:fluor
-    owner: Localization
-    domain_of:
-    - Localization
-    range: string
   localizations:
     name: localizations
     definition_uri: https://w3id.org/fof-ct/localizations
     description: The complete collection of Localization events constituting this
       dataset. Each Localization corresponds to one data row in the TSV serialisation.
     from_schema: https://w3id.org/fof-ct/demultiplexing
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:localizations
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     range: Localization
     multivalued: true
     inlined: true
@@ -1162,6 +1308,217 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  channel_name:
+    name: channel_name
+    definition_uri: https://w3id.org/fof-ct/channel_name
+    description: The name of the imaging channel used for this Spot (e.g. 510/25).
+      Mandatory in the Spot Quality table.
+    examples:
+    - value: 510/25
+    - value: 647/50
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:channel_name
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: string
+  fluorophore_name:
+    name: fluorophore_name
+    definition_uri: https://w3id.org/fof-ct/fluorophore_name
+    description: The name of the fluorophore used for this Spot (e.g. AlexaFluor_488).
+      Mandatory in the Spot Quality table.
+    examples:
+    - value: AlexaFluor_488
+    - value: Cy5
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:fluorophore_name
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: string
+  centroid_intensity:
+    name: centroid_intensity
+    definition_uri: https://w3id.org/fof-ct/centroid_intensity
+    description: Signal intensity of the centroid pixel of the Spot. Conditionally
+      required in the Spot Quality table when intensity metrics are reported.
+    examples:
+    - value: '2500.0'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:centroid_intensity
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  peak_intensity:
+    name: peak_intensity
+    definition_uri: https://w3id.org/fof-ct/peak_intensity
+    description: Signal intensity of the brightest pixel within the Spot boundary.
+      Conditionally required in the Spot Quality table when intensity metrics are
+      reported.
+    examples:
+    - value: '3200.0'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:peak_intensity
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  raw_x:
+    name: raw_x
+    definition_uri: https://w3id.org/fof-ct/raw_x
+    description: X coordinate of this Spot before any post-processing corrections
+      (drift correction, chromatic correction, etc.). Same unit as X.
+    examples:
+    - value: '14.30'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:raw_x
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  raw_y:
+    name: raw_y
+    definition_uri: https://w3id.org/fof-ct/raw_y
+    description: Y coordinate of this Spot before any post-processing corrections.
+      Same unit as Y.
+    examples:
+    - value: '41.20'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:raw_y
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  raw_z:
+    name: raw_z
+    definition_uri: https://w3id.org/fof-ct/raw_z
+    description: Z coordinate of this Spot before any post-processing corrections.
+      Same unit as Z.
+    examples:
+    - value: '1.10'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:raw_z
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  x_drift:
+    name: x_drift
+    definition_uri: https://w3id.org/fof-ct/x_drift
+    description: Drift correction offset applied to the X coordinate of this Spot.
+      Same unit as X.
+    examples:
+    - value: '0.13'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:x_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  y_drift:
+    name: y_drift
+    definition_uri: https://w3id.org/fof-ct/y_drift
+    description: Drift correction offset applied to the Y coordinate of this Spot.
+      Same unit as Y.
+    examples:
+    - value: '0.23'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:y_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  z_drift:
+    name: z_drift
+    definition_uri: https://w3id.org/fof-ct/z_drift
+    description: Drift correction offset applied to the Z coordinate of this Spot.
+      Same unit as Z.
+    examples:
+    - value: '0.13'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:z_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  x_chromatic_shift:
+    name: x_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/x_chromatic_shift
+    description: Chromatic aberration correction offset applied to the X coordinate
+      of this Spot. Same unit as X.
+    examples:
+    - value: '0.05'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:x_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  y_chromatic_shift:
+    name: y_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/y_chromatic_shift
+    description: Chromatic aberration correction offset applied to the Y coordinate
+      of this Spot. Same unit as Y.
+    examples:
+    - value: '0.04'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:y_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  z_chromatic_shift:
+    name: z_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/z_chromatic_shift
+    description: Chromatic aberration correction offset applied to the Z coordinate
+      of this Spot. Same unit as Z.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:z_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  x_loc_error:
+    name: x_loc_error
+    definition_uri: https://w3id.org/fof-ct/x_loc_error
+    description: Localization error estimate for the X coordinate of this Spot (e.g.
+      standard deviation of repeated measurements). Same unit as X.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:x_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  y_loc_error:
+    name: y_loc_error
+    definition_uri: https://w3id.org/fof-ct/y_loc_error
+    description: Localization error estimate for the Y coordinate of this Spot. Same
+      unit as Y.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:y_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
+  z_loc_error:
+    name: z_loc_error
+    definition_uri: https://w3id.org/fof-ct/z_loc_error
+    description: Localization error estimate for the Z coordinate of this Spot. Same
+      unit as Z.
+    examples:
+    - value: '0.05'
+    from_schema: https://w3id.org/fof-ct/quality
+    slot_uri: fof_ct:z_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    range: float
   rna_spot_quality_records:
     name: rna_spot_quality_records
     definition_uri: https://w3id.org/fof-ct/rna_spot_quality_records
@@ -1316,14 +1673,101 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  sm_localizations:
+    name: sm_localizations
+    definition_uri: https://w3id.org/fof-ct/sm_localizations
+    description: The complete collection of SMLocalization events constituting this
+      dataset. Each entry corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/vol_core
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:sm_localizations
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    range: SMLocalization
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  chrom:
+    name: chrom
+    definition_uri: https://w3id.org/fof-ct/chrom
+    description: Chromosome identifier for the genomic locus targeted by this SM localization
+      event (e.g. chr1, chrX).
+    examples:
+    - value: chr1
+    - value: chrX
+    from_schema: https://w3id.org/fof-ct/vol_core
+    slot_uri: fof_ct:chrom
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    range: string
+  chrom_start:
+    name: chrom_start
+    definition_uri: https://w3id.org/fof-ct/chrom_start
+    description: Start coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    examples:
+    - value: '1000000'
+    from_schema: https://w3id.org/fof-ct/vol_core
+    slot_uri: fof_ct:chrom_start
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    range: integer
+  chrom_end:
+    name: chrom_end
+    definition_uri: https://w3id.org/fof-ct/chrom_end
+    description: End coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    examples:
+    - value: '1050000'
+    from_schema: https://w3id.org/fof-ct/vol_core
+    slot_uri: fof_ct:chrom_end
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    range: integer
+  sm_localization_quality_records:
+    name: sm_localization_quality_records
+    definition_uri: https://w3id.org/fof-ct/sm_localization_quality_records
+    description: The complete collection of SMLocalizationQualityRecord rows constituting
+      this dataset. Each record corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/vol_quality
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:sm_localization_quality_records
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    range: SMLocalizationQualityRecord
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  undecoded_localizations:
+    name: undecoded_localizations
+    definition_uri: https://w3id.org/fof-ct/undecoded_localizations
+    description: The complete collection of UndecodedLocalization events constituting
+      this dataset. Each entry corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/undecoded
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:undecoded_localizations
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    range: UndecodedLocalization
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
   Localization_loc_id:
     name: Localization_loc_id
     definition_uri: https://w3id.org/fof-ct/loc_id
-    description: A unique integer identifier for this individual localisation event.
-      Loc_ID values are unique across the entire dataset.
+    description: A unique integer identifier for an individual localization event.
+      Loc_ID values are unique across the entire dataset. Serves as primary key in
+      the Spot Demultiplexing, SM Localization Data, and Undecoded SM Localization
+      tables, and as a foreign key in the SM Localization Quality table.
     examples:
     - value: '1'
-    from_schema: https://w3id.org/fof-ct/demultiplexing
+    from_schema: https://w3id.org/fof-ct/common
     is_a: loc_id
     domain: Localization
     slot_uri: fof_ct:loc_id
@@ -1420,12 +1864,13 @@ slots:
   Localization_fluor:
     name: Localization_fluor
     definition_uri: https://w3id.org/fof-ct/fluor
-    description: Fluorescent channel in which this individual localisation event was
-      detected (e.g. DAPI, GFP, Cy5, Alexa647).
+    description: Fluorescent channel in which this localization event was detected
+      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and
+      Undecoded SM Localization tables.
     examples:
     - value: Cy5
     - value: Alexa647
-    from_schema: https://w3id.org/fof-ct/demultiplexing
+    from_schema: https://w3id.org/fof-ct/common
     is_a: fluor
     domain: Localization
     slot_uri: fof_ct:fluor
@@ -1437,8 +1882,8 @@ slots:
     usage_slot_name: fluor
     range: string
     required: true
-  LocalizationTable_fof_ct_version:
-    name: LocalizationTable_fof_ct_version
+  DemultiplexingTable_fof_ct_version:
+    name: DemultiplexingTable_fof_ct_version
     definition_uri: https://w3id.org/fof-ct/fof_ct_version
     description: Version of the FOF-CT format used in this file. Always the first
       line of the file header (##FOF-CT_Version=).
@@ -1446,37 +1891,37 @@ slots:
     - value: v1.0
     from_schema: https://w3id.org/fof-ct/common
     is_a: fof_ct_version
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:fof_ct_version
     alias: fof_ct_version
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: fof_ct_version
     range: string
     required: true
     pattern: ^v[0-9]+\.[0-9]+
-  LocalizationTable_table_namespace:
-    name: LocalizationTable_table_namespace
+  DemultiplexingTable_table_namespace:
+    name: DemultiplexingTable_table_namespace
     definition_uri: https://w3id.org/fof-ct/table_namespace
     description: 'Identifier for this table type. The required value is specific to
       each table. Written as ##Table_Namespace= in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     is_a: table_namespace
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:table_namespace
     alias: table_namespace
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: table_namespace
     range: string
     required: true
     equals_string: 4dn_FOF-CT_demultiplexing
-  LocalizationTable_lab_name:
-    name: LocalizationTable_lab_name
+  DemultiplexingTable_lab_name:
+    name: DemultiplexingTable_lab_name
     definition_uri: https://w3id.org/fof-ct/lab_name
     description: 'Name of the laboratory where the experiment was performed. Written
       as #Lab_Name: in the file header.'
@@ -1484,18 +1929,18 @@ slots:
     - value: Nobel
     from_schema: https://w3id.org/fof-ct/common
     is_a: lab_name
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:lab_name
     alias: lab_name
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: lab_name
     range: string
     required: true
-  LocalizationTable_experimenter_name:
-    name: LocalizationTable_experimenter_name
+  DemultiplexingTable_experimenter_name:
+    name: DemultiplexingTable_experimenter_name
     definition_uri: https://w3id.org/fof-ct/experimenter_name
     description: 'Full name of the person who performed the experiment. Written as
       #Experimenter_Name: in the file header.'
@@ -1503,18 +1948,18 @@ slots:
     - value: John Doe
     from_schema: https://w3id.org/fof-ct/common
     is_a: experimenter_name
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:experimenter_name
     alias: experimenter_name
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: experimenter_name
     range: string
     required: true
-  LocalizationTable_experimenter_contact:
-    name: LocalizationTable_experimenter_contact
+  DemultiplexingTable_experimenter_contact:
+    name: DemultiplexingTable_experimenter_contact
     definition_uri: https://w3id.org/fof-ct/experimenter_contact
     description: 'Email address of the person who performed the experiment. Written
       as #Experimenter_Contact: in the file header.'
@@ -1522,49 +1967,49 @@ slots:
     - value: john.doe@email.com
     from_schema: https://w3id.org/fof-ct/common
     is_a: experimenter_contact
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:experimenter_contact
     alias: experimenter_contact
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: experimenter_contact
     range: string
     required: true
     pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
-  LocalizationTable_description:
-    name: LocalizationTable_description
+  DemultiplexingTable_description:
+    name: DemultiplexingTable_description
     definition_uri: https://w3id.org/fof-ct/description
     description: 'Free-text description of the experiment and of the data recorded
       in this table. Should provide sufficient detail for interpretation and reproducibility.
       Written as #Description: in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     is_a: description
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:description
     alias: description
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: description
     range: string
     required: true
-  LocalizationTable_softwares:
-    name: LocalizationTable_softwares
+  DemultiplexingTable_softwares:
+    name: DemultiplexingTable_softwares
     definition_uri: https://w3id.org/fof-ct/softwares
     description: 'One or more Software entries documenting every tool used to produce
       or process data in this table. Written as repeating #Software_* blocks in the
       file header.'
     from_schema: https://w3id.org/fof-ct/common
     is_a: softwares
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:softwares
     alias: softwares
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: softwares
     range: Software
@@ -1572,38 +2017,38 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  LocalizationTable_additional_tables:
-    name: LocalizationTable_additional_tables
+  DemultiplexingTable_additional_tables:
+    name: DemultiplexingTable_additional_tables
     definition_uri: https://w3id.org/fof-ct/additional_tables
     description: 'List of additional FOF-CT table namespaces being submitted alongside
       this table, separated by commas in the TSV header. Written as #Additional_Tables:
       in the file header.'
     from_schema: https://w3id.org/fof-ct/common
     is_a: additional_tables
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:additional_tables
     alias: additional_tables
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: additional_tables
     range: TableNamespaceEnum
     required: true
     multivalued: true
-  LocalizationTable_localizations:
-    name: LocalizationTable_localizations
+  DemultiplexingTable_localizations:
+    name: DemultiplexingTable_localizations
     definition_uri: https://w3id.org/fof-ct/localizations
     description: The complete collection of Localization events constituting this
       dataset. Each Localization corresponds to one data row in the TSV serialisation.
     from_schema: https://w3id.org/fof-ct/demultiplexing
     is_a: localizations
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     slot_uri: fof_ct:localizations
     alias: localizations
-    owner: LocalizationTable
+    owner: DemultiplexingTable
     domain_of:
-    - LocalizationTable
+    - DemultiplexingTable
     is_usage_slot: true
     usage_slot_name: localizations
     range: Localization
@@ -2184,6 +2629,409 @@ slots:
     usage_slot_name: spot_id
     range: integer
     required: true
+  SpotQualityRecord_channel_name:
+    name: SpotQualityRecord_channel_name
+    definition_uri: https://w3id.org/fof-ct/channel_name
+    description: The name of the imaging channel used for this Spot (e.g. 510/25).
+      Mandatory in the Spot Quality table.
+    examples:
+    - value: 510/25
+    - value: 647/50
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: channel_name
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:channel_name
+    alias: channel_name
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: channel_name
+    range: string
+    required: true
+  SpotQualityRecord_fluorophore_name:
+    name: SpotQualityRecord_fluorophore_name
+    definition_uri: https://w3id.org/fof-ct/fluorophore_name
+    description: The name of the fluorophore used for this Spot (e.g. AlexaFluor_488).
+      Mandatory in the Spot Quality table.
+    examples:
+    - value: AlexaFluor_488
+    - value: Cy5
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: fluorophore_name
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:fluorophore_name
+    alias: fluorophore_name
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: fluorophore_name
+    range: string
+    required: true
+  SpotQualityRecord_x_precision:
+    name: SpotQualityRecord_x_precision
+    definition_uri: https://w3id.org/fof-ct/x_precision
+    description: 'Recommended: metric for X localization precision'
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: x_precision
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:x_precision
+    alias: x_precision
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: x_precision
+    range: float
+    required: false
+  SpotQualityRecord_y_precision:
+    name: SpotQualityRecord_y_precision
+    definition_uri: https://w3id.org/fof-ct/y_precision
+    description: Metric quantifying the precision of the Y-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: y_precision
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:y_precision
+    alias: y_precision
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: y_precision
+    range: float
+    required: false
+  SpotQualityRecord_z_precision:
+    name: SpotQualityRecord_z_precision
+    definition_uri: https://w3id.org/fof-ct/z_precision
+    description: Metric quantifying the precision of the Z-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: z_precision
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:z_precision
+    alias: z_precision
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: z_precision
+    range: float
+    required: false
+  SpotQualityRecord_photon_count:
+    name: SpotQualityRecord_photon_count
+    definition_uri: https://w3id.org/fof-ct/photon_count
+    description: Optional standardised name for photon count
+    examples:
+    - value: '1500'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: photon_count
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:photon_count
+    alias: photon_count
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: photon_count
+    range: integer
+    required: false
+  SpotQualityRecord_goodness_of_fit:
+    name: SpotQualityRecord_goodness_of_fit
+    definition_uri: https://w3id.org/fof-ct/goodness_of_fit
+    description: Metric quantifying how well the fitted model matches the observed
+      signal (e.g. chi-squared, R-squared). Optional (but standardised name) in the
+      Spot Quality table; recommended in the SM Localization Quality table.
+    examples:
+    - value: '0.95'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: goodness_of_fit
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:goodness_of_fit
+    alias: goodness_of_fit
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: goodness_of_fit
+    range: float
+    required: false
+  SpotQualityRecord_centroid_intensity:
+    name: SpotQualityRecord_centroid_intensity
+    definition_uri: https://w3id.org/fof-ct/centroid_intensity
+    description: Signal intensity of the centroid pixel of the Spot. Conditionally
+      required in the Spot Quality table when intensity metrics are reported.
+    examples:
+    - value: '2500.0'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: centroid_intensity
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:centroid_intensity
+    alias: centroid_intensity
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: centroid_intensity
+    range: float
+    required: false
+  SpotQualityRecord_peak_intensity:
+    name: SpotQualityRecord_peak_intensity
+    definition_uri: https://w3id.org/fof-ct/peak_intensity
+    description: Signal intensity of the brightest pixel within the Spot boundary.
+      Conditionally required in the Spot Quality table when intensity metrics are
+      reported.
+    examples:
+    - value: '3200.0'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: peak_intensity
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:peak_intensity
+    alias: peak_intensity
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: peak_intensity
+    range: float
+    required: false
+  SpotQualityRecord_raw_x:
+    name: SpotQualityRecord_raw_x
+    definition_uri: https://w3id.org/fof-ct/raw_x
+    description: X coordinate of this Spot before any post-processing corrections
+      (drift correction, chromatic correction, etc.). Same unit as X.
+    examples:
+    - value: '14.30'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: raw_x
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:raw_x
+    alias: raw_x
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: raw_x
+    range: float
+    required: false
+  SpotQualityRecord_raw_y:
+    name: SpotQualityRecord_raw_y
+    definition_uri: https://w3id.org/fof-ct/raw_y
+    description: Y coordinate of this Spot before any post-processing corrections.
+      Same unit as Y.
+    examples:
+    - value: '41.20'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: raw_y
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:raw_y
+    alias: raw_y
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: raw_y
+    range: float
+    required: false
+  SpotQualityRecord_raw_z:
+    name: SpotQualityRecord_raw_z
+    definition_uri: https://w3id.org/fof-ct/raw_z
+    description: Z coordinate of this Spot before any post-processing corrections.
+      Same unit as Z.
+    examples:
+    - value: '1.10'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: raw_z
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:raw_z
+    alias: raw_z
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: raw_z
+    range: float
+    required: false
+  SpotQualityRecord_x_drift:
+    name: SpotQualityRecord_x_drift
+    definition_uri: https://w3id.org/fof-ct/x_drift
+    description: Drift correction offset applied to the X coordinate of this Spot.
+      Same unit as X.
+    examples:
+    - value: '0.13'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: x_drift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:x_drift
+    alias: x_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: x_drift
+    range: float
+    required: false
+  SpotQualityRecord_y_drift:
+    name: SpotQualityRecord_y_drift
+    definition_uri: https://w3id.org/fof-ct/y_drift
+    description: Drift correction offset applied to the Y coordinate of this Spot.
+      Same unit as Y.
+    examples:
+    - value: '0.23'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: y_drift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:y_drift
+    alias: y_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: y_drift
+    range: float
+    required: false
+  SpotQualityRecord_z_drift:
+    name: SpotQualityRecord_z_drift
+    definition_uri: https://w3id.org/fof-ct/z_drift
+    description: Drift correction offset applied to the Z coordinate of this Spot.
+      Same unit as Z.
+    examples:
+    - value: '0.13'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: z_drift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:z_drift
+    alias: z_drift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: z_drift
+    range: float
+    required: false
+  SpotQualityRecord_x_chromatic_shift:
+    name: SpotQualityRecord_x_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/x_chromatic_shift
+    description: Chromatic aberration correction offset applied to the X coordinate
+      of this Spot. Same unit as X.
+    examples:
+    - value: '0.05'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: x_chromatic_shift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:x_chromatic_shift
+    alias: x_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: x_chromatic_shift
+    range: float
+    required: false
+  SpotQualityRecord_y_chromatic_shift:
+    name: SpotQualityRecord_y_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/y_chromatic_shift
+    description: Chromatic aberration correction offset applied to the Y coordinate
+      of this Spot. Same unit as Y.
+    examples:
+    - value: '0.04'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: y_chromatic_shift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:y_chromatic_shift
+    alias: y_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: y_chromatic_shift
+    range: float
+    required: false
+  SpotQualityRecord_z_chromatic_shift:
+    name: SpotQualityRecord_z_chromatic_shift
+    definition_uri: https://w3id.org/fof-ct/z_chromatic_shift
+    description: Chromatic aberration correction offset applied to the Z coordinate
+      of this Spot. Same unit as Z.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: z_chromatic_shift
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:z_chromatic_shift
+    alias: z_chromatic_shift
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: z_chromatic_shift
+    range: float
+    required: false
+  SpotQualityRecord_x_loc_error:
+    name: SpotQualityRecord_x_loc_error
+    definition_uri: https://w3id.org/fof-ct/x_loc_error
+    description: Localization error estimate for the X coordinate of this Spot (e.g.
+      standard deviation of repeated measurements). Same unit as X.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: x_loc_error
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:x_loc_error
+    alias: x_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: x_loc_error
+    range: float
+    required: false
+  SpotQualityRecord_y_loc_error:
+    name: SpotQualityRecord_y_loc_error
+    definition_uri: https://w3id.org/fof-ct/y_loc_error
+    description: Localization error estimate for the Y coordinate of this Spot. Same
+      unit as Y.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: y_loc_error
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:y_loc_error
+    alias: y_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: y_loc_error
+    range: float
+    required: false
+  SpotQualityRecord_z_loc_error:
+    name: SpotQualityRecord_z_loc_error
+    definition_uri: https://w3id.org/fof-ct/z_loc_error
+    description: Localization error estimate for the Z coordinate of this Spot. Same
+      unit as Z.
+    examples:
+    - value: '0.05'
+    from_schema: https://w3id.org/fof-ct/quality
+    is_a: z_loc_error
+    domain: SpotQualityRecord
+    slot_uri: fof_ct:z_loc_error
+    alias: z_loc_error
+    owner: SpotQualityRecord
+    domain_of:
+    - SpotQualityRecord
+    is_usage_slot: true
+    usage_slot_name: z_loc_error
+    range: float
+    required: false
   SpotQualityTable_fof_ct_version:
     name: SpotQualityTable_fof_ct_version
     definition_uri: https://w3id.org/fof-ct/fof_ct_version
@@ -4713,6 +5561,1086 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
+  SMLocalization_loc_id:
+    name: SMLocalization_loc_id
+    definition_uri: https://w3id.org/fof-ct/loc_id
+    description: Unique integer identifier for this SM localization event. Loc_ID
+      values are unique across the entire dataset.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: loc_id
+    domain: SMLocalization
+    slot_uri: fof_ct:loc_id
+    identifier: true
+    alias: loc_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: loc_id
+    range: integer
+    required: true
+  SMLocalization_x:
+    name: SMLocalization_x
+    definition_uri: https://w3id.org/fof-ct/x
+    description: Sub-pixel X coordinate of this SM localization event in the unit
+      specified by xyz_unit. The reported value is the final position after all post-processing
+      corrections.
+    examples:
+    - value: '14.43'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: x
+    domain: SMLocalization
+    slot_uri: fof_ct:x
+    alias: x
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: x
+    range: float
+    required: true
+  SMLocalization_y:
+    name: SMLocalization_y
+    definition_uri: https://w3id.org/fof-ct/y
+    description: Sub-pixel Y coordinate of this detected event (Spot or localisation)
+      in the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    examples:
+    - value: '41.43'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: y
+    domain: SMLocalization
+    slot_uri: fof_ct:y
+    alias: y
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: y
+    range: float
+    required: true
+  SMLocalization_z:
+    name: SMLocalization_z
+    definition_uri: https://w3id.org/fof-ct/z
+    description: Sub-pixel Z coordinate of this detected event (Spot or localisation)
+      in the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    examples:
+    - value: '1.23'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: z
+    domain: SMLocalization
+    slot_uri: fof_ct:z
+    alias: z
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: z
+    range: float
+    required: true
+  SMLocalization_spot_id:
+    name: SMLocalization_spot_id
+    definition_uri: https://w3id.org/fof-ct/spot_id
+    description: Identifier of the Spot (centroid of the SM localization cloud) to
+      which this localization belongs. Conditionally required when Spot/Trace post-processing
+      results are reported.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: spot_id
+    domain: SMLocalization
+    slot_uri: fof_ct:spot_id
+    alias: spot_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: spot_id
+    range: integer
+    required: false
+  SMLocalization_trace_id:
+    name: SMLocalization_trace_id
+    definition_uri: https://w3id.org/fof-ct/trace_id
+    description: Identifier of the chromatin Trace to which this localization belongs.
+      Conditionally required when Trace results are reported.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: trace_id
+    domain: SMLocalization
+    slot_uri: fof_ct:trace_id
+    alias: trace_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: trace_id
+    range: integer
+    required: false
+  SMLocalization_chrom:
+    name: SMLocalization_chrom
+    definition_uri: https://w3id.org/fof-ct/chrom
+    description: Chromosome identifier for the genomic locus targeted by this SM localization
+      event (e.g. chr1, chrX).
+    examples:
+    - value: chr1
+    - value: chrX
+    from_schema: https://w3id.org/fof-ct/vol_core
+    is_a: chrom
+    domain: SMLocalization
+    slot_uri: fof_ct:chrom
+    alias: chrom
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: chrom
+    range: string
+    required: true
+  SMLocalization_chrom_start:
+    name: SMLocalization_chrom_start
+    definition_uri: https://w3id.org/fof-ct/chrom_start
+    description: Start coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    examples:
+    - value: '1000000'
+    from_schema: https://w3id.org/fof-ct/vol_core
+    is_a: chrom_start
+    domain: SMLocalization
+    slot_uri: fof_ct:chrom_start
+    alias: chrom_start
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: chrom_start
+    range: integer
+    required: true
+  SMLocalization_chrom_end:
+    name: SMLocalization_chrom_end
+    definition_uri: https://w3id.org/fof-ct/chrom_end
+    description: End coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    examples:
+    - value: '1050000'
+    from_schema: https://w3id.org/fof-ct/vol_core
+    is_a: chrom_end
+    domain: SMLocalization
+    slot_uri: fof_ct:chrom_end
+    alias: chrom_end
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: chrom_end
+    range: integer
+    required: true
+  SMLocalization_sub_cell_roi_id:
+    name: SMLocalization_sub_cell_roi_id
+    definition_uri: https://w3id.org/fof-ct/sub_cell_roi_id
+    description: Unique identifier for a sub-cellular structure ROI (e.g., nucleus,
+      nucleolus). Links to the Sub-Cell ROI Data table.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: sub_cell_roi_id
+    domain: SMLocalization
+    slot_uri: fof_ct:sub_cell_roi_id
+    alias: sub_cell_roi_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: sub_cell_roi_id
+    range: integer
+    required: false
+  SMLocalization_cell_id:
+    name: SMLocalization_cell_id
+    definition_uri: https://w3id.org/fof-ct/cell_id
+    description: Unique identifier for a Cell. Links to the Cell Data table.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: cell_id
+    domain: SMLocalization
+    slot_uri: fof_ct:cell_id
+    alias: cell_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: cell_id
+    range: integer
+    required: false
+  SMLocalization_extra_cell_roi_id:
+    name: SMLocalization_extra_cell_roi_id
+    definition_uri: https://w3id.org/fof-ct/extra_cell_roi_id
+    description: Unique identifier for an extracellular structure ROI (e.g., tissue,
+      organoid). Links to the Extra-Cell ROI Data table.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: extra_cell_roi_id
+    domain: SMLocalization
+    slot_uri: fof_ct:extra_cell_roi_id
+    alias: extra_cell_roi_id
+    owner: SMLocalization
+    domain_of:
+    - SMLocalization
+    is_usage_slot: true
+    usage_slot_name: extra_cell_roi_id
+    range: integer
+    required: false
+  SMLocalizationTable_fof_ct_version:
+    name: SMLocalizationTable_fof_ct_version
+    definition_uri: https://w3id.org/fof-ct/fof_ct_version
+    description: Version of the FOF-CT format used in this file. Always the first
+      line of the file header (##FOF-CT_Version=).
+    examples:
+    - value: v1.0
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: fof_ct_version
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:fof_ct_version
+    alias: fof_ct_version
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: fof_ct_version
+    range: string
+    required: true
+    pattern: ^v[0-9]+\.[0-9]+
+  SMLocalizationTable_table_namespace:
+    name: SMLocalizationTable_table_namespace
+    definition_uri: https://w3id.org/fof-ct/table_namespace
+    description: 'Identifier for this table type. The required value is specific to
+      each table. Written as ##Table_Namespace= in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: table_namespace
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:table_namespace
+    alias: table_namespace
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: table_namespace
+    range: string
+    required: true
+    equals_string: 4dn_FOF-CT_vol_core
+  SMLocalizationTable_lab_name:
+    name: SMLocalizationTable_lab_name
+    definition_uri: https://w3id.org/fof-ct/lab_name
+    description: 'Name of the laboratory where the experiment was performed. Written
+      as #Lab_Name: in the file header.'
+    examples:
+    - value: Nobel
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: lab_name
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:lab_name
+    alias: lab_name
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: lab_name
+    range: string
+    required: true
+  SMLocalizationTable_experimenter_name:
+    name: SMLocalizationTable_experimenter_name
+    definition_uri: https://w3id.org/fof-ct/experimenter_name
+    description: 'Full name of the person who performed the experiment. Written as
+      #Experimenter_Name: in the file header.'
+    examples:
+    - value: John Doe
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_name
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:experimenter_name
+    alias: experimenter_name
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_name
+    range: string
+    required: true
+  SMLocalizationTable_experimenter_contact:
+    name: SMLocalizationTable_experimenter_contact
+    definition_uri: https://w3id.org/fof-ct/experimenter_contact
+    description: 'Email address of the person who performed the experiment. Written
+      as #Experimenter_Contact: in the file header.'
+    examples:
+    - value: john.doe@email.com
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_contact
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:experimenter_contact
+    alias: experimenter_contact
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_contact
+    range: string
+    required: true
+    pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+  SMLocalizationTable_description:
+    name: SMLocalizationTable_description
+    definition_uri: https://w3id.org/fof-ct/description
+    description: 'Free-text description of the experiment and of the data recorded
+      in this table. Should provide sufficient detail for interpretation and reproducibility.
+      Written as #Description: in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: description
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:description
+    alias: description
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: description
+    range: string
+    required: true
+  SMLocalizationTable_softwares:
+    name: SMLocalizationTable_softwares
+    definition_uri: https://w3id.org/fof-ct/softwares
+    description: 'One or more Software entries documenting every tool used to produce
+      or process data in this table. Written as repeating #Software_* blocks in the
+      file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: softwares
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:softwares
+    alias: softwares
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: softwares
+    range: Software
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  SMLocalizationTable_additional_tables:
+    name: SMLocalizationTable_additional_tables
+    definition_uri: https://w3id.org/fof-ct/additional_tables
+    description: 'List of additional FOF-CT table namespaces being submitted alongside
+      this table, separated by commas in the TSV header. Written as #Additional_Tables:
+      in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: additional_tables
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:additional_tables
+    alias: additional_tables
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: additional_tables
+    range: TableNamespaceEnum
+    required: true
+    multivalued: true
+  SMLocalizationTable_genome_assembly:
+    name: SMLocalizationTable_genome_assembly
+    definition_uri: https://w3id.org/fof-ct/genome_assembly
+    description: 'Genome build used for Chrom, Chrom_Start and Chrom_End coordinates.
+      The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome
+      under study contains an INSERTION or DELETION the value must use the mandatory
+      ''custom-build:'' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)).
+      Written as ##Genome_Assembly= in the file header.'
+    examples:
+    - value: GRCh38
+    - value: custom-build:GRCm38+pJT039(insertion)
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: genome_assembly
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:genome_assembly
+    alias: genome_assembly
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: genome_assembly
+    range: string
+    required: true
+  SMLocalizationTable_xyz_unit:
+    name: SMLocalizationTable_xyz_unit
+    definition_uri: https://w3id.org/fof-ct/xyz_unit
+    description: 'Unit used to represent X, Y, Z spatial coordinates or distances
+      in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
+      be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
+      Conditionally required when any location or distance metric is reported.'
+    examples:
+    - value: micron
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: xyz_unit
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:xyz_unit
+    alias: xyz_unit
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: xyz_unit
+    range: XYZUnitEnum
+    required: true
+  SMLocalizationTable_sm_localizations:
+    name: SMLocalizationTable_sm_localizations
+    definition_uri: https://w3id.org/fof-ct/sm_localizations
+    description: The complete collection of SMLocalization events constituting this
+      dataset. Each entry corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/vol_core
+    is_a: sm_localizations
+    domain: SMLocalizationTable
+    slot_uri: fof_ct:sm_localizations
+    alias: sm_localizations
+    owner: SMLocalizationTable
+    domain_of:
+    - SMLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: sm_localizations
+    range: SMLocalization
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  SMLocalizationQualityRecord_loc_id:
+    name: SMLocalizationQualityRecord_loc_id
+    definition_uri: https://w3id.org/fof-ct/loc_id
+    description: Unique integer identifier for the SM localization event to which
+      these quality metrics belong. Links to the corresponding SMLocalization record
+      in the SM Localization Data table (table 13).
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: loc_id
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:loc_id
+    identifier: true
+    alias: loc_id
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: loc_id
+    range: integer
+    required: true
+  SMLocalizationQualityRecord_x_precision:
+    name: SMLocalizationQualityRecord_x_precision
+    definition_uri: https://w3id.org/fof-ct/x_precision
+    description: Metric quantifying the precision of the X-axis localization estimate.
+      Typically the Cramer-Rao lower bound or Thompson method estimate. Recommended
+      in the Spot Quality table; mandatory in the SM Localization Quality table. Must
+      be accompanied by a description in the file header.
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: x_precision
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:x_precision
+    alias: x_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: x_precision
+    range: float
+    required: true
+  SMLocalizationQualityRecord_y_precision:
+    name: SMLocalizationQualityRecord_y_precision
+    definition_uri: https://w3id.org/fof-ct/y_precision
+    description: Metric quantifying the precision of the Y-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.01'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: y_precision
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:y_precision
+    alias: y_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: y_precision
+    range: float
+    required: true
+  SMLocalizationQualityRecord_z_precision:
+    name: SMLocalizationQualityRecord_z_precision
+    definition_uri: https://w3id.org/fof-ct/z_precision
+    description: Metric quantifying the precision of the Z-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
+      table.
+    examples:
+    - value: '0.02'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: z_precision
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:z_precision
+    alias: z_precision
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: z_precision
+    range: float
+    required: true
+  SMLocalizationQualityRecord_photon_count:
+    name: SMLocalizationQualityRecord_photon_count
+    definition_uri: https://w3id.org/fof-ct/photon_count
+    description: 'Recommended: number of photons detected for this localization.'
+    examples:
+    - value: '1500'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: photon_count
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:photon_count
+    alias: photon_count
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: photon_count
+    range: integer
+    required: false
+  SMLocalizationQualityRecord_goodness_of_fit:
+    name: SMLocalizationQualityRecord_goodness_of_fit
+    definition_uri: https://w3id.org/fof-ct/goodness_of_fit
+    description: 'Recommended: goodness-of-fit metric for the localization model.'
+    examples:
+    - value: '0.95'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: goodness_of_fit
+    domain: SMLocalizationQualityRecord
+    slot_uri: fof_ct:goodness_of_fit
+    alias: goodness_of_fit
+    owner: SMLocalizationQualityRecord
+    domain_of:
+    - SMLocalizationQualityRecord
+    is_usage_slot: true
+    usage_slot_name: goodness_of_fit
+    range: float
+    required: false
+  SMLocalizationQualityTable_fof_ct_version:
+    name: SMLocalizationQualityTable_fof_ct_version
+    definition_uri: https://w3id.org/fof-ct/fof_ct_version
+    description: Version of the FOF-CT format used in this file. Always the first
+      line of the file header (##FOF-CT_Version=).
+    examples:
+    - value: v1.0
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: fof_ct_version
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:fof_ct_version
+    alias: fof_ct_version
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: fof_ct_version
+    range: string
+    required: true
+    pattern: ^v[0-9]+\.[0-9]+
+  SMLocalizationQualityTable_table_namespace:
+    name: SMLocalizationQualityTable_table_namespace
+    definition_uri: https://w3id.org/fof-ct/table_namespace
+    description: 'Identifier for this table type. The required value is specific to
+      each table. Written as ##Table_Namespace= in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: table_namespace
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:table_namespace
+    alias: table_namespace
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: table_namespace
+    range: string
+    required: true
+    equals_string: 4dn_FOF-CT_vol_quality
+  SMLocalizationQualityTable_lab_name:
+    name: SMLocalizationQualityTable_lab_name
+    definition_uri: https://w3id.org/fof-ct/lab_name
+    description: 'Name of the laboratory where the experiment was performed. Written
+      as #Lab_Name: in the file header.'
+    examples:
+    - value: Nobel
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: lab_name
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:lab_name
+    alias: lab_name
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: lab_name
+    range: string
+    required: true
+  SMLocalizationQualityTable_experimenter_name:
+    name: SMLocalizationQualityTable_experimenter_name
+    definition_uri: https://w3id.org/fof-ct/experimenter_name
+    description: 'Full name of the person who performed the experiment. Written as
+      #Experimenter_Name: in the file header.'
+    examples:
+    - value: John Doe
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_name
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:experimenter_name
+    alias: experimenter_name
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_name
+    range: string
+    required: true
+  SMLocalizationQualityTable_experimenter_contact:
+    name: SMLocalizationQualityTable_experimenter_contact
+    definition_uri: https://w3id.org/fof-ct/experimenter_contact
+    description: 'Email address of the person who performed the experiment. Written
+      as #Experimenter_Contact: in the file header.'
+    examples:
+    - value: john.doe@email.com
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_contact
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:experimenter_contact
+    alias: experimenter_contact
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_contact
+    range: string
+    required: true
+    pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+  SMLocalizationQualityTable_description:
+    name: SMLocalizationQualityTable_description
+    definition_uri: https://w3id.org/fof-ct/description
+    description: 'Free-text description of the experiment and of the data recorded
+      in this table. Should provide sufficient detail for interpretation and reproducibility.
+      Written as #Description: in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: description
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:description
+    alias: description
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: description
+    range: string
+    required: true
+  SMLocalizationQualityTable_softwares:
+    name: SMLocalizationQualityTable_softwares
+    definition_uri: https://w3id.org/fof-ct/softwares
+    description: 'One or more Software entries documenting every tool used to produce
+      or process data in this table. Written as repeating #Software_* blocks in the
+      file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: softwares
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:softwares
+    alias: softwares
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: softwares
+    range: Software
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  SMLocalizationQualityTable_additional_tables:
+    name: SMLocalizationQualityTable_additional_tables
+    definition_uri: https://w3id.org/fof-ct/additional_tables
+    description: 'List of additional FOF-CT table namespaces being submitted alongside
+      this table, separated by commas in the TSV header. Written as #Additional_Tables:
+      in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: additional_tables
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:additional_tables
+    alias: additional_tables
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: additional_tables
+    range: TableNamespaceEnum
+    required: true
+    multivalued: true
+  SMLocalizationQualityTable_xyz_unit:
+    name: SMLocalizationQualityTable_xyz_unit
+    definition_uri: https://w3id.org/fof-ct/xyz_unit
+    description: 'Unit used to represent X, Y, Z spatial coordinates or distances
+      in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
+      be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
+      Conditionally required when any location or distance metric is reported.'
+    examples:
+    - value: micron
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: xyz_unit
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:xyz_unit
+    alias: xyz_unit
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: xyz_unit
+    range: XYZUnitEnum
+    required: true
+  SMLocalizationQualityTable_sm_localization_quality_records:
+    name: SMLocalizationQualityTable_sm_localization_quality_records
+    definition_uri: https://w3id.org/fof-ct/sm_localization_quality_records
+    description: The complete collection of SMLocalizationQualityRecord rows constituting
+      this dataset. Each record corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/vol_quality
+    is_a: sm_localization_quality_records
+    domain: SMLocalizationQualityTable
+    slot_uri: fof_ct:sm_localization_quality_records
+    alias: sm_localization_quality_records
+    owner: SMLocalizationQualityTable
+    domain_of:
+    - SMLocalizationQualityTable
+    is_usage_slot: true
+    usage_slot_name: sm_localization_quality_records
+    range: SMLocalizationQualityRecord
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  UndecodedLocalization_loc_id:
+    name: UndecodedLocalization_loc_id
+    definition_uri: https://w3id.org/fof-ct/loc_id
+    description: Unique integer identifier for this undecoded localization event.
+      Loc_ID values are unique across the entire dataset.
+    examples:
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: loc_id
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:loc_id
+    identifier: true
+    alias: loc_id
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: loc_id
+    range: integer
+    required: true
+  UndecodedLocalization_x:
+    name: UndecodedLocalization_x
+    definition_uri: https://w3id.org/fof-ct/x
+    description: Sub-pixel X coordinate of this detected event (Spot or localisation)
+      in the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections (drift correction, chromatic correction,
+      etc.).
+    examples:
+    - value: '14.43'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: x
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:x
+    alias: x
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: x
+    range: float
+    required: true
+  UndecodedLocalization_y:
+    name: UndecodedLocalization_y
+    definition_uri: https://w3id.org/fof-ct/y
+    description: Sub-pixel Y coordinate of this detected event (Spot or localisation)
+      in the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    examples:
+    - value: '41.43'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: y
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:y
+    alias: y
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: y
+    range: float
+    required: true
+  UndecodedLocalization_z:
+    name: UndecodedLocalization_z
+    definition_uri: https://w3id.org/fof-ct/z
+    description: Sub-pixel Z coordinate of this detected event (Spot or localisation)
+      in the unit specified by xyz_unit. The reported value is the final position
+      after all post-processing corrections.
+    examples:
+    - value: '1.23'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: z
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:z
+    alias: z
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: z
+    range: float
+    required: true
+  UndecodedLocalization_frame_id:
+    name: UndecodedLocalization_frame_id
+    definition_uri: https://w3id.org/fof-ct/frame_id
+    description: Unique integer identifier for the imaging frame in which this undecoded
+      localization event was detected. Used in the Undecoded SM Localization table.
+    examples:
+    - value: '42'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: frame_id
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:frame_id
+    alias: frame_id
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: frame_id
+    range: integer
+    required: true
+  UndecodedLocalization_fluor:
+    name: UndecodedLocalization_fluor
+    definition_uri: https://w3id.org/fof-ct/fluor
+    description: Fluorescent channel in which this localization event was detected
+      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and
+      Undecoded SM Localization tables.
+    examples:
+    - value: Cy5
+    - value: Alexa647
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: fluor
+    domain: UndecodedLocalization
+    slot_uri: fof_ct:fluor
+    alias: fluor
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    is_usage_slot: true
+    usage_slot_name: fluor
+    range: string
+    required: true
+  UndecodedLocalizationTable_fof_ct_version:
+    name: UndecodedLocalizationTable_fof_ct_version
+    definition_uri: https://w3id.org/fof-ct/fof_ct_version
+    description: Version of the FOF-CT format used in this file. Always the first
+      line of the file header (##FOF-CT_Version=).
+    examples:
+    - value: v1.0
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: fof_ct_version
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:fof_ct_version
+    alias: fof_ct_version
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: fof_ct_version
+    range: string
+    required: true
+    pattern: ^v[0-9]+\.[0-9]+
+  UndecodedLocalizationTable_table_namespace:
+    name: UndecodedLocalizationTable_table_namespace
+    definition_uri: https://w3id.org/fof-ct/table_namespace
+    description: 'Identifier for this table type. The required value is specific to
+      each table. Written as ##Table_Namespace= in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: table_namespace
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:table_namespace
+    alias: table_namespace
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: table_namespace
+    range: string
+    required: true
+    equals_string: 4dn_FOF-CT_undecoded
+  UndecodedLocalizationTable_lab_name:
+    name: UndecodedLocalizationTable_lab_name
+    definition_uri: https://w3id.org/fof-ct/lab_name
+    description: 'Name of the laboratory where the experiment was performed. Written
+      as #Lab_Name: in the file header.'
+    examples:
+    - value: Nobel
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: lab_name
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:lab_name
+    alias: lab_name
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: lab_name
+    range: string
+    required: true
+  UndecodedLocalizationTable_experimenter_name:
+    name: UndecodedLocalizationTable_experimenter_name
+    definition_uri: https://w3id.org/fof-ct/experimenter_name
+    description: 'Full name of the person who performed the experiment. Written as
+      #Experimenter_Name: in the file header.'
+    examples:
+    - value: John Doe
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_name
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:experimenter_name
+    alias: experimenter_name
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_name
+    range: string
+    required: true
+  UndecodedLocalizationTable_experimenter_contact:
+    name: UndecodedLocalizationTable_experimenter_contact
+    definition_uri: https://w3id.org/fof-ct/experimenter_contact
+    description: 'Email address of the person who performed the experiment. Written
+      as #Experimenter_Contact: in the file header.'
+    examples:
+    - value: john.doe@email.com
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: experimenter_contact
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:experimenter_contact
+    alias: experimenter_contact
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: experimenter_contact
+    range: string
+    required: true
+    pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+  UndecodedLocalizationTable_description:
+    name: UndecodedLocalizationTable_description
+    definition_uri: https://w3id.org/fof-ct/description
+    description: 'Free-text description of the experiment and of the data recorded
+      in this table. Should provide sufficient detail for interpretation and reproducibility.
+      Written as #Description: in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: description
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:description
+    alias: description
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: description
+    range: string
+    required: true
+  UndecodedLocalizationTable_softwares:
+    name: UndecodedLocalizationTable_softwares
+    definition_uri: https://w3id.org/fof-ct/softwares
+    description: 'One or more Software entries documenting every tool used to produce
+      or process data in this table. Written as repeating #Software_* blocks in the
+      file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: softwares
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:softwares
+    alias: softwares
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: softwares
+    range: Software
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  UndecodedLocalizationTable_additional_tables:
+    name: UndecodedLocalizationTable_additional_tables
+    definition_uri: https://w3id.org/fof-ct/additional_tables
+    description: 'List of additional FOF-CT table namespaces being submitted alongside
+      this table, separated by commas in the TSV header. Written as #Additional_Tables:
+      in the file header.'
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: additional_tables
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:additional_tables
+    alias: additional_tables
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: additional_tables
+    range: TableNamespaceEnum
+    required: true
+    multivalued: true
+  UndecodedLocalizationTable_xyz_unit:
+    name: UndecodedLocalizationTable_xyz_unit
+    definition_uri: https://w3id.org/fof-ct/xyz_unit
+    description: 'Unit used to represent X, Y, Z spatial coordinates or distances
+      in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
+      be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
+      Conditionally required when any location or distance metric is reported.'
+    examples:
+    - value: micron
+    from_schema: https://w3id.org/fof-ct/common
+    is_a: xyz_unit
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:xyz_unit
+    alias: xyz_unit
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: xyz_unit
+    range: XYZUnitEnum
+    required: true
+  UndecodedLocalizationTable_undecoded_localizations:
+    name: UndecodedLocalizationTable_undecoded_localizations
+    definition_uri: https://w3id.org/fof-ct/undecoded_localizations
+    description: The complete collection of UndecodedLocalization events constituting
+      this dataset. Each entry corresponds to one data row in the TSV serialisation.
+    from_schema: https://w3id.org/fof-ct/undecoded
+    is_a: undecoded_localizations
+    domain: UndecodedLocalizationTable
+    slot_uri: fof_ct:undecoded_localizations
+    alias: undecoded_localizations
+    owner: UndecodedLocalizationTable
+    domain_of:
+    - UndecodedLocalizationTable
+    is_usage_slot: true
+    usage_slot_name: undecoded_localizations
+    range: UndecodedLocalization
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
 classes:
   Software:
     name: Software
@@ -4730,6 +6658,23 @@ classes:
     - software_repository
     - software_preferred_citation_id
     class_uri: fof_ct:Software
+  LocalizationMixin:
+    name: LocalizationMixin
+    definition_uri: https://w3id.org/fof-ct/LocalizationMixin
+    description: "Mixin capturing the shared concept of a single localization event\
+      \ across FOF-CT modalities. Used by Localization (demultiplexing), SMLocalization\
+      \ (vol_core), and UndecodedLocalization (undecoded). All three classes represent\
+      \ the same atomic measurement unit \u2014 the sub-pixel position of a detected\
+      \ fluorescence emission event \u2014 but differ in context, mandatory columns,\
+      \ and table role."
+    from_schema: https://w3id.org/fof-ct/common
+    mixin: true
+    slots:
+    - loc_id
+    - x
+    - y
+    - z
+    class_uri: fof_ct:LocalizationMixin
   Localization:
     name: Localization
     definition_uri: https://w3id.org/fof-ct/Localization
@@ -4741,16 +6686,19 @@ classes:
       when the localisation could not be assigned to any Spot. This class accepts
       additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
     from_schema: https://w3id.org/fof-ct/demultiplexing
+    mixins:
+    - LocalizationMixin
     slots:
-    - Localization_loc_id
     - Localization_spot_id
+    - Localization_fluor
+    - Localization_loc_id
     - Localization_x
     - Localization_y
     - Localization_z
-    - Localization_fluor
     slot_usage:
       loc_id:
         name: loc_id
+        identifier: true
         required: true
       spot_id:
         name: spot_id
@@ -4768,9 +6716,9 @@ classes:
         name: fluor
         required: true
     class_uri: fof_ct:Localization
-  LocalizationTable:
-    name: LocalizationTable
-    definition_uri: https://w3id.org/fof-ct/LocalizationTable
+  DemultiplexingTable:
+    name: DemultiplexingTable
+    definition_uri: https://w3id.org/fof-ct/DemultiplexingTable
     description: 'The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace:
       4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds
       all dataset-level provenance metadata (recorded as header lines in the CSV serialisation)
@@ -4779,19 +6727,19 @@ classes:
       for multiplexed FISH experiments.'
     from_schema: https://w3id.org/fof-ct/demultiplexing
     slots:
-    - LocalizationTable_fof_ct_version
-    - LocalizationTable_table_namespace
-    - LocalizationTable_lab_name
-    - LocalizationTable_experimenter_name
-    - LocalizationTable_experimenter_contact
-    - LocalizationTable_description
-    - LocalizationTable_softwares
-    - LocalizationTable_additional_tables
+    - DemultiplexingTable_fof_ct_version
+    - DemultiplexingTable_table_namespace
+    - DemultiplexingTable_lab_name
+    - DemultiplexingTable_experimenter_name
+    - DemultiplexingTable_experimenter_contact
+    - DemultiplexingTable_description
+    - DemultiplexingTable_softwares
+    - DemultiplexingTable_additional_tables
     - xyz_unit
     - time_unit
     - intensity_unit
     - intensity_measurement_method
-    - LocalizationTable_localizations
+    - DemultiplexingTable_localizations
     slot_usage:
       fof_ct_version:
         name: fof_ct_version
@@ -4823,7 +6771,7 @@ classes:
       localizations:
         name: localizations
         required: true
-    class_uri: fof_ct:LocalizationTable
+    class_uri: fof_ct:DemultiplexingTable
     tree_root: true
   Trace:
     name: Trace
@@ -5021,6 +6969,27 @@ classes:
     from_schema: https://w3id.org/fof-ct/quality
     slots:
     - SpotQualityRecord_spot_id
+    - SpotQualityRecord_channel_name
+    - SpotQualityRecord_fluorophore_name
+    - SpotQualityRecord_x_precision
+    - SpotQualityRecord_y_precision
+    - SpotQualityRecord_z_precision
+    - SpotQualityRecord_photon_count
+    - SpotQualityRecord_goodness_of_fit
+    - SpotQualityRecord_centroid_intensity
+    - SpotQualityRecord_peak_intensity
+    - SpotQualityRecord_raw_x
+    - SpotQualityRecord_raw_y
+    - SpotQualityRecord_raw_z
+    - SpotQualityRecord_x_drift
+    - SpotQualityRecord_y_drift
+    - SpotQualityRecord_z_drift
+    - SpotQualityRecord_x_chromatic_shift
+    - SpotQualityRecord_y_chromatic_shift
+    - SpotQualityRecord_z_chromatic_shift
+    - SpotQualityRecord_x_loc_error
+    - SpotQualityRecord_y_loc_error
+    - SpotQualityRecord_z_loc_error
     slot_usage:
       spot_id:
         name: spot_id
@@ -5029,6 +6998,71 @@ classes:
           table (table 1). Must be unique within this table.
         identifier: true
         required: true
+      channel_name:
+        name: channel_name
+        required: true
+      fluorophore_name:
+        name: fluorophore_name
+        required: true
+      x_precision:
+        name: x_precision
+        description: 'Recommended: metric for X localization precision'
+        required: false
+      y_precision:
+        name: y_precision
+        required: false
+      z_precision:
+        name: z_precision
+        required: false
+      photon_count:
+        name: photon_count
+        description: Optional standardised name for photon count
+        required: false
+      goodness_of_fit:
+        name: goodness_of_fit
+        required: false
+      centroid_intensity:
+        name: centroid_intensity
+        required: false
+      peak_intensity:
+        name: peak_intensity
+        required: false
+      raw_x:
+        name: raw_x
+        required: false
+      raw_y:
+        name: raw_y
+        required: false
+      raw_z:
+        name: raw_z
+        required: false
+      x_drift:
+        name: x_drift
+        required: false
+      y_drift:
+        name: y_drift
+        required: false
+      z_drift:
+        name: z_drift
+        required: false
+      x_chromatic_shift:
+        name: x_chromatic_shift
+        required: false
+      y_chromatic_shift:
+        name: y_chromatic_shift
+        required: false
+      z_chromatic_shift:
+        name: z_chromatic_shift
+        required: false
+      x_loc_error:
+        name: x_loc_error
+        required: false
+      y_loc_error:
+        name: y_loc_error
+        required: false
+      z_loc_error:
+        name: z_loc_error
+        required: false
     class_uri: fof_ct:SpotQualityRecord
   SpotQualityTable:
     name: SpotQualityTable
@@ -5869,9 +7903,345 @@ classes:
         required: true
     class_uri: fof_ct:ROIMappingTable
     tree_root: true
+  SMLocalization:
+    name: SMLocalization
+    definition_uri: https://w3id.org/fof-ct/SMLocalization
+    description: A single individual single-molecule (SM) localization event in a
+      FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section
+      of the SM Localization Data table. The loc_id field is the primary key; spot_id
+      links this localization to its parent Spot (if Spot/Trace post-processing was
+      performed); trace_id links it to its parent Trace. Sub_Cell_ROI_ID, Cell_ID
+      and Extra_Cell_ROI_ID optionally link the localization to spatial context tables.
+    from_schema: https://w3id.org/fof-ct/vol_core
+    mixins:
+    - LocalizationMixin
+    slots:
+    - SMLocalization_spot_id
+    - SMLocalization_trace_id
+    - SMLocalization_chrom
+    - SMLocalization_chrom_start
+    - SMLocalization_chrom_end
+    - SMLocalization_sub_cell_roi_id
+    - SMLocalization_cell_id
+    - SMLocalization_extra_cell_roi_id
+    - SMLocalization_loc_id
+    - SMLocalization_x
+    - SMLocalization_y
+    - SMLocalization_z
+    slot_usage:
+      loc_id:
+        name: loc_id
+        description: Unique integer identifier for this SM localization event. Loc_ID
+          values are unique across the entire dataset.
+        identifier: true
+        required: true
+      x:
+        name: x
+        description: Sub-pixel X coordinate of this SM localization event in the unit
+          specified by xyz_unit. The reported value is the final position after all
+          post-processing corrections.
+        required: true
+      y:
+        name: y
+        required: true
+      z:
+        name: z
+        required: true
+      spot_id:
+        name: spot_id
+        description: Identifier of the Spot (centroid of the SM localization cloud)
+          to which this localization belongs. Conditionally required when Spot/Trace
+          post-processing results are reported.
+        required: false
+      trace_id:
+        name: trace_id
+        description: Identifier of the chromatin Trace to which this localization
+          belongs. Conditionally required when Trace results are reported.
+        required: false
+      chrom:
+        name: chrom
+        required: true
+      chrom_start:
+        name: chrom_start
+        required: true
+      chrom_end:
+        name: chrom_end
+        required: true
+      sub_cell_roi_id:
+        name: sub_cell_roi_id
+        required: false
+      cell_id:
+        name: cell_id
+        required: false
+      extra_cell_roi_id:
+        name: extra_cell_roi_id
+        required: false
+    class_uri: fof_ct:SMLocalization
+  SMLocalizationTable:
+    name: SMLocalizationTable
+    definition_uri: https://w3id.org/fof-ct/SMLocalizationTable
+    description: 'The SM Localization Data table of a FOF-vol-CT dataset (namespace:
+      4dn_FOF-CT_vol_core). This is the mandatory primary data table for volumetric
+      FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace
+      Data table is optional for FOF-vol-CT submissions but may be included to report
+      post-processing results derived from the localization data.'
+    from_schema: https://w3id.org/fof-ct/vol_core
+    slots:
+    - SMLocalizationTable_fof_ct_version
+    - SMLocalizationTable_table_namespace
+    - SMLocalizationTable_lab_name
+    - SMLocalizationTable_experimenter_name
+    - SMLocalizationTable_experimenter_contact
+    - SMLocalizationTable_description
+    - SMLocalizationTable_softwares
+    - SMLocalizationTable_additional_tables
+    - SMLocalizationTable_genome_assembly
+    - SMLocalizationTable_xyz_unit
+    - time_unit
+    - intensity_unit
+    - intensity_measurement_method
+    - SMLocalizationTable_sm_localizations
+    slot_usage:
+      fof_ct_version:
+        name: fof_ct_version
+        required: true
+      table_namespace:
+        name: table_namespace
+        required: true
+        equals_string: 4dn_FOF-CT_vol_core
+      lab_name:
+        name: lab_name
+        required: true
+      experimenter_name:
+        name: experimenter_name
+        required: true
+      experimenter_contact:
+        name: experimenter_contact
+        required: true
+      description:
+        name: description
+        required: true
+      softwares:
+        name: softwares
+        range: Software
+        required: true
+        multivalued: true
+      additional_tables:
+        name: additional_tables
+        required: true
+      genome_assembly:
+        name: genome_assembly
+        required: true
+      xyz_unit:
+        name: xyz_unit
+        required: true
+      sm_localizations:
+        name: sm_localizations
+        required: true
+    class_uri: fof_ct:SMLocalizationTable
+    tree_root: true
+  SMLocalizationQualityRecord:
+    name: SMLocalizationQualityRecord
+    definition_uri: https://w3id.org/fof-ct/SMLocalizationQualityRecord
+    description: A single row in the SM Localization Quality table. Each instance
+      captures quality metrics for one SM localization event identified by Loc_ID.
+      X_Precision, Y_Precision and Z_Precision are mandatory. Photon_Count and Goodness_of_Fit
+      are recommended. Additional user-defined optional columns must be described
+      in the file header.
+    from_schema: https://w3id.org/fof-ct/vol_quality
+    slots:
+    - SMLocalizationQualityRecord_loc_id
+    - SMLocalizationQualityRecord_x_precision
+    - SMLocalizationQualityRecord_y_precision
+    - SMLocalizationQualityRecord_z_precision
+    - SMLocalizationQualityRecord_photon_count
+    - SMLocalizationQualityRecord_goodness_of_fit
+    slot_usage:
+      loc_id:
+        name: loc_id
+        description: Unique integer identifier for the SM localization event to which
+          these quality metrics belong. Links to the corresponding SMLocalization
+          record in the SM Localization Data table (table 13).
+        identifier: true
+        required: true
+      x_precision:
+        name: x_precision
+        required: true
+      y_precision:
+        name: y_precision
+        required: true
+      z_precision:
+        name: z_precision
+        required: true
+      photon_count:
+        name: photon_count
+        description: 'Recommended: number of photons detected for this localization.'
+        required: false
+      goodness_of_fit:
+        name: goodness_of_fit
+        description: 'Recommended: goodness-of-fit metric for the localization model.'
+        required: false
+    class_uri: fof_ct:SMLocalizationQualityRecord
+  SMLocalizationQualityTable:
+    name: SMLocalizationQualityTable
+    definition_uri: https://w3id.org/fof-ct/SMLocalizationQualityTable
+    description: 'The SM Localization Quality table of a FOF-vol-CT dataset (namespace:
+      4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT submissions.
+      It provides localization quality metrics indexed by Loc_ID.'
+    from_schema: https://w3id.org/fof-ct/vol_quality
+    slots:
+    - SMLocalizationQualityTable_fof_ct_version
+    - SMLocalizationQualityTable_table_namespace
+    - SMLocalizationQualityTable_lab_name
+    - SMLocalizationQualityTable_experimenter_name
+    - SMLocalizationQualityTable_experimenter_contact
+    - SMLocalizationQualityTable_description
+    - SMLocalizationQualityTable_softwares
+    - SMLocalizationQualityTable_additional_tables
+    - SMLocalizationQualityTable_xyz_unit
+    - time_unit
+    - intensity_unit
+    - intensity_measurement_method
+    - SMLocalizationQualityTable_sm_localization_quality_records
+    slot_usage:
+      fof_ct_version:
+        name: fof_ct_version
+        required: true
+      table_namespace:
+        name: table_namespace
+        required: true
+        equals_string: 4dn_FOF-CT_vol_quality
+      lab_name:
+        name: lab_name
+        required: true
+      experimenter_name:
+        name: experimenter_name
+        required: true
+      experimenter_contact:
+        name: experimenter_contact
+        required: true
+      description:
+        name: description
+        required: true
+      softwares:
+        name: softwares
+        range: Software
+        required: true
+        multivalued: true
+      additional_tables:
+        name: additional_tables
+        required: true
+      xyz_unit:
+        name: xyz_unit
+        required: true
+      sm_localization_quality_records:
+        name: sm_localization_quality_records
+        required: true
+    class_uri: fof_ct:SMLocalizationQualityTable
+    tree_root: true
+  UndecodedLocalization:
+    name: UndecodedLocalization
+    definition_uri: https://w3id.org/fof-ct/UndecodedLocalization
+    description: A single raw, undecoded SM localization event in a FOF-vol-CT dataset.
+      Each instance corresponds to one row in the TSV data section of the Undecoded
+      SM Localization Data table. This class uses LocalizationMixin for the shared
+      loc_id, x, y, z slots. The frame_id column identifies the source imaging frame;
+      fluor identifies the detection channel.
+    from_schema: https://w3id.org/fof-ct/undecoded
+    mixins:
+    - LocalizationMixin
+    slots:
+    - UndecodedLocalization_frame_id
+    - UndecodedLocalization_fluor
+    - UndecodedLocalization_loc_id
+    - UndecodedLocalization_x
+    - UndecodedLocalization_y
+    - UndecodedLocalization_z
+    slot_usage:
+      loc_id:
+        name: loc_id
+        description: Unique integer identifier for this undecoded localization event.
+          Loc_ID values are unique across the entire dataset.
+        identifier: true
+        required: true
+      x:
+        name: x
+        required: true
+      y:
+        name: y
+        required: true
+      z:
+        name: z
+        required: true
+      frame_id:
+        name: frame_id
+        required: true
+      fluor:
+        name: fluor
+        required: true
+    class_uri: fof_ct:UndecodedLocalization
+  UndecodedLocalizationTable:
+    name: UndecodedLocalizationTable
+    definition_uri: https://w3id.org/fof-ct/UndecodedLocalizationTable
+    description: 'The Undecoded SM Localization Data table of a FOF-vol-CT dataset
+      (namespace: 4dn_FOF-CT_undecoded). This table is optional. It records raw localization
+      detections prior to any decoding or assignment step. Submission is recommended
+      when the raw detections are available and reproducibility of the decoding pipeline
+      is desired.'
+    from_schema: https://w3id.org/fof-ct/undecoded
+    slots:
+    - UndecodedLocalizationTable_fof_ct_version
+    - UndecodedLocalizationTable_table_namespace
+    - UndecodedLocalizationTable_lab_name
+    - UndecodedLocalizationTable_experimenter_name
+    - UndecodedLocalizationTable_experimenter_contact
+    - UndecodedLocalizationTable_description
+    - UndecodedLocalizationTable_softwares
+    - UndecodedLocalizationTable_additional_tables
+    - UndecodedLocalizationTable_xyz_unit
+    - time_unit
+    - intensity_unit
+    - intensity_measurement_method
+    - UndecodedLocalizationTable_undecoded_localizations
+    slot_usage:
+      fof_ct_version:
+        name: fof_ct_version
+        required: true
+      table_namespace:
+        name: table_namespace
+        required: true
+        equals_string: 4dn_FOF-CT_undecoded
+      lab_name:
+        name: lab_name
+        required: true
+      experimenter_name:
+        name: experimenter_name
+        required: true
+      experimenter_contact:
+        name: experimenter_contact
+        required: true
+      description:
+        name: description
+        required: true
+      softwares:
+        name: softwares
+        range: Software
+        required: true
+        multivalued: true
+      additional_tables:
+        name: additional_tables
+        required: true
+      xyz_unit:
+        name: xyz_unit
+        required: true
+      undecoded_localizations:
+        name: undecoded_localizations
+        required: true
+    class_uri: fof_ct:UndecodedLocalizationTable
+    tree_root: true
 metamodel_version: 1.11.0
 source_file: fof_ct.yaml
-source_file_date: '2026-05-24T11:07:29'
-source_file_size: 1568
-generation_date: '2026-05-24T11:07:38'
+source_file_date: '2026-05-25T08:15:20'
+source_file_size: 1903
+generation_date: '2026-05-25T08:15:29'
 

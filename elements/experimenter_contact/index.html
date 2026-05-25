@@ -298,7 +298,7 @@
   <span class="md-ellipsis">
     
   
-    Schema
+    Schema (FOF-bas-CT + FOF-vol-CT)
   
 
     
@@ -325,7 +325,7 @@
   <span class="md-ellipsis">
     
   
-    ER Diagram
+    ER Diagrams
   
 
     
@@ -544,7 +544,7 @@
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../LocalizationTable/">LocalizationTable</a></td>
+<td><a href="../DemultiplexingTable/">DemultiplexingTable</a></td>
 <td>The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_...</td>
 <td>yes</td>
 </tr>
@@ -598,6 +598,21 @@
 <td>The Cell/ROI Mapping table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_map...</td>
 <td>yes</td>
 </tr>
+<tr>
+<td><a href="../SMLocalizationTable/">SMLocalizationTable</a></td>
+<td>The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../SMLocalizationQualityTable/">SMLocalizationQualityTable</a></td>
+<td>The SM Localization Quality table of a FOF-vol-CT dataset (namespace: 4dn_FOF...</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../UndecodedLocalizationTable/">UndecodedLocalizationTable</a></td>
+<td>The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: ...</td>
+<td>yes</td>
+</tr>
 </tbody>
 </table>
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
@@ -616,7 +631,7 @@
 </tr>
 <tr>
 <td>Domain Of</td>
-<td><a href="../SpotTable/">SpotTable</a>, <a href="../LocalizationTable/">LocalizationTable</a>, <a href="../TraceTable/">TraceTable</a>, <a href="../RNASpotTable/">RNASpotTable</a>, <a href="../SpotQualityTable/">SpotQualityTable</a>, <a href="../RNASpotQualityTable/">RNASpotQualityTable</a>, <a href="../SpotBiologicalTable/">SpotBiologicalTable</a>, <a href="../RNASpotBiologicalTable/">RNASpotBiologicalTable</a>, <a href="../CellTable/">CellTable</a>, <a href="../ExtraCellROITable/">ExtraCellROITable</a>, <a href="../SubCellROITable/">SubCellROITable</a>, <a href="../ROIMappingTable/">ROIMappingTable</a></td>
+<td><a href="../SpotTable/">SpotTable</a>, <a href="../DemultiplexingTable/">DemultiplexingTable</a>, <a href="../TraceTable/">TraceTable</a>, <a href="../RNASpotTable/">RNASpotTable</a>, <a href="../SpotQualityTable/">SpotQualityTable</a>, <a href="../RNASpotQualityTable/">RNASpotQualityTable</a>, <a href="../SpotBiologicalTable/">SpotBiologicalTable</a>, <a href="../RNASpotBiologicalTable/">RNASpotBiologicalTable</a>, <a href="../CellTable/">CellTable</a>, <a href="../ExtraCellROITable/">ExtraCellROITable</a>, <a href="../SubCellROITable/">SubCellROITable</a>, <a href="../ROIMappingTable/">ROIMappingTable</a>, <a href="../SMLocalizationTable/">SMLocalizationTable</a>, <a href="../SMLocalizationQualityTable/">SMLocalizationQualityTable</a>, <a href="../UndecodedLocalizationTable/">UndecodedLocalizationTable</a></td>
 </tr>
 </tbody>
 </table>
@@ -697,7 +712,7 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">domain_of</span><span class="p">:</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotTable</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationTable</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DemultiplexingTable</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TraceTable</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotTable</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotQualityTable</span>
@@ -708,8 +723,11 @@
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROITable</span>
 <a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROITable</span>
 <a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^[^@\s]+@[^@\s]+\.[^@\s]+$</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalizationTable</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalizationQualityTable</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">UndecodedLocalizationTable</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^[^@\s]+@[^@\s]+\.[^@\s]+$</span>
 </code></pre></div>
 </details>
 </div>

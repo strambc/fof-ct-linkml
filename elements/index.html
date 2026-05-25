@@ -25,7 +25,7 @@
     
     
       
-        <title>Schema - fof-ct</title>
+        <title>Schema (FOF-bas-CT + FOF-vol-CT) - fof-ct</title>
       
     
     
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Schema
+              Schema (FOF-bas-CT + FOF-vol-CT)
             
           </span>
         </div>
@@ -311,7 +311,7 @@
   <span class="md-ellipsis">
     
   
-    Schema
+    Schema (FOF-bas-CT + FOF-vol-CT)
   
 
     
@@ -329,7 +329,7 @@
   <span class="md-ellipsis">
     
   
-    Schema
+    Schema (FOF-bas-CT + FOF-vol-CT)
   
 
     
@@ -431,7 +431,7 @@
   <span class="md-ellipsis">
     
   
-    ER Diagram
+    ER Diagrams
   
 
     
@@ -574,7 +574,7 @@
 
 
 <h1 id="fish-omics-format-for-chromatin-tracing-fof-ct">FISH Omics Format for Chromatin Tracing (FOF-CT)<a class="headerlink" href="#fish-omics-format-for-chromatin-tracing-fof-ct" title="Permanent link">&para;</a></h1>
-<p>Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT). Imports all twelve table schemas that together constitute the complete FOF-bas-CT data model. Each table schema in turn imports fof_bas_ct_common for shared slots, the Software class, and enumerations.</p>
+<p>Root schema for the FISH Omics Format for Chromatin Tracing (FOF-CT). Covers both modalities: FOF-bas-CT (ball-and-stick, tables 1–12) and FOF-vol-CT (volumetric, tables 13–15). Imports all fifteen table schemas that together constitute the complete FOF-CT data model. Each table schema in turn imports fof_bas_ct_common for shared slots, the Software class, and enumerations.</p>
 <p>URI: https://w3id.org/fof-ct</p>
 <p>Name: fof_ct</p>
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h2>
@@ -595,6 +595,10 @@
 <td>The Cell Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_cell)</td>
 </tr>
 <tr>
+<td><a href="DemultiplexingTable/">DemultiplexingTable</a></td>
+<td>The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_...</td>
+</tr>
+<tr>
 <td><a href="ExtraCellROI/">ExtraCellROI</a></td>
 <td>A single extracellular structure ROI (e</td>
 </tr>
@@ -607,8 +611,8 @@
 <td>A single individual localisation event contributing to the final position of ...</td>
 </tr>
 <tr>
-<td><a href="LocalizationTable/">LocalizationTable</a></td>
-<td>The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_...</td>
+<td><a href="LocalizationMixin/">LocalizationMixin</a></td>
+<td>Mixin capturing the shared concept of a single localization event across FOF-...</td>
 </tr>
 <tr>
 <td><a href="RNASpot/">RNASpot</a></td>
@@ -641,6 +645,22 @@
 <tr>
 <td><a href="ROIMappingTable/">ROIMappingTable</a></td>
 <td>The Cell/ROI Mapping table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_map...</td>
+</tr>
+<tr>
+<td><a href="SMLocalization/">SMLocalization</a></td>
+<td>A single individual single-molecule (SM) localization event in a FOF-vol-CT d...</td>
+</tr>
+<tr>
+<td><a href="SMLocalizationQualityRecord/">SMLocalizationQualityRecord</a></td>
+<td>A single row in the SM Localization Quality table</td>
+</tr>
+<tr>
+<td><a href="SMLocalizationQualityTable/">SMLocalizationQualityTable</a></td>
+<td>The SM Localization Quality table of a FOF-vol-CT dataset (namespace: 4dn_FOF...</td>
+</tr>
+<tr>
+<td><a href="SMLocalizationTable/">SMLocalizationTable</a></td>
+<td>The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT...</td>
 </tr>
 <tr>
 <td><a href="Software/">Software</a></td>
@@ -686,6 +706,14 @@
 <td><a href="TraceTable/">TraceTable</a></td>
 <td>The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace)</td>
 </tr>
+<tr>
+<td><a href="UndecodedLocalization/">UndecodedLocalization</a></td>
+<td>A single raw, undecoded SM localization event in a FOF-vol-CT dataset</td>
+</tr>
+<tr>
+<td><a href="UndecodedLocalizationTable/">UndecodedLocalizationTable</a></td>
+<td>The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: ...</td>
+</tr>
 </tbody>
 </table>
 <h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">&para;</a></h2>
@@ -712,6 +740,14 @@
 <tr>
 <td><a href="cells/">cells</a></td>
 <td>The complete collection of Cells constituting this dataset</td>
+</tr>
+<tr>
+<td><a href="centroid_intensity/">centroid_intensity</a></td>
+<td>Signal intensity of the centroid pixel of the Spot</td>
+</tr>
+<tr>
+<td><a href="channel_name/">channel_name</a></td>
+<td>The name of the imaging channel used for this Spot (e</td>
 </tr>
 <tr>
 <td><a href="chrom/">chrom</a></td>
@@ -751,11 +787,19 @@
 </tr>
 <tr>
 <td><a href="fluor/">fluor</a></td>
-<td>Fluorescent channel in which this individual localisation event was detected ...</td>
+<td>Fluorescent channel in which this localization event was detected (e</td>
+</tr>
+<tr>
+<td><a href="fluorophore_name/">fluorophore_name</a></td>
+<td>The name of the fluorophore used for this Spot (e</td>
 </tr>
 <tr>
 <td><a href="fof_ct_version/">fof_ct_version</a></td>
 <td>Version of the FOF-CT format used in this file</td>
+</tr>
+<tr>
+<td><a href="frame_id/">frame_id</a></td>
+<td>Unique integer identifier for the imaging frame in which this undecoded local...</td>
 </tr>
 <tr>
 <td><a href="gene_id/">gene_id</a></td>
@@ -768,6 +812,10 @@
 <tr>
 <td><a href="genome_assembly/">genome_assembly</a></td>
 <td>Genome build used for Chrom, Chrom_Start and Chrom_End coordinates</td>
+</tr>
+<tr>
+<td><a href="goodness_of_fit/">goodness_of_fit</a></td>
+<td>Metric quantifying how well the fitted model matches the observed signal (e</td>
 </tr>
 <tr>
 <td><a href="intensity_measurement_method/">intensity_measurement_method</a></td>
@@ -783,7 +831,7 @@
 </tr>
 <tr>
 <td><a href="loc_id/">loc_id</a></td>
-<td>A unique integer identifier for this individual localisation event</td>
+<td>A unique integer identifier for an individual localization event</td>
 </tr>
 <tr>
 <td><a href="localizations/">localizations</a></td>
@@ -792,6 +840,26 @@
 <tr>
 <td><a href="modification/">modification</a></td>
 <td>Description of the nature and genomic position of a DNA insertion or deletion...</td>
+</tr>
+<tr>
+<td><a href="peak_intensity/">peak_intensity</a></td>
+<td>Signal intensity of the brightest pixel within the Spot boundary</td>
+</tr>
+<tr>
+<td><a href="photon_count/">photon_count</a></td>
+<td>Number of photons detected for this localization event or Spot</td>
+</tr>
+<tr>
+<td><a href="raw_x/">raw_x</a></td>
+<td>X coordinate of this Spot before any post-processing corrections (drift corre...</td>
+</tr>
+<tr>
+<td><a href="raw_y/">raw_y</a></td>
+<td>Y coordinate of this Spot before any post-processing corrections</td>
+</tr>
+<tr>
+<td><a href="raw_z/">raw_z</a></td>
+<td>Z coordinate of this Spot before any post-processing corrections</td>
 </tr>
 <tr>
 <td><a href="rna_name/">rna_name</a></td>
@@ -824,6 +892,14 @@
 <tr>
 <td><a href="roi_mappings/">roi_mappings</a></td>
 <td>The complete collection of ROI boundary records constituting this dataset</td>
+</tr>
+<tr>
+<td><a href="sm_localization_quality_records/">sm_localization_quality_records</a></td>
+<td>The complete collection of SMLocalizationQualityRecord rows constituting this...</td>
+</tr>
+<tr>
+<td><a href="sm_localizations/">sm_localizations</a></td>
+<td>The complete collection of SMLocalization events constituting this dataset</td>
 </tr>
 <tr>
 <td><a href="software_authors/">software_authors</a></td>
@@ -906,6 +982,10 @@
 <td>Type of transcript identifier used in the transcript_id column (e</td>
 </tr>
 <tr>
+<td><a href="undecoded_localizations/">undecoded_localizations</a></td>
+<td>The complete collection of UndecodedLocalization events constituting this dat...</td>
+</tr>
+<tr>
 <td><a href="vcf_file_name/">vcf_file_name</a></td>
 <td>Name of the Variant Call Format (VCF) file that must be submitted alongside t...</td>
 </tr>
@@ -918,6 +998,22 @@
 <td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
 </tr>
 <tr>
+<td><a href="x_chromatic_shift/">x_chromatic_shift</a></td>
+<td>Chromatic aberration correction offset applied to the X coordinate of this Sp...</td>
+</tr>
+<tr>
+<td><a href="x_drift/">x_drift</a></td>
+<td>Drift correction offset applied to the X coordinate of this Spot</td>
+</tr>
+<tr>
+<td><a href="x_loc_error/">x_loc_error</a></td>
+<td>Localization error estimate for the X coordinate of this Spot (e</td>
+</tr>
+<tr>
+<td><a href="x_precision/">x_precision</a></td>
+<td>Metric quantifying the precision of the X-axis localization estimate</td>
+</tr>
+<tr>
 <td><a href="xyz_unit/">xyz_unit</a></td>
 <td>Unit used to represent X, Y, Z spatial coordinates or distances in this table</td>
 </tr>
@@ -926,8 +1022,40 @@
 <td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
 </tr>
 <tr>
+<td><a href="y_chromatic_shift/">y_chromatic_shift</a></td>
+<td>Chromatic aberration correction offset applied to the Y coordinate of this Sp...</td>
+</tr>
+<tr>
+<td><a href="y_drift/">y_drift</a></td>
+<td>Drift correction offset applied to the Y coordinate of this Spot</td>
+</tr>
+<tr>
+<td><a href="y_loc_error/">y_loc_error</a></td>
+<td>Localization error estimate for the Y coordinate of this Spot</td>
+</tr>
+<tr>
+<td><a href="y_precision/">y_precision</a></td>
+<td>Metric quantifying the precision of the Y-axis localization estimate</td>
+</tr>
+<tr>
 <td><a href="z/">z</a></td>
 <td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
+</tr>
+<tr>
+<td><a href="z_chromatic_shift/">z_chromatic_shift</a></td>
+<td>Chromatic aberration correction offset applied to the Z coordinate of this Sp...</td>
+</tr>
+<tr>
+<td><a href="z_drift/">z_drift</a></td>
+<td>Drift correction offset applied to the Z coordinate of this Spot</td>
+</tr>
+<tr>
+<td><a href="z_loc_error/">z_loc_error</a></td>
+<td>Localization error estimate for the Z coordinate of this Spot</td>
+</tr>
+<tr>
+<td><a href="z_precision/">z_precision</a></td>
+<td>Metric quantifying the precision of the Z-axis localization estimate</td>
 </tr>
 </tbody>
 </table>
@@ -1124,7 +1252,7 @@
               <span class="md-footer__direction">
                 Next
               </span>
-              ER Diagram
+              ER Diagrams
             </div>
           </div>
           <div class="md-footer__button md-icon">
