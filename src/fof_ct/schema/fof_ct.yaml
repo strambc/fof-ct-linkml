@@ -3,10 +3,12 @@ id: https://w3id.org/fof-ct
 name: fof_ct
 title: FISH Omics Format for Chromatin Tracing (FOF-CT)
 description: >-
-  Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick
-  modality (FOF-bas-CT). Imports all twelve table schemas that together constitute
-  the complete FOF-bas-CT data model. Each table schema in turn imports
-  fof_bas_ct_common for shared slots, the Software class, and enumerations.
+  Root schema for the FISH Omics Format for Chromatin Tracing (FOF-CT).
+  Covers both modalities: FOF-bas-CT (ball-and-stick, tables 1–12) and
+  FOF-vol-CT (volumetric, tables 13–15). Imports all fifteen table schemas
+  that together constitute the complete FOF-CT data model. Each table schema
+  in turn imports fof_bas_ct_common for shared slots, the Software class,
+  and enumerations.
 license: MIT
 version: 1.0.0
 see_also:
@@ -49,3 +51,9 @@ imports:
   - fof_bas_ct_subcell
   # Table 12 – Cell/ROI Mapping table
   - fof_bas_ct_mapping
+  # Table 13 – SM Localization Data table (FOF-vol-CT)
+  - fof_vol_ct_core
+  # Table 14 – SM Localization Quality table (FOF-vol-CT)
+  - fof_vol_ct_quality
+  # Table 15 – Undecoded SM Localization Data table (FOF-vol-CT)
+  - fof_vol_ct_undecoded

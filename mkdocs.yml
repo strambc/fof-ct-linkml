@@ -60,8 +60,8 @@ watch:
 
 nav:
   - Home: index.md
-  - Schema: elements/index.md
-  - ER Diagram: erdiagram.md
+  - Schema (FOF-bas-CT + FOF-vol-CT): elements/index.md
+  - ER Diagrams: erdiagram.md
   - About: about.md
 
 exclude_docs: |

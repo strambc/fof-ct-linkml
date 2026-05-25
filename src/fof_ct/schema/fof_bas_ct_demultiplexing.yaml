@@ -7,7 +7,7 @@ description: >-
   bright Spot results from combining multiple individual localisation events.
   Each row is one Localization event. Modelled after the SSSOM pattern: a
   row-level class (Localization) captures each individual localisation event;
-  a container class (LocalizationTable) holds the full collection together
+  a container class (DemultiplexingTable) holds the full collection together
   with dataset-level provenance metadata written in the FOF-CT file header.
 license: CC-BY-4.0
 version: 1.0.0
@@ -40,16 +40,15 @@ classes:
       it may be NA when the localisation could not be assigned to any Spot.
       This class accepts additional user-defined optional columns (e.g. Hyb,
       Brightness, Fit_Quality).
+    mixins:
+      - LocalizationMixin
     slots:
-      - loc_id
       - spot_id
-      - x
-      - y
-      - z
       - fluor
     slot_usage:
       loc_id:
         required: true
+        identifier: true
       spot_id:
         required: true
       x:
@@ -61,7 +60,7 @@ classes:
       fluor:
         required: true
 
-  LocalizationTable:
+  DemultiplexingTable:
     description: >-
       The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace:
       4dn_FOF-CT_demultiplexing). This class represents the entire file: it
@@ -117,38 +116,13 @@ classes:
 
 slots:
 
-  # ---- Localization (row-level) slots -------------------------------------
-
-  loc_id:
-    description: >-
-      A unique integer identifier for this individual localisation event.
-      Loc_ID values are unique across the entire dataset.
-    domain: Localization
-    range: integer
-    identifier: true
-    examples:
-      - value: "1"
-
-
-
-
-  fluor:
-    description: >-
-      Fluorescent channel in which this individual localisation event was
-      detected (e.g. DAPI, GFP, Cy5, Alexa647).
-    domain: Localization
-    range: string
-    examples:
-      - value: Cy5
-      - value: Alexa647
-
-  # ---- LocalizationTable-level (data) slot --------------------------------
+  # ---- DemultiplexingTable-level (data) slot --------------------------------
 
   localizations:
     description: >-
       The complete collection of Localization events constituting this dataset.
       Each Localization corresponds to one data row in the TSV serialisation.
-    domain: LocalizationTable
+    domain: DemultiplexingTable
     range: Localization
     multivalued: true
     inlined_as_list: true

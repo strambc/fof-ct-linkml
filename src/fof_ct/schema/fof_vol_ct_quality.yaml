@@ -1,0 +1,119 @@
+---
+id: https://w3id.org/fof-ct/vol_quality
+name: fof_vol_ct_quality
+title: FOF-vol-CT SM Localization Quality table
+description: >-
+  FISH Omics Format for Chromatin Tracing - Volumetric modality (FOF-vol-CT).
+  LinkML schema for the mandatory SM Localization Quality table (table 14).
+  Each row provides quality metrics for one SM localization event identified
+  by Loc_ID. X_Precision, Y_Precision and Z_Precision are mandatory columns;
+  Photon_Count and Goodness_of_Fit are recommended. Additional user-defined
+  optional columns may be included and must be declared via #^ header lines.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+classes:
+
+  SMLocalizationQualityRecord:
+    description: >-
+      A single row in the SM Localization Quality table. Each instance
+      captures quality metrics for one SM localization event identified
+      by Loc_ID. X_Precision, Y_Precision and Z_Precision are mandatory.
+      Photon_Count and Goodness_of_Fit are recommended. Additional
+      user-defined optional columns must be described in the file header.
+    slots:
+      - loc_id
+      - x_precision
+      - y_precision
+      - z_precision
+      - photon_count
+      - goodness_of_fit
+    slot_usage:
+      loc_id:
+        required: true
+        identifier: true
+        description: >-
+          Unique integer identifier for the SM localization event to which
+          these quality metrics belong. Links to the corresponding
+          SMLocalization record in the SM Localization Data table (table 13).
+      x_precision:
+        required: true
+      y_precision:
+        required: true
+      z_precision:
+        required: true
+      photon_count:
+        required: false
+        description: "Recommended: number of photons detected for this localization."
+      goodness_of_fit:
+        required: false
+        description: "Recommended: goodness-of-fit metric for the localization model."
+
+  SMLocalizationQualityTable:
+    description: >-
+      The SM Localization Quality table of a FOF-vol-CT dataset (namespace:
+      4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT
+      submissions. It provides localization quality metrics indexed by Loc_ID.
+    tree_root: true
+    slots:
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - softwares
+      - additional_tables
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      - sm_localization_quality_records
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_vol_quality
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      softwares:
+        required: true
+        multivalued: true
+        range: Software
+      additional_tables:
+        required: true
+      xyz_unit:
+        required: true
+      sm_localization_quality_records:
+        required: true
+
+slots:
+
+  sm_localization_quality_records:
+    description: >-
+      The complete collection of SMLocalizationQualityRecord rows
+      constituting this dataset. Each record corresponds to one data
+      row in the TSV serialisation.
+    domain: SMLocalizationQualityTable
+    range: SMLocalizationQualityRecord
+    multivalued: true
+    inlined_as_list: true

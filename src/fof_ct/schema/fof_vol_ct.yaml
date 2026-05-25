@@ -1,0 +1,38 @@
+---
+id: https://w3id.org/fof-ct/vol
+name: fof_vol_ct
+title: FISH Omics Format for Chromatin Tracing - Volumetric modality (FOF-vol-CT)
+description: >-
+  Root schema for the FISH Omics Format for Chromatin Tracing - Volumetric
+  modality (FOF-vol-CT). Imports all twelve FOF-bas-CT table schemas plus
+  the three FOF-vol-CT-specific table schemas. In FOF-vol-CT, the SM
+  Localization Data table and SM Localization Quality table are mandatory;
+  the Spot/Trace Data table is optional post-processing output.
+license: MIT
+version: 1.0.0
+see_also:
+  - https://strambc.github.io/fof-ct-linkml/
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+default_prefix: fof_ct
+default_range: string
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+  - fof_bas_ct_core
+  - fof_bas_ct_demultiplexing
+  - fof_bas_ct_trace
+  - fof_bas_ct_rna
+  - fof_bas_ct_quality
+  - fof_bas_ct_rna_quality
+  - fof_bas_ct_bio
+  - fof_bas_ct_rna_bio
+  - fof_bas_ct_cell
+  - fof_bas_ct_extracell
+  - fof_bas_ct_subcell
+  - fof_bas_ct_mapping
+  - fof_vol_ct_core
+  - fof_vol_ct_quality
+  - fof_vol_ct_undecoded

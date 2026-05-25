@@ -19,7 +19,7 @@ imports:
   - linkml:types
 
 # ---------------------------------------------------------------------------
-# Shared class
+# Shared classes
 # ---------------------------------------------------------------------------
 
 classes:
@@ -37,6 +37,21 @@ classes:
       - software_description
       - software_repository
       - software_preferred_citation_id
+
+  LocalizationMixin:
+    mixin: true
+    description: >-
+      Mixin capturing the shared concept of a single localization event
+      across FOF-CT modalities. Used by Localization (demultiplexing),
+      SMLocalization (vol_core), and UndecodedLocalization (undecoded).
+      All three classes represent the same atomic measurement unit — the
+      sub-pixel position of a detected fluorescence emission event — but
+      differ in context, mandatory columns, and table role.
+    slots:
+      - loc_id
+      - x
+      - y
+      - z
 
 # ---------------------------------------------------------------------------
 # Shared slots
@@ -184,7 +199,18 @@ slots:
     examples:
       - value: "1.23"
 
-  # ---- Cross-table foreign-key slots --------------------------------------
+  # ---- Cross-table foreign-key / primary-key slots ------------------------
+
+  loc_id:
+    description: >-
+      A unique integer identifier for an individual localization event.
+      Loc_ID values are unique across the entire dataset. Serves as
+      primary key in the Spot Demultiplexing, SM Localization Data, and
+      Undecoded SM Localization tables, and as a foreign key in the
+      SM Localization Quality table.
+    range: integer
+    examples:
+      - value: "1"
 
   spot_id:
     description: >-
@@ -236,6 +262,76 @@ slots:
     range: integer
     examples:
       - value: "1"
+
+  # ---- Fluorescence channel slot (shared by demultiplexing + undecoded) ---
+
+  fluor:
+    description: >-
+      Fluorescent channel in which this localization event was detected
+      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot
+      Demultiplexing and Undecoded SM Localization tables.
+    range: string
+    examples:
+      - value: Cy5
+      - value: Alexa647
+
+  # ---- Quality metric slots (shared by SpotQuality + SMLocalizationQuality) -
+
+  x_precision:
+    description: >-
+      Metric quantifying the precision of the X-axis localization estimate.
+      Typically the Cramer-Rao lower bound or Thompson method estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization
+      Quality table. Must be accompanied by a description in the file header.
+    range: float
+    examples:
+      - value: "0.01"
+
+  y_precision:
+    description: >-
+      Metric quantifying the precision of the Y-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization
+      Quality table.
+    range: float
+    examples:
+      - value: "0.01"
+
+  z_precision:
+    description: >-
+      Metric quantifying the precision of the Z-axis localization estimate.
+      Recommended in the Spot Quality table; mandatory in the SM Localization
+      Quality table.
+    range: float
+    examples:
+      - value: "0.02"
+
+  photon_count:
+    description: >-
+      Number of photons detected for this localization event or Spot.
+      Optional (but standardised name) in the Spot Quality table;
+      recommended in the SM Localization Quality table.
+    range: integer
+    examples:
+      - value: "1500"
+
+  goodness_of_fit:
+    description: >-
+      Metric quantifying how well the fitted model matches the observed
+      signal (e.g. chi-squared, R-squared). Optional (but standardised
+      name) in the Spot Quality table; recommended in the SM Localization
+      Quality table.
+    range: float
+    examples:
+      - value: "0.95"
+
+  frame_id:
+    description: >-
+      Unique integer identifier for the imaging frame in which this
+      undecoded localization event was detected. Used in the Undecoded
+      SM Localization table.
+    range: integer
+    examples:
+      - value: "42"
 
   # ---- Genome / modification header slots (shared by core + rna) ----------
 
@@ -425,3 +521,9 @@ enums:
         description: Sub-Cell ROI Data table (table 11)
       4dn_FOF-CT_mapping:
         description: Cell/ROI Mapping table (table 12)
+      4dn_FOF-CT_vol_core:
+        description: SM Localization Data table — FOF-vol-CT (table 13)
+      4dn_FOF-CT_vol_quality:
+        description: SM Localization Quality table — FOF-vol-CT (table 14)
+      4dn_FOF-CT_undecoded:
+        description: Undecoded SM Localization Data table — FOF-vol-CT (table 15)

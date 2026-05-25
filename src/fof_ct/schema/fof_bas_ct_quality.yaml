@@ -36,6 +36,27 @@ classes:
       present; users declare these via #^ header lines.
     slots:
       - spot_id
+      - channel_name
+      - fluorophore_name
+      - x_precision
+      - y_precision
+      - z_precision
+      - photon_count
+      - goodness_of_fit
+      - centroid_intensity
+      - peak_intensity
+      - raw_x
+      - raw_y
+      - raw_z
+      - x_drift
+      - y_drift
+      - z_drift
+      - x_chromatic_shift
+      - y_chromatic_shift
+      - z_chromatic_shift
+      - x_loc_error
+      - y_loc_error
+      - z_loc_error
     slot_usage:
       spot_id:
         required: true
@@ -44,6 +65,50 @@ classes:
           Unique integer identifier for the DNA bright Spot to which these
           quality metrics belong. Links to the corresponding Spot record in
           the core table (table 1). Must be unique within this table.
+      channel_name:
+        required: true
+      fluorophore_name:
+        required: true
+      x_precision:
+        required: false
+        description: "Recommended: metric for X localization precision"
+      y_precision:
+        required: false
+      z_precision:
+        required: false
+      photon_count:
+        required: false
+        description: "Optional standardised name for photon count"
+      goodness_of_fit:
+        required: false
+      centroid_intensity:
+        required: false
+      peak_intensity:
+        required: false
+      raw_x:
+        required: false
+      raw_y:
+        required: false
+      raw_z:
+        required: false
+      x_drift:
+        required: false
+      y_drift:
+        required: false
+      z_drift:
+        required: false
+      x_chromatic_shift:
+        required: false
+      y_chromatic_shift:
+        required: false
+      z_chromatic_shift:
+        required: false
+      x_loc_error:
+        required: false
+      y_loc_error:
+        required: false
+      z_loc_error:
+        required: false
 
   SpotQualityTable:
     description: >-
@@ -139,3 +204,135 @@ slots:
     range: SpotQualityRecord
     multivalued: true
     inlined_as_list: true
+
+  channel_name:
+    description: >-
+      The name of the imaging channel used for this Spot (e.g. 510/25).
+      Mandatory in the Spot Quality table.
+    range: string
+    examples:
+      - value: "510/25"
+      - value: "647/50"
+
+  fluorophore_name:
+    description: >-
+      The name of the fluorophore used for this Spot (e.g. AlexaFluor_488).
+      Mandatory in the Spot Quality table.
+    range: string
+    examples:
+      - value: AlexaFluor_488
+      - value: Cy5
+
+  centroid_intensity:
+    description: >-
+      Signal intensity of the centroid pixel of the Spot.
+      Conditionally required in the Spot Quality table when intensity
+      metrics are reported.
+    range: float
+    examples:
+      - value: "2500.0"
+
+  peak_intensity:
+    description: >-
+      Signal intensity of the brightest pixel within the Spot boundary.
+      Conditionally required in the Spot Quality table when intensity
+      metrics are reported.
+    range: float
+    examples:
+      - value: "3200.0"
+
+  raw_x:
+    description: >-
+      X coordinate of this Spot before any post-processing corrections
+      (drift correction, chromatic correction, etc.). Same unit as X.
+    range: float
+    examples:
+      - value: "14.30"
+
+  raw_y:
+    description: >-
+      Y coordinate of this Spot before any post-processing corrections.
+      Same unit as Y.
+    range: float
+    examples:
+      - value: "41.20"
+
+  raw_z:
+    description: >-
+      Z coordinate of this Spot before any post-processing corrections.
+      Same unit as Z.
+    range: float
+    examples:
+      - value: "1.10"
+
+  x_drift:
+    description: >-
+      Drift correction offset applied to the X coordinate of this Spot.
+      Same unit as X.
+    range: float
+    examples:
+      - value: "0.13"
+
+  y_drift:
+    description: >-
+      Drift correction offset applied to the Y coordinate of this Spot.
+      Same unit as Y.
+    range: float
+    examples:
+      - value: "0.23"
+
+  z_drift:
+    description: >-
+      Drift correction offset applied to the Z coordinate of this Spot.
+      Same unit as Z.
+    range: float
+    examples:
+      - value: "0.13"
+
+  x_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the X coordinate
+      of this Spot. Same unit as X.
+    range: float
+    examples:
+      - value: "0.05"
+
+  y_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the Y coordinate
+      of this Spot. Same unit as Y.
+    range: float
+    examples:
+      - value: "0.04"
+
+  z_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the Z coordinate
+      of this Spot. Same unit as Z.
+    range: float
+    examples:
+      - value: "0.02"
+
+  x_loc_error:
+    description: >-
+      Localization error estimate for the X coordinate of this Spot
+      (e.g. standard deviation of repeated measurements). Same unit as X.
+    range: float
+    examples:
+      - value: "0.02"
+
+  y_loc_error:
+    description: >-
+      Localization error estimate for the Y coordinate of this Spot.
+      Same unit as Y.
+    range: float
+    examples:
+      - value: "0.02"
+
+  z_loc_error:
+    description: >-
+      Localization error estimate for the Z coordinate of this Spot.
+      Same unit as Z.
+    range: float
+    examples:
+      - value: "0.05"

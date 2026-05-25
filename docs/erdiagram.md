@@ -1,12 +1,19 @@
-# Entity Relationship Diagram
+# Entity Relationship Diagrams
 
-Entity-Relationship diagrams of the FOF-bas-CT schema, generated using [LinkML's ER Diagram generator](https://linkml.io/linkml/generators/erdiagram.html).
+Entity-Relationship diagrams generated using [LinkML's ER Diagram generator](https://linkml.io/linkml/generators/erdiagram.html).
+
+FOF-CT defines two complementary modalities:
+
+- **FOF-bas-CT** (ball-and-stick): The Spot and Trace are the mandatory primary data. The raw localizations from which Spots were extracted may optionally be reported in the Demultiplexing table.
+- **FOF-vol-CT** (volumetric): Individual SM Localizations and their quality metrics are the mandatory primary data. Spots and Traces (post-processing outputs) are optional.
+
+In both modalities the ID chain is identical: `Loc_ID` (n→1) `Spot_ID` (n→1) `Trace_ID`.
 
 ---
 
-## Overview (tables and relationships only)
+## Combined overview — FOF-CT (both modalities)
 
-A high-level view showing the 12 FOF-bas-CT tables, their contained record classes, and the shared `Software` provenance class. Attributes are hidden for clarity.
+All 15 tables. Attributes hidden for clarity.
 
 ```mermaid
 erDiagram
@@ -16,6 +23,9 @@ Cell {
 CellTable {
 
 }
+DemultiplexingTable {
+
+}
 ExtraCellROI {
 
 }
@@ -23,9 +33,6 @@ ExtraCellROITable {
 
 }
 Localization {
-
-}
-LocalizationTable {
 
 }
 RNASpot {
@@ -50,6 +57,18 @@ ROIMapping {
 
 }
 ROIMappingTable {
+
+}
+SMLocalization {
+
+}
+SMLocalizationQualityRecord {
+
+}
+SMLocalizationQualityTable {
+
+}
+SMLocalizationTable {
 
 }
 Software {
@@ -85,13 +104,19 @@ Trace {
 TraceTable {
 
 }
+UndecodedLocalization {
+
+}
+UndecodedLocalizationTable {
+
+}
 
 CellTable ||--}o Software : "softwares"
 CellTable ||--}| Cell : "cells"
+DemultiplexingTable ||--}| Localization : "localizations"
+DemultiplexingTable ||--}| Software : "softwares"
 ExtraCellROITable ||--}o Software : "softwares"
 ExtraCellROITable ||--}| ExtraCellROI : "extra_cell_rois"
-LocalizationTable ||--}| Localization : "localizations"
-LocalizationTable ||--}| Software : "softwares"
 RNASpotBiologicalTable ||--}o Software : "softwares"
 RNASpotBiologicalTable ||--}| RNASpotBiologicalRecord : "rna_spot_biological_records"
 RNASpotQualityTable ||--}o Software : "softwares"
@@ -100,6 +125,10 @@ RNASpotTable ||--}| RNASpot : "rna_spots"
 RNASpotTable ||--}| Software : "softwares"
 ROIMappingTable ||--}o Software : "softwares"
 ROIMappingTable ||--}| ROIMapping : "roi_mappings"
+SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
+SMLocalizationQualityTable ||--}| Software : "softwares"
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
 SpotBiologicalTable ||--}o Software : "softwares"
 SpotBiologicalTable ||--}| SpotBiologicalRecord : "spot_biological_records"
 SpotQualityTable ||--}o Software : "softwares"
@@ -110,282 +139,89 @@ SubCellROITable ||--}o Software : "softwares"
 SubCellROITable ||--}| SubCellROI : "sub_cell_rois"
 TraceTable ||--}o Software : "softwares"
 TraceTable ||--}| Trace : "traces"
+UndecodedLocalizationTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
 ```
 
 ---
 
-## Full diagram (with all attributes)
+## FOF-vol-CT additions (tables 13–15)
 
-A detailed view showing all slots for each class.
+The three tables specific to the volumetric modality, shown with their attributes.
 
 ```mermaid
 erDiagram
-Cell {
-    integer cell_id  
-    integer extra_cell_roi_id  
+SMLocalization {
+    integer loc_id
+    float x
+    float y
+    float z
+    integer spot_id
+    integer trace_id
+    string chrom
+    integer chrom_start
+    integer chrom_end
+    integer sub_cell_roi_id
+    integer cell_id
+    integer extra_cell_roi_id
 }
-CellTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+SMLocalizationTable {
+    string fof_ct_version
+    string table_namespace
+    string genome_assembly
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
-ExtraCellROI {
-    integer extra_cell_roi_id  
+SMLocalizationQualityRecord {
+    integer loc_id
+    float x_precision
+    float y_precision
+    float z_precision
+    integer photon_count
+    float goodness_of_fit
 }
-ExtraCellROITable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+SMLocalizationQualityTable {
+    string fof_ct_version
+    string table_namespace
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
-Localization {
-    string fluor  
-    integer loc_id  
-    integer spot_id  
-    float x  
-    float y  
-    float z  
+UndecodedLocalization {
+    integer loc_id
+    float x
+    float y
+    float z
+    integer frame_id
+    string fluor
 }
-LocalizationTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpot {
-    integer cell_id  
-    integer extra_cell_roi_id  
-    string gene_id  
-    string rna_name  
-    integer rna_spot_id  
-    integer sub_cell_roi_id  
-    integer trace_id  
-    string transcript_id  
-    float x  
-    float y  
-    float z  
-}
-RNASpotBiologicalRecord {
-    integer rna_spot_id  
-}
-RNASpotBiologicalTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpotQualityRecord {
-    integer rna_spot_id  
-}
-RNASpotQualityTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-RNASpotTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string gene_id_type  
-    string genome_assembly  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    string transcript_id_type  
-    XYZUnitEnum xyz_unit  
-}
-ROIMapping {
-    integer cell_id  
-    integer extra_cell_roi_id  
-    string roi_boundaries  
-    integer sub_cell_roi_id  
-}
-ROIMappingTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string extra_cell_roi_type  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string roi_boundaries_format  
-    string sub_cell_roi_type  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+UndecodedLocalizationTable {
+    string fof_ct_version
+    string table_namespace
+    XYZUnitEnum xyz_unit
+    string lab_name
+    string experimenter_name
+    string experimenter_contact
+    string description
 }
 Software {
-    string software_authors  
-    string software_description  
-    uri software_preferred_citation_id  
-    uri software_repository  
-    string software_title  
-    SoftwareTypeEnum software_type  
-}
-Spot {
-    integer cell_id  
-    string chrom  
-    integer chrom_end  
-    integer chrom_start  
-    integer extra_cell_roi_id  
-    integer spot_id  
-    integer sub_cell_roi_id  
-    integer trace_id  
-    float x  
-    float y  
-    float z  
-}
-SpotBiologicalRecord {
-    integer spot_id  
-}
-SpotBiologicalTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-SpotQualityRecord {
-    integer spot_id  
-}
-SpotQualityTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-SpotTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string genome_assembly  
-    string lab_name  
-    string modification  
-    string table_namespace  
-    string vcf_file_name  
-    string vcf_version  
-    XYZUnitEnum xyz_unit  
-}
-SubCellROI {
-    integer cell_id  
-    integer sub_cell_roi_id  
-}
-SubCellROITable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string cell_type  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string sub_cell_roi_type  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
-}
-Trace {
-    integer trace_id  
-}
-TraceTable {
-    string description  
-    TableNamespaceEnumList additional_tables  
-    string experimenter_contact  
-    string experimenter_name  
-    string fof_ct_version  
-    string intensity_measurement_method  
-    string intensity_unit  
-    string lab_name  
-    string table_namespace  
-    TimeUnitEnum time_unit  
-    XYZUnitEnum xyz_unit  
+    string software_title
+    SoftwareTypeEnum software_type
+    string software_authors
+    string software_description
+    uri software_repository
+    uri software_preferred_citation_id
 }
 
-CellTable ||--}o Software : "softwares"
-CellTable ||--}| Cell : "cells"
-ExtraCellROITable ||--}o Software : "softwares"
-ExtraCellROITable ||--}| ExtraCellROI : "extra_cell_rois"
-LocalizationTable ||--}| Localization : "localizations"
-LocalizationTable ||--}| Software : "softwares"
-RNASpotBiologicalTable ||--}o Software : "softwares"
-RNASpotBiologicalTable ||--}| RNASpotBiologicalRecord : "rna_spot_biological_records"
-RNASpotQualityTable ||--}o Software : "softwares"
-RNASpotQualityTable ||--}| RNASpotQualityRecord : "rna_spot_quality_records"
-RNASpotTable ||--}| RNASpot : "rna_spots"
-RNASpotTable ||--}| Software : "softwares"
-ROIMappingTable ||--}o Software : "softwares"
-ROIMappingTable ||--}| ROIMapping : "roi_mappings"
-SpotBiologicalTable ||--}o Software : "softwares"
-SpotBiologicalTable ||--}| SpotBiologicalRecord : "spot_biological_records"
-SpotQualityTable ||--}o Software : "softwares"
-SpotQualityTable ||--}| SpotQualityRecord : "spot_quality_records"
-SpotTable ||--}| Software : "softwares"
-SpotTable ||--}| Spot : "spots"
-SubCellROITable ||--}o Software : "softwares"
-SubCellROITable ||--}| SubCellROI : "sub_cell_rois"
-TraceTable ||--}o Software : "softwares"
-TraceTable ||--}| Trace : "traces"
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
+SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
+SMLocalizationQualityTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
+UndecodedLocalizationTable ||--}| Software : "softwares"
 ```

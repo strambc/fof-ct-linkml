@@ -1,0 +1,176 @@
+---
+id: https://w3id.org/fof-ct/vol_core
+name: fof_vol_ct_core
+title: FOF-vol-CT SM Localization Data table
+description: >-
+  FISH Omics Format for Chromatin Tracing - Volumetric modality (FOF-vol-CT).
+  LinkML schema for the mandatory SM Localization Data table (table 13).
+  In FOF-vol-CT, this is the primary data table: each row represents one
+  individual single-molecule localization event detected by a super-resolution
+  microscopy method (e.g. STORM, PALM, PAINT). The basic unit of FOF-vol-CT
+  is the SM localization, from which Spots (centroids of localization clouds)
+  and Traces (chromosomal walks) are optionally derived.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+classes:
+
+  SMLocalization:
+    description: >-
+      A single individual single-molecule (SM) localization event in a
+      FOF-vol-CT dataset. Each instance corresponds to one row in the TSV
+      data section of the SM Localization Data table. The loc_id field is
+      the primary key; spot_id links this localization to its parent Spot
+      (if Spot/Trace post-processing was performed); trace_id links it
+      to its parent Trace. Sub_Cell_ROI_ID, Cell_ID and Extra_Cell_ROI_ID
+      optionally link the localization to spatial context tables.
+    mixins:
+      - LocalizationMixin
+    slots:
+      - spot_id
+      - trace_id
+      - chrom
+      - chrom_start
+      - chrom_end
+      - sub_cell_roi_id
+      - cell_id
+      - extra_cell_roi_id
+    slot_usage:
+      loc_id:
+        required: true
+        identifier: true
+        description: >-
+          Unique integer identifier for this SM localization event.
+          Loc_ID values are unique across the entire dataset.
+      x:
+        required: true
+        description: >-
+          Sub-pixel X coordinate of this SM localization event in the unit
+          specified by xyz_unit. The reported value is the final position
+          after all post-processing corrections.
+      y:
+        required: true
+      z:
+        required: true
+      spot_id:
+        required: false
+        description: >-
+          Identifier of the Spot (centroid of the SM localization cloud)
+          to which this localization belongs. Conditionally required when
+          Spot/Trace post-processing results are reported.
+      trace_id:
+        required: false
+        description: >-
+          Identifier of the chromatin Trace to which this localization
+          belongs. Conditionally required when Trace results are reported.
+      chrom:
+        required: true
+      chrom_start:
+        required: true
+      chrom_end:
+        required: true
+      sub_cell_roi_id:
+        required: false
+      cell_id:
+        required: false
+      extra_cell_roi_id:
+        required: false
+
+  SMLocalizationTable:
+    description: >-
+      The SM Localization Data table of a FOF-vol-CT dataset (namespace:
+      4dn_FOF-CT_vol_core). This is the mandatory primary data table for
+      volumetric FOF-CT submissions. Each row corresponds to one SM
+      localization event. The Spot/Trace Data table is optional for
+      FOF-vol-CT submissions but may be included to report post-processing
+      results derived from the localization data.
+    tree_root: true
+    slots:
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - softwares
+      - additional_tables
+      - genome_assembly
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      - sm_localizations
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_vol_core
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      softwares:
+        required: true
+        multivalued: true
+        range: Software
+      additional_tables:
+        required: true
+      genome_assembly:
+        required: true
+      xyz_unit:
+        required: true
+      sm_localizations:
+        required: true
+
+slots:
+
+  sm_localizations:
+    description: >-
+      The complete collection of SMLocalization events constituting this
+      dataset. Each entry corresponds to one data row in the TSV serialisation.
+    domain: SMLocalizationTable
+    range: SMLocalization
+    multivalued: true
+    inlined_as_list: true
+
+  chrom:
+    description: >-
+      Chromosome identifier for the genomic locus targeted by this
+      SM localization event (e.g. chr1, chrX).
+    range: string
+    examples:
+      - value: chr1
+      - value: chrX
+
+  chrom_start:
+    description: >-
+      Start coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    range: integer
+    examples:
+      - value: "1000000"
+
+  chrom_end:
+    description: >-
+      End coordinate (0-based, half-open BED convention) of the genomic
+      locus targeted by this SM localization event.
+    range: integer
+    examples:
+      - value: "1050000"

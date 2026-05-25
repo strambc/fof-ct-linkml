@@ -1,0 +1,117 @@
+---
+id: https://w3id.org/fof-ct/undecoded
+name: fof_vol_ct_undecoded
+title: FOF-vol-CT Undecoded SM Localization Data table
+description: >-
+  FISH Omics Format for Chromatin Tracing - Volumetric modality (FOF-vol-CT).
+  LinkML schema for the optional Undecoded SM Localization Data table (table 15).
+  Each row represents a raw, undecoded single-molecule localization event
+  detected before the decoding/assignment step that produces the decoded
+  SM Localization Data table (vol_core). The Frame_ID column links each
+  detection to its source imaging frame.
+license: CC-BY-4.0
+version: 1.0.0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: fof_ct
+default_range: string
+
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+
+classes:
+
+  UndecodedLocalization:
+    description: >-
+      A single raw, undecoded SM localization event in a FOF-vol-CT
+      dataset. Each instance corresponds to one row in the TSV data
+      section of the Undecoded SM Localization Data table. This class
+      uses LocalizationMixin for the shared loc_id, x, y, z slots.
+      The frame_id column identifies the source imaging frame;
+      fluor identifies the detection channel.
+    mixins:
+      - LocalizationMixin
+    slots:
+      - frame_id
+      - fluor
+    slot_usage:
+      loc_id:
+        required: true
+        identifier: true
+        description: >-
+          Unique integer identifier for this undecoded localization event.
+          Loc_ID values are unique across the entire dataset.
+      x:
+        required: true
+      y:
+        required: true
+      z:
+        required: true
+      frame_id:
+        required: true
+      fluor:
+        required: true
+
+  UndecodedLocalizationTable:
+    description: >-
+      The Undecoded SM Localization Data table of a FOF-vol-CT dataset
+      (namespace: 4dn_FOF-CT_undecoded). This table is optional. It
+      records raw localization detections prior to any decoding or
+      assignment step. Submission is recommended when the raw detections
+      are available and reproducibility of the decoding pipeline is desired.
+    tree_root: true
+    slots:
+      - fof_ct_version
+      - table_namespace
+      - lab_name
+      - experimenter_name
+      - experimenter_contact
+      - description
+      - softwares
+      - additional_tables
+      - xyz_unit
+      - time_unit
+      - intensity_unit
+      - intensity_measurement_method
+      - undecoded_localizations
+    slot_usage:
+      fof_ct_version:
+        required: true
+      table_namespace:
+        required: true
+        equals_string: 4dn_FOF-CT_undecoded
+      lab_name:
+        required: true
+      experimenter_name:
+        required: true
+      experimenter_contact:
+        required: true
+      description:
+        required: true
+      softwares:
+        required: true
+        multivalued: true
+        range: Software
+      additional_tables:
+        required: true
+      xyz_unit:
+        required: true
+      undecoded_localizations:
+        required: true
+
+slots:
+
+  undecoded_localizations:
+    description: >-
+      The complete collection of UndecodedLocalization events constituting
+      this dataset. Each entry corresponds to one data row in the TSV
+      serialisation.
+    domain: UndecodedLocalizationTable
+    range: UndecodedLocalization
+    multivalued: true
+    inlined_as_list: true
