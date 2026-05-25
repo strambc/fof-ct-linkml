@@ -1,0 +1,9 @@
+/* Make Mermaid ER diagrams horizontally scrollable instead of truncated */
+.mermaid {
+  overflow-x: auto;
+  display: block;
+}
+
+.mermaid svg {
+  max-width: none !important;
+}
