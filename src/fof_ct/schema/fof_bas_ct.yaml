@@ -1,0 +1,37 @@
+---
+id: https://w3id.org/fof-ct/bas
+name: fof_bas_ct
+title: FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT)
+description: >-
+  Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick
+  modality (FOF-bas-CT). Imports all twelve table schemas that together constitute
+  the complete FOF-bas-CT data model. The DNA-Spot/Trace Data core table is the
+  only mandatory table; all other 11 tables are optional but recommended.
+  Each table schema imports fof_bas_ct_common for shared slots, the Software
+  class, and enumerations.
+license: MIT
+version: 1.0.0
+see_also:
+  - https://strambc.github.io/fof-ct-linkml/
+  - https://fish-omics-format.readthedocs.io/
+prefixes:
+  linkml: https://w3id.org/linkml/
+  fof_ct: https://w3id.org/fof-ct/
+  xsd: http://www.w3.org/2001/XMLSchema#
+default_prefix: fof_ct
+default_range: string
+imports:
+  - linkml:types
+  - fof_bas_ct_common
+  - fof_bas_ct_core
+  - fof_bas_ct_demultiplexing
+  - fof_bas_ct_trace
+  - fof_bas_ct_rna
+  - fof_bas_ct_quality
+  - fof_bas_ct_rna_quality
+  - fof_bas_ct_bio
+  - fof_bas_ct_rna_bio
+  - fof_bas_ct_cell
+  - fof_bas_ct_extracell
+  - fof_bas_ct_subcell
+  - fof_bas_ct_mapping

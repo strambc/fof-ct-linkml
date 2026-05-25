@@ -1,0 +1,111 @@
+---
+search:
+  boost: 5.0
+---
+
+# Slot: chrom 
+
+
+_Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random)._
+
+
+
+<div data-search-exclude markdown="1">
+
+
+
+URI: [fof_ct:chrom](https://w3id.org/fof-ct/chrom)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Spot](Spot.md) | A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing ... |  yes  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain | [Spot](Spot.md) |
+| Domain Of | [Spot](Spot.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| chr3 |
+| chrY |
+| chr2_random |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://w3id.org/fof-ct/bas
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | fof_ct:chrom |
+| native | fof_ct:chrom |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: chrom
+description: Chromosome name using BED (Browser Extensible Data) convention (e.g.,
+  chr3, chrY, chr2_random).
+examples:
+- value: chr3
+- value: chrY
+- value: chr2_random
+from_schema: https://w3id.org/fof-ct/bas
+rank: 1000
+domain: Spot
+domain_of:
+- Spot
+range: string
+
+```
+</details></div>

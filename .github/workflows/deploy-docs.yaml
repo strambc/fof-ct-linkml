@@ -58,5 +58,6 @@ jobs:
 
       - name: Generate schema documentation
         run: |
-          just gen-doc
+          uv run gen-doc -d docs/bas src/fof_ct/schema/fof_bas_ct.yaml
+          uv run gen-doc -d docs/vol src/fof_ct/schema/fof_vol_ct.yaml
           uv run mkdocs gh-deploy

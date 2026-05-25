@@ -60,12 +60,17 @@ watch:
 
 nav:
   - Home: index.md
-  - Schema (FOF-bas-CT + FOF-vol-CT): elements/index.md
-  - ER Diagrams: erdiagram.md
+  - Schema:
+    - FOF-bas-CT (12 tables): bas/index.md
+    - FOF-vol-CT (15 tables): vol/index.md
+  - ER Diagrams:
+    - FOF-bas-CT: erdiagram_bas.md
+    - FOF-vol-CT: erdiagram_vol.md
   - About: about.md
 
 exclude_docs: |
   /templates-linkml/
+  /elements/
 
 site_url: https://strambc.github.io/fof-ct-linkml/
 repo_url: https://github.com/strambc/fof-ct-linkml
