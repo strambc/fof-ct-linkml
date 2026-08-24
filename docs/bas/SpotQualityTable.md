@@ -90,7 +90,7 @@ URI: [fof_ct:SpotQualityTable](https://w3id.org/fof-ct/SpotQualityTable)
     
         
         
-        SpotQualityTable --> "0..1" XYZUnitEnum : xyz_unit
+        SpotQualityTable --> "1" XYZUnitEnum : xyz_unit
         click XYZUnitEnum href "../XYZUnitEnum/"
     
 
@@ -122,7 +122,7 @@ URI: [fof_ct:SpotQualityTable](https://w3id.org/fof-ct/SpotQualityTable)
 | [description](description.md) | 1 <br/> [String](String.md) | Free-text description of the experiment and of the data recorded in this tabl... | direct |
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
 | [softwares](softwares.md) | * <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
-| [xyz_unit](xyz_unit.md) | 0..1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used for any spatial coordinate or distance metric reported in user-defi... | direct |
+| [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
 | [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used for any time metric reported in user-defined columns | direct |
 | [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used for any intensity metric reported in user-defined columns | direct |
 | [intensity_measurement_method](intensity_measurement_method.md) | 0..1 <br/> [String](String.md) | Method used to perform intensity measurements | direct |
@@ -237,10 +237,7 @@ slot_usage:
     required: false
   xyz_unit:
     name: xyz_unit
-    description: 'Unit used for any spatial coordinate or distance metric reported
-      in user-defined columns. Conditionally required when any such metric is present.
-      Written as ##XYZ_Unit= in the file header.'
-    required: false
+    required: true
   time_unit:
     name: time_unit
     description: 'Unit used for any time metric reported in user-defined columns.
@@ -311,10 +308,7 @@ slot_usage:
     required: false
   xyz_unit:
     name: xyz_unit
-    description: 'Unit used for any spatial coordinate or distance metric reported
-      in user-defined columns. Conditionally required when any such metric is present.
-      Written as ##XYZ_Unit= in the file header.'
-    required: false
+    required: true
   time_unit:
     name: time_unit
     description: 'Unit used for any time metric reported in user-defined columns.
@@ -534,9 +528,10 @@ attributes:
     inlined_as_list: true
   xyz_unit:
     name: xyz_unit
-    description: 'Unit used for any spatial coordinate or distance metric reported
-      in user-defined columns. Conditionally required when any such metric is present.
-      Written as ##XYZ_Unit= in the file header.'
+    description: 'Unit used to represent X, Y, Z spatial coordinates or distances
+      in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
+      be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/bas
@@ -556,7 +551,7 @@ attributes:
     - SubCellROITable
     - ROIMappingTable
     range: XYZUnitEnum
-    required: false
+    required: true
   time_unit:
     name: time_unit
     description: 'Unit used for any time metric reported in user-defined columns.
@@ -570,7 +565,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -595,7 +589,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -620,7 +613,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

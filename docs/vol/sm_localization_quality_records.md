@@ -25,7 +25,7 @@ URI: [fof_ct:sm_localization_quality_records](https://w3id.org/fof-ct/sm_localiz
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [SMLocalizationQualityTable](SMLocalizationQualityTable.md) | The SM Localization Quality table of a FOF-vol-CT dataset (namespace: 4dn_FOF... |  yes  |
+| [SMLocalizationQualityTable](SMLocalizationQualityTable.md) | The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_... |  yes  |
 
 
 

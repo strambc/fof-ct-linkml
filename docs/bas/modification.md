@@ -6,7 +6,7 @@ search:
 # Slot: modification 
 
 
-_Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header._
+_Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header._
 
 
 
@@ -39,7 +39,6 @@ URI: [fof_ct:modification](https://w3id.org/fof-ct/modification)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain | [SpotTable](SpotTable.md) |
 | Domain Of | [SpotTable](SpotTable.md) |
 
 ### Cardinality and Requirements
@@ -93,13 +92,13 @@ URI: [fof_ct:modification](https://w3id.org/fof-ct/modification)
 ```yaml
 name: modification
 description: 'Description of the nature and genomic position of a DNA insertion or
-  deletion in the genome under study. Conditionally required when genome_assembly
-  uses the ''custom-build:'' prefix. Written as ##Modification= in the file header.'
+  deletion in the genome under study. Conditionally required (content- triggered)
+  when genome_assembly uses the ''custom-build:'' prefix. Applies to both the core
+  (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.'
 examples:
 - value: pJT039:chr3(insertion 0001-2500)
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
-domain: SpotTable
 domain_of:
 - SpotTable
 range: string

@@ -6,7 +6,7 @@ search:
 # Slot: vcf_version 
 
 
-_Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header._
+_Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:vcf_version](https://w3id.org/fof-ct/vcf_version)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotTable](SpotTable.md) | The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FO... |  no  |
+| [SMLocalizationTable](SMLocalizationTable.md) | The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol... |  no  |
 
 
 
@@ -39,8 +40,7 @@ URI: [fof_ct:vcf_version](https://w3id.org/fof-ct/vcf_version)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain | [SpotTable](SpotTable.md) |
-| Domain Of | [SpotTable](SpotTable.md) |
+| Domain Of | [SpotTable](SpotTable.md), [SMLocalizationTable](SMLocalizationTable.md) |
 
 ### Cardinality and Requirements
 
@@ -93,15 +93,16 @@ URI: [fof_ct:vcf_version](https://w3id.org/fof-ct/vcf_version)
 ```yaml
 name: vcf_version
 description: 'Version of the VCF format used for the accompanying VCF file. Conditionally
-  required when genome_assembly uses the ''custom-build:'' prefix. Written as ##VCF_Version=
+  required (content-triggered) when genome_assembly uses the ''custom-build:'' prefix.
+  Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version=
   in the file header.'
 examples:
 - value: v4.2
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
-domain: SpotTable
 domain_of:
 - SpotTable
+- SMLocalizationTable
 range: string
 
 ```

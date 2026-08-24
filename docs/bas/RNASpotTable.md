@@ -47,10 +47,6 @@ URI: [fof_ct:RNASpotTable](https://w3id.org/fof-ct/RNASpotTable)
         
       RNASpotTable : genome_assembly
         
-      RNASpotTable : intensity_measurement_method
-        
-      RNASpotTable : intensity_unit
-        
       RNASpotTable : lab_name
         
       RNASpotTable : rna_spots
@@ -76,17 +72,6 @@ URI: [fof_ct:RNASpotTable](https://w3id.org/fof-ct/RNASpotTable)
 
         
       RNASpotTable : table_namespace
-        
-      RNASpotTable : time_unit
-        
-          
-    
-        
-        
-        RNASpotTable --> "0..1" TimeUnitEnum : time_unit
-        click TimeUnitEnum href "../TimeUnitEnum/"
-    
-
         
       RNASpotTable : transcript_id_type
         
@@ -132,9 +117,6 @@ URI: [fof_ct:RNASpotTable](https://w3id.org/fof-ct/RNASpotTable)
 | [softwares](softwares.md) | 1..* <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
 | [transcript_id_type](transcript_id_type.md) | 0..1 <br/> [String](String.md) | Type of transcript identifier used in the transcript_id column (e | direct |
-| [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used to represent time intervals in this table | direct |
-| [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used to represent intensity measurements in this table | direct |
-| [intensity_measurement_method](intensity_measurement_method.md) | 0..1 <br/> [String](String.md) | Method used to perform intensity measurements, including how digital signals ... | direct |
 | [rna_spots](rna_spots.md) | 1..* <br/> [RNASpot](RNASpot.md) | The complete collection of RNA Spots constituting this dataset | direct |
 
 
@@ -215,9 +197,6 @@ slots:
 - softwares
 - additional_tables
 - transcript_id_type
-- time_unit
-- intensity_unit
-- intensity_measurement_method
 - rna_spots
 slot_usage:
   fof_ct_version:
@@ -403,7 +382,7 @@ attributes:
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/bas
@@ -585,77 +564,6 @@ attributes:
     owner: RNASpotTable
     domain_of:
     - RNASpotTable
-    range: string
-  time_unit:
-    name: time_unit
-    description: 'Unit used to represent time intervals in this table. Allowed values
-      are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
-    examples:
-    - value: sec
-    from_schema: https://w3id.org/fof-ct/bas
-    rank: 1000
-    owner: RNASpotTable
-    domain_of:
-    - DemultiplexingTable
-    - TraceTable
-    - RNASpotTable
-    - SpotQualityTable
-    - RNASpotQualityTable
-    - SpotBiologicalTable
-    - RNASpotBiologicalTable
-    - CellTable
-    - ExtraCellROITable
-    - SubCellROITable
-    - ROIMappingTable
-    range: TimeUnitEnum
-  intensity_unit:
-    name: intensity_unit
-    description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
-    examples:
-    - value: a.u.
-    - value: photons
-    from_schema: https://w3id.org/fof-ct/bas
-    rank: 1000
-    owner: RNASpotTable
-    domain_of:
-    - DemultiplexingTable
-    - TraceTable
-    - RNASpotTable
-    - SpotQualityTable
-    - RNASpotQualityTable
-    - SpotBiologicalTable
-    - RNASpotBiologicalTable
-    - CellTable
-    - ExtraCellROITable
-    - SubCellROITable
-    - ROIMappingTable
-    range: string
-  intensity_measurement_method:
-    name: intensity_measurement_method
-    description: 'Method used to perform intensity measurements, including how digital
-      signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
-    examples:
-    - value: Localization centroid intensity
-    - value: Mean Fluorescence Intensity
-    from_schema: https://w3id.org/fof-ct/bas
-    rank: 1000
-    owner: RNASpotTable
-    domain_of:
-    - DemultiplexingTable
-    - TraceTable
-    - RNASpotTable
-    - SpotQualityTable
-    - RNASpotQualityTable
-    - SpotBiologicalTable
-    - RNASpotBiologicalTable
-    - CellTable
-    - ExtraCellROITable
-    - SubCellROITable
-    - ROIMappingTable
     range: string
   rna_spots:
     name: rna_spots

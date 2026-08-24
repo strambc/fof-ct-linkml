@@ -63,8 +63,8 @@ URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
 | [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | direct |
 | [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | direct |
 | [z](z.md) | 1 <br/> [Float](Float.md) | Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u... | direct |
-| [chrom](chrom.md) | 1 <br/> [String](String.md) | Chromosome name using BED (Browser Extensible Data) convention (e | direct |
-| [chrom_start](chrom_start.md) | 1 <br/> [Integer](Integer.md) | 0-based start coordinate on the chromosome for the genomic target sequence as... | direct |
+| [chrom](chrom.md) | 1 <br/> [String](String.md) | Chromosome name/identifier using BED (Browser Extensible Data) convention (e | direct |
+| [chrom_start](chrom_start.md) | 1 <br/> [Integer](Integer.md) | 0-based start coordinate on the chromosome for the genomic target sequence, f... | direct |
 | [chrom_end](chrom_end.md) | 1 <br/> [Integer](Integer.md) | Non-inclusive end coordinate on the chromosome for the genomic target sequenc... | direct |
 | [sub_cell_roi_id](sub_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a sub-cellular structure ROI (e | direct |
 | [cell_id](cell_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for a Cell | direct |
@@ -78,13 +78,7 @@ URI: [fof_ct:Spot](https://w3id.org/fof-ct/Spot)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [Spot](Spot.md) | [chrom](chrom.md) | domain | [Spot](Spot.md) |
-| [Spot](Spot.md) | [chrom_start](chrom_start.md) | domain | [Spot](Spot.md) |
-| [Spot](Spot.md) | [chrom_end](chrom_end.md) | domain | [Spot](Spot.md) |
 | [SpotTable](SpotTable.md) | [spots](spots.md) | range | [Spot](Spot.md) |
-| [SMLocalization](SMLocalization.md) | [chrom](chrom.md) | domain | [Spot](Spot.md) |
-| [SMLocalization](SMLocalization.md) | [chrom_start](chrom_start.md) | domain | [Spot](Spot.md) |
-| [SMLocalization](SMLocalization.md) | [chrom_end](chrom_end.md) | domain | [Spot](Spot.md) |
 
 
 
@@ -220,7 +214,10 @@ attributes:
     name: spot_id
     description: Unique identifier for a bright DNA Spot. Used as a primary key in
       quality and biological data tables, and as a foreign key linking localization
-      events to their parent Spot in the demultiplexing table.
+      events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table
+      13, SM Localization Data), this same Spot_ID concept is derived by clustering
+      Single-Molecule (SM) Localization events rather than by direct optical detection,
+      and every SM Localization event MUST report its associated Spot_ID.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/vol
@@ -238,7 +235,8 @@ attributes:
   trace_id:
     name: trace_id
     description: Unique identifier for a chromatin Trace. Used as a primary key in
-      the Trace Data table and as a foreign key in the RNA Spot Data table.
+      the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily)
+      in the FOF-vol-CT SM Localization Data table.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/vol
@@ -302,15 +300,15 @@ attributes:
     required: true
   chrom:
     name: chrom
-    description: Chromosome name using BED (Browser Extensible Data) convention (e.g.,
-      chr3, chrY, chr2_random).
+    description: Chromosome name/identifier using BED (Browser Extensible Data) convention
+      (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization)
+      tables.
     examples:
     - value: chr3
     - value: chrY
     - value: chr2_random
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: Spot
     owner: Spot
     domain_of:
     - Spot
@@ -320,12 +318,12 @@ attributes:
   chrom_start:
     name: chrom_start
     description: 0-based start coordinate on the chromosome for the genomic target
-      sequence associated with this Spot, following BED convention.
+      sequence, following BED convention. Used by both the core (Spot) and vol_core
+      (SMLocalization) tables.
     examples:
     - value: '0'
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: Spot
     owner: Spot
     domain_of:
     - Spot
@@ -336,12 +334,12 @@ attributes:
   chrom_end:
     name: chrom_end
     description: Non-inclusive end coordinate on the chromosome for the genomic target
-      sequence associated with this Spot, following BED convention.
+      sequence, following BED convention. Used by both the core (Spot) and vol_core
+      (SMLocalization) tables.
     examples:
     - value: '1000'
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: Spot
     owner: Spot
     domain_of:
     - Spot

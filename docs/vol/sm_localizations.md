@@ -25,7 +25,7 @@ URI: [fof_ct:sm_localizations](https://w3id.org/fof-ct/sm_localizations)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [SMLocalizationTable](SMLocalizationTable.md) | The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT... |  yes  |
+| [SMLocalizationTable](SMLocalizationTable.md) | The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol... |  yes  |
 
 
 

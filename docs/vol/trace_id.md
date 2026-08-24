@@ -6,7 +6,7 @@ search:
 # Slot: trace_id 
 
 
-_Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table._
+_Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table._
 
 
 
@@ -95,7 +95,8 @@ URI: [fof_ct:trace_id](https://w3id.org/fof-ct/trace_id)
 ```yaml
 name: trace_id
 description: Unique identifier for a chromatin Trace. Used as a primary key in the
-  Trace Data table and as a foreign key in the RNA Spot Data table.
+  Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily)
+  in the FOF-vol-CT SM Localization Data table.
 examples:
 - value: '1'
 from_schema: https://w3id.org/fof-ct/vol

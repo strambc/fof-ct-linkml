@@ -105,7 +105,7 @@ classes:
         multivalued: true
         range: Software
       xyz_unit:
-        required: false
+        required: true
       time_unit:
         required: false
       intensity_unit:

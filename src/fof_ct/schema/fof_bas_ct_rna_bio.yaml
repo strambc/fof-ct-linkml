@@ -97,12 +97,7 @@ classes:
           omit the block entirely if no software was applied. Written as
           repeating #Software_* blocks in the file header.
       xyz_unit:
-        required: false
-        description: >-
-          Unit used for any spatial coordinate or distance metric reported in
-          user-defined columns (e.g. distance from nuclear lamina). Conditionally
-          required when any such metric is present. Written as ##XYZ_Unit= in
-          the file header.
+        required: true
       time_unit:
         required: false
         description: >-

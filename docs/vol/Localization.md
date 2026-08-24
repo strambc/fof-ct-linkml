@@ -27,7 +27,9 @@ URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
       LocalizationMixin <|-- Localization
         click LocalizationMixin href "../LocalizationMixin/"
       
-      Localization : fluor
+      Localization : channel_name
+        
+      Localization : fluorophore_name
         
       Localization : loc_id
         
@@ -55,7 +57,8 @@ URI: [fof_ct:Localization](https://w3id.org/fof-ct/Localization)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [spot_id](spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for a bright DNA Spot | direct |
-| [fluor](fluor.md) | 1 <br/> [String](String.md) | Fluorescent channel in which this localization event was detected (e | direct |
+| [channel_name](channel_name.md) | 1 <br/> [String](String.md) | The wavelength characteristics of the emission channel used to image this Spo... | direct |
+| [fluorophore_name](fluorophore_name.md) | 1 <br/> [String](String.md) | The name of the fluorophore whose emission was used to detect this Spot / RNA... | direct |
 | [loc_id](loc_id.md) | 1 <br/> [Integer](Integer.md) | A unique integer identifier for an individual localization event | [LocalizationMixin](LocalizationMixin.md) |
 | [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | [LocalizationMixin](LocalizationMixin.md) |
 | [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | [LocalizationMixin](LocalizationMixin.md) |
@@ -129,7 +132,8 @@ mixins:
 - LocalizationMixin
 slots:
 - spot_id
-- fluor
+- channel_name
+- fluorophore_name
 slot_usage:
   loc_id:
     name: loc_id
@@ -147,8 +151,11 @@ slot_usage:
   z:
     name: z
     required: true
-  fluor:
-    name: fluor
+  channel_name:
+    name: channel_name
+    required: true
+  fluorophore_name:
+    name: fluorophore_name
     required: true
 
 ```
@@ -186,15 +193,21 @@ slot_usage:
   z:
     name: z
     required: true
-  fluor:
-    name: fluor
+  channel_name:
+    name: channel_name
+    required: true
+  fluorophore_name:
+    name: fluorophore_name
     required: true
 attributes:
   spot_id:
     name: spot_id
     description: Unique identifier for a bright DNA Spot. Used as a primary key in
       quality and biological data tables, and as a foreign key linking localization
-      events to their parent Spot in the demultiplexing table.
+      events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table
+      13, SM Localization Data), this same Spot_ID concept is derived by clustering
+      Single-Molecule (SM) Localization events rather than by direct optical detection,
+      and every SM Localization event MUST report its associated Spot_ID.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/vol
@@ -208,19 +221,43 @@ attributes:
     - SMLocalization
     range: integer
     required: true
-  fluor:
-    name: fluor
-    description: Fluorescent channel in which this localization event was detected
-      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and
-      Undecoded SM Localization tables.
+  channel_name:
+    name: channel_name
+    description: The wavelength characteristics of the emission channel used to image
+      this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory
+      in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization
+      Quality, and Undecoded SM Localization tables. Written as the Channel column.
     examples:
-    - value: Cy5
-    - value: Alexa647
+    - value: 510/25
+    - value: 695/81
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: Localization
     domain_of:
     - Localization
+    - SpotQualityRecord
+    - RNASpotQualityRecord
+    - SMLocalizationQualityRecord
+    - UndecodedLocalization
+    range: string
+    required: true
+  fluorophore_name:
+    name: fluorophore_name
+    description: The name of the fluorophore whose emission was used to detect this
+      Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in
+      the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality,
+      and Undecoded SM Localization tables. Written as the Fluor column.
+    examples:
+    - value: AlexaFluor_488
+    - value: Cy5
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: Localization
+    domain_of:
+    - Localization
+    - SpotQualityRecord
+    - RNASpotQualityRecord
+    - SMLocalizationQualityRecord
     - UndecodedLocalization
     range: string
     required: true
@@ -228,8 +265,8 @@ attributes:
     name: loc_id
     description: A unique integer identifier for an individual localization event.
       Loc_ID values are unique across the entire dataset. Serves as primary key in
-      the Spot Demultiplexing, SM Localization Data, and Undecoded SM Localization
-      tables, and as a foreign key in the SM Localization Quality table.
+      the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and
+      Undecoded SM Localization tables.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/vol

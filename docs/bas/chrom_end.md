@@ -6,7 +6,7 @@ search:
 # Slot: chrom_end 
 
 
-_Non-inclusive end coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention._
+_Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables._
 
 
 
@@ -39,7 +39,6 @@ URI: [fof_ct:chrom_end](https://w3id.org/fof-ct/chrom_end)
 | Property | Value |
 | --- | --- |
 | Range | [Integer](Integer.md) |
-| Domain | [Spot](Spot.md) |
 | Domain Of | [Spot](Spot.md) |
 
 ### Cardinality and Requirements
@@ -100,12 +99,12 @@ URI: [fof_ct:chrom_end](https://w3id.org/fof-ct/chrom_end)
 ```yaml
 name: chrom_end
 description: Non-inclusive end coordinate on the chromosome for the genomic target
-  sequence associated with this Spot, following BED convention.
+  sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization)
+  tables.
 examples:
 - value: '1000'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
-domain: Spot
 domain_of:
 - Spot
 range: integer

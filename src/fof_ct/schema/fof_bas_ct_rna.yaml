@@ -92,9 +92,6 @@ classes:
       - additional_tables
       # --- conditional header fields ---
       - transcript_id_type
-      - time_unit
-      - intensity_unit
-      - intensity_measurement_method
       # --- data ---
       - rna_spots
     slot_usage:

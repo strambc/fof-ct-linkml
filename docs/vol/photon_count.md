@@ -6,7 +6,7 @@ search:
 # Slot: photon_count 
 
 
-_Number of photons detected for this localization event or Spot. Optional (but standardised name) in the Spot Quality table; recommended in the SM Localization Quality table._
+_Number of photons detected for this localization event or Spot. Reserved, conditionally-required column name (Photon_Count) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables; highly recommended in the latter._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:photon_count](https://w3id.org/fof-ct/photon_count)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 | [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
 
 
@@ -40,7 +41,7 @@ URI: [fof_ct:photon_count](https://w3id.org/fof-ct/photon_count)
 | Property | Value |
 | --- | --- |
 | Range | [Integer](Integer.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -92,15 +93,16 @@ URI: [fof_ct:photon_count](https://w3id.org/fof-ct/photon_count)
 <details>
 ```yaml
 name: photon_count
-description: Number of photons detected for this localization event or Spot. Optional
-  (but standardised name) in the Spot Quality table; recommended in the SM Localization
-  Quality table.
+description: Number of photons detected for this localization event or Spot. Reserved,
+  conditionally-required column name (Photon_Count) in the Spot Quality, RNA Spot
+  Quality, and SM Localization Quality tables; highly recommended in the latter.
 examples:
 - value: '1500'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 - SMLocalizationQualityRecord
 range: integer
 

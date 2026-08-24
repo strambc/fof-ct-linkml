@@ -6,7 +6,7 @@ search:
 # Slot: software_description 
 
 
-_Free-text description of the algorithm and analysis parameters, sufficient to guarantee reproducibility. Written as #Software_Description:._
+_Free-text description of the algorithm used, sufficient to guarantee reproducibility. Written as #Software_Description:._
 
 
 
@@ -85,8 +85,8 @@ URI: [fof_ct:software_description](https://w3id.org/fof-ct/software_description)
 <details>
 ```yaml
 name: software_description
-description: 'Free-text description of the algorithm and analysis parameters, sufficient
-  to guarantee reproducibility. Written as #Software_Description:.'
+description: 'Free-text description of the algorithm used, sufficient to guarantee
+  reproducibility. Written as #Software_Description:.'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:

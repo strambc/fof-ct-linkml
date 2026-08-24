@@ -6,7 +6,7 @@ search:
 # Class: UndecodedLocalization 
 
 
-_A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The frame_id column identifies the source imaging frame; fluor identifies the detection channel._
+_A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier._
 
 
 
@@ -27,11 +27,17 @@ URI: [fof_ct:UndecodedLocalization](https://w3id.org/fof-ct/UndecodedLocalizatio
       LocalizationMixin <|-- UndecodedLocalization
         click LocalizationMixin href "../LocalizationMixin/"
       
-      UndecodedLocalization : fluor
+      UndecodedLocalization : channel_name
         
-      UndecodedLocalization : frame_id
+      UndecodedLocalization : fluorophore_name
+        
+      UndecodedLocalization : hyb_id
+        
+      UndecodedLocalization : image_frame_id
         
       UndecodedLocalization : loc_id
+        
+      UndecodedLocalization : the_z
         
       UndecodedLocalization : x
         
@@ -54,8 +60,11 @@ URI: [fof_ct:UndecodedLocalization](https://w3id.org/fof-ct/UndecodedLocalizatio
 
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
-| [frame_id](frame_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for the imaging frame in which this undecoded local... | direct |
-| [fluor](fluor.md) | 1 <br/> [String](String.md) | Fluorescent channel in which this localization event was detected (e | direct |
+| [hyb_id](hyb_id.md) | 1 <br/> [Integer](Integer.md) | Unique identifier for the hybridization round in which this localization even... | direct |
+| [image_frame_id](image_frame_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for the imaging frame in which this undecoded local... | direct |
+| [channel_name](channel_name.md) | 1 <br/> [String](String.md) | The wavelength characteristics of the emission channel used to image this Spo... | direct |
+| [fluorophore_name](fluorophore_name.md) | 1 <br/> [String](String.md) | The name of the fluorophore whose emission was used to detect this Spot / RNA... | direct |
+| [the_z](the_z.md) | 0..1 <br/> [Integer](Integer.md) | Identifier of the focal Z-plane in which this localization event was detected | direct |
 | [loc_id](loc_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for this undecoded localization event | [LocalizationMixin](LocalizationMixin.md) |
 | [x](x.md) | 1 <br/> [Float](Float.md) | Sub-pixel X coordinate of this detected event (Spot or localisation) in the u... | [LocalizationMixin](LocalizationMixin.md) |
 | [y](y.md) | 1 <br/> [Float](Float.md) | Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u... | [LocalizationMixin](LocalizationMixin.md) |
@@ -117,17 +126,21 @@ URI: [fof_ct:UndecodedLocalization](https://w3id.org/fof-ct/UndecodedLocalizatio
 <details>
 ```yaml
 name: UndecodedLocalization
-description: A single raw, undecoded SM localization event in a FOF-vol-CT dataset.
+description: 'A single raw, undecoded SM localization event in a FOF-vol-CT dataset.
   Each instance corresponds to one row in the TSV data section of the Undecoded SM
   Localization Data table. This class uses LocalizationMixin for the shared loc_id,
-  x, y, z slots. The frame_id column identifies the source imaging frame; fluor identifies
-  the detection channel.
+  x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID,
+  X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column
+  for the focal Z-plane identifier.'
 from_schema: https://w3id.org/fof-ct/vol
 mixins:
 - LocalizationMixin
 slots:
-- frame_id
-- fluor
+- hyb_id
+- image_frame_id
+- channel_name
+- fluorophore_name
+- the_z
 slot_usage:
   loc_id:
     name: loc_id
@@ -144,12 +157,21 @@ slot_usage:
   z:
     name: z
     required: true
-  frame_id:
-    name: frame_id
+  hyb_id:
+    name: hyb_id
     required: true
-  fluor:
-    name: fluor
+  image_frame_id:
+    name: image_frame_id
     required: true
+  channel_name:
+    name: channel_name
+    required: true
+  fluorophore_name:
+    name: fluorophore_name
+    required: true
+  the_z:
+    name: the_z
+    required: false
 
 ```
 </details>
@@ -159,11 +181,12 @@ slot_usage:
 <details>
 ```yaml
 name: UndecodedLocalization
-description: A single raw, undecoded SM localization event in a FOF-vol-CT dataset.
+description: 'A single raw, undecoded SM localization event in a FOF-vol-CT dataset.
   Each instance corresponds to one row in the TSV data section of the Undecoded SM
   Localization Data table. This class uses LocalizationMixin for the shared loc_id,
-  x, y, z slots. The frame_id column identifies the source imaging frame; fluor identifies
-  the detection channel.
+  x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID,
+  X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column
+  for the focal Z-plane identifier.'
 from_schema: https://w3id.org/fof-ct/vol
 mixins:
 - LocalizationMixin
@@ -183,19 +206,29 @@ slot_usage:
   z:
     name: z
     required: true
-  frame_id:
-    name: frame_id
+  hyb_id:
+    name: hyb_id
     required: true
-  fluor:
-    name: fluor
+  image_frame_id:
+    name: image_frame_id
     required: true
+  channel_name:
+    name: channel_name
+    required: true
+  fluorophore_name:
+    name: fluorophore_name
+    required: true
+  the_z:
+    name: the_z
+    required: false
 attributes:
-  frame_id:
-    name: frame_id
-    description: Unique integer identifier for the imaging frame in which this undecoded
-      localization event was detected. Used in the Undecoded SM Localization table.
+  hyb_id:
+    name: hyb_id
+    description: Unique identifier for the hybridization round in which this localization
+      event was detected. Written as the Hyb_ID column. Mandatory in the Undecoded
+      SM Localization table.
     examples:
-    - value: '42'
+    - value: '1'
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: UndecodedLocalization
@@ -203,22 +236,75 @@ attributes:
     - UndecodedLocalization
     range: integer
     required: true
-  fluor:
-    name: fluor
-    description: Fluorescent channel in which this localization event was detected
-      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and
-      Undecoded SM Localization tables.
+  image_frame_id:
+    name: image_frame_id
+    description: Unique integer identifier for the imaging frame in which this undecoded
+      localization event was detected. Written as the Image_Frame_ID column. Mandatory
+      in the Undecoded SM Localization table.
     examples:
-    - value: Cy5
-    - value: Alexa647
+    - value: '1'
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    range: integer
+    required: true
+  channel_name:
+    name: channel_name
+    description: The wavelength characteristics of the emission channel used to image
+      this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory
+      in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization
+      Quality, and Undecoded SM Localization tables. Written as the Channel column.
+    examples:
+    - value: 510/25
+    - value: 695/81
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: UndecodedLocalization
     domain_of:
     - Localization
+    - SpotQualityRecord
+    - RNASpotQualityRecord
+    - SMLocalizationQualityRecord
     - UndecodedLocalization
     range: string
     required: true
+  fluorophore_name:
+    name: fluorophore_name
+    description: The name of the fluorophore whose emission was used to detect this
+      Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in
+      the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality,
+      and Undecoded SM Localization tables. Written as the Fluor column.
+    examples:
+    - value: AlexaFluor_488
+    - value: Cy5
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: UndecodedLocalization
+    domain_of:
+    - Localization
+    - SpotQualityRecord
+    - RNASpotQualityRecord
+    - SMLocalizationQualityRecord
+    - UndecodedLocalization
+    range: string
+    required: true
+  the_z:
+    name: the_z
+    description: 'Identifier of the focal Z-plane in which this localization event
+      was detected. Reserved, conditionally-required column name (TheZ) in the Undecoded
+      SM Localization table: optional to use, but if the focal Z-plane is reported
+      this exact reserved column name MUST be used.'
+    examples:
+    - value: '10'
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: UndecodedLocalization
+    domain_of:
+    - UndecodedLocalization
+    range: integer
+    required: false
   loc_id:
     name: loc_id
     description: Unique integer identifier for this undecoded localization event.

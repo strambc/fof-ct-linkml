@@ -6,7 +6,7 @@ search:
 # Slot: x_drift 
 
 
-_Drift correction offset applied to the X coordinate of this Spot. Same unit as X._
+_Drift correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization Quality table._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:x_drift](https://w3id.org/fof-ct/x_drift)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:x_drift](https://w3id.org/fof-ct/x_drift)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,17 @@ URI: [fof_ct:x_drift](https://w3id.org/fof-ct/x_drift)
 <details>
 ```yaml
 name: x_drift
-description: Drift correction offset applied to the X coordinate of this Spot. Same
-  unit as X.
+description: Drift correction offset applied to the X coordinate. Same unit as X.
+  Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA
+  Spot Quality tables. Not part of the reserved vocabulary of the SM Localization
+  Quality table.
 examples:
 - value: '0.13'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

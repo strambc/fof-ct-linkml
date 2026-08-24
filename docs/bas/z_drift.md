@@ -6,7 +6,7 @@ search:
 # Slot: z_drift 
 
 
-_Drift correction offset applied to the Z coordinate of this Spot. Same unit as Z._
+_Drift correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA Spot Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:z_drift](https://w3id.org/fof-ct/z_drift)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:z_drift](https://w3id.org/fof-ct/z_drift)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,16 @@ URI: [fof_ct:z_drift](https://w3id.org/fof-ct/z_drift)
 <details>
 ```yaml
 name: z_drift
-description: Drift correction offset applied to the Z coordinate of this Spot. Same
-  unit as Z.
+description: Drift correction offset applied to the Z coordinate. Same unit as Z.
+  Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA
+  Spot Quality tables.
 examples:
 - value: '0.13'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

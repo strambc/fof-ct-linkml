@@ -1,13 +1,28 @@
 # metamodel_version: 1.11.0
 # version: 1.0.0
+enum ROIBoundariesFormatTypeEnum
+  {
+    OME_Polygon
+    OME_Mask
+    Mesh_OBJ
+    Mesh_STL
+    Mesh_PLY
+    GeoJSON
+    WKT
+    Label_Mask_Image
+    Other
+  }
+
 enum SoftwareTypeEnum
   {
-    SpotLoc
-    Tracing
-    SpotLoc__PLUS_SIGN__Tracing
+    Distance_Calculation
+    DriftCorrection
+    Precision_Assessment
     Segmentation
-    QC
-    Distance
+    Single_Molecule_Localization
+    SpotLoc
+    SpotLoc__PLUS_SIGN__Tracing
+    Tracing
     Other
   }
 
@@ -25,6 +40,9 @@ enum TableNamespaceEnum
     __4dn_FOF__HYPHEN_MINUS__CT_extracell
     __4dn_FOF__HYPHEN_MINUS__CT_subcell
     __4dn_FOF__HYPHEN_MINUS__CT_mapping
+    FOF__HYPHEN_MINUS__CT_vol_core
+    FOF__HYPHEN_MINUS__CT_vol_quality
+    FOF__HYPHEN_MINUS__CT_undecoded
   }
 
 enum TimeUnitEnum
@@ -32,6 +50,7 @@ enum TimeUnitEnum
     s
     sec
     ms
+    msec
     min
     hr
   }
@@ -61,11 +80,28 @@ type CellTable
     additionalTables: [TableNamespaceEnum]!
     extraCellRoiType: String
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
     cells: [Cell]!
+  }
+
+type DemultiplexingTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    xyzUnit: XYZUnitEnum!
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    localizations: [Localization]!
   }
 
 type ExtraCellROI
@@ -84,38 +120,30 @@ type ExtraCellROITable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
     extraCellRois: [ExtraCellROI]!
   }
 
-type Localization
+type Localization implements LocalizationMixin
   {
-    locId: Int!
     spotId: Int!
+    channelName: String!
+    fluorophoreName: String!
+    locId: Int!
     x: Float!
     y: Float!
     z: Float!
-    fluor: String!
   }
 
-type LocalizationTable
+interface LocalizationMixin
   {
-    fofCtVersion: String!
-    tableNamespace: String!
-    labName: String!
-    experimenterName: String!
-    experimenterContact: String!
-    description: String!
-    softwares: [Software]!
-    additionalTables: [TableNamespaceEnum]!
-    xyzUnit: XYZUnitEnum
-    timeUnit: TimeUnitEnum
-    intensityUnit: String
-    intensityMeasurementMethod: String
-    localizations: [Localization]!
+    locId: Int
+    x: Float
+    y: Float
+    z: Float
   }
 
 type RNASpot
@@ -148,7 +176,7 @@ type RNASpotBiologicalTable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
@@ -158,6 +186,27 @@ type RNASpotBiologicalTable
 type RNASpotQualityRecord
   {
     rnaSpotId: Int!
+    channelName: String!
+    fluorophoreName: String!
+    xPrecision: Float
+    yPrecision: Float
+    zPrecision: Float
+    photonCount: Int
+    goodnessOfFit: Float
+    centroidIntensity: Float
+    peakIntensity: Float
+    rawX: Float
+    rawY: Float
+    rawZ: Float
+    xDrift: Float
+    yDrift: Float
+    zDrift: Float
+    xChromaticShift: Float
+    yChromaticShift: Float
+    zChromaticShift: Float
+    xLocError: Float
+    yLocError: Float
+    zLocError: Float
   }
 
 type RNASpotQualityTable
@@ -170,7 +219,7 @@ type RNASpotQualityTable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
@@ -191,9 +240,6 @@ type RNASpotTable
     softwares: [Software]!
     additionalTables: [TableNamespaceEnum]!
     transcriptIdType: String
-    timeUnit: TimeUnitEnum
-    intensityUnit: String
-    intensityMeasurementMethod: String
     rnaSpots: [RNASpot]!
   }
 
@@ -209,13 +255,14 @@ type ROIMappingTable
   {
     fofCtVersion: String!
     tableNamespace: String!
-    roiBoundariesFormat: String!
+    roiBoundariesFormatType: ROIBoundariesFormatTypeEnum!
     xyzUnit: XYZUnitEnum!
     labName: String!
     experimenterName: String!
     experimenterContact: String!
     description: String!
     additionalTables: [TableNamespaceEnum]!
+    roiBoundariesFormatDescription: String
     cellType: String
     subCellRoiType: String
     extraCellRoiType: String
@@ -226,12 +273,87 @@ type ROIMappingTable
     roiMappings: [ROIMapping]!
   }
 
+type SMLocalization implements LocalizationMixin
+  {
+    spotId: Int!
+    traceId: Int!
+    chrom: String!
+    chromStart: Int!
+    chromEnd: Int!
+    subCellRoiId: Int
+    cellId: Int
+    extraCellRoiId: Int
+    locId: Int!
+    x: Float!
+    y: Float!
+    z: Float!
+  }
+
+type SMLocalizationQualityRecord
+  {
+    locId: Int!
+    channelName: String!
+    fluorophoreName: String!
+    xPrecision: Float
+    yPrecision: Float
+    zPrecision: Float
+    photonCount: Int
+    goodnessOfFit: Float
+    centroidIntensity: Float
+    peakIntensity: Float
+    rawX: Float
+    rawY: Float
+    rawZ: Float
+    xLocError: Float
+    yLocError: Float
+    zLocError: Float
+  }
+
+type SMLocalizationQualityTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    xyzUnit: XYZUnitEnum!
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    smLocalizationQualityRecords: [SMLocalizationQualityRecord]!
+  }
+
+type SMLocalizationTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    genomeAssembly: String!
+    modification: String
+    vcfFileName: String
+    vcfVersion: String
+    xyzUnit: XYZUnitEnum!
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    smLocalizations: [SMLocalization]!
+  }
+
 type Software
   {
     softwareTitle: String!
     softwareType: SoftwareTypeEnum!
     softwareAuthors: String!
     softwareDescription: String!
+    softwareParameters: String!
     softwareRepository: String!
     softwarePreferredCitationId: String!
   }
@@ -251,7 +373,7 @@ type SpotBiologicalTable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
@@ -261,6 +383,27 @@ type SpotBiologicalTable
 type SpotQualityRecord
   {
     spotId: Int!
+    channelName: String!
+    fluorophoreName: String!
+    xPrecision: Float
+    yPrecision: Float
+    zPrecision: Float
+    photonCount: Int
+    goodnessOfFit: Float
+    centroidIntensity: Float
+    peakIntensity: Float
+    rawX: Float
+    rawY: Float
+    rawZ: Float
+    xDrift: Float
+    yDrift: Float
+    zDrift: Float
+    xChromaticShift: Float
+    yChromaticShift: Float
+    zChromaticShift: Float
+    xLocError: Float
+    yLocError: Float
+    zLocError: Float
   }
 
 type SpotQualityTable
@@ -273,7 +416,7 @@ type SpotQualityTable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
@@ -298,7 +441,7 @@ type SubCellROITable
     additionalTables: [TableNamespaceEnum]!
     cellType: String
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
@@ -320,9 +463,39 @@ type TraceTable
     description: String!
     additionalTables: [TableNamespaceEnum]!
     softwares: [Software]
-    xyzUnit: XYZUnitEnum
+    xyzUnit: XYZUnitEnum!
     timeUnit: TimeUnitEnum
     intensityUnit: String
     intensityMeasurementMethod: String
     traces: [Trace]!
+  }
+
+type UndecodedLocalization implements LocalizationMixin
+  {
+    hybId: Int!
+    imageFrameId: Int!
+    channelName: String!
+    fluorophoreName: String!
+    theZ: Int
+    locId: Int!
+    x: Float!
+    y: Float!
+    z: Float!
+  }
+
+type UndecodedLocalizationTable
+  {
+    fofCtVersion: String!
+    tableNamespace: String!
+    labName: String!
+    experimenterName: String!
+    experimenterContact: String!
+    description: String!
+    softwares: [Software]!
+    additionalTables: [TableNamespaceEnum]!
+    xyzUnit: XYZUnitEnum!
+    timeUnit: TimeUnitEnum
+    intensityUnit: String
+    intensityMeasurementMethod: String
+    undecodedLocalizations: [UndecodedLocalization]!
   }

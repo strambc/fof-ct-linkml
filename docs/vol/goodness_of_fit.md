@@ -6,7 +6,7 @@ search:
 # Slot: goodness_of_fit 
 
 
-_Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Optional (but standardised name) in the Spot Quality table; recommended in the SM Localization Quality table._
+_Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:goodness_of_fit](https://w3id.org/fof-ct/goodness_of_fit)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 | [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
 
 
@@ -40,7 +41,7 @@ URI: [fof_ct:goodness_of_fit](https://w3id.org/fof-ct/goodness_of_fit)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -93,14 +94,15 @@ URI: [fof_ct:goodness_of_fit](https://w3id.org/fof-ct/goodness_of_fit)
 ```yaml
 name: goodness_of_fit
 description: Metric quantifying how well the fitted model matches the observed signal
-  (e.g. chi-squared, R-squared). Optional (but standardised name) in the Spot Quality
-  table; recommended in the SM Localization Quality table.
+  (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit)
+  in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
 examples:
 - value: '0.95'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 - SMLocalizationQualityRecord
 range: float
 

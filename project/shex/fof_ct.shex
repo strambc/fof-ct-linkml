@@ -69,19 +69,58 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <extra_cell_roi_type> @linkml:String ? ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <cells> @<Cell> +
        ) ;
        rdf:type [ <CellTable> ] ?
+    )
+}
+
+<DemultiplexingTable> CLOSED {
+    (  $<DemultiplexingTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <localizations> @<Localization> +
+       ) ;
+       rdf:type [ <DemultiplexingTable> ] ?
     )
 }
 
@@ -110,13 +149,16 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <extra_cell_rois> @<ExtraCellROI> +
@@ -126,46 +168,26 @@ linkml:Sparqlpath xsd:string
 }
 
 <Localization> CLOSED {
-    (  $<Localization_tes> (  <spot_id> @linkml:Integer ;
+    (  $<Localization_tes> (  &<LocalizationMixin_tes> ;
+          rdf:type [ <LocalizationMixin> ] ? ;
+          <spot_id> @linkml:Integer ;
+          <channel_name> @linkml:String ;
+          <fluorophore_name> @linkml:String ;
           <x> @linkml:Float ;
           <y> @linkml:Float ;
-          <z> @linkml:Float ;
-          <fluor> @linkml:String
+          <z> @linkml:Float
        ) ;
        rdf:type [ <Localization> ]
     )
 }
 
-<LocalizationTable> CLOSED {
-    (  $<LocalizationTable_tes> (  <fof_ct_version> @linkml:String ;
-          <table_namespace> @linkml:String ;
-          <lab_name> @linkml:String ;
-          <experimenter_name> @linkml:String ;
-          <experimenter_contact> @linkml:String ;
-          <description> @linkml:String ;
-          <softwares> @<Software> + ;
-          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
-          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
-          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
-          <intensity_unit> @linkml:String ? ;
-          <intensity_measurement_method> @linkml:String ? ;
-          <localizations> @<Localization> +
+<LocalizationMixin> {
+    (  $<LocalizationMixin_tes> (  <loc_id> @linkml:Integer ? ;
+          <x> @linkml:Float ? ;
+          <y> @linkml:Float ? ;
+          <z> @linkml:Float ?
        ) ;
-       rdf:type [ <LocalizationTable> ] ?
+       rdf:type [ <LocalizationMixin> ] ?
     )
 }
 
@@ -210,13 +232,16 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <rna_spot_biological_records> @<RNASpotBiologicalRecord> +
@@ -226,7 +251,28 @@ linkml:Sparqlpath xsd:string
 }
 
 <RNASpotQualityRecord> CLOSED {
-    (  $<RNASpotQualityRecord_tes> rdf:type . * ;
+    (  $<RNASpotQualityRecord_tes> (  <channel_name> @linkml:String ;
+          <fluorophore_name> @linkml:String ;
+          <x_precision> @linkml:Float ? ;
+          <y_precision> @linkml:Float ? ;
+          <z_precision> @linkml:Float ? ;
+          <photon_count> @linkml:Integer ? ;
+          <goodness_of_fit> @linkml:Float ? ;
+          <centroid_intensity> @linkml:Float ? ;
+          <peak_intensity> @linkml:Float ? ;
+          <raw_x> @linkml:Float ? ;
+          <raw_y> @linkml:Float ? ;
+          <raw_z> @linkml:Float ? ;
+          <x_drift> @linkml:Float ? ;
+          <y_drift> @linkml:Float ? ;
+          <z_drift> @linkml:Float ? ;
+          <x_chromatic_shift> @linkml:Float ? ;
+          <y_chromatic_shift> @linkml:Float ? ;
+          <z_chromatic_shift> @linkml:Float ? ;
+          <x_loc_error> @linkml:Float ? ;
+          <y_loc_error> @linkml:Float ? ;
+          <z_loc_error> @linkml:Float ?
+       ) ;
        rdf:type [ <RNASpotQualityRecord> ]
     )
 }
@@ -249,13 +295,16 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <rna_spot_quality_records> @<RNASpotQualityRecord> +
@@ -287,13 +336,11 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <transcript_id_type> @linkml:String ? ;
-          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
-          <intensity_unit> @linkml:String ? ;
-          <intensity_measurement_method> @linkml:String ? ;
           <rna_spots> @<RNASpot> +
        ) ;
        rdf:type [ <RNASpotTable> ] ?
@@ -313,7 +360,15 @@ linkml:Sparqlpath xsd:string
 <ROIMappingTable> CLOSED {
     (  $<ROIMappingTable_tes> (  <fof_ct_version> @linkml:String ;
           <table_namespace> @linkml:String ;
-          <roi_boundaries_format> @linkml:String ;
+          <roi_boundaries_format_type> [ <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#OME_Polygon>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#OME_Mask>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#Mesh_OBJ>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#Mesh_STL>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#Mesh_PLY>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#GeoJSON>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#WKT>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#Label_Mask_Image>
+             <https://w3id.org/fof-ct/ROIBoundariesFormatTypeEnum#Other> ] ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
              <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <lab_name> @linkml:String ;
@@ -331,14 +386,18 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
+          <roi_boundaries_format_description> @linkml:String ? ;
           <cell_type> @linkml:String ? ;
           <sub_cell_roi_type> @linkml:String ? ;
           <extra_cell_roi_type> @linkml:String ? ;
           <softwares> @<Software> * ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <roi_mappings> @<ROIMapping> +
@@ -347,14 +406,134 @@ linkml:Sparqlpath xsd:string
     )
 }
 
+<SMLocalization> CLOSED {
+    (  $<SMLocalization_tes> (  &<LocalizationMixin_tes> ;
+          rdf:type [ <LocalizationMixin> ] ? ;
+          <spot_id> @linkml:Integer ;
+          <trace_id> @linkml:Integer ;
+          <chrom> @linkml:String ;
+          <chrom_start> @linkml:Integer ;
+          <chrom_end> @linkml:Integer ;
+          <sub_cell_roi_id> @linkml:Integer ? ;
+          <cell_id> @linkml:Integer ? ;
+          <extra_cell_roi_id> @linkml:Integer ? ;
+          <x> @linkml:Float ;
+          <y> @linkml:Float ;
+          <z> @linkml:Float
+       ) ;
+       rdf:type [ <SMLocalization> ]
+    )
+}
+
+<SMLocalizationQualityRecord> CLOSED {
+    (  $<SMLocalizationQualityRecord_tes> (  <channel_name> @linkml:String ;
+          <fluorophore_name> @linkml:String ;
+          <x_precision> @linkml:Float ? ;
+          <y_precision> @linkml:Float ? ;
+          <z_precision> @linkml:Float ? ;
+          <photon_count> @linkml:Integer ? ;
+          <goodness_of_fit> @linkml:Float ? ;
+          <centroid_intensity> @linkml:Float ? ;
+          <peak_intensity> @linkml:Float ? ;
+          <raw_x> @linkml:Float ? ;
+          <raw_y> @linkml:Float ? ;
+          <raw_z> @linkml:Float ? ;
+          <x_loc_error> @linkml:Float ? ;
+          <y_loc_error> @linkml:Float ? ;
+          <z_loc_error> @linkml:Float ?
+       ) ;
+       rdf:type [ <SMLocalizationQualityRecord> ]
+    )
+}
+
+<SMLocalizationQualityTable> CLOSED {
+    (  $<SMLocalizationQualityTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <sm_localization_quality_records> @<SMLocalizationQualityRecord> +
+       ) ;
+       rdf:type [ <SMLocalizationQualityTable> ] ?
+    )
+}
+
+<SMLocalizationTable> CLOSED {
+    (  $<SMLocalizationTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
+          <genome_assembly> @linkml:String ;
+          <modification> @linkml:String ? ;
+          <vcf_file_name> @linkml:String ? ;
+          <vcf_version> @linkml:String ? ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <sm_localizations> @<SMLocalization> +
+       ) ;
+       rdf:type [ <SMLocalizationTable> ] ?
+    )
+}
+
 <Software> CLOSED {
     (  $<Software_tes> (  <software_title> @linkml:String ;
-          <software_type> [ <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc> <https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing>
-             <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing> <https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation>
-             <https://w3id.org/fof-ct/SoftwareTypeEnum#QC> <https://w3id.org/fof-ct/SoftwareTypeEnum#Distance>
-             <https://w3id.org/fof-ct/SoftwareTypeEnum#Other> ] ;
+          <software_type> [ <https://w3id.org/fof-ct/SoftwareTypeEnum#Distance%20Calculation>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#DriftCorrection>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#Precision%20Assessment>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#Segmentation>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#Single%20Molecule%20Localization>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc> <https://w3id.org/fof-ct/SoftwareTypeEnum#SpotLoc%2BTracing>
+             <https://w3id.org/fof-ct/SoftwareTypeEnum#Tracing> <https://w3id.org/fof-ct/SoftwareTypeEnum#Other> ] ;
           <software_authors> @linkml:String ;
           <software_description> @linkml:String ;
+          <software_parameters> @linkml:String ;
           <software_repository> @linkml:Uri ;
           <software_preferred_citation_id> @linkml:Uri
        ) ;
@@ -386,13 +565,16 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <spot_biological_records> @<SpotBiologicalRecord> +
@@ -402,7 +584,28 @@ linkml:Sparqlpath xsd:string
 }
 
 <SpotQualityRecord> CLOSED {
-    (  $<SpotQualityRecord_tes> rdf:type . * ;
+    (  $<SpotQualityRecord_tes> (  <channel_name> @linkml:String ;
+          <fluorophore_name> @linkml:String ;
+          <x_precision> @linkml:Float ? ;
+          <y_precision> @linkml:Float ? ;
+          <z_precision> @linkml:Float ? ;
+          <photon_count> @linkml:Integer ? ;
+          <goodness_of_fit> @linkml:Float ? ;
+          <centroid_intensity> @linkml:Float ? ;
+          <peak_intensity> @linkml:Float ? ;
+          <raw_x> @linkml:Float ? ;
+          <raw_y> @linkml:Float ? ;
+          <raw_z> @linkml:Float ? ;
+          <x_drift> @linkml:Float ? ;
+          <y_drift> @linkml:Float ? ;
+          <z_drift> @linkml:Float ? ;
+          <x_chromatic_shift> @linkml:Float ? ;
+          <y_chromatic_shift> @linkml:Float ? ;
+          <z_chromatic_shift> @linkml:Float ? ;
+          <x_loc_error> @linkml:Float ? ;
+          <y_loc_error> @linkml:Float ? ;
+          <z_loc_error> @linkml:Float ?
+       ) ;
        rdf:type [ <SpotQualityRecord> ]
     )
 }
@@ -425,13 +628,16 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <spot_quality_records> @<SpotQualityRecord> +
@@ -465,14 +671,17 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <cell_type> @linkml:String ? ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <sub_cell_rois> @<SubCellROI> +
@@ -505,17 +714,72 @@ linkml:Sparqlpath xsd:string
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
              <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
-             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping> ] + ;
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
           <softwares> @<Software> * ;
           <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
-             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ? ;
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
           <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
-             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#min>
-             <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
           <intensity_unit> @linkml:String ? ;
           <intensity_measurement_method> @linkml:String ? ;
           <traces> @<Trace> +
        ) ;
        rdf:type [ <TraceTable> ] ?
+    )
+}
+
+<UndecodedLocalization> CLOSED {
+    (  $<UndecodedLocalization_tes> (  &<LocalizationMixin_tes> ;
+          rdf:type [ <LocalizationMixin> ] ? ;
+          <hyb_id> @linkml:Integer ;
+          <image_frame_id> @linkml:Integer ;
+          <channel_name> @linkml:String ;
+          <fluorophore_name> @linkml:String ;
+          <the_z> @linkml:Integer ? ;
+          <x> @linkml:Float ;
+          <y> @linkml:Float ;
+          <z> @linkml:Float
+       ) ;
+       rdf:type [ <UndecodedLocalization> ]
+    )
+}
+
+<UndecodedLocalizationTable> CLOSED {
+    (  $<UndecodedLocalizationTable_tes> (  <fof_ct_version> @linkml:String ;
+          <table_namespace> @linkml:String ;
+          <lab_name> @linkml:String ;
+          <experimenter_name> @linkml:String ;
+          <experimenter_contact> @linkml:String ;
+          <description> @linkml:String ;
+          <softwares> @<Software> + ;
+          <additional_tables> [ <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_demultiplexing>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_trace>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_rna_bio>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_cell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_extracell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_subcell>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#4dn_FOF-CT_mapping>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_core>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_vol_quality>
+             <https://w3id.org/fof-ct/TableNamespaceEnum#FOF-CT_undecoded> ] + ;
+          <xyz_unit> [ <https://w3id.org/fof-ct/XYZUnitEnum#nm> <https://w3id.org/fof-ct/XYZUnitEnum#micron>
+             <https://w3id.org/fof-ct/XYZUnitEnum#mm> ] ;
+          <time_unit> [ <https://w3id.org/fof-ct/TimeUnitEnum#s> <https://w3id.org/fof-ct/TimeUnitEnum#sec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#ms> <https://w3id.org/fof-ct/TimeUnitEnum#msec>
+             <https://w3id.org/fof-ct/TimeUnitEnum#min> <https://w3id.org/fof-ct/TimeUnitEnum#hr> ] ? ;
+          <intensity_unit> @linkml:String ? ;
+          <intensity_measurement_method> @linkml:String ? ;
+          <undecoded_localizations> @<UndecodedLocalization> +
+       ) ;
+       rdf:type [ <UndecodedLocalizationTable> ] ?
     )
 }

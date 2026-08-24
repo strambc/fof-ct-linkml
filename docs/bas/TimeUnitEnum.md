@@ -23,6 +23,7 @@ URI: [fof_ct:TimeUnitEnum](https://w3id.org/fof-ct/TimeUnitEnum)
 | s | None | Seconds (SI base unit) |
 | sec | None | Seconds (alternative spelling accepted by FOF-CT) |
 | ms | None | Milliseconds |
+| msec | None | Milliseconds (alternative spelling accepted by FOF-CT) |
 | min | None | Minutes |
 | hr | None | Hours |
 
@@ -78,6 +79,9 @@ permissible_values:
   ms:
     text: ms
     description: Milliseconds
+  msec:
+    text: msec
+    description: Milliseconds (alternative spelling accepted by FOF-CT)
   min:
     text: min
     description: Minutes

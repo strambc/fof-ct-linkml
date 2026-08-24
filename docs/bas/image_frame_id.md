@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: frame_id 
+# Slot: image_frame_id 
 
 
-_Unique integer identifier for the imaging frame in which this undecoded localization event was detected. Used in the Undecoded SM Localization table._
+_Unique integer identifier for the imaging frame in which this undecoded localization event was detected. Written as the Image_Frame_ID column. Mandatory in the Undecoded SM Localization table._
 
 
 
@@ -14,7 +14,7 @@ _Unique integer identifier for the imaging frame in which this undecoded localiz
 
 
 
-URI: [fof_ct:frame_id](https://w3id.org/fof-ct/frame_id)
+URI: [fof_ct:image_frame_id](https://w3id.org/fof-ct/image_frame_id)
 <!-- no inheritance hierarchy -->
 
 
@@ -48,7 +48,7 @@ URI: [fof_ct:frame_id](https://w3id.org/fof-ct/frame_id)
 
 | Value |
 | --- |
-| 42 |
+| 1 |
 
 
 
@@ -70,8 +70,8 @@ URI: [fof_ct:frame_id](https://w3id.org/fof-ct/frame_id)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | fof_ct:frame_id |
-| native | fof_ct:frame_id |
+| self | fof_ct:image_frame_id |
+| native | fof_ct:image_frame_id |
 
 
 
@@ -80,11 +80,12 @@ URI: [fof_ct:frame_id](https://w3id.org/fof-ct/frame_id)
 
 <details>
 ```yaml
-name: frame_id
+name: image_frame_id
 description: Unique integer identifier for the imaging frame in which this undecoded
-  localization event was detected. Used in the Undecoded SM Localization table.
+  localization event was detected. Written as the Image_Frame_ID column. Mandatory
+  in the Undecoded SM Localization table.
 examples:
-- value: '42'
+- value: '1'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 range: integer

@@ -6,7 +6,7 @@ search:
 # Slot: sub_cell_roi_type 
 
 
-_The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header._
+_The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header._
 
 
 
@@ -60,8 +60,8 @@ URI: [fof_ct:sub_cell_roi_type](https://w3id.org/fof-ct/sub_cell_roi_type)
 | Value |
 | --- |
 | Nucleolus |
-| NL |
-| NPC |
+| Nuclear Lamina (NL) |
+| Nuclear Pore Complex (NPC) |
 | Chromosome_Domain |
 
 
@@ -96,13 +96,13 @@ URI: [fof_ct:sub_cell_roi_type](https://w3id.org/fof-ct/sub_cell_roi_type)
 ```yaml
 name: sub_cell_roi_type
 description: 'The type of sub-cellular structure ROI documented in this table or mapping
-  file. It is recommended to use an EFO ''cellular_component'' child term. Examples
-  include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body,
+  file. It is recommended to use a GO ''cellular_component'' child term. Examples
+  include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body,
   Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.'
 examples:
 - value: Nucleolus
-- value: NL
-- value: NPC
+- value: Nuclear Lamina (NL)
+- value: Nuclear Pore Complex (NPC)
 - value: Chromosome_Domain
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000

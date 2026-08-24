@@ -65,16 +65,20 @@ classes:
       z:
         required: true
       spot_id:
-        required: false
+        required: true
         description: >-
-          Identifier of the Spot (centroid of the SM localization cloud)
-          to which this localization belongs. Conditionally required when
-          Spot/Trace post-processing results are reported.
+          Identifier of the Spot (centroid of the SM localization cloud,
+          derived by clustering SM Localization events) to which this
+          localization belongs. Mandatory for every SM Localization event
+          (see vol_core.rst: "A valid FOF-vol-CT deposition MUST
+          mandatorily report Loc_ID together with its associated Spot_ID
+          and Trace_ID for every SM Localization event.").
       trace_id:
-        required: false
+        required: true
         description: >-
           Identifier of the chromatin Trace to which this localization
-          belongs. Conditionally required when Trace results are reported.
+          and its parent Spot belong. Mandatory for every SM Localization
+          event (see vol_core.rst).
       chrom:
         required: true
       chrom_start:
@@ -91,7 +95,7 @@ classes:
   SMLocalizationTable:
     description: >-
       The SM Localization Data table of a FOF-vol-CT dataset (namespace:
-      4dn_FOF-CT_vol_core). This is the mandatory primary data table for
+      FOF-CT_vol_core, no 4dn_ prefix). This is the mandatory primary data table for
       volumetric FOF-CT submissions. Each row corresponds to one SM
       localization event. The Spot/Trace Data table is optional for
       FOF-vol-CT submissions but may be included to report post-processing
@@ -107,6 +111,9 @@ classes:
       - softwares
       - additional_tables
       - genome_assembly
+      - modification
+      - vcf_file_name
+      - vcf_version
       - xyz_unit
       - time_unit
       - intensity_unit
@@ -117,7 +124,11 @@ classes:
         required: true
       table_namespace:
         required: true
-        equals_string: 4dn_FOF-CT_vol_core
+        equals_string: FOF-CT_vol_core
+        description: >-
+          Identifier for this table type. Must always be 'FOF-CT_vol_core'
+          (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally
+          omits it). Written as ##Table_Namespace= in the file header.
       lab_name:
         required: true
       experimenter_name:
@@ -150,27 +161,5 @@ slots:
     multivalued: true
     inlined_as_list: true
 
-  chrom:
-    description: >-
-      Chromosome identifier for the genomic locus targeted by this
-      SM localization event (e.g. chr1, chrX).
-    range: string
-    examples:
-      - value: chr1
-      - value: chrX
-
-  chrom_start:
-    description: >-
-      Start coordinate (0-based, half-open BED convention) of the genomic
-      locus targeted by this SM localization event.
-    range: integer
-    examples:
-      - value: "1000000"
-
-  chrom_end:
-    description: >-
-      End coordinate (0-based, half-open BED convention) of the genomic
-      locus targeted by this SM localization event.
-    range: integer
-    examples:
-      - value: "1050000"
+  # NOTE: chrom, chrom_start, chrom_end moved to fof_bas_ct_common.yaml
+  # (domain-agnostic) — see the note in fof_bas_ct_core.yaml.

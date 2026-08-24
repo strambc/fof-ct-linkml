@@ -4,11 +4,14 @@ name: fof_vol_ct_quality
 title: FOF-vol-CT SM Localization Quality table
 description: >-
   FISH Omics Format for Chromatin Tracing - Volumetric modality (FOF-vol-CT).
-  LinkML schema for the mandatory SM Localization Quality table (table 14).
-  Each row provides quality metrics for one SM localization event identified
-  by Loc_ID. X_Precision, Y_Precision and Z_Precision are mandatory columns;
-  Photon_Count and Goodness_of_Fit are recommended. Additional user-defined
-  optional columns may be included and must be declared via #^ header lines.
+  LinkML schema for the optional (but recommended) SM Localization Quality
+  table (table 14). Each row provides quality metrics for one SM localization
+  event identified by Loc_ID; the three mandatory columns are Loc_ID, Channel,
+  and Fluor. X_Loc_Precision, Y_Loc_Precision, Z_Loc_Precision, and
+  Photon_Count are highly recommended (not literally mandatory); all other
+  quality metrics are reserved, conditionally-required column names drawn
+  from the LiMi-Model. Additional user-defined optional columns may be
+  included and must be declared via #^ header lines.
 license: CC-BY-4.0
 version: 1.0.0
 
@@ -30,16 +33,29 @@ classes:
     description: >-
       A single row in the SM Localization Quality table. Each instance
       captures quality metrics for one SM localization event identified
-      by Loc_ID. X_Precision, Y_Precision and Z_Precision are mandatory.
-      Photon_Count and Goodness_of_Fit are recommended. Additional
+      by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision,
+      Y_Loc_Precision, Z_Loc_Precision and Photon_Count are highly
+      recommended but not literally mandatory. All other reserved metric
+      columns are conditionally required (use of the reserved name is
+      optional, but mandatory if that metric is reported). Additional
       user-defined optional columns must be described in the file header.
     slots:
       - loc_id
+      - channel_name
+      - fluorophore_name
       - x_precision
       - y_precision
       - z_precision
       - photon_count
       - goodness_of_fit
+      - centroid_intensity
+      - peak_intensity
+      - raw_x
+      - raw_y
+      - raw_z
+      - x_loc_error
+      - y_loc_error
+      - z_loc_error
     slot_usage:
       loc_id:
         required: true
@@ -48,24 +64,48 @@ classes:
           Unique integer identifier for the SM localization event to which
           these quality metrics belong. Links to the corresponding
           SMLocalization record in the SM Localization Data table (table 13).
+      channel_name:
+        required: true
+      fluorophore_name:
+        required: true
       x_precision:
-        required: true
+        required: false
+        description: "Highly recommended (not literally mandatory): X_Loc_Precision."
       y_precision:
-        required: true
+        required: false
+        description: "Highly recommended (not literally mandatory): Y_Loc_Precision."
       z_precision:
-        required: true
+        required: false
+        description: "Highly recommended (not literally mandatory): Z_Loc_Precision."
       photon_count:
         required: false
-        description: "Recommended: number of photons detected for this localization."
+        description: "Highly recommended: number of photons detected for this localization."
       goodness_of_fit:
         required: false
-        description: "Recommended: goodness-of-fit metric for the localization model."
+      centroid_intensity:
+        required: false
+      peak_intensity:
+        required: false
+      raw_x:
+        required: false
+      raw_y:
+        required: false
+      raw_z:
+        required: false
+      x_loc_error:
+        required: false
+      y_loc_error:
+        required: false
+      z_loc_error:
+        required: false
 
   SMLocalizationQualityTable:
     description: >-
       The SM Localization Quality table of a FOF-vol-CT dataset (namespace:
-      4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT
-      submissions. It provides localization quality metrics indexed by Loc_ID.
+      FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional
+      (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT
+      submissions; this table provides localization quality metrics indexed
+      by Loc_ID when submitted.
     tree_root: true
     slots:
       - fof_ct_version
@@ -86,7 +126,12 @@ classes:
         required: true
       table_namespace:
         required: true
-        equals_string: 4dn_FOF-CT_vol_quality
+        equals_string: FOF-CT_vol_quality
+        description: >-
+          Identifier for this table type. Must always be
+          'FOF-CT_vol_quality' (no 4dn_ prefix — this FOF-vol-CT-exclusive
+          namespace intentionally omits it). Written as ##Table_Namespace=
+          in the file header.
       lab_name:
         required: true
       experimenter_name:

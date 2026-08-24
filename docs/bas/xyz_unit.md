@@ -6,7 +6,7 @@ search:
 # Slot: xyz_unit 
 
 
-_Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported._
+_Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table._
 
 
 
@@ -56,6 +56,7 @@ URI: [fof_ct:xyz_unit](https://w3id.org/fof-ct/xyz_unit)
 
 | Property | Value |
 | --- | --- |
+| Required | Yes |
 
 
 
@@ -104,8 +105,8 @@ URI: [fof_ct:xyz_unit](https://w3id.org/fof-ct/xyz_unit)
 name: xyz_unit
 description: 'Unit used to represent X, Y, Z spatial coordinates or distances in this
   table. Use ''micron'' to avoid issues with Greek symbols. Values should be drawn
-  from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally
-  required when any location or distance metric is reported.'
+  from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in
+  every FOF-CT table.'
 examples:
 - value: micron
 from_schema: https://w3id.org/fof-ct/bas
@@ -124,6 +125,7 @@ domain_of:
 - SubCellROITable
 - ROIMappingTable
 range: XYZUnitEnum
+required: true
 
 ```
 </details></div>

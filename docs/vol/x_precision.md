@@ -6,7 +6,7 @@ search:
 # Slot: x_precision 
 
 
-_Metric quantifying the precision of the X-axis localization estimate. Typically the Cramer-Rao lower bound or Thompson method estimate. Recommended in the Spot Quality table; mandatory in the SM Localization Quality table. Must be accompanied by a description in the file header._
+_Metric quantifying the precision of the X-axis localization estimate. Typically the Cramer-Rao lower bound or Thompson method estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Must be accompanied by a description in the file header. Written as the reserved X_Loc_Precision column._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:x_precision](https://w3id.org/fof-ct/x_precision)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 | [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
 
 
@@ -40,7 +41,7 @@ URI: [fof_ct:x_precision](https://w3id.org/fof-ct/x_precision)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -93,15 +94,17 @@ URI: [fof_ct:x_precision](https://w3id.org/fof-ct/x_precision)
 ```yaml
 name: x_precision
 description: Metric quantifying the precision of the X-axis localization estimate.
-  Typically the Cramer-Rao lower bound or Thompson method estimate. Recommended in
-  the Spot Quality table; mandatory in the SM Localization Quality table. Must be
-  accompanied by a description in the file header.
+  Typically the Cramer-Rao lower bound or Thompson method estimate. Highly recommended
+  (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization
+  Quality tables. Must be accompanied by a description in the file header. Written
+  as the reserved X_Loc_Precision column.
 examples:
 - value: '0.01'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 - SMLocalizationQualityRecord
 range: float
 

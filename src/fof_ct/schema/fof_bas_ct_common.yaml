@@ -5,7 +5,7 @@ description: >-
   table schemas. Each individual table schema imports this file to avoid
   duplication and ensure consistency.
 license: CC-BY-4.0
-version: 1.0.0
+version: 1.1.0
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -35,6 +35,7 @@ classes:
       - software_type
       - software_authors
       - software_description
+      - software_parameters
       - software_repository
       - software_preferred_citation_id
 
@@ -125,25 +126,32 @@ slots:
     multivalued: true
     inlined_as_list: true
 
-  # ---- Conditional measurement-unit header slots --------------------------
+  # ---- Mandatory measurement-unit header slot ------------------------------
+  # NOTE: ##XYZ_Unit= is listed as a MANDATORY header line for every one of
+  # the 15 FOF-CT tables (see format_overview.rst "Mandatory header lines
+  # (all tables)" and every individual table's own header field table).
+  # required: true is set here so every table inherits it by default;
+  # individual table schemas must NOT override it back to required: false.
 
   xyz_unit:
     description: >-
       Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use 'micron' to avoid issues with Greek symbols.
       Values should be drawn from SI units of length. Written as
-      ##XYZ_Unit= in the file header. Conditionally required when any
-      location or distance metric is reported.
+      ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
     range: XYZUnitEnum
+    required: true
     examples:
       - value: micron
+
+  # ---- Conditional measurement-unit header slots ---------------------------
 
   time_unit:
     description: >-
       Unit used to represent time intervals in this table. Allowed
       values are SI time units plus 'min' and 'hr'. Written as
-      ##Time_Unit= in the file header. Conditionally required when
-      any time metric is reported.
+      ##Time_Unit= in the file header. Conditionally required (metric-
+      triggered) when any time metric is reported in an optional column.
     range: TimeUnitEnum
     examples:
       - value: sec
@@ -152,7 +160,8 @@ slots:
     description: >-
       Unit used to represent intensity measurements in this table.
       Written as ##Intensity_Unit= in the file header. Conditionally
-      required when any intensity metric is reported.
+      required (metric-triggered) when any intensity metric is reported
+      in an optional column.
     range: string
     examples:
       - value: a.u.
@@ -163,13 +172,13 @@ slots:
       Method used to perform intensity measurements, including how
       digital signals were converted to photon counts. Written as
       #Intensity_Measurement_Method: in the file header. Conditionally
-      required when any intensity metric is reported.
+      required (metric-triggered) when any intensity metric is reported.
     range: string
     examples:
       - value: Localization centroid intensity
       - value: Mean Fluorescence Intensity
 
-  # ---- Spatial-coordinate slots (shared by core, demultiplexing, rna) -----
+  # ---- Spatial-coordinate slots (shared by core, demultiplexing, rna, vol_core) -
 
   x:
     description: >-
@@ -205,9 +214,8 @@ slots:
     description: >-
       A unique integer identifier for an individual localization event.
       Loc_ID values are unique across the entire dataset. Serves as
-      primary key in the Spot Demultiplexing, SM Localization Data, and
-      Undecoded SM Localization tables, and as a foreign key in the
-      SM Localization Quality table.
+      primary key in the Spot Demultiplexing, SM Localization Data, SM
+      Localization Quality, and Undecoded SM Localization tables.
     range: integer
     examples:
       - value: "1"
@@ -217,7 +225,11 @@ slots:
       Unique identifier for a bright DNA Spot. Used as a primary key
       in quality and biological data tables, and as a foreign key
       linking localization events to their parent Spot in the
-      demultiplexing table.
+      demultiplexing table. In FOF-vol-CT (table 13, SM Localization
+      Data), this same Spot_ID concept is derived by clustering
+      Single-Molecule (SM) Localization events rather than by direct
+      optical detection, and every SM Localization event MUST report
+      its associated Spot_ID.
     range: integer
     examples:
       - value: "1"
@@ -226,6 +238,7 @@ slots:
     description: >-
       Unique identifier for a chromatin Trace. Used as a primary key
       in the Trace Data table and as a foreign key in the RNA Spot
+      Data table and (mandatorily) in the FOF-vol-CT SM Localization
       Data table.
     range: integer
     examples:
@@ -254,6 +267,39 @@ slots:
     examples:
       - value: "1"
 
+  # ---- Genomic-target coordinate slots (shared by core Spot + vol_core SMLocalization) --
+
+  chrom:
+    description: >-
+      Chromosome name/identifier using BED (Browser Extensible Data)
+      convention (e.g., chr3, chrY, chr2_random). Used by both the core
+      (Spot) and vol_core (SMLocalization) tables.
+    range: string
+    examples:
+      - value: chr3
+      - value: chrY
+      - value: chr2_random
+
+  chrom_start:
+    description: >-
+      0-based start coordinate on the chromosome for the genomic target
+      sequence, following BED convention. Used by both the core (Spot)
+      and vol_core (SMLocalization) tables.
+    range: integer
+    minimum_value: 0
+    examples:
+      - value: "0"
+
+  chrom_end:
+    description: >-
+      Non-inclusive end coordinate on the chromosome for the genomic
+      target sequence, following BED convention. Used by both the core
+      (Spot) and vol_core (SMLocalization) tables.
+    range: integer
+    minimum_value: 0
+    examples:
+      - value: "1000"
+
   rna_spot_id:
     description: >-
       Unique integer identifier for an RNA bright Spot, unique across the
@@ -263,26 +309,48 @@ slots:
     examples:
       - value: "1"
 
-  # ---- Fluorescence channel slot (shared by demultiplexing + undecoded) ---
+  # ---- Fluorescence channel / fluorophore slots ---------------------------
+  # Shared by Spot Demultiplexing, Spot Quality, RNA Spot Quality,
+  # SM Localization Quality, and Undecoded SM Localization tables.
 
-  fluor:
+  channel_name:
     description: >-
-      Fluorescent channel in which this localization event was detected
-      (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot
-      Demultiplexing and Undecoded SM Localization tables.
+      The wavelength characteristics of the emission channel used to image
+      this Spot / RNA Spot / localization event (e.g. '510/25', '695/81').
+      Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality,
+      SM Localization Quality, and Undecoded SM Localization tables.
+      Written as the Channel column.
     range: string
     examples:
-      - value: Cy5
-      - value: Alexa647
+      - value: "510/25"
+      - value: "695/81"
 
-  # ---- Quality metric slots (shared by SpotQuality + SMLocalizationQuality) -
+  fluorophore_name:
+    description: >-
+      The name of the fluorophore whose emission was used to detect this
+      Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5).
+      Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality,
+      SM Localization Quality, and Undecoded SM Localization tables.
+      Written as the Fluor column.
+    range: string
+    examples:
+      - value: AlexaFluor_488
+      - value: Cy5
+
+  # ---- Quality metric slots -------------------------------------------------
+  # Shared by Spot Quality, RNA Spot Quality, and SM Localization Quality
+  # tables. Reserved, conditionally-required column names (per the
+  # LiMi-Model, see quality.rst / vol_quality.rst): using the column is
+  # optional, but if used it MUST match this exact reserved name.
 
   x_precision:
     description: >-
       Metric quantifying the precision of the X-axis localization estimate.
       Typically the Cramer-Rao lower bound or Thompson method estimate.
-      Recommended in the Spot Quality table; mandatory in the SM Localization
-      Quality table. Must be accompanied by a description in the file header.
+      Highly recommended (not literally mandatory) in the Spot Quality, RNA
+      Spot Quality, and SM Localization Quality tables. Must be accompanied
+      by a description in the file header. Written as the reserved
+      X_Loc_Precision column.
     range: float
     examples:
       - value: "0.01"
@@ -290,8 +358,9 @@ slots:
   y_precision:
     description: >-
       Metric quantifying the precision of the Y-axis localization estimate.
-      Recommended in the Spot Quality table; mandatory in the SM Localization
-      Quality table.
+      Highly recommended (not literally mandatory) in the Spot Quality, RNA
+      Spot Quality, and SM Localization Quality tables. Written as the
+      reserved Y_Loc_Precision column.
     range: float
     examples:
       - value: "0.01"
@@ -299,8 +368,9 @@ slots:
   z_precision:
     description: >-
       Metric quantifying the precision of the Z-axis localization estimate.
-      Recommended in the Spot Quality table; mandatory in the SM Localization
-      Quality table.
+      Highly recommended (not literally mandatory) in the Spot Quality, RNA
+      Spot Quality, and SM Localization Quality tables. Written as the
+      reserved Z_Loc_Precision column.
     range: float
     examples:
       - value: "0.02"
@@ -308,8 +378,9 @@ slots:
   photon_count:
     description: >-
       Number of photons detected for this localization event or Spot.
-      Optional (but standardised name) in the Spot Quality table;
-      recommended in the SM Localization Quality table.
+      Reserved, conditionally-required column name (Photon_Count) in the
+      Spot Quality, RNA Spot Quality, and SM Localization Quality tables;
+      highly recommended in the latter.
     range: integer
     examples:
       - value: "1500"
@@ -317,23 +388,175 @@ slots:
   goodness_of_fit:
     description: >-
       Metric quantifying how well the fitted model matches the observed
-      signal (e.g. chi-squared, R-squared). Optional (but standardised
-      name) in the Spot Quality table; recommended in the SM Localization
-      Quality table.
+      signal (e.g. chi-squared, R-squared). Reserved, conditionally-required
+      column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality,
+      and SM Localization Quality tables.
     range: float
     examples:
       - value: "0.95"
 
-  frame_id:
+  centroid_intensity:
+    description: >-
+      Signal intensity of the centroid pixel of the Spot / localization.
+      Reserved, conditionally-required column name (Centroid_Intensity) in
+      the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "2500.0"
+
+  peak_intensity:
+    description: >-
+      Signal intensity of the brightest pixel within the Spot / localization
+      boundary. Reserved, conditionally-required column name (Peak_Intensity)
+      in the Spot Quality, RNA Spot Quality, and SM Localization Quality
+      tables.
+    range: float
+    examples:
+      - value: "3200.0"
+
+  raw_x:
+    description: >-
+      X coordinate before any post-processing corrections (drift correction,
+      chromatic correction, etc.). Same unit as X. Reserved,
+      conditionally-required column name (Raw_X) in the Spot Quality, RNA
+      Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "14.30"
+
+  raw_y:
+    description: >-
+      Y coordinate before any post-processing corrections. Same unit as Y.
+      Reserved, conditionally-required column name (Raw_Y) in the Spot
+      Quality, RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "41.20"
+
+  raw_z:
+    description: >-
+      Z coordinate before any post-processing corrections. Same unit as Z.
+      Reserved, conditionally-required column name (Raw_Z) in the Spot
+      Quality, RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "1.10"
+
+  x_drift:
+    description: >-
+      Drift correction offset applied to the X coordinate. Same unit as X.
+      Reserved, conditionally-required column name (X_Drift) in the Spot
+      Quality and RNA Spot Quality tables. Not part of the reserved
+      vocabulary of the SM Localization Quality table.
+    range: float
+    examples:
+      - value: "0.13"
+
+  y_drift:
+    description: >-
+      Drift correction offset applied to the Y coordinate. Same unit as Y.
+      Reserved, conditionally-required column name (Y_Drift) in the Spot
+      Quality and RNA Spot Quality tables.
+    range: float
+    examples:
+      - value: "0.23"
+
+  z_drift:
+    description: >-
+      Drift correction offset applied to the Z coordinate. Same unit as Z.
+      Reserved, conditionally-required column name (Z_Drift) in the Spot
+      Quality and RNA Spot Quality tables.
+    range: float
+    examples:
+      - value: "0.13"
+
+  x_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the X coordinate.
+      Same unit as X. Reserved, conditionally-required column name
+      (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+    range: float
+    examples:
+      - value: "0.05"
+
+  y_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the Y coordinate.
+      Same unit as Y. Reserved, conditionally-required column name
+      (Y_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+    range: float
+    examples:
+      - value: "0.04"
+
+  z_chromatic_shift:
+    description: >-
+      Chromatic aberration correction offset applied to the Z coordinate.
+      Same unit as Z. Reserved, conditionally-required column name
+      (Z_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+    range: float
+    examples:
+      - value: "0.02"
+
+  x_loc_error:
+    description: >-
+      Localization error estimate for the X coordinate (e.g. standard
+      deviation of repeated measurements). Same unit as X. Reserved,
+      conditionally-required column name (X_Loc_Error) in the Spot Quality,
+      RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "0.02"
+
+  y_loc_error:
+    description: >-
+      Localization error estimate for the Y coordinate. Same unit as Y.
+      Reserved, conditionally-required column name (Y_Loc_Error) in the
+      Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "0.02"
+
+  z_loc_error:
+    description: >-
+      Localization error estimate for the Z coordinate. Same unit as Z.
+      Reserved, conditionally-required column name (Z_Loc_Error) in the
+      Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+    range: float
+    examples:
+      - value: "0.05"
+
+  # ---- Undecoded SM Localization table-specific identifier slots ----------
+
+  image_frame_id:
     description: >-
       Unique integer identifier for the imaging frame in which this
-      undecoded localization event was detected. Used in the Undecoded
-      SM Localization table.
+      undecoded localization event was detected. Written as the
+      Image_Frame_ID column. Mandatory in the Undecoded SM Localization
+      table.
     range: integer
     examples:
-      - value: "42"
+      - value: "1"
 
-  # ---- Genome / modification header slots (shared by core + rna) ----------
+  hyb_id:
+    description: >-
+      Unique identifier for the hybridization round in which this
+      localization event was detected. Written as the Hyb_ID column.
+      Mandatory in the Undecoded SM Localization table.
+    range: integer
+    examples:
+      - value: "1"
+
+  the_z:
+    description: >-
+      Identifier of the focal Z-plane in which this localization event was
+      detected. Reserved, conditionally-required column name (TheZ) in the
+      Undecoded SM Localization table: optional to use, but if the focal
+      Z-plane is reported this exact reserved column name MUST be used.
+    range: integer
+    examples:
+      - value: "10"
+
+  # ---- Genome / modification header slots (shared by core + vol_core) -----
 
   genome_assembly:
     description: >-
@@ -348,14 +571,47 @@ slots:
       - value: GRCh38
       - value: custom-build:GRCm38+pJT039(insertion)
 
+  modification:
+    description: >-
+      Description of the nature and genomic position of a DNA insertion or
+      deletion in the genome under study. Conditionally required (content-
+      triggered) when genome_assembly uses the 'custom-build:' prefix.
+      Applies to both the core (bas) and vol_core (vol) tables. Written as
+      ##Modification= in the file header.
+    range: string
+    examples:
+      - value: "pJT039:chr3(insertion 0001-2500)"
+
+  vcf_file_name:
+    description: >-
+      Name of the Variant Call Format (VCF) file that must be submitted
+      alongside the dataset to describe the genome insertion or deletion.
+      Conditionally required (content-triggered) when genome_assembly uses
+      the 'custom-build:' prefix. Applies to both the core (bas) and
+      vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.
+    range: string
+    examples:
+      - value: pJT039:chr3.vcf
+
+  vcf_version:
+    description: >-
+      Version of the VCF format used for the accompanying VCF file.
+      Conditionally required (content-triggered) when genome_assembly uses
+      the 'custom-build:' prefix. Applies to both the core (bas) and
+      vol_core (vol) tables. Written as ##VCF_Version= in the file header.
+    range: string
+    examples:
+      - value: v4.2
+
   # ---- Cell / ROI type header slots (shared by cell, subcell, extracell, mapping) ----
 
   cell_type:
     description: >-
       The type of cells present in this dataset, expressed using an ontology
       term from the Experimental Factor Ontology (EFO). Examples include
-      "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the
-      file header.
+      "Primary cell line", "Immortal cell line", "Induced pluripotent stem
+      (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as
+      #Cell_Type: in the file header.
     range: string
     examples:
       - value: Cell in tissue
@@ -376,15 +632,15 @@ slots:
   sub_cell_roi_type:
     description: >-
       The type of sub-cellular structure ROI documented in this table or
-      mapping file. It is recommended to use an EFO 'cellular_component'
-      child term. Examples include Nucleolus, NL (nuclear lamina), NPC
-      (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain.
+      mapping file. It is recommended to use a GO 'cellular_component'
+      child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear
+      Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain.
       Written as #Sub_Cell_ROI_Type: in the file header.
     range: string
     examples:
       - value: Nucleolus
-      - value: NL
-      - value: NPC
+      - value: Nuclear Lamina (NL)
+      - value: Nuclear Pore Complex (NPC)
       - value: Chromosome_Domain
 
   # ---- Software slots -----------------------------------------------------
@@ -417,11 +673,23 @@ slots:
 
   software_description:
     description: >-
-      Free-text description of the algorithm and analysis parameters,
-      sufficient to guarantee reproducibility. Written as
-      #Software_Description:.
+      Free-text description of the algorithm used, sufficient to guarantee
+      reproducibility. Written as #Software_Description:.
     range: string
     required: true
+
+  software_parameters:
+    description: >-
+      Free-text description of the input parameters used for the specific
+      analysis run performed using this Software. Should provide sufficient
+      detail about the analysis parameters used to guarantee interpretation
+      and reproducibility (e.g. input parameters used for assessing the
+      precision of single molecule localization or drift correction in X, Y
+      and Z). Written as #Software_Parameters:.
+    range: string
+    required: true
+    examples:
+      - value: "X_Loc_Precision Parameter = 1.01"
 
   software_repository:
     description: >-
@@ -469,33 +737,45 @@ enums:
         description: Seconds (alternative spelling accepted by FOF-CT)
       ms:
         description: Milliseconds
+      msec:
+        description: Milliseconds (alternative spelling accepted by FOF-CT)
       min:
         description: Minutes
       hr:
         description: Hours
 
   SoftwareTypeEnum:
-    description: Allowed functional categories for software tools.
+    description: >-
+      Allowed functional categories for software tools (per the FOF-CT RTD
+      "Allowable value lists" table for Software_Type).
     permissible_values:
-      SpotLoc:
-        description: Spot localisation software
-      Tracing:
-        description: Chromatin tracing software
-      SpotLoc+Tracing:
-        description: Combined spot localisation and tracing software
+      Distance Calculation:
+        description: Distance calculation software
+      DriftCorrection:
+        description: Drift correction software
+      Precision Assessment:
+        description: Localization/tracing precision assessment software
       Segmentation:
         description: Image segmentation software
-      QC:
-        description: Quality control software
-      Distance:
-        description: Distance calculation software
+      Single Molecule Localization:
+        description: Single-molecule localization software (FOF-vol-CT)
+      SpotLoc:
+        description: Spot localisation software
+      SpotLoc+Tracing:
+        description: Combined spot localisation and tracing software
+      Tracing:
+        description: Chromatin tracing software
       Other:
         description: Other software type
 
   TableNamespaceEnum:
     description: >-
       Allowed namespace identifiers for FOF-CT tables that may be listed
-      in the additional_tables field.
+      in the additional_tables field. Note: per the FOF-CT RTD, the three
+      FOF-vol-CT-exclusive namespaces (vol_core, vol_quality, undecoded)
+      intentionally omit the 4dn_ prefix used by the 12 shared tables, to
+      reflect the format's continued stewardship by the broader community
+      beyond 4DN.
     permissible_values:
       4dn_FOF-CT_core:
         description: DNA-Spot/Trace Data core table (table 1)
@@ -521,9 +801,42 @@ enums:
         description: Sub-Cell ROI Data table (table 11)
       4dn_FOF-CT_mapping:
         description: Cell/ROI Mapping table (table 12)
-      4dn_FOF-CT_vol_core:
-        description: SM Localization Data table — FOF-vol-CT (table 13)
-      4dn_FOF-CT_vol_quality:
-        description: SM Localization Quality table — FOF-vol-CT (table 14)
-      4dn_FOF-CT_undecoded:
-        description: Undecoded SM Localization Data table — FOF-vol-CT (table 15)
+      FOF-CT_vol_core:
+        description: >-
+          SM Localization Data table — FOF-vol-CT (table 13). No 4dn_
+          prefix (see enum-level note).
+      FOF-CT_vol_quality:
+        description: >-
+          SM Localization Quality table — FOF-vol-CT (table 14). No 4dn_
+          prefix (see enum-level note).
+      FOF-CT_undecoded:
+        description: >-
+          Undecoded SM Localization Data table — FOF-vol-CT (table 15).
+          No 4dn_ prefix (see enum-level note).
+
+  ROIBoundariesFormatTypeEnum:
+    description: >-
+      Controlled vocabulary for ##ROI_Boundaries_Format_Type= in the
+      Cell/ROI Mapping table (per the FOF-CT RTD "Allowable value lists"
+      table). Default value is OME_Polygon.
+    permissible_values:
+      OME_Polygon:
+        description: OME ROI data model, polygon representation (default).
+      OME_Mask:
+        description: OME ROI data model, mask representation.
+      Mesh_OBJ:
+        description: 3D mesh boundary described using the Wavefront OBJ format.
+      Mesh_STL:
+        description: 3D mesh boundary described using the STL format.
+      Mesh_PLY:
+        description: 3D mesh boundary described using the PLY format.
+      GeoJSON:
+        description: Boundary described using the GeoJSON format.
+      WKT:
+        description: Boundary described using Well-Known Text.
+      Label_Mask_Image:
+        description: Boundary described as a labeled mask image.
+      Other:
+        description: >-
+          Any other boundary format. When used, ROI_Boundaries_Format_Description
+          becomes mandatory.

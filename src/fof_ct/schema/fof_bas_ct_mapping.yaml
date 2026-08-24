@@ -11,8 +11,10 @@ description: >-
   Sub_Cell_ROI_ID, Cell_ID, or Extra_Cell_ROI_ID — all rows within a single
   file must use the same identifier column; the same file MUST NOT mix
   identifier types. Boundaries may follow the OME ROI data model (e.g. polygon
-  "x1,y1 x2,y2 ..."), OBJ 3D mesh format, or any other format described in
-  roi_boundaries_format. Modelled after the SSSOM pattern: a row-level class
+  "x1,y1 x2,y2 ..."), OBJ 3D mesh format, or any other format identified via
+  the controlled vocabulary in roi_boundaries_format_type (with free-text
+  detail in roi_boundaries_format_description). Modelled after the SSSOM
+  pattern: a row-level class
   (ROIMapping) captures per-ROI boundary data; a container class
   (ROIMappingTable) holds the full collection together with dataset-level
   provenance metadata written in the FOF-CT file header.
@@ -48,6 +50,28 @@ classes:
       boundary coordinates in the format specified by roi_boundaries_format in
       the table header. This class accepts additional user-defined optional
       columns.
+    exactly_one_of:
+      - slot_conditions:
+          sub_cell_roi_id:
+            value_presence: PRESENT
+          cell_id:
+            value_presence: ABSENT
+          extra_cell_roi_id:
+            value_presence: ABSENT
+      - slot_conditions:
+          sub_cell_roi_id:
+            value_presence: ABSENT
+          cell_id:
+            value_presence: PRESENT
+          extra_cell_roi_id:
+            value_presence: ABSENT
+      - slot_conditions:
+          sub_cell_roi_id:
+            value_presence: ABSENT
+          cell_id:
+            value_presence: ABSENT
+          extra_cell_roi_id:
+            value_presence: PRESENT
     slots:
       - sub_cell_roi_id
       - cell_id
@@ -96,7 +120,7 @@ classes:
       # --- mandatory header fields ---
       - fof_ct_version
       - table_namespace
-      - roi_boundaries_format
+      - roi_boundaries_format_type
       - xyz_unit
       - lab_name
       - experimenter_name
@@ -104,6 +128,7 @@ classes:
       - description
       - additional_tables
       # --- conditional header fields ---
+      - roi_boundaries_format_description
       - cell_type
       - sub_cell_roi_type
       - extra_cell_roi_type
@@ -119,8 +144,16 @@ classes:
       table_namespace:
         required: true
         equals_string: 4dn_FOF-CT_mapping
-      roi_boundaries_format:
+      roi_boundaries_format_type:
         required: true
+      roi_boundaries_format_description:
+        required: false
+        description: >-
+          Free-text description of how ROI boundaries are encoded, beyond
+          what the format name alone conveys (e.g. coordinate order,
+          dimensionality, or an external file reference). Conditionally
+          required (content-triggered): MANDATORY when
+          roi_boundaries_format_type is 'Other'; otherwise recommended.
       xyz_unit:
         required: true
       lab_name:
@@ -158,19 +191,34 @@ classes:
 
 slots:
 
-  roi_boundaries_format:
+  roi_boundaries_format_type:
     description: >-
-      Description of the coordinate format used to encode boundary data in
-      the roi_boundaries column. Examples include the OME ROI Polygon model
-      (coordinates as "x1,y1 x2,y2 ...") and the OBJ 3D mesh format (vertex
-      and face lists). Must be sufficient for unambiguous parsing of all
-      roi_boundaries values in this file. Written as #ROI_Boundaries_Format:
-      in the file header.
+      Controlled-vocabulary identifier of the standard used to encode ROI
+      boundaries in global coordinates (e.g. OME_Polygon for the OME ROI
+      data model, or Mesh_OBJ for a 3D OBJ mesh). Written as
+      ##ROI_Boundaries_Format_Type= in the file header. Default value is
+      OME_Polygon.
+    domain: ROIMappingTable
+    range: ROIBoundariesFormatTypeEnum
+    examples:
+      - value: OME_Polygon
+      - value: Mesh_OBJ
+
+  roi_boundaries_format_description:
+    description: >-
+      Free-text description of how ROI boundaries are encoded, sufficient
+      for unambiguous parsing of all roi_boundaries values in this file
+      (e.g. coordinate order, dimensionality, or an external file
+      reference). Written as ##ROI_Boundaries_Format_Description= in the
+      file header. Conditionally required (content-triggered): MANDATORY
+      whenever roi_boundaries_format_type is 'Other'; otherwise recommended.
     domain: ROIMappingTable
     range: string
     examples:
-      - value: OME ROI Polygon model
-      - value: OBJ 3D mesh
+      - value: >-
+          Cell boundaries are reported in global coordinates as lists of
+          comma separated x,y coordinates separated by spaces like
+          "x1,y1 x2,y2 x3,y3" (e.g. "0,0 1,2 3,5").
 
   roi_boundaries:
     description: >-

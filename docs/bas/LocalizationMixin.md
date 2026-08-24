@@ -148,8 +148,8 @@ attributes:
     name: loc_id
     description: A unique integer identifier for an individual localization event.
       Loc_ID values are unique across the entire dataset. Serves as primary key in
-      the Spot Demultiplexing, SM Localization Data, and Undecoded SM Localization
-      tables, and as a foreign key in the SM Localization Quality table.
+      the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and
+      Undecoded SM Localization tables.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/bas

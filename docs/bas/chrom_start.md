@@ -6,7 +6,7 @@ search:
 # Slot: chrom_start 
 
 
-_0-based start coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention._
+_0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables._
 
 
 
@@ -39,7 +39,6 @@ URI: [fof_ct:chrom_start](https://w3id.org/fof-ct/chrom_start)
 | Property | Value |
 | --- | --- |
 | Range | [Integer](Integer.md) |
-| Domain | [Spot](Spot.md) |
 | Domain Of | [Spot](Spot.md) |
 
 ### Cardinality and Requirements
@@ -99,13 +98,13 @@ URI: [fof_ct:chrom_start](https://w3id.org/fof-ct/chrom_start)
 <details>
 ```yaml
 name: chrom_start
-description: 0-based start coordinate on the chromosome for the genomic target sequence
-  associated with this Spot, following BED convention.
+description: 0-based start coordinate on the chromosome for the genomic target sequence,
+  following BED convention. Used by both the core (Spot) and vol_core (SMLocalization)
+  tables.
 examples:
 - value: '0'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
-domain: Spot
 domain_of:
 - Spot
 range: integer

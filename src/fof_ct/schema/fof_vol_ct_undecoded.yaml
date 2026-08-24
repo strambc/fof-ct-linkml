@@ -7,8 +7,9 @@ description: >-
   LinkML schema for the optional Undecoded SM Localization Data table (table 15).
   Each row represents a raw, undecoded single-molecule localization event
   detected before the decoding/assignment step that produces the decoded
-  SM Localization Data table (vol_core). The Frame_ID column links each
-  detection to its source imaging frame.
+  SM Localization Data table (vol_core). The Image_Frame_ID column links
+  each detection to its source imaging frame; Hyb_ID links it to its
+  hybridization round.
 license: CC-BY-4.0
 version: 1.0.0
 
@@ -31,14 +32,18 @@ classes:
       A single raw, undecoded SM localization event in a FOF-vol-CT
       dataset. Each instance corresponds to one row in the TSV data
       section of the Undecoded SM Localization Data table. This class
-      uses LocalizationMixin for the shared loc_id, x, y, z slots.
-      The frame_id column identifies the source imaging frame;
-      fluor identifies the detection channel.
+      uses LocalizationMixin for the shared loc_id, x, y, z slots. The
+      8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID,
+      X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved,
+      conditionally-required column for the focal Z-plane identifier.
     mixins:
       - LocalizationMixin
     slots:
-      - frame_id
-      - fluor
+      - hyb_id
+      - image_frame_id
+      - channel_name
+      - fluorophore_name
+      - the_z
     slot_usage:
       loc_id:
         required: true
@@ -52,18 +57,25 @@ classes:
         required: true
       z:
         required: true
-      frame_id:
+      hyb_id:
         required: true
-      fluor:
+      image_frame_id:
         required: true
+      channel_name:
+        required: true
+      fluorophore_name:
+        required: true
+      the_z:
+        required: false
 
   UndecodedLocalizationTable:
     description: >-
       The Undecoded SM Localization Data table of a FOF-vol-CT dataset
-      (namespace: 4dn_FOF-CT_undecoded). This table is optional. It
-      records raw localization detections prior to any decoding or
-      assignment step. Submission is recommended when the raw detections
-      are available and reproducibility of the decoding pipeline is desired.
+      (namespace: FOF-CT_undecoded, no 4dn_ prefix). This table is optional
+      but recommended. It records raw localization detections prior to any
+      decoding or assignment step. Submission is recommended when the raw
+      detections are available and reproducibility of the decoding
+      pipeline is desired.
     tree_root: true
     slots:
       - fof_ct_version
@@ -84,7 +96,11 @@ classes:
         required: true
       table_namespace:
         required: true
-        equals_string: 4dn_FOF-CT_undecoded
+        equals_string: FOF-CT_undecoded
+        description: >-
+          Identifier for this table type. Must always be 'FOF-CT_undecoded'
+          (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally
+          omits it). Written as ##Table_Namespace= in the file header.
       lab_name:
         required: true
       experimenter_name:

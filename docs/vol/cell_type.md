@@ -6,7 +6,7 @@ search:
 # Slot: cell_type 
 
 
-_The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the file header._
+_The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Primary cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file header._
 
 
 
@@ -95,8 +95,9 @@ URI: [fof_ct:cell_type](https://w3id.org/fof-ct/cell_type)
 ```yaml
 name: cell_type
 description: 'The type of cells present in this dataset, expressed using an ontology
-  term from the Experimental Factor Ontology (EFO). Examples include "Cell in tissue"
-  or "Cell in organoid". Written as #Cell_Type: in the file header.'
+  term from the Experimental Factor Ontology (EFO). Examples include "Primary cell
+  line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue",
+  "Cell in organoid", "Other". Written as #Cell_Type: in the file header.'
 examples:
 - value: Cell in tissue
 - value: Cell in organoid

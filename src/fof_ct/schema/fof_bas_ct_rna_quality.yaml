@@ -34,14 +34,79 @@ classes:
       or more quality metrics for a specific RNA bright Spot identified by
       RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset,
       linking to the corresponding record in the RNA Spot Data table (table 4).
-      At least one user-defined quality metric column MUST be present; users
-      declare these via #^ header lines.
+      RNA_Spot_ID, Channel and Fluor are mandatory; all other reserved
+      quality-metric columns are conditionally required (the same reserved
+      vocabulary as the Spot Quality table) or fully free-form; users declare
+      the latter via #^ header lines.
     slots:
       - rna_spot_id
+      - channel_name
+      - fluorophore_name
+      - x_precision
+      - y_precision
+      - z_precision
+      - photon_count
+      - goodness_of_fit
+      - centroid_intensity
+      - peak_intensity
+      - raw_x
+      - raw_y
+      - raw_z
+      - x_drift
+      - y_drift
+      - z_drift
+      - x_chromatic_shift
+      - y_chromatic_shift
+      - z_chromatic_shift
+      - x_loc_error
+      - y_loc_error
+      - z_loc_error
     slot_usage:
       rna_spot_id:
         required: true
         identifier: true
+      channel_name:
+        required: true
+      fluorophore_name:
+        required: true
+      x_precision:
+        required: false
+      y_precision:
+        required: false
+      z_precision:
+        required: false
+      photon_count:
+        required: false
+      goodness_of_fit:
+        required: false
+      centroid_intensity:
+        required: false
+      peak_intensity:
+        required: false
+      raw_x:
+        required: false
+      raw_y:
+        required: false
+      raw_z:
+        required: false
+      x_drift:
+        required: false
+      y_drift:
+        required: false
+      z_drift:
+        required: false
+      x_chromatic_shift:
+        required: false
+      y_chromatic_shift:
+        required: false
+      z_chromatic_shift:
+        required: false
+      x_loc_error:
+        required: false
+      y_loc_error:
+        required: false
+      z_loc_error:
+        required: false
 
   RNASpotQualityTable:
     description: >-
@@ -97,11 +162,7 @@ classes:
           omit the block entirely if no software was applied. Written as
           repeating #Software_* blocks in the file header.
       xyz_unit:
-        required: false
-        description: >-
-          Unit used for any spatial coordinate or distance metric reported in
-          user-defined columns. Conditionally required when any such metric
-          is present. Written as ##XYZ_Unit= in the file header.
+        required: true
       time_unit:
         required: false
         description: >-
