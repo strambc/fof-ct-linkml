@@ -696,7 +696,7 @@
 
 
 <h1 id="slot-intensity_unit">Slot: intensity_unit<a class="headerlink" href="#slot-intensity_unit" title="Permanent link">&para;</a></h1>
-<p><em>Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.</em></p>
+<p><em>Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.</em></p>
 <div>
 <p>URI: <a href="https://w3id.org/fof-ct/intensity_unit">fof_ct:intensity_unit</a></p>
 <!-- no inheritance hierarchy -->
@@ -718,11 +718,6 @@
 <tr>
 <td><a href="../TraceTable/">TraceTable</a></td>
 <td>The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace)</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RNASpotTable/">RNASpotTable</a></td>
-<td>The RNA Spot Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna)</td>
 <td>no</td>
 </tr>
 <tr>
@@ -783,7 +778,7 @@
 </tr>
 <tr>
 <td>Domain Of</td>
-<td><a href="../DemultiplexingTable/">DemultiplexingTable</a>, <a href="../TraceTable/">TraceTable</a>, <a href="../RNASpotTable/">RNASpotTable</a>, <a href="../SpotQualityTable/">SpotQualityTable</a>, <a href="../RNASpotQualityTable/">RNASpotQualityTable</a>, <a href="../SpotBiologicalTable/">SpotBiologicalTable</a>, <a href="../RNASpotBiologicalTable/">RNASpotBiologicalTable</a>, <a href="../CellTable/">CellTable</a>, <a href="../ExtraCellROITable/">ExtraCellROITable</a>, <a href="../SubCellROITable/">SubCellROITable</a>, <a href="../ROIMappingTable/">ROIMappingTable</a></td>
+<td><a href="../DemultiplexingTable/">DemultiplexingTable</a>, <a href="../TraceTable/">TraceTable</a>, <a href="../SpotQualityTable/">SpotQualityTable</a>, <a href="../RNASpotQualityTable/">RNASpotQualityTable</a>, <a href="../SpotBiologicalTable/">SpotBiologicalTable</a>, <a href="../RNASpotBiologicalTable/">RNASpotBiologicalTable</a>, <a href="../CellTable/">CellTable</a>, <a href="../ExtraCellROITable/">ExtraCellROITable</a>, <a href="../SubCellROITable/">SubCellROITable</a>, <a href="../ROIMappingTable/">ROIMappingTable</a></td>
 </tr>
 </tbody>
 </table>
@@ -846,8 +841,8 @@
 <details>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">intensity_unit</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Unit</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">represent</span><span class="nv"> </span><span class="s">intensity</span><span class="nv"> </span><span class="s">measurements</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">table.</span><span class="nv"> </span><span class="s">Written</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">as</span><span class="nv"> </span><span class="s">##Intensity_Unit=</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.</span><span class="nv"> </span><span class="s">Conditionally</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">any</span><span class="nv"> </span><span class="s">intensity</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">metric</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">reported.&#39;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">as</span><span class="nv"> </span><span class="s">##Intensity_Unit=</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.</span><span class="nv"> </span><span class="s">Conditionally</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">(metric-triggered)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">when</span><span class="nv"> </span><span class="s">any</span><span class="nv"> </span><span class="s">intensity</span><span class="nv"> </span><span class="s">metric</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">reported</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">optional</span><span class="nv"> </span><span class="s">column.&#39;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nt">examples</span><span class="p">:</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a.u.</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">photons</span>
@@ -856,16 +851,15 @@
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nt">domain_of</span><span class="p">:</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DemultiplexingTable</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TraceTable</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotTable</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotQualityTable</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotQualityTable</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotBiologicalTable</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotBiologicalTable</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROITable</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROITable</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotQualityTable</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotQualityTable</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotBiologicalTable</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotBiologicalTable</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROITable</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROITable</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
 </code></pre></div>
 </details>
 </div>

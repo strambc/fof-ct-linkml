@@ -345,7 +345,7 @@
 <article class="md-content__inner md-typeset">
 <h1 id="er-diagram-fof-vol-ct">ER Diagram — FOF-vol-CT<a class="headerlink" href="#er-diagram-fof-vol-ct" title="Permanent link">¶</a></h1>
 <p>Entity-Relationship diagrams for the <strong>FOF-vol-CT</strong> (volumetric) modality, generated using <a href="https://linkml.io/linkml/generators/erdiagram.html">LinkML's ER Diagram generator</a>.</p>
-<p>FOF-vol-CT comprises <strong>15 tables</strong>: all 12 FOF-bas-CT tables plus 3 volumetric-specific tables. The <strong>SM Localization Data table</strong> (table 13) and <strong>SM Localization Quality table</strong> (table 14) are mandatory. The Undecoded SM Localization table (table 15) is optional.</p>
+<p>FOF-vol-CT comprises <strong>15 tables</strong>: all 12 FOF-bas-CT tables plus 3 volumetric-specific tables. The <strong>SM Localization Data table</strong> (table 13) is the only mandatory FOF-vol-CT-exclusive table. The SM Localization Quality table (table 14) and the Undecoded SM Localization table (table 15) are both optional but recommended.</p>
 <p>The SM Localization event is the primary data unit. Spots and Traces are optional post-processing outputs.</p>
 <p>ID chain: <code>Loc_ID</code> (n→1) <code>Spot_ID</code> (n→1) <code>Trace_ID</code></p>
 <hr/>
@@ -479,78 +479,107 @@ UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizatio
 <h2 id="fof-vol-ct-additions-tables-1315-with-attributes">FOF-vol-CT additions (tables 13–15, with attributes)<a class="headerlink" href="#fof-vol-ct-additions-tables-1315-with-attributes" title="Permanent link">¶</a></h2>
 <pre class="mermaid"><code>erDiagram
 SMLocalization {
+    integer cell_id
+    string chrom
+    integer chrom_end
+    integer chrom_start
+    integer extra_cell_roi_id
     integer loc_id
+    integer spot_id
+    integer sub_cell_roi_id
+    integer trace_id
     float x
     float y
     float z
-    integer spot_id
-    integer trace_id
-    string chrom
-    integer chrom_start
-    integer chrom_end
-    integer sub_cell_roi_id
-    integer cell_id
-    integer extra_cell_roi_id
-}
-SMLocalizationTable {
-    string fof_ct_version
-    string table_namespace
-    string genome_assembly
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
-    string description
 }
 SMLocalizationQualityRecord {
-    integer loc_id
-    float x_precision
-    float y_precision
-    float z_precision
-    integer photon_count
+    float centroid_intensity
+    string channel_name
+    string fluorophore_name
     float goodness_of_fit
+    integer loc_id
+    float peak_intensity
+    integer photon_count
+    float raw_x
+    float raw_y
+    float raw_z
+    float x_loc_error
+    float x_precision
+    float y_loc_error
+    float y_precision
+    float z_loc_error
+    float z_precision
 }
 SMLocalizationQualityTable {
-    string fof_ct_version
-    string table_namespace
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
     string description
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string table_namespace
+    TimeUnitEnum time_unit
+    XYZUnitEnum xyz_unit
+}
+SMLocalizationTable {
+    string description
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string genome_assembly
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string modification
+    string table_namespace
+    TimeUnitEnum time_unit
+    string vcf_file_name
+    string vcf_version
+    XYZUnitEnum xyz_unit
+}
+Software {
+    string software_authors
+    string software_description
+    string software_parameters
+    uri software_preferred_citation_id
+    uri software_repository
+    string software_title
+    SoftwareTypeEnum software_type
 }
 UndecodedLocalization {
+    string channel_name
+    string fluorophore_name
+    integer hyb_id
+    integer image_frame_id
     integer loc_id
+    integer the_z
     float x
     float y
     float z
-    integer frame_id
-    string fluor
 }
 UndecodedLocalizationTable {
-    string fof_ct_version
-    string table_namespace
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
     string description
-}
-Software {
-    string software_title
-    SoftwareTypeEnum software_type
-    string software_authors
-    string software_description
-    uri software_repository
-    uri software_preferred_citation_id
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string table_namespace
+    TimeUnitEnum time_unit
+    XYZUnitEnum xyz_unit
 }
 
-SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
-SMLocalizationTable ||--}| Software : "softwares"
 SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
 SMLocalizationQualityTable ||--}| Software : "softwares"
-UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
-UndecodedLocalizationTable ||--}| Software : "softwares"</code></pre>
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"</code></pre>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

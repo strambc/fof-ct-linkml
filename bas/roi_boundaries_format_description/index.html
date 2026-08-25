@@ -8,7 +8,7 @@
       
       
       
-        <link rel="canonical" href="https://strambc.github.io/fof-ct-linkml/bas/roi_boundaries_format/">
+        <link rel="canonical" href="https://strambc.github.io/fof-ct-linkml/bas/roi_boundaries_format_description/">
       
       
       
@@ -21,7 +21,7 @@
     
     
       
-        <title>Slot: roi_boundaries_format - fof-ct</title>
+        <title>Slot: roi_boundaries_format_description - fof-ct</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#slot-roi_boundaries_format" class="md-skip">
+        <a href="#slot-roi_boundaries_format_description" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Slot: roi_boundaries_format
+              Slot: roi_boundaries_format_description
             
           </span>
         </div>
@@ -695,10 +695,10 @@
   
 
 
-<h1 id="slot-roi_boundaries_format">Slot: roi_boundaries_format<a class="headerlink" href="#slot-roi_boundaries_format" title="Permanent link">&para;</a></h1>
-<p><em>Description of the coordinate format used to encode boundary data in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates as "x1,y1 x2,y2 ...") and the OBJ 3D mesh format (vertex and face lists). Must be sufficient for unambiguous parsing of all roi_boundaries values in this file. Written as #ROI_Boundaries_Format: in the file header.</em></p>
+<h1 id="slot-roi_boundaries_format_description">Slot: roi_boundaries_format_description<a class="headerlink" href="#slot-roi_boundaries_format_description" title="Permanent link">&para;</a></h1>
+<p><em>Free-text description of how ROI boundaries are encoded, sufficient for unambiguous parsing of all roi_boundaries values in this file (e.g. coordinate order, dimensionality, or an external file reference). Written as ##ROI_Boundaries_Format_Description= in the file header. Conditionally required (content-triggered): MANDATORY whenever roi_boundaries_format_type is 'Other'; otherwise recommended.</em></p>
 <div>
-<p>URI: <a href="https://w3id.org/fof-ct/roi_boundaries_format">fof_ct:roi_boundaries_format</a></p>
+<p>URI: <a href="https://w3id.org/fof-ct/roi_boundaries_format_description">fof_ct:roi_boundaries_format_description</a></p>
 <!-- no inheritance hierarchy -->
 <h2 id="applicable-classes">Applicable Classes<a class="headerlink" href="#applicable-classes" title="Permanent link">&para;</a></h2>
 <table>
@@ -765,10 +765,7 @@
 </thead>
 <tbody>
 <tr>
-<td>OME ROI Polygon model</td>
-</tr>
-<tr>
-<td>OBJ 3D mesh</td>
+<td>Cell boundaries are reported in global coordinates as lists of comma separated x,y coordinates separated by spaces like "x1,y1 x2,y2 x3,y3" (e.g. "0,0 1,2 3,5").</td>
 </tr>
 </tbody>
 </table>
@@ -788,25 +785,25 @@
 <tbody>
 <tr>
 <td>self</td>
-<td>fof_ct:roi_boundaries_format</td>
+<td>fof_ct:roi_boundaries_format_description</td>
 </tr>
 <tr>
 <td>native</td>
-<td>fof_ct:roi_boundaries_format</td>
+<td>fof_ct:roi_boundaries_format_description</td>
 </tr>
 </tbody>
 </table>
 <h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">&para;</a></h2>
 <details>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roi_boundaries_format</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">coordinate</span><span class="nv"> </span><span class="s">format</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">encode</span><span class="nv"> </span><span class="s">boundary</span><span class="nv"> </span><span class="s">data</span><span class="nv"> </span><span class="s">in</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">the</span><span class="nv"> </span><span class="s">roi_boundaries</span><span class="nv"> </span><span class="s">column.</span><span class="nv"> </span><span class="s">Examples</span><span class="nv"> </span><span class="s">include</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">OME</span><span class="nv"> </span><span class="s">ROI</span><span class="nv"> </span><span class="s">Polygon</span><span class="nv"> </span><span class="s">model</span><span class="nv"> </span><span class="s">(coordinates</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">as</span><span class="nv"> </span><span class="s">&quot;x1,y1</span><span class="nv"> </span><span class="s">x2,y2</span><span class="nv"> </span><span class="s">...&quot;)</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">OBJ</span><span class="nv"> </span><span class="s">3D</span><span class="nv"> </span><span class="s">mesh</span><span class="nv"> </span><span class="s">format</span><span class="nv"> </span><span class="s">(vertex</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">face</span><span class="nv"> </span><span class="s">lists).</span><span class="nv"> </span><span class="s">Must</span><span class="nv"> </span><span class="s">be</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="s">sufficient</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">unambiguous</span><span class="nv"> </span><span class="s">parsing</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">roi_boundaries</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">Written</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="s">as</span><span class="nv"> </span><span class="s">#ROI_Boundaries_Format:</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">roi_boundaries_format_description</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Free-text</span><span class="nv"> </span><span class="s">description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">how</span><span class="nv"> </span><span class="s">ROI</span><span class="nv"> </span><span class="s">boundaries</span><span class="nv"> </span><span class="s">are</span><span class="nv"> </span><span class="s">encoded,</span><span class="nv"> </span><span class="s">sufficient</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">for</span><span class="nv"> </span><span class="s">unambiguous</span><span class="nv"> </span><span class="s">parsing</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">roi_boundaries</span><span class="nv"> </span><span class="s">values</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">(e.g.</span><span class="nv"> </span><span class="s">coordinate</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">order,</span><span class="nv"> </span><span class="s">dimensionality,</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">external</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">reference).</span><span class="nv"> </span><span class="s">Written</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">##ROI_Boundaries_Format_Description=</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.</span><span class="nv"> </span><span class="s">Conditionally</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">(content-triggered):</span><span class="nv"> </span><span class="s">MANDATORY</span><span class="nv"> </span><span class="s">whenever</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="s">roi_boundaries_format_type</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="se">&#39;&#39;</span><span class="s">Other</span><span class="se">&#39;&#39;</span><span class="s">;</span><span class="nv"> </span><span class="s">otherwise</span><span class="nv"> </span><span class="s">recommended.&#39;</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">examples</span><span class="p">:</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OME ROI Polygon model</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OBJ 3D mesh</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell boundaries are reported in global coordinates as lists of comma separated</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">x,y coordinates separated by spaces like &quot;x1,y1 x2,y2 x3,y3&quot; (e.g. &quot;0,0 1,2 3,5&quot;).</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/bas</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>

@@ -696,7 +696,7 @@
 
 
 <h1 id="slot-vcf_version">Slot: vcf_version<a class="headerlink" href="#slot-vcf_version" title="Permanent link">&para;</a></h1>
-<p><em>Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.</em></p>
+<p><em>Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.</em></p>
 <div>
 <p>URI: <a href="https://w3id.org/fof-ct/vcf_version">fof_ct:vcf_version</a></p>
 <!-- no inheritance hierarchy -->
@@ -730,10 +730,6 @@
 <tr>
 <td>Range</td>
 <td><a href="../String/">String</a></td>
-</tr>
-<tr>
-<td>Domain</td>
-<td><a href="../SpotTable/">SpotTable</a></td>
 </tr>
 <tr>
 <td>Domain Of</td>
@@ -797,13 +793,13 @@
 <details>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vcf_version</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;Version</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">VCF</span><span class="nv"> </span><span class="s">format</span><span class="nv"> </span><span class="s">used</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">accompanying</span><span class="nv"> </span><span class="s">VCF</span><span class="nv"> </span><span class="s">file.</span><span class="nv"> </span><span class="s">Conditionally</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">required</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">genome_assembly</span><span class="nv"> </span><span class="s">uses</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="se">&#39;&#39;</span><span class="s">custom-build:</span><span class="se">&#39;&#39;</span><span class="nv"> </span><span class="s">prefix.</span><span class="nv"> </span><span class="s">Written</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">##VCF_Version=</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.&#39;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nt">examples</span><span class="p">:</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v4.2</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/bas</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotTable</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">required</span><span class="nv"> </span><span class="s">(content-triggered)</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">genome_assembly</span><span class="nv"> </span><span class="s">uses</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="se">&#39;&#39;</span><span class="s">custom-build:</span><span class="se">&#39;&#39;</span><span class="nv"> </span><span class="s">prefix.</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">Applies</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">both</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">core</span><span class="nv"> </span><span class="s">(bas)</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">vol_core</span><span class="nv"> </span><span class="s">(vol)</span><span class="nv"> </span><span class="s">tables.</span><span class="nv"> </span><span class="s">Written</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">##VCF_Version=</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.&#39;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">examples</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v4.2</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/bas</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nt">domain_of</span><span class="p">:</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotTable</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
