@@ -1,0 +1,9 @@
+# Example FOF-CT Software header record (one #Software_Title=... block from a table header)
+---
+software_title: "deepBlink"
+software_type: "Single Molecule Localization"
+software_authors: "Eichenberger BT, Zhan Y, Rempfler M, Giorgetti L, Chao JA"
+software_description: "Deep-learning-based spot/single-molecule localization detection tool used for FOF-CT SM Localization calling."
+software_parameters: "model=deepBlink-smfish; threshold=0.5; min_distance_px=2"
+software_repository: "https://github.com/BBQuercus/deepBlink"
+software_preferred_citation_id: "https://doi.org/10.1016/j.cels.2021.08.004"

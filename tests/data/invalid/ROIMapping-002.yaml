@@ -1,0 +1,8 @@
+# Counter-example (must FAIL validation): populates two of the three
+# mutually-exclusive ID slots (cell_id AND sub_cell_roi_id) on the same
+# Cell/ROI Mapping row, which the exactly_one_of constraint added to
+# ROIMapping must reject.
+---
+cell_id: 1
+sub_cell_roi_id: 2
+roi_boundaries: "[[100.0, 120.0], [140.0, 120.0], [140.0, 160.0], [100.0, 160.0]]"
