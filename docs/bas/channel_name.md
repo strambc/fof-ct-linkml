@@ -6,7 +6,7 @@ search:
 # Slot: channel_name 
 
 
-_The name of the imaging channel used for this Spot (e.g. 510/25). Mandatory in the Spot Quality table._
+_The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column._
 
 
 
@@ -25,7 +25,9 @@ URI: [fof_ct:channel_name](https://w3id.org/fof-ct/channel_name)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Localization](Localization.md) | A single individual localisation event contributing to the final position of ... |  yes  |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +41,7 @@ URI: [fof_ct:channel_name](https://w3id.org/fof-ct/channel_name)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [Localization](Localization.md), [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -59,7 +61,7 @@ URI: [fof_ct:channel_name](https://w3id.org/fof-ct/channel_name)
 | Value |
 | --- |
 | 510/25 |
-| 647/50 |
+| 695/81 |
 
 
 
@@ -92,15 +94,19 @@ URI: [fof_ct:channel_name](https://w3id.org/fof-ct/channel_name)
 <details>
 ```yaml
 name: channel_name
-description: The name of the imaging channel used for this Spot (e.g. 510/25). Mandatory
-  in the Spot Quality table.
+description: The wavelength characteristics of the emission channel used to image
+  this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in
+  the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality,
+  and Undecoded SM Localization tables. Written as the Channel column.
 examples:
 - value: 510/25
-- value: 647/50
+- value: 695/81
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
+- Localization
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: string
 
 ```

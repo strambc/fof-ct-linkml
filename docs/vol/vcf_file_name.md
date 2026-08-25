@@ -6,7 +6,7 @@ search:
 # Slot: vcf_file_name 
 
 
-_Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header._
+_Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:vcf_file_name](https://w3id.org/fof-ct/vcf_file_name)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotTable](SpotTable.md) | The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FO... |  no  |
+| [SMLocalizationTable](SMLocalizationTable.md) | The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol... |  no  |
 
 
 
@@ -39,8 +40,7 @@ URI: [fof_ct:vcf_file_name](https://w3id.org/fof-ct/vcf_file_name)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain | [SpotTable](SpotTable.md) |
-| Domain Of | [SpotTable](SpotTable.md) |
+| Domain Of | [SpotTable](SpotTable.md), [SMLocalizationTable](SMLocalizationTable.md) |
 
 ### Cardinality and Requirements
 
@@ -94,15 +94,16 @@ URI: [fof_ct:vcf_file_name](https://w3id.org/fof-ct/vcf_file_name)
 name: vcf_file_name
 description: 'Name of the Variant Call Format (VCF) file that must be submitted alongside
   the dataset to describe the genome insertion or deletion. Conditionally required
-  when genome_assembly uses the ''custom-build:'' prefix. Written as ##VCF_File_Name=
-  in the file header.'
+  (content-triggered) when genome_assembly uses the ''custom-build:'' prefix. Applies
+  to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in
+  the file header.'
 examples:
 - value: pJT039:chr3.vcf
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
-domain: SpotTable
 domain_of:
 - SpotTable
+- SMLocalizationTable
 range: string
 
 ```

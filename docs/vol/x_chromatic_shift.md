@@ -6,7 +6,7 @@ search:
 # Slot: x_chromatic_shift 
 
 
-_Chromatic aberration correction offset applied to the X coordinate of this Spot. Same unit as X._
+_Chromatic aberration correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:x_chromatic_shift](https://w3id.org/fof-ct/x_chromatic_shift)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:x_chromatic_shift](https://w3id.org/fof-ct/x_chromatic_shift)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,16 @@ URI: [fof_ct:x_chromatic_shift](https://w3id.org/fof-ct/x_chromatic_shift)
 <details>
 ```yaml
 name: x_chromatic_shift
-description: Chromatic aberration correction offset applied to the X coordinate of
-  this Spot. Same unit as X.
+description: Chromatic aberration correction offset applied to the X coordinate. Same
+  unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the
+  Spot Quality and RNA Spot Quality tables.
 examples:
 - value: '0.05'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

@@ -6,7 +6,7 @@ search:
 # Slot: intensity_measurement_method 
 
 
-_Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported._
+_Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported._
 
 
 
@@ -27,7 +27,6 @@ URI: [fof_ct:intensity_measurement_method](https://w3id.org/fof-ct/intensity_mea
 | --- | --- | --- |
 | [DemultiplexingTable](DemultiplexingTable.md) | The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_... |  no  |
 | [TraceTable](TraceTable.md) | The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace) |  no  |
-| [RNASpotTable](RNASpotTable.md) | The RNA Spot Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna) |  no  |
 | [SpotQualityTable](SpotQualityTable.md) | The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality... |  yes  |
 | [RNASpotQualityTable](RNASpotQualityTable.md) | The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna... |  yes  |
 | [SpotBiologicalTable](SpotBiologicalTable.md) | The Spot Biological Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT... |  yes  |
@@ -49,7 +48,7 @@ URI: [fof_ct:intensity_measurement_method](https://w3id.org/fof-ct/intensity_mea
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [DemultiplexingTable](DemultiplexingTable.md), [TraceTable](TraceTable.md), [RNASpotTable](RNASpotTable.md), [SpotQualityTable](SpotQualityTable.md), [RNASpotQualityTable](RNASpotQualityTable.md), [SpotBiologicalTable](SpotBiologicalTable.md), [RNASpotBiologicalTable](RNASpotBiologicalTable.md), [CellTable](CellTable.md), [ExtraCellROITable](ExtraCellROITable.md), [SubCellROITable](SubCellROITable.md), [ROIMappingTable](ROIMappingTable.md) |
+| Domain Of | [DemultiplexingTable](DemultiplexingTable.md), [TraceTable](TraceTable.md), [SpotQualityTable](SpotQualityTable.md), [RNASpotQualityTable](RNASpotQualityTable.md), [SpotBiologicalTable](SpotBiologicalTable.md), [RNASpotBiologicalTable](RNASpotBiologicalTable.md), [CellTable](CellTable.md), [ExtraCellROITable](ExtraCellROITable.md), [SubCellROITable](SubCellROITable.md), [ROIMappingTable](ROIMappingTable.md) |
 
 ### Cardinality and Requirements
 
@@ -104,7 +103,8 @@ URI: [fof_ct:intensity_measurement_method](https://w3id.org/fof-ct/intensity_mea
 name: intensity_measurement_method
 description: 'Method used to perform intensity measurements, including how digital
   signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-  in the file header. Conditionally required when any intensity metric is reported.'
+  in the file header. Conditionally required (metric-triggered) when any intensity
+  metric is reported.'
 examples:
 - value: Localization centroid intensity
 - value: Mean Fluorescence Intensity
@@ -113,7 +113,6 @@ rank: 1000
 domain_of:
 - DemultiplexingTable
 - TraceTable
-- RNASpotTable
 - SpotQualityTable
 - RNASpotQualityTable
 - SpotBiologicalTable

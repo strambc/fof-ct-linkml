@@ -6,7 +6,7 @@ search:
 # Class: SMLocalizationTable 
 
 
-_The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT_vol_core). This is the mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing results derived from the localization data._
+_The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core, no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing results derived from the localization data._
 
 
 
@@ -51,6 +51,8 @@ URI: [fof_ct:SMLocalizationTable](https://w3id.org/fof-ct/SMLocalizationTable)
         
       SMLocalizationTable : lab_name
         
+      SMLocalizationTable : modification
+        
       SMLocalizationTable : sm_localizations
         
           
@@ -85,6 +87,10 @@ URI: [fof_ct:SMLocalizationTable](https://w3id.org/fof-ct/SMLocalizationTable)
         click TimeUnitEnum href "../TimeUnitEnum/"
     
 
+        
+      SMLocalizationTable : vcf_file_name
+        
+      SMLocalizationTable : vcf_version
         
       SMLocalizationTable : xyz_unit
         
@@ -125,6 +131,9 @@ URI: [fof_ct:SMLocalizationTable](https://w3id.org/fof-ct/SMLocalizationTable)
 | [softwares](softwares.md) | 1..* <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
 | [genome_assembly](genome_assembly.md) | 1 <br/> [String](String.md) | Genome build used for Chrom, Chrom_Start and Chrom_End coordinates | direct |
+| [modification](modification.md) | 0..1 <br/> [String](String.md) | Description of the nature and genomic position of a DNA insertion or deletion... | direct |
+| [vcf_file_name](vcf_file_name.md) | 0..1 <br/> [String](String.md) | Name of the Variant Call Format (VCF) file that must be submitted alongside t... | direct |
+| [vcf_version](vcf_version.md) | 0..1 <br/> [String](String.md) | Version of the VCF format used for the accompanying VCF file | direct |
 | [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
 | [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used to represent time intervals in this table | direct |
 | [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used to represent intensity measurements in this table | direct |
@@ -187,11 +196,11 @@ URI: [fof_ct:SMLocalizationTable](https://w3id.org/fof-ct/SMLocalizationTable)
 <details>
 ```yaml
 name: SMLocalizationTable
-description: 'The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT_vol_core).
-  This is the mandatory primary data table for volumetric FOF-CT submissions. Each
-  row corresponds to one SM localization event. The Spot/Trace Data table is optional
-  for FOF-vol-CT submissions but may be included to report post-processing results
-  derived from the localization data.'
+description: 'The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core,
+  no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT
+  submissions. Each row corresponds to one SM localization event. The Spot/Trace Data
+  table is optional for FOF-vol-CT submissions but may be included to report post-processing
+  results derived from the localization data.'
 from_schema: https://w3id.org/fof-ct/vol
 slots:
 - fof_ct_version
@@ -203,6 +212,9 @@ slots:
 - softwares
 - additional_tables
 - genome_assembly
+- modification
+- vcf_file_name
+- vcf_version
 - xyz_unit
 - time_unit
 - intensity_unit
@@ -214,8 +226,11 @@ slot_usage:
     required: true
   table_namespace:
     name: table_namespace
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_core''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     required: true
-    equals_string: 4dn_FOF-CT_vol_core
+    equals_string: FOF-CT_vol_core
   lab_name:
     name: lab_name
     required: true
@@ -255,11 +270,11 @@ tree_root: true
 <details>
 ```yaml
 name: SMLocalizationTable
-description: 'The SM Localization Data table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT_vol_core).
-  This is the mandatory primary data table for volumetric FOF-CT submissions. Each
-  row corresponds to one SM localization event. The Spot/Trace Data table is optional
-  for FOF-vol-CT submissions but may be included to report post-processing results
-  derived from the localization data.'
+description: 'The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core,
+  no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT
+  submissions. Each row corresponds to one SM localization event. The Spot/Trace Data
+  table is optional for FOF-vol-CT submissions but may be included to report post-processing
+  results derived from the localization data.'
 from_schema: https://w3id.org/fof-ct/vol
 slot_usage:
   fof_ct_version:
@@ -267,8 +282,11 @@ slot_usage:
     required: true
   table_namespace:
     name: table_namespace
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_core''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     required: true
-    equals_string: 4dn_FOF-CT_vol_core
+    equals_string: FOF-CT_vol_core
   lab_name:
     name: lab_name
     required: true
@@ -329,8 +347,9 @@ attributes:
     pattern: ^v[0-9]+\.[0-9]+
   table_namespace:
     name: table_namespace
-    description: 'Identifier for this table type. The required value is specific to
-      each table. Written as ##Table_Namespace= in the file header.'
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_core''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: SMLocalizationTable
@@ -352,7 +371,7 @@ attributes:
     - UndecodedLocalizationTable
     range: string
     required: true
-    equals_string: 4dn_FOF-CT_vol_core
+    equals_string: FOF-CT_vol_core
   lab_name:
     name: lab_name
     description: 'Name of the laboratory where the experiment was performed. Written
@@ -536,12 +555,59 @@ attributes:
     - SMLocalizationTable
     range: string
     required: true
+  modification:
+    name: modification
+    description: 'Description of the nature and genomic position of a DNA insertion
+      or deletion in the genome under study. Conditionally required (content- triggered)
+      when genome_assembly uses the ''custom-build:'' prefix. Applies to both the
+      core (bas) and vol_core (vol) tables. Written as ##Modification= in the file
+      header.'
+    examples:
+    - value: pJT039:chr3(insertion 0001-2500)
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: SMLocalizationTable
+    domain_of:
+    - SpotTable
+    - SMLocalizationTable
+    range: string
+  vcf_file_name:
+    name: vcf_file_name
+    description: 'Name of the Variant Call Format (VCF) file that must be submitted
+      alongside the dataset to describe the genome insertion or deletion. Conditionally
+      required (content-triggered) when genome_assembly uses the ''custom-build:''
+      prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as
+      ##VCF_File_Name= in the file header.'
+    examples:
+    - value: pJT039:chr3.vcf
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: SMLocalizationTable
+    domain_of:
+    - SpotTable
+    - SMLocalizationTable
+    range: string
+  vcf_version:
+    name: vcf_version
+    description: 'Version of the VCF format used for the accompanying VCF file. Conditionally
+      required (content-triggered) when genome_assembly uses the ''custom-build:''
+      prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as
+      ##VCF_Version= in the file header.'
+    examples:
+    - value: v4.2
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: SMLocalizationTable
+    domain_of:
+    - SpotTable
+    - SMLocalizationTable
+    range: string
   xyz_unit:
     name: xyz_unit
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -569,7 +635,8 @@ attributes:
     name: time_unit
     description: 'Unit used to represent time intervals in this table. Allowed values
       are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
+      header. Conditionally required (metric- triggered) when any time metric is reported
+      in an optional column.'
     examples:
     - value: sec
     from_schema: https://w3id.org/fof-ct/vol
@@ -578,7 +645,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -594,8 +660,8 @@ attributes:
   intensity_unit:
     name: intensity_unit
     description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
+      as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered)
+      when any intensity metric is reported in an optional column.'
     examples:
     - value: a.u.
     - value: photons
@@ -605,7 +671,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -622,7 +687,8 @@ attributes:
     name: intensity_measurement_method
     description: 'Method used to perform intensity measurements, including how digital
       signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
+      in the file header. Conditionally required (metric-triggered) when any intensity
+      metric is reported.'
     examples:
     - value: Localization centroid intensity
     - value: Mean Fluorescence Intensity
@@ -632,7 +698,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

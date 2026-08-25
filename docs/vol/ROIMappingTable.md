@@ -53,7 +53,18 @@ URI: [fof_ct:ROIMappingTable](https://w3id.org/fof-ct/ROIMappingTable)
         
       ROIMappingTable : lab_name
         
-      ROIMappingTable : roi_boundaries_format
+      ROIMappingTable : roi_boundaries_format_description
+        
+      ROIMappingTable : roi_boundaries_format_type
+        
+          
+    
+        
+        
+        ROIMappingTable --> "1" ROIBoundariesFormatTypeEnum : roi_boundaries_format_type
+        click ROIBoundariesFormatTypeEnum href "../ROIBoundariesFormatTypeEnum/"
+    
+
         
       ROIMappingTable : roi_mappings
         
@@ -124,13 +135,14 @@ URI: [fof_ct:ROIMappingTable](https://w3id.org/fof-ct/ROIMappingTable)
 | ---  | --- | --- | --- |
 | [fof_ct_version](fof_ct_version.md) | 1 <br/> [String](String.md) | Version of the FOF-CT format used in this file | direct |
 | [table_namespace](table_namespace.md) | 1 <br/> [String](String.md) | Identifier for this table type | direct |
-| [roi_boundaries_format](roi_boundaries_format.md) | 1 <br/> [String](String.md) | Description of the coordinate format used to encode boundary data in the roi_... | direct |
+| [roi_boundaries_format_type](roi_boundaries_format_type.md) | 1 <br/> [ROIBoundariesFormatTypeEnum](ROIBoundariesFormatTypeEnum.md) | Controlled-vocabulary identifier of the standard used to encode ROI boundarie... | direct |
 | [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
 | [lab_name](lab_name.md) | 1 <br/> [String](String.md) | Name of the laboratory where the experiment was performed | direct |
 | [experimenter_name](experimenter_name.md) | 1 <br/> [String](String.md) | Full name of the person who performed the experiment | direct |
 | [experimenter_contact](experimenter_contact.md) | 1 <br/> [String](String.md) | Email address of the person who performed the experiment | direct |
 | [description](description.md) | 1 <br/> [String](String.md) | Free-text description of the experiment and of the data recorded in this tabl... | direct |
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
+| [roi_boundaries_format_description](roi_boundaries_format_description.md) | 0..1 <br/> [String](String.md) | Free-text description of how ROI boundaries are encoded, beyond what the form... | direct |
 | [cell_type](cell_type.md) | 0..1 <br/> [String](String.md) | The type of cells present in this dataset, expressed using an ontology term f... | direct |
 | [sub_cell_roi_type](sub_cell_roi_type.md) | 0..1 <br/> [String](String.md) | The type of sub-cellular structure ROI documented in this table or mapping fi... | direct |
 | [extra_cell_roi_type](extra_cell_roi_type.md) | 0..1 <br/> [String](String.md) | The type of extracellular structure ROI within which cells are embedded, expr... | direct |
@@ -148,7 +160,8 @@ URI: [fof_ct:ROIMappingTable](https://w3id.org/fof-ct/ROIMappingTable)
 
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
-| [ROIMappingTable](ROIMappingTable.md) | [roi_boundaries_format](roi_boundaries_format.md) | domain | [ROIMappingTable](ROIMappingTable.md) |
+| [ROIMappingTable](ROIMappingTable.md) | [roi_boundaries_format_type](roi_boundaries_format_type.md) | domain | [ROIMappingTable](ROIMappingTable.md) |
+| [ROIMappingTable](ROIMappingTable.md) | [roi_boundaries_format_description](roi_boundaries_format_description.md) | domain | [ROIMappingTable](ROIMappingTable.md) |
 | [ROIMappingTable](ROIMappingTable.md) | [roi_mappings](roi_mappings.md) | domain | [ROIMappingTable](ROIMappingTable.md) |
 
 
@@ -207,13 +220,14 @@ from_schema: https://w3id.org/fof-ct/vol
 slots:
 - fof_ct_version
 - table_namespace
-- roi_boundaries_format
+- roi_boundaries_format_type
 - xyz_unit
 - lab_name
 - experimenter_name
 - experimenter_contact
 - description
 - additional_tables
+- roi_boundaries_format_description
 - cell_type
 - sub_cell_roi_type
 - extra_cell_roi_type
@@ -230,9 +244,16 @@ slot_usage:
     name: table_namespace
     required: true
     equals_string: 4dn_FOF-CT_mapping
-  roi_boundaries_format:
-    name: roi_boundaries_format
+  roi_boundaries_format_type:
+    name: roi_boundaries_format_type
     required: true
+  roi_boundaries_format_description:
+    name: roi_boundaries_format_description
+    description: 'Free-text description of how ROI boundaries are encoded, beyond
+      what the format name alone conveys (e.g. coordinate order, dimensionality, or
+      an external file reference). Conditionally required (content-triggered): MANDATORY
+      when roi_boundaries_format_type is ''Other''; otherwise recommended.'
+    required: false
   xyz_unit:
     name: xyz_unit
     required: true
@@ -302,9 +323,16 @@ slot_usage:
     name: table_namespace
     required: true
     equals_string: 4dn_FOF-CT_mapping
-  roi_boundaries_format:
-    name: roi_boundaries_format
+  roi_boundaries_format_type:
+    name: roi_boundaries_format_type
     required: true
+  roi_boundaries_format_description:
+    name: roi_boundaries_format_description
+    description: 'Free-text description of how ROI boundaries are encoded, beyond
+      what the format name alone conveys (e.g. coordinate order, dimensionality, or
+      an external file reference). Conditionally required (content-triggered): MANDATORY
+      when roi_boundaries_format_type is ''Other''; otherwise recommended.'
+    required: false
   xyz_unit:
     name: xyz_unit
     required: true
@@ -404,30 +432,29 @@ attributes:
     range: string
     required: true
     equals_string: 4dn_FOF-CT_mapping
-  roi_boundaries_format:
-    name: roi_boundaries_format
-    description: 'Description of the coordinate format used to encode boundary data
-      in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates
-      as "x1,y1 x2,y2 ...") and the OBJ 3D mesh format (vertex and face lists). Must
-      be sufficient for unambiguous parsing of all roi_boundaries values in this file.
-      Written as #ROI_Boundaries_Format: in the file header.'
+  roi_boundaries_format_type:
+    name: roi_boundaries_format_type
+    description: 'Controlled-vocabulary identifier of the standard used to encode
+      ROI boundaries in global coordinates (e.g. OME_Polygon for the OME ROI data
+      model, or Mesh_OBJ for a 3D OBJ mesh). Written as ##ROI_Boundaries_Format_Type=
+      in the file header. Default value is OME_Polygon.'
     examples:
-    - value: OME ROI Polygon model
-    - value: OBJ 3D mesh
+    - value: OME_Polygon
+    - value: Mesh_OBJ
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     domain: ROIMappingTable
     owner: ROIMappingTable
     domain_of:
     - ROIMappingTable
-    range: string
+    range: ROIBoundariesFormatTypeEnum
     required: true
   xyz_unit:
     name: xyz_unit
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -586,11 +613,31 @@ attributes:
     range: TableNamespaceEnum
     required: true
     multivalued: true
+  roi_boundaries_format_description:
+    name: roi_boundaries_format_description
+    description: 'Free-text description of how ROI boundaries are encoded, beyond
+      what the format name alone conveys (e.g. coordinate order, dimensionality, or
+      an external file reference). Conditionally required (content-triggered): MANDATORY
+      when roi_boundaries_format_type is ''Other''; otherwise recommended.'
+    examples:
+    - value: Cell boundaries are reported in global coordinates as lists of comma
+        separated x,y coordinates separated by spaces like "x1,y1 x2,y2 x3,y3" (e.g.
+        "0,0 1,2 3,5").
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    domain: ROIMappingTable
+    owner: ROIMappingTable
+    domain_of:
+    - ROIMappingTable
+    range: string
+    required: false
   cell_type:
     name: cell_type
     description: 'The type of cells present in this dataset, expressed using an ontology
-      term from the Experimental Factor Ontology (EFO). Examples include "Cell in
-      tissue" or "Cell in organoid". Written as #Cell_Type: in the file header.'
+      term from the Experimental Factor Ontology (EFO). Examples include "Primary
+      cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell
+      in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file
+      header.'
     examples:
     - value: Cell in tissue
     - value: Cell in organoid
@@ -606,14 +653,14 @@ attributes:
   sub_cell_roi_type:
     name: sub_cell_roi_type
     description: 'The type of sub-cellular structure ROI documented in this table
-      or mapping file. It is recommended to use an EFO ''cellular_component'' child
-      term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex),
-      PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the
-      file header.'
+      or mapping file. It is recommended to use a GO ''cellular_component'' child
+      term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex
+      (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type:
+      in the file header.'
     examples:
     - value: Nucleolus
-    - value: NL
-    - value: NPC
+    - value: Nuclear Lamina (NL)
+    - value: Nuclear Pore Complex (NPC)
     - value: Chromosome_Domain
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
@@ -675,7 +722,8 @@ attributes:
     name: time_unit
     description: 'Unit used to represent time intervals in this table. Allowed values
       are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
+      header. Conditionally required (metric- triggered) when any time metric is reported
+      in an optional column.'
     examples:
     - value: sec
     from_schema: https://w3id.org/fof-ct/vol
@@ -684,7 +732,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -701,8 +748,8 @@ attributes:
   intensity_unit:
     name: intensity_unit
     description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
+      as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered)
+      when any intensity metric is reported in an optional column.'
     examples:
     - value: a.u.
     - value: photons
@@ -712,7 +759,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -730,7 +776,8 @@ attributes:
     name: intensity_measurement_method
     description: 'Method used to perform intensity measurements, including how digital
       signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
+      in the file header. Conditionally required (metric-triggered) when any intensity
+      metric is reported.'
     examples:
     - value: Localization centroid intensity
     - value: Mean Fluorescence Intensity
@@ -740,7 +787,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

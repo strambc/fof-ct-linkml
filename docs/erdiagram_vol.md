@@ -2,7 +2,7 @@
 
 Entity-Relationship diagrams for the **FOF-vol-CT** (volumetric) modality, generated using [LinkML's ER Diagram generator](https://linkml.io/linkml/generators/erdiagram.html).
 
-FOF-vol-CT comprises **15 tables**: all 12 FOF-bas-CT tables plus 3 volumetric-specific tables. The **SM Localization Data table** (table 13) and **SM Localization Quality table** (table 14) are mandatory. The Undecoded SM Localization table (table 15) is optional.
+FOF-vol-CT comprises **15 tables**: all 12 FOF-bas-CT tables plus 3 volumetric-specific tables. The **SM Localization Data table** (table 13) is the only mandatory FOF-vol-CT-exclusive table. The SM Localization Quality table (table 14) and the Undecoded SM Localization table (table 15) are both optional but recommended.
 
 The SM Localization event is the primary data unit. Spots and Traces are optional post-processing outputs.
 
@@ -147,76 +147,105 @@ UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizatio
 ```mermaid
 erDiagram
 SMLocalization {
+    integer cell_id
+    string chrom
+    integer chrom_end
+    integer chrom_start
+    integer extra_cell_roi_id
     integer loc_id
+    integer spot_id
+    integer sub_cell_roi_id
+    integer trace_id
     float x
     float y
     float z
-    integer spot_id
-    integer trace_id
-    string chrom
-    integer chrom_start
-    integer chrom_end
-    integer sub_cell_roi_id
-    integer cell_id
-    integer extra_cell_roi_id
-}
-SMLocalizationTable {
-    string fof_ct_version
-    string table_namespace
-    string genome_assembly
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
-    string description
 }
 SMLocalizationQualityRecord {
-    integer loc_id
-    float x_precision
-    float y_precision
-    float z_precision
-    integer photon_count
+    float centroid_intensity
+    string channel_name
+    string fluorophore_name
     float goodness_of_fit
+    integer loc_id
+    float peak_intensity
+    integer photon_count
+    float raw_x
+    float raw_y
+    float raw_z
+    float x_loc_error
+    float x_precision
+    float y_loc_error
+    float y_precision
+    float z_loc_error
+    float z_precision
 }
 SMLocalizationQualityTable {
-    string fof_ct_version
-    string table_namespace
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
     string description
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string table_namespace
+    TimeUnitEnum time_unit
+    XYZUnitEnum xyz_unit
+}
+SMLocalizationTable {
+    string description
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string genome_assembly
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string modification
+    string table_namespace
+    TimeUnitEnum time_unit
+    string vcf_file_name
+    string vcf_version
+    XYZUnitEnum xyz_unit
+}
+Software {
+    string software_authors
+    string software_description
+    string software_parameters
+    uri software_preferred_citation_id
+    uri software_repository
+    string software_title
+    SoftwareTypeEnum software_type
 }
 UndecodedLocalization {
+    string channel_name
+    string fluorophore_name
+    integer hyb_id
+    integer image_frame_id
     integer loc_id
+    integer the_z
     float x
     float y
     float z
-    integer frame_id
-    string fluor
 }
 UndecodedLocalizationTable {
-    string fof_ct_version
-    string table_namespace
-    XYZUnitEnum xyz_unit
-    string lab_name
-    string experimenter_name
-    string experimenter_contact
     string description
-}
-Software {
-    string software_title
-    SoftwareTypeEnum software_type
-    string software_authors
-    string software_description
-    uri software_repository
-    uri software_preferred_citation_id
+    TableNamespaceEnumList additional_tables
+    string experimenter_contact
+    string experimenter_name
+    string fof_ct_version
+    string intensity_measurement_method
+    string intensity_unit
+    string lab_name
+    string table_namespace
+    TimeUnitEnum time_unit
+    XYZUnitEnum xyz_unit
 }
 
-SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
-SMLocalizationTable ||--}| Software : "softwares"
 SMLocalizationQualityTable ||--}| SMLocalizationQualityRecord : "sm_localization_quality_records"
 SMLocalizationQualityTable ||--}| Software : "softwares"
-UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
+SMLocalizationTable ||--}| SMLocalization : "sm_localizations"
+SMLocalizationTable ||--}| Software : "softwares"
 UndecodedLocalizationTable ||--}| Software : "softwares"
+UndecodedLocalizationTable ||--}| UndecodedLocalization : "undecoded_localizations"
 ```

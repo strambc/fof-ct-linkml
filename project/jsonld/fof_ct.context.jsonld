@@ -24,6 +24,24 @@
          "@type": "@id",
          "@id": "cells"
       },
+      "centroid_intensity": {
+         "@type": "xsd:float",
+         "@id": "centroid_intensity"
+      },
+      "channel_name": {
+         "@id": "channel_name"
+      },
+      "chrom": {
+         "@id": "chrom"
+      },
+      "chrom_end": {
+         "@type": "xsd:integer",
+         "@id": "chrom_end"
+      },
+      "chrom_start": {
+         "@type": "xsd:integer",
+         "@id": "chrom_start"
+      },
       "description": {
          "@id": "description"
       },
@@ -41,8 +59,8 @@
          "@type": "@id",
          "@id": "extra_cell_rois"
       },
-      "fluor": {
-         "@id": "fluor"
+      "fluorophore_name": {
+         "@id": "fluorophore_name"
       },
       "fof_ct_version": {
          "@id": "fof_ct_version"
@@ -55,6 +73,18 @@
       },
       "genome_assembly": {
          "@id": "genome_assembly"
+      },
+      "goodness_of_fit": {
+         "@type": "xsd:float",
+         "@id": "goodness_of_fit"
+      },
+      "hyb_id": {
+         "@type": "xsd:integer",
+         "@id": "hyb_id"
+      },
+      "image_frame_id": {
+         "@type": "xsd:integer",
+         "@id": "image_frame_id"
       },
       "intensity_measurement_method": {
          "@id": "intensity_measurement_method"
@@ -69,6 +99,29 @@
       "localizations": {
          "@type": "@id",
          "@id": "localizations"
+      },
+      "modification": {
+         "@id": "modification"
+      },
+      "peak_intensity": {
+         "@type": "xsd:float",
+         "@id": "peak_intensity"
+      },
+      "photon_count": {
+         "@type": "xsd:integer",
+         "@id": "photon_count"
+      },
+      "raw_x": {
+         "@type": "xsd:float",
+         "@id": "raw_x"
+      },
+      "raw_y": {
+         "@type": "xsd:float",
+         "@id": "raw_y"
+      },
+      "raw_z": {
+         "@type": "xsd:float",
+         "@id": "raw_z"
       },
       "rna_name": {
          "@id": "rna_name"
@@ -89,18 +142,37 @@
       "roi_boundaries": {
          "@id": "roi_boundaries"
       },
-      "roi_boundaries_format": {
-         "@id": "roi_boundaries_format"
+      "roi_boundaries_format_description": {
+         "@id": "roi_boundaries_format_description"
+      },
+      "roi_boundaries_format_type": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "roi_boundaries_format_type"
       },
       "roi_mappings": {
          "@type": "@id",
          "@id": "roi_mappings"
+      },
+      "sm_localization_quality_records": {
+         "@type": "@id",
+         "@id": "sm_localization_quality_records"
+      },
+      "sm_localizations": {
+         "@type": "@id",
+         "@id": "sm_localizations"
       },
       "software_authors": {
          "@id": "software_authors"
       },
       "software_description": {
          "@id": "software_description"
+      },
+      "software_parameters": {
+         "@id": "software_parameters"
       },
       "software_preferred_citation_id": {
          "@type": "xsd:anyURI",
@@ -145,6 +217,10 @@
       "table_namespace": {
          "@id": "table_namespace"
       },
+      "the_z": {
+         "@type": "xsd:integer",
+         "@id": "the_z"
+      },
       "time_unit": {
          "@context": {
             "text": "skos:notation",
@@ -164,9 +240,35 @@
       "transcript_id_type": {
          "@id": "transcript_id_type"
       },
+      "undecoded_localizations": {
+         "@type": "@id",
+         "@id": "undecoded_localizations"
+      },
+      "vcf_file_name": {
+         "@id": "vcf_file_name"
+      },
+      "vcf_version": {
+         "@id": "vcf_version"
+      },
       "x": {
          "@type": "xsd:float",
          "@id": "x"
+      },
+      "x_chromatic_shift": {
+         "@type": "xsd:float",
+         "@id": "x_chromatic_shift"
+      },
+      "x_drift": {
+         "@type": "xsd:float",
+         "@id": "x_drift"
+      },
+      "x_loc_error": {
+         "@type": "xsd:float",
+         "@id": "x_loc_error"
+      },
+      "x_precision": {
+         "@type": "xsd:float",
+         "@id": "x_precision"
       },
       "xyz_unit": {
          "@context": {
@@ -180,15 +282,50 @@
          "@type": "xsd:float",
          "@id": "y"
       },
+      "y_chromatic_shift": {
+         "@type": "xsd:float",
+         "@id": "y_chromatic_shift"
+      },
+      "y_drift": {
+         "@type": "xsd:float",
+         "@id": "y_drift"
+      },
+      "y_loc_error": {
+         "@type": "xsd:float",
+         "@id": "y_loc_error"
+      },
+      "y_precision": {
+         "@type": "xsd:float",
+         "@id": "y_precision"
+      },
       "z": {
          "@type": "xsd:float",
          "@id": "z"
+      },
+      "z_chromatic_shift": {
+         "@type": "xsd:float",
+         "@id": "z_chromatic_shift"
+      },
+      "z_drift": {
+         "@type": "xsd:float",
+         "@id": "z_drift"
+      },
+      "z_loc_error": {
+         "@type": "xsd:float",
+         "@id": "z_loc_error"
+      },
+      "z_precision": {
+         "@type": "xsd:float",
+         "@id": "z_precision"
       },
       "Cell": {
          "@id": "Cell"
       },
       "CellTable": {
          "@id": "CellTable"
+      },
+      "DemultiplexingTable": {
+         "@id": "DemultiplexingTable"
       },
       "ExtraCellROI": {
          "@id": "ExtraCellROI"
@@ -199,8 +336,8 @@
       "Localization": {
          "@id": "Localization"
       },
-      "LocalizationTable": {
-         "@id": "LocalizationTable"
+      "LocalizationMixin": {
+         "@id": "LocalizationMixin"
       },
       "RNASpot": {
          "@id": "RNASpot"
@@ -225,6 +362,18 @@
       },
       "ROIMappingTable": {
          "@id": "ROIMappingTable"
+      },
+      "SMLocalization": {
+         "@id": "SMLocalization"
+      },
+      "SMLocalizationQualityRecord": {
+         "@id": "SMLocalizationQualityRecord"
+      },
+      "SMLocalizationQualityTable": {
+         "@id": "SMLocalizationQualityTable"
+      },
+      "SMLocalizationTable": {
+         "@id": "SMLocalizationTable"
       },
       "Software": {
          "@id": "Software"
@@ -252,6 +401,12 @@
       },
       "TraceTable": {
          "@id": "TraceTable"
+      },
+      "UndecodedLocalization": {
+         "@id": "UndecodedLocalization"
+      },
+      "UndecodedLocalizationTable": {
+         "@id": "UndecodedLocalizationTable"
       }
    }
 }

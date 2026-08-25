@@ -34,7 +34,7 @@
                     "type": "array"
                 },
                 "cell_type": {
-                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.",
                     "type": "string"
                 },
                 "cells": {
@@ -70,14 +70,14 @@
                     "type": "string"
                 },
                 "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
                     "type": [
                         "string",
                         "null"
@@ -104,11 +104,11 @@
                 },
                 "time_unit": {
                     "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -120,9 +120,100 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "cells"
             ],
             "title": "CellTable",
+            "type": "object"
+        },
+        "DemultiplexingTable": {
+            "additionalProperties": false,
+            "description": "The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "localizations": {
+                    "description": "The complete collection of Localization events constituting this dataset. Each Localization corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/Localization"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "4dn_FOF-CT_demultiplexing",
+                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "xyz_unit",
+                "localizations"
+            ],
+            "title": "DemultiplexingTable",
             "type": "object"
         },
         "ExtraCellROI": {
@@ -181,14 +272,14 @@
                     "type": "string"
                 },
                 "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
                     "type": [
                         "string",
                         "null"
@@ -215,11 +306,11 @@
                 },
                 "time_unit": {
                     "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -231,6 +322,7 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "extra_cell_rois"
             ],
             "title": "ExtraCellROITable",
@@ -240,16 +332,20 @@
             "additionalProperties": false,
             "description": "A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).",
             "properties": {
-                "fluor": {
-                    "description": "Fluorescent channel in which this individual localisation event was detected (e.g. DAPI, GFP, Cy5, Alexa647).",
+                "channel_name": {
+                    "description": "The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.",
+                    "type": "string"
+                },
+                "fluorophore_name": {
+                    "description": "The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.",
                     "type": "string"
                 },
                 "loc_id": {
-                    "description": "A unique integer identifier for this individual localisation event. Loc_ID values are unique across the entire dataset.",
+                    "description": "A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.",
                     "type": "integer"
                 },
                 "spot_id": {
-                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.",
+                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization events rather than by direct optical detection, and every SM Localization event MUST report its associated Spot_ID.",
                     "type": "integer"
                 },
                 "x": {
@@ -266,103 +362,51 @@
                 }
             },
             "required": [
-                "loc_id",
                 "spot_id",
+                "channel_name",
+                "fluorophore_name",
+                "loc_id",
                 "x",
                 "y",
-                "z",
-                "fluor"
+                "z"
             ],
             "title": "Localization",
             "type": "object"
         },
-        "LocalizationTable": {
+        "LocalizationMixin": {
             "additionalProperties": false,
-            "description": "The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.",
+            "description": "Mixin capturing the shared concept of a single localization event across FOF-CT modalities. Used by Localization (demultiplexing), SMLocalization (vol_core), and UndecodedLocalization (undecoded). All three classes represent the same atomic measurement unit \u2014 the sub-pixel position of a detected fluorescence emission event \u2014 but differ in context, mandatory columns, and table role.",
             "properties": {
-                "additional_tables": {
-                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
-                    "items": {
-                        "$ref": "#/$defs/TableNamespaceEnum"
-                    },
-                    "type": "array"
-                },
-                "description": {
-                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
-                    "type": "string"
-                },
-                "experimenter_contact": {
-                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
-                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
-                    "type": "string"
-                },
-                "experimenter_name": {
-                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
-                    "type": "string"
-                },
-                "fof_ct_version": {
-                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
-                    "pattern": "^v[0-9]+\\.[0-9]+",
-                    "type": "string"
-                },
-                "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                "loc_id": {
+                    "description": "A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.",
                     "type": [
-                        "string",
+                        "integer",
                         "null"
                     ]
                 },
-                "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                "x": {
+                    "description": "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).",
                     "type": [
-                        "string",
+                        "number",
                         "null"
                     ]
                 },
-                "lab_name": {
-                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
-                    "type": "string"
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 },
-                "localizations": {
-                    "description": "The complete collection of Localization events constituting this dataset. Each Localization corresponds to one data row in the TSV serialisation.",
-                    "items": {
-                        "$ref": "#/$defs/Localization"
-                    },
-                    "type": "array"
-                },
-                "softwares": {
-                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
-                    "items": {
-                        "$ref": "#/$defs/Software"
-                    },
-                    "type": "array"
-                },
-                "table_namespace": {
-                    "const": "4dn_FOF-CT_demultiplexing",
-                    "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
-                    "type": "string"
-                },
-                "time_unit": {
-                    "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
-                },
-                "xyz_unit": {
-                    "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 }
             },
-            "required": [
-                "fof_ct_version",
-                "table_namespace",
-                "lab_name",
-                "experimenter_name",
-                "experimenter_contact",
-                "description",
-                "softwares",
-                "additional_tables",
-                "localizations"
-            ],
-            "title": "LocalizationTable",
+            "title": "LocalizationMixin",
             "type": "object"
         },
         "RNASpot": {
@@ -403,7 +447,7 @@
                     ]
                 },
                 "trace_id": {
-                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.",
                     "type": "integer"
                 },
                 "transcript_id": {
@@ -528,7 +572,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -539,6 +583,7 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "rna_spot_biological_records"
             ],
             "title": "RNASpotBiologicalTable",
@@ -546,15 +591,158 @@
         },
         "RNASpotQualityRecord": {
             "additionalProperties": false,
-            "description": "A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.",
+            "description": "A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). RNA_Spot_ID, Channel and Fluor are mandatory; all other reserved quality-metric columns are conditionally required (the same reserved vocabulary as the Spot Quality table) or fully free-form; users declare the latter via #^ header lines.",
             "properties": {
+                "centroid_intensity": {
+                    "description": "Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "channel_name": {
+                    "description": "The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.",
+                    "type": "string"
+                },
+                "fluorophore_name": {
+                    "description": "The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.",
+                    "type": "string"
+                },
+                "goodness_of_fit": {
+                    "description": "Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "peak_intensity": {
+                    "description": "Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "photon_count": {
+                    "description": "Number of photons detected for this localization event or Spot. Reserved, conditionally-required column name (Photon_Count) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables; highly recommended in the latter.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "raw_x": {
+                    "description": "X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_y": {
+                    "description": "Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_z": {
+                    "description": "Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "rna_spot_id": {
                     "description": "Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.",
                     "type": "integer"
+                },
+                "x_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_drift": {
+                    "description": "Drift correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization Quality table.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_loc_error": {
+                    "description": "Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_precision": {
+                    "description": "Metric quantifying the precision of the X-axis localization estimate. Typically the Cramer-Rao lower bound or Thompson method estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Must be accompanied by a description in the file header. Written as the reserved X_Loc_Precision column.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_drift": {
+                    "description": "Drift correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Drift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_loc_error": {
+                    "description": "Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_precision": {
+                    "description": "Metric quantifying the precision of the Y-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Y_Loc_Precision column.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_drift": {
+                    "description": "Drift correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_loc_error": {
+                    "description": "Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_precision": {
+                    "description": "Metric quantifying the precision of the Z-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 }
             },
             "required": [
-                "rna_spot_id"
+                "rna_spot_id",
+                "channel_name",
+                "fluorophore_name"
             ],
             "title": "RNASpotQualityRecord",
             "type": "object"
@@ -634,7 +822,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -645,6 +833,7 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "rna_spot_quality_records"
             ],
             "title": "RNASpotQualityTable",
@@ -687,20 +876,6 @@
                     "description": "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.",
                     "type": "string"
                 },
-                "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
                 "lab_name": {
                     "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
                     "type": "string"
@@ -724,10 +899,6 @@
                     "description": "Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.",
                     "type": "string"
                 },
-                "time_unit": {
-                    "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
-                },
                 "transcript_id_type": {
                     "description": "Type of transcript identifier used in the transcript_id column (e.g. Ensembl_V38, RefSeq). Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. Written as ##Transcript_ID_Type= in the file header.",
                     "type": [
@@ -737,7 +908,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -757,9 +928,75 @@
             "title": "RNASpotTable",
             "type": "object"
         },
+        "ROIBoundariesFormatTypeEnum": {
+            "description": "Controlled vocabulary for ##ROI_Boundaries_Format_Type= in the Cell/ROI Mapping table (per the FOF-CT RTD \"Allowable value lists\" table). Default value is OME_Polygon.",
+            "enum": [
+                "OME_Polygon",
+                "OME_Mask",
+                "Mesh_OBJ",
+                "Mesh_STL",
+                "Mesh_PLY",
+                "GeoJSON",
+                "WKT",
+                "Label_Mask_Image",
+                "Other"
+            ],
+            "title": "ROIBoundariesFormatTypeEnum",
+            "type": "string"
+        },
         "ROIMapping": {
             "additionalProperties": false,
             "description": "A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns.",
+            "oneOf": [
+                {
+                    "not": {
+                        "required": [
+                            "cell_id",
+                            "extra_cell_roi_id"
+                        ]
+                    },
+                    "properties": {
+                        "cell_id": {},
+                        "extra_cell_roi_id": {},
+                        "sub_cell_roi_id": {}
+                    },
+                    "required": [
+                        "sub_cell_roi_id"
+                    ]
+                },
+                {
+                    "not": {
+                        "required": [
+                            "sub_cell_roi_id",
+                            "extra_cell_roi_id"
+                        ]
+                    },
+                    "properties": {
+                        "cell_id": {},
+                        "extra_cell_roi_id": {},
+                        "sub_cell_roi_id": {}
+                    },
+                    "required": [
+                        "cell_id"
+                    ]
+                },
+                {
+                    "not": {
+                        "required": [
+                            "sub_cell_roi_id",
+                            "cell_id"
+                        ]
+                    },
+                    "properties": {
+                        "cell_id": {},
+                        "extra_cell_roi_id": {},
+                        "sub_cell_roi_id": {}
+                    },
+                    "required": [
+                        "extra_cell_roi_id"
+                    ]
+                }
+            ],
             "properties": {
                 "cell_id": {
                     "description": "Unique identifier for the Cell whose boundaries are described in this row. Conditionally required when this file contains Cell boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.",
@@ -805,7 +1042,7 @@
                     "type": "array"
                 },
                 "cell_type": {
-                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.",
                     "type": [
                         "string",
                         "null"
@@ -837,14 +1074,14 @@
                     "type": "string"
                 },
                 "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
                     "type": [
                         "string",
                         "null"
@@ -854,9 +1091,16 @@
                     "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
                     "type": "string"
                 },
-                "roi_boundaries_format": {
-                    "description": "Description of the coordinate format used to encode boundary data in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates as \"x1,y1 x2,y2 ...\") and the OBJ 3D mesh format (vertex and face lists). Must be sufficient for unambiguous parsing of all roi_boundaries values in this file. Written as #ROI_Boundaries_Format: in the file header.",
-                    "type": "string"
+                "roi_boundaries_format_description": {
+                    "description": "Free-text description of how ROI boundaries are encoded, beyond what the format name alone conveys (e.g. coordinate order, dimensionality, or an external file reference). Conditionally required (content-triggered): MANDATORY when roi_boundaries_format_type is 'Other'; otherwise recommended.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "roi_boundaries_format_type": {
+                    "$ref": "#/$defs/ROIBoundariesFormatTypeEnum",
+                    "description": "Controlled-vocabulary identifier of the standard used to encode ROI boundaries in global coordinates (e.g. OME_Polygon for the OME ROI data model, or Mesh_OBJ for a 3D OBJ mesh). Written as ##ROI_Boundaries_Format_Type= in the file header. Default value is OME_Polygon."
                 },
                 "roi_mappings": {
                     "description": "The complete collection of ROI boundary records constituting this dataset. Each ROIMapping corresponds to one data row in the TSV serialisation.",
@@ -876,7 +1120,7 @@
                     ]
                 },
                 "sub_cell_roi_type": {
-                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
+                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
                     "type": [
                         "string",
                         "null"
@@ -889,17 +1133,17 @@
                 },
                 "time_unit": {
                     "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
                 "fof_ct_version",
                 "table_namespace",
-                "roi_boundaries_format",
+                "roi_boundaries_format_type",
                 "xyz_unit",
                 "lab_name",
                 "experimenter_name",
@@ -911,6 +1155,406 @@
             "title": "ROIMappingTable",
             "type": "object"
         },
+        "SMLocalization": {
+            "additionalProperties": false,
+            "description": "A single individual single-molecule (SM) localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the SM Localization Data table. The loc_id field is the primary key; spot_id links this localization to its parent Spot (if Spot/Trace post-processing was performed); trace_id links it to its parent Trace. Sub_Cell_ROI_ID, Cell_ID and Extra_Cell_ROI_ID optionally link the localization to spatial context tables.",
+            "properties": {
+                "cell_id": {
+                    "description": "Unique identifier for a Cell. Links to the Cell Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "chrom": {
+                    "description": "Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables.",
+                    "type": "string"
+                },
+                "chrom_end": {
+                    "description": "Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "chrom_start": {
+                    "description": "0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.",
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "extra_cell_roi_id": {
+                    "description": "Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "loc_id": {
+                    "description": "Unique integer identifier for this SM localization event. Loc_ID values are unique across the entire dataset.",
+                    "type": "integer"
+                },
+                "spot_id": {
+                    "description": "Identifier of the Spot (centroid of the SM localization cloud, derived by clustering SM Localization events) to which this localization belongs. Mandatory for every SM Localization event (see vol_core.rst: \"A valid FOF-vol-CT deposition MUST mandatorily report Loc_ID together with its associated Spot_ID and Trace_ID for every SM Localization event.\").",
+                    "type": "integer"
+                },
+                "sub_cell_roi_id": {
+                    "description": "Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "trace_id": {
+                    "description": "Identifier of the chromatin Trace to which this localization and its parent Spot belong. Mandatory for every SM Localization event (see vol_core.rst).",
+                    "type": "integer"
+                },
+                "x": {
+                    "description": "Sub-pixel X coordinate of this SM localization event in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "spot_id",
+                "trace_id",
+                "chrom",
+                "chrom_start",
+                "chrom_end",
+                "loc_id",
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "SMLocalization",
+            "type": "object"
+        },
+        "SMLocalizationQualityRecord": {
+            "additionalProperties": false,
+            "description": "A single row in the SM Localization Quality table. Each instance captures quality metrics for one SM localization event identified by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision, Y_Loc_Precision, Z_Loc_Precision and Photon_Count are highly recommended but not literally mandatory. All other reserved metric columns are conditionally required (use of the reserved name is optional, but mandatory if that metric is reported). Additional user-defined optional columns must be described in the file header.",
+            "properties": {
+                "centroid_intensity": {
+                    "description": "Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "channel_name": {
+                    "description": "The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.",
+                    "type": "string"
+                },
+                "fluorophore_name": {
+                    "description": "The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.",
+                    "type": "string"
+                },
+                "goodness_of_fit": {
+                    "description": "Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "loc_id": {
+                    "description": "Unique integer identifier for the SM localization event to which these quality metrics belong. Links to the corresponding SMLocalization record in the SM Localization Data table (table 13).",
+                    "type": "integer"
+                },
+                "peak_intensity": {
+                    "description": "Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "photon_count": {
+                    "description": "Highly recommended: number of photons detected for this localization.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "raw_x": {
+                    "description": "X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_y": {
+                    "description": "Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_z": {
+                    "description": "Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_loc_error": {
+                    "description": "Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_precision": {
+                    "description": "Highly recommended (not literally mandatory): X_Loc_Precision.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_loc_error": {
+                    "description": "Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_precision": {
+                    "description": "Highly recommended (not literally mandatory): Y_Loc_Precision.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_loc_error": {
+                    "description": "Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_precision": {
+                    "description": "Highly recommended (not literally mandatory): Z_Loc_Precision.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "loc_id",
+                "channel_name",
+                "fluorophore_name"
+            ],
+            "title": "SMLocalizationQualityRecord",
+            "type": "object"
+        },
+        "SMLocalizationQualityTable": {
+            "additionalProperties": false,
+            "description": "The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides localization quality metrics indexed by Loc_ID when submitted.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "sm_localization_quality_records": {
+                    "description": "The complete collection of SMLocalizationQualityRecord rows constituting this dataset. Each record corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/SMLocalizationQualityRecord"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "FOF-CT_vol_quality",
+                    "description": "Identifier for this table type. Must always be 'FOF-CT_vol_quality' (no 4dn_ prefix \u2014 this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "xyz_unit",
+                "sm_localization_quality_records"
+            ],
+            "title": "SMLocalizationQualityTable",
+            "type": "object"
+        },
+        "SMLocalizationTable": {
+            "additionalProperties": false,
+            "description": "The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core, no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing results derived from the localization data.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "genome_assembly": {
+                    "description": "Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "modification": {
+                    "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "sm_localizations": {
+                    "description": "The complete collection of SMLocalization events constituting this dataset. Each entry corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/SMLocalization"
+                    },
+                    "type": "array"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "FOF-CT_vol_core",
+                    "description": "Identifier for this table type. Must always be 'FOF-CT_vol_core' (no 4dn_ prefix \u2014 this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
+                },
+                "vcf_file_name": {
+                    "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vcf_version": {
+                    "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "genome_assembly",
+                "xyz_unit",
+                "sm_localizations"
+            ],
+            "title": "SMLocalizationTable",
+            "type": "object"
+        },
         "Software": {
             "additionalProperties": false,
             "description": "Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software_* fields in the file header.",
@@ -920,7 +1564,11 @@
                     "type": "string"
                 },
                 "software_description": {
-                    "description": "Free-text description of the algorithm and analysis parameters, sufficient to guarantee reproducibility. Written as #Software_Description:.",
+                    "description": "Free-text description of the algorithm used, sufficient to guarantee reproducibility. Written as #Software_Description:.",
+                    "type": "string"
+                },
+                "software_parameters": {
+                    "description": "Free-text description of the input parameters used for the specific analysis run performed using this Software. Should provide sufficient detail about the analysis parameters used to guarantee interpretation and reproducibility (e.g. input parameters used for assessing the precision of single molecule localization or drift correction in X, Y and Z). Written as #Software_Parameters:.",
                     "type": "string"
                 },
                 "software_preferred_citation_id": {
@@ -947,6 +1595,7 @@
                 "software_type",
                 "software_authors",
                 "software_description",
+                "software_parameters",
                 "software_repository",
                 "software_preferred_citation_id"
             ],
@@ -954,14 +1603,16 @@
             "type": "object"
         },
         "SoftwareTypeEnum": {
-            "description": "Allowed functional categories for software tools.",
+            "description": "Allowed functional categories for software tools (per the FOF-CT RTD \"Allowable value lists\" table for Software_Type).",
             "enum": [
-                "SpotLoc",
-                "Tracing",
-                "SpotLoc+Tracing",
+                "Distance Calculation",
+                "DriftCorrection",
+                "Precision Assessment",
                 "Segmentation",
-                "QC",
-                "Distance",
+                "Single Molecule Localization",
+                "SpotLoc",
+                "SpotLoc+Tracing",
+                "Tracing",
                 "Other"
             ],
             "title": "SoftwareTypeEnum",
@@ -979,16 +1630,16 @@
                     ]
                 },
                 "chrom": {
-                    "description": "Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random).",
+                    "description": "Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables.",
                     "type": "string"
                 },
                 "chrom_end": {
-                    "description": "Non-inclusive end coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.",
+                    "description": "Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.",
                     "minimum": 0,
                     "type": "integer"
                 },
                 "chrom_start": {
-                    "description": "0-based start coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.",
+                    "description": "0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.",
                     "minimum": 0,
                     "type": "integer"
                 },
@@ -1000,7 +1651,7 @@
                     ]
                 },
                 "spot_id": {
-                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.",
+                    "description": "Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization events rather than by direct optical detection, and every SM Localization event MUST report its associated Spot_ID.",
                     "type": "integer"
                 },
                 "sub_cell_roi_id": {
@@ -1011,7 +1662,7 @@
                     ]
                 },
                 "trace_id": {
-                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.",
                     "type": "integer"
                 },
                 "x": {
@@ -1130,7 +1781,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -1141,6 +1792,7 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "spot_biological_records"
             ],
             "title": "SpotBiologicalTable",
@@ -1150,13 +1802,156 @@
             "additionalProperties": false,
             "description": "A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.",
             "properties": {
+                "centroid_intensity": {
+                    "description": "Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "channel_name": {
+                    "description": "The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.",
+                    "type": "string"
+                },
+                "fluorophore_name": {
+                    "description": "The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.",
+                    "type": "string"
+                },
+                "goodness_of_fit": {
+                    "description": "Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "peak_intensity": {
+                    "description": "Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "photon_count": {
+                    "description": "Optional standardised name for photon count",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "raw_x": {
+                    "description": "X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_y": {
+                    "description": "Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "raw_z": {
+                    "description": "Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "spot_id": {
                     "description": "Unique integer identifier for the DNA bright Spot to which these quality metrics belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table.",
                     "type": "integer"
+                },
+                "x_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_drift": {
+                    "description": "Drift correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization Quality table.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_loc_error": {
+                    "description": "Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "x_precision": {
+                    "description": "Recommended: metric for X localization precision",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_drift": {
+                    "description": "Drift correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Drift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_loc_error": {
+                    "description": "Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "y_precision": {
+                    "description": "Metric quantifying the precision of the Y-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Y_Loc_Precision column.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_chromatic_shift": {
+                    "description": "Chromatic aberration correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_drift": {
+                    "description": "Drift correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA Spot Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_loc_error": {
+                    "description": "Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "z_precision": {
+                    "description": "Metric quantifying the precision of the Z-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
                 }
             },
             "required": [
-                "spot_id"
+                "spot_id",
+                "channel_name",
+                "fluorophore_name"
             ],
             "title": "SpotQualityRecord",
             "type": "object"
@@ -1236,7 +2031,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -1247,6 +2042,7 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "spot_quality_records"
             ],
             "title": "SpotQualityTable",
@@ -1293,7 +2089,7 @@
                     "type": "string"
                 },
                 "modification": {
-                    "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header.",
+                    "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.",
                     "type": [
                         "string",
                         "null"
@@ -1319,14 +2115,14 @@
                     "type": "string"
                 },
                 "vcf_file_name": {
-                    "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header.",
+                    "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "vcf_version": {
-                    "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.",
+                    "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.",
                     "type": [
                         "string",
                         "null"
@@ -1334,7 +2130,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -1386,7 +2182,7 @@
                     "type": "array"
                 },
                 "cell_type": {
-                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Cell in tissue\" or \"Cell in organoid\". Written as #Cell_Type: in the file header.",
+                    "description": "The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.",
                     "type": [
                         "string",
                         "null"
@@ -1411,14 +2207,14 @@
                     "type": "string"
                 },
                 "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
                     "type": [
                         "string",
                         "null"
@@ -1439,7 +2235,7 @@
                     ]
                 },
                 "sub_cell_roi_type": {
-                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
+                    "description": "The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.",
                     "type": "string"
                 },
                 "sub_cell_rois": {
@@ -1456,11 +2252,11 @@
                 },
                 "time_unit": {
                     "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -1472,13 +2268,14 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "sub_cell_rois"
             ],
             "title": "SubCellROITable",
             "type": "object"
         },
         "TableNamespaceEnum": {
-            "description": "Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field.",
+            "description": "Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field. Note: per the FOF-CT RTD, the three FOF-vol-CT-exclusive namespaces (vol_core, vol_quality, undecoded) intentionally omit the 4dn_ prefix used by the 12 shared tables, to reflect the format's continued stewardship by the broader community beyond 4DN.",
             "enum": [
                 "4dn_FOF-CT_core",
                 "4dn_FOF-CT_demultiplexing",
@@ -1491,7 +2288,10 @@
                 "4dn_FOF-CT_cell",
                 "4dn_FOF-CT_extracell",
                 "4dn_FOF-CT_subcell",
-                "4dn_FOF-CT_mapping"
+                "4dn_FOF-CT_mapping",
+                "FOF-CT_vol_core",
+                "FOF-CT_vol_quality",
+                "FOF-CT_undecoded"
             ],
             "title": "TableNamespaceEnum",
             "type": "string"
@@ -1502,6 +2302,7 @@
                 "s",
                 "sec",
                 "ms",
+                "msec",
                 "min",
                 "hr"
             ],
@@ -1513,7 +2314,7 @@
             "description": "A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema.",
             "properties": {
                 "trace_id": {
-                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.",
+                    "description": "Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.",
                     "type": "integer"
                 }
             },
@@ -1553,14 +2354,14 @@
                     "type": "string"
                 },
                 "intensity_measurement_method": {
-                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "intensity_unit": {
-                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.",
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
                     "type": [
                         "string",
                         "null"
@@ -1587,7 +2388,7 @@
                 },
                 "time_unit": {
                     "$ref": "#/$defs/TimeUnitEnum",
-                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported."
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
                 },
                 "traces": {
                     "description": "The complete collection of Traces constituting this dataset. Each Trace corresponds to one data row in the TSV serialisation.",
@@ -1598,7 +2399,7 @@
                 },
                 "xyz_unit": {
                     "$ref": "#/$defs/XYZUnitEnum",
-                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
                 }
             },
             "required": [
@@ -1609,9 +2410,157 @@
                 "experimenter_contact",
                 "description",
                 "additional_tables",
+                "xyz_unit",
                 "traces"
             ],
             "title": "TraceTable",
+            "type": "object"
+        },
+        "UndecodedLocalization": {
+            "additionalProperties": false,
+            "description": "A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier.",
+            "properties": {
+                "channel_name": {
+                    "description": "The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.",
+                    "type": "string"
+                },
+                "fluorophore_name": {
+                    "description": "The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.",
+                    "type": "string"
+                },
+                "hyb_id": {
+                    "description": "Unique identifier for the hybridization round in which this localization event was detected. Written as the Hyb_ID column. Mandatory in the Undecoded SM Localization table.",
+                    "type": "integer"
+                },
+                "image_frame_id": {
+                    "description": "Unique integer identifier for the imaging frame in which this undecoded localization event was detected. Written as the Image_Frame_ID column. Mandatory in the Undecoded SM Localization table.",
+                    "type": "integer"
+                },
+                "loc_id": {
+                    "description": "Unique integer identifier for this undecoded localization event. Loc_ID values are unique across the entire dataset.",
+                    "type": "integer"
+                },
+                "the_z": {
+                    "description": "Identifier of the focal Z-plane in which this localization event was detected. Reserved, conditionally-required column name (TheZ) in the Undecoded SM Localization table: optional to use, but if the focal Z-plane is reported this exact reserved column name MUST be used.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "x": {
+                    "description": "Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                },
+                "z": {
+                    "description": "Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "hyb_id",
+                "image_frame_id",
+                "channel_name",
+                "fluorophore_name",
+                "loc_id",
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "UndecodedLocalization",
+            "type": "object"
+        },
+        "UndecodedLocalizationTable": {
+            "additionalProperties": false,
+            "description": "The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_undecoded, no 4dn_ prefix). This table is optional but recommended. It records raw localization detections prior to any decoding or assignment step. Submission is recommended when the raw detections are available and reproducibility of the decoding pipeline is desired.",
+            "properties": {
+                "additional_tables": {
+                    "description": "List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/TableNamespaceEnum"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "description": "Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.",
+                    "type": "string"
+                },
+                "experimenter_contact": {
+                    "description": "Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": "string"
+                },
+                "experimenter_name": {
+                    "description": "Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.",
+                    "type": "string"
+                },
+                "fof_ct_version": {
+                    "description": "Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).",
+                    "pattern": "^v[0-9]+\\.[0-9]+",
+                    "type": "string"
+                },
+                "intensity_measurement_method": {
+                    "description": "Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "intensity_unit": {
+                    "description": "Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "lab_name": {
+                    "description": "Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.",
+                    "type": "string"
+                },
+                "softwares": {
+                    "description": "One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "table_namespace": {
+                    "const": "FOF-CT_undecoded",
+                    "description": "Identifier for this table type. Must always be 'FOF-CT_undecoded' (no 4dn_ prefix \u2014 this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.",
+                    "type": "string"
+                },
+                "time_unit": {
+                    "$ref": "#/$defs/TimeUnitEnum",
+                    "description": "Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column."
+                },
+                "undecoded_localizations": {
+                    "description": "The complete collection of UndecodedLocalization events constituting this dataset. Each entry corresponds to one data row in the TSV serialisation.",
+                    "items": {
+                        "$ref": "#/$defs/UndecodedLocalization"
+                    },
+                    "type": "array"
+                },
+                "xyz_unit": {
+                    "$ref": "#/$defs/XYZUnitEnum",
+                    "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
+                }
+            },
+            "required": [
+                "fof_ct_version",
+                "table_namespace",
+                "lab_name",
+                "experimenter_name",
+                "experimenter_contact",
+                "description",
+                "softwares",
+                "additional_tables",
+                "xyz_unit",
+                "undecoded_localizations"
+            ],
+            "title": "UndecodedLocalizationTable",
             "type": "object"
         },
         "XYZUnitEnum": {
@@ -1668,7 +2617,7 @@
             "type": "string"
         },
         "modification": {
-            "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header.",
+            "description": "Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.",
             "type": [
                 "string",
                 "null"
@@ -1694,14 +2643,14 @@
             "type": "string"
         },
         "vcf_file_name": {
-            "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header.",
+            "description": "Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.",
             "type": [
                 "string",
                 "null"
             ]
         },
         "vcf_version": {
-            "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.",
+            "description": "Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.",
             "type": [
                 "string",
                 "null"
@@ -1709,7 +2658,7 @@
         },
         "xyz_unit": {
             "$ref": "#/$defs/XYZUnitEnum",
-            "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported."
+            "description": "Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table."
         }
     },
     "required": [

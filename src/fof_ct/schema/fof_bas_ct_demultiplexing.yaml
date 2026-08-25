@@ -44,7 +44,8 @@ classes:
       - LocalizationMixin
     slots:
       - spot_id
-      - fluor
+      - channel_name
+      - fluorophore_name
     slot_usage:
       loc_id:
         required: true
@@ -57,7 +58,9 @@ classes:
         required: true
       z:
         required: true
-      fluor:
+      channel_name:
+        required: true
+      fluorophore_name:
         required: true
 
   DemultiplexingTable:

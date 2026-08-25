@@ -6,7 +6,7 @@ search:
 # Slot: z_precision 
 
 
-_Metric quantifying the precision of the Z-axis localization estimate. Recommended in the Spot Quality table; mandatory in the SM Localization Quality table._
+_Metric quantifying the precision of the Z-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:z_precision](https://w3id.org/fof-ct/z_precision)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 | [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
 
 
@@ -40,7 +41,7 @@ URI: [fof_ct:z_precision](https://w3id.org/fof-ct/z_precision)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -93,14 +94,15 @@ URI: [fof_ct:z_precision](https://w3id.org/fof-ct/z_precision)
 ```yaml
 name: z_precision
 description: Metric quantifying the precision of the Z-axis localization estimate.
-  Recommended in the Spot Quality table; mandatory in the SM Localization Quality
-  table.
+  Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality,
+  and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column.
 examples:
 - value: '0.02'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 - SMLocalizationQualityRecord
 range: float
 

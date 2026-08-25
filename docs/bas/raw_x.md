@@ -6,7 +6,7 @@ search:
 # Slot: raw_x 
 
 
-_X coordinate of this Spot before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X._
+_X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:raw_x](https://w3id.org/fof-ct/raw_x)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:raw_x](https://w3id.org/fof-ct/raw_x)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,17 @@ URI: [fof_ct:raw_x](https://w3id.org/fof-ct/raw_x)
 <details>
 ```yaml
 name: raw_x
-description: X coordinate of this Spot before any post-processing corrections (drift
-  correction, chromatic correction, etc.). Same unit as X.
+description: X coordinate before any post-processing corrections (drift correction,
+  chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column
+  name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality
+  tables.
 examples:
 - value: '14.30'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

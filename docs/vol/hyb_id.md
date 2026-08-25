@@ -3,10 +3,10 @@ search:
   boost: 5.0
 ---
 
-# Slot: fluor 
+# Slot: hyb_id 
 
 
-_Fluorescent channel in which this localization event was detected (e.g. DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and Undecoded SM Localization tables._
+_Unique identifier for the hybridization round in which this localization event was detected. Written as the Hyb_ID column. Mandatory in the Undecoded SM Localization table._
 
 
 
@@ -14,7 +14,7 @@ _Fluorescent channel in which this localization event was detected (e.g. DAPI, G
 
 
 
-URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
+URI: [fof_ct:hyb_id](https://w3id.org/fof-ct/hyb_id)
 <!-- no inheritance hierarchy -->
 
 
@@ -25,7 +25,6 @@ URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
-| [Localization](Localization.md) | A single individual localisation event contributing to the final position of ... |  yes  |
 | [UndecodedLocalization](UndecodedLocalization.md) | A single raw, undecoded SM localization event in a FOF-vol-CT dataset |  yes  |
 
 
@@ -39,8 +38,8 @@ URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
 
 | Property | Value |
 | --- | --- |
-| Range | [String](String.md) |
-| Domain Of | [Localization](Localization.md), [UndecodedLocalization](UndecodedLocalization.md) |
+| Range | [Integer](Integer.md) |
+| Domain Of | [UndecodedLocalization](UndecodedLocalization.md) |
 
 ### Cardinality and Requirements
 
@@ -59,8 +58,7 @@ URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
 
 | Value |
 | --- |
-| Cy5 |
-| Alexa647 |
+| 1 |
 
 
 
@@ -82,8 +80,8 @@ URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
 
 | Mapping Type | Mapped Value |
 | ---  | ---  |
-| self | fof_ct:fluor |
-| native | fof_ct:fluor |
+| self | fof_ct:hyb_id |
+| native | fof_ct:hyb_id |
 
 
 
@@ -92,19 +90,17 @@ URI: [fof_ct:fluor](https://w3id.org/fof-ct/fluor)
 
 <details>
 ```yaml
-name: fluor
-description: Fluorescent channel in which this localization event was detected (e.g.
-  DAPI, GFP, Cy5, Alexa647). Mandatory in both the Spot Demultiplexing and Undecoded
-  SM Localization tables.
+name: hyb_id
+description: Unique identifier for the hybridization round in which this localization
+  event was detected. Written as the Hyb_ID column. Mandatory in the Undecoded SM
+  Localization table.
 examples:
-- value: Cy5
-- value: Alexa647
+- value: '1'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
-- Localization
 - UndecodedLocalization
-range: string
+range: integer
 
 ```
 </details></div>

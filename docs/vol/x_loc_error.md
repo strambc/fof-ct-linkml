@@ -6,7 +6,7 @@ search:
 # Slot: x_loc_error 
 
 
-_Localization error estimate for the X coordinate of this Spot (e.g. standard deviation of repeated measurements). Same unit as X._
+_Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables._
 
 
 
@@ -26,6 +26,8 @@ URI: [fof_ct:x_loc_error](https://w3id.org/fof-ct/x_loc_error)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
+| [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
 
 
 
@@ -39,7 +41,7 @@ URI: [fof_ct:x_loc_error](https://w3id.org/fof-ct/x_loc_error)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +93,18 @@ URI: [fof_ct:x_loc_error](https://w3id.org/fof-ct/x_loc_error)
 <details>
 ```yaml
 name: x_loc_error
-description: Localization error estimate for the X coordinate of this Spot (e.g. standard
-  deviation of repeated measurements). Same unit as X.
+description: Localization error estimate for the X coordinate (e.g. standard deviation
+  of repeated measurements). Same unit as X. Reserved, conditionally-required column
+  name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality
+  tables.
 examples:
 - value: '0.02'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
+- SMLocalizationQualityRecord
 range: float
 
 ```

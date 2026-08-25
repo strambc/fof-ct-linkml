@@ -137,7 +137,8 @@ attributes:
   trace_id:
     name: trace_id
     description: Unique identifier for a chromatin Trace. Used as a primary key in
-      the Trace Data table and as a foreign key in the RNA Spot Data table.
+      the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily)
+      in the FOF-vol-CT SM Localization Data table.
     examples:
     - value: '1'
     from_schema: https://w3id.org/fof-ct/vol

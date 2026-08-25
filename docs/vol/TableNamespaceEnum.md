@@ -9,7 +9,7 @@ search:
 
 
 
-_Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field._
+_Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field. Note: per the FOF-CT RTD, the three FOF-vol-CT-exclusive namespaces (vol_core, vol_quality, undecoded) intentionally omit the 4dn_ prefix used by the 12 shared tables, to reflect the format's continued stewardship by the broader community beyond 4DN._
 
 
 
@@ -32,9 +32,9 @@ URI: [fof_ct:TableNamespaceEnum](https://w3id.org/fof-ct/TableNamespaceEnum)
 | 4dn_FOF-CT_extracell | None | Extra-Cell ROI Data table (table 10) |
 | 4dn_FOF-CT_subcell | None | Sub-Cell ROI Data table (table 11) |
 | 4dn_FOF-CT_mapping | None | Cell/ROI Mapping table (table 12) |
-| 4dn_FOF-CT_vol_core | None | SM Localization Data table — FOF-vol-CT (table 13) |
-| 4dn_FOF-CT_vol_quality | None | SM Localization Quality table — FOF-vol-CT (table 14) |
-| 4dn_FOF-CT_undecoded | None | Undecoded SM Localization Data table — FOF-vol-CT (table 15) |
+| FOF-CT_vol_core | None | SM Localization Data table — FOF-vol-CT (table 13) |
+| FOF-CT_vol_quality | None | SM Localization Quality table — FOF-vol-CT (table 14) |
+| FOF-CT_undecoded | None | Undecoded SM Localization Data table — FOF-vol-CT (table 15) |
 
 
 
@@ -75,8 +75,11 @@ URI: [fof_ct:TableNamespaceEnum](https://w3id.org/fof-ct/TableNamespaceEnum)
 <details>
 ```yaml
 name: TableNamespaceEnum
-description: Allowed namespace identifiers for FOF-CT tables that may be listed in
-  the additional_tables field.
+description: 'Allowed namespace identifiers for FOF-CT tables that may be listed in
+  the additional_tables field. Note: per the FOF-CT RTD, the three FOF-vol-CT-exclusive
+  namespaces (vol_core, vol_quality, undecoded) intentionally omit the 4dn_ prefix
+  used by the 12 shared tables, to reflect the format''s continued stewardship by
+  the broader community beyond 4DN.'
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 permissible_values:
@@ -116,15 +119,18 @@ permissible_values:
   4dn_FOF-CT_mapping:
     text: 4dn_FOF-CT_mapping
     description: Cell/ROI Mapping table (table 12)
-  4dn_FOF-CT_vol_core:
-    text: 4dn_FOF-CT_vol_core
-    description: SM Localization Data table — FOF-vol-CT (table 13)
-  4dn_FOF-CT_vol_quality:
-    text: 4dn_FOF-CT_vol_quality
-    description: SM Localization Quality table — FOF-vol-CT (table 14)
-  4dn_FOF-CT_undecoded:
-    text: 4dn_FOF-CT_undecoded
-    description: Undecoded SM Localization Data table — FOF-vol-CT (table 15)
+  FOF-CT_vol_core:
+    text: FOF-CT_vol_core
+    description: SM Localization Data table — FOF-vol-CT (table 13). No 4dn_ prefix
+      (see enum-level note).
+  FOF-CT_vol_quality:
+    text: FOF-CT_vol_quality
+    description: SM Localization Quality table — FOF-vol-CT (table 14). No 4dn_ prefix
+      (see enum-level note).
+  FOF-CT_undecoded:
+    text: FOF-CT_undecoded
+    description: Undecoded SM Localization Data table — FOF-vol-CT (table 15). No
+      4dn_ prefix (see enum-level note).
 
 ```
 </details>

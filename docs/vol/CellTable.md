@@ -94,7 +94,7 @@ URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
     
         
         
-        CellTable --> "0..1" XYZUnitEnum : xyz_unit
+        CellTable --> "1" XYZUnitEnum : xyz_unit
         click XYZUnitEnum href "../XYZUnitEnum/"
     
 
@@ -128,7 +128,7 @@ URI: [fof_ct:CellTable](https://w3id.org/fof-ct/CellTable)
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
 | [extra_cell_roi_type](extra_cell_roi_type.md) | 0..1 <br/> [String](String.md) | The type of extracellular structure ROI within which cells are embedded, expr... | direct |
 | [softwares](softwares.md) | * <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
-| [xyz_unit](xyz_unit.md) | 0..1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
+| [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
 | [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used to represent time intervals in this table | direct |
 | [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used to represent intensity measurements in this table | direct |
 | [intensity_measurement_method](intensity_measurement_method.md) | 0..1 <br/> [String](String.md) | Method used to perform intensity measurements, including how digital signals ... | direct |
@@ -248,7 +248,7 @@ slot_usage:
     multivalued: true
   xyz_unit:
     name: xyz_unit
-    required: false
+    required: true
   time_unit:
     name: time_unit
     required: false
@@ -313,7 +313,7 @@ slot_usage:
     multivalued: true
   xyz_unit:
     name: xyz_unit
-    required: false
+    required: true
   time_unit:
     name: time_unit
     required: false
@@ -384,8 +384,10 @@ attributes:
   cell_type:
     name: cell_type
     description: 'The type of cells present in this dataset, expressed using an ontology
-      term from the Experimental Factor Ontology (EFO). Examples include "Cell in
-      tissue" or "Cell in organoid". Written as #Cell_Type: in the file header.'
+      term from the Experimental Factor Ontology (EFO). Examples include "Primary
+      cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell
+      in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file
+      header.'
     examples:
     - value: Cell in tissue
     - value: Cell in organoid
@@ -586,7 +588,7 @@ attributes:
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -609,12 +611,13 @@ attributes:
     - SMLocalizationQualityTable
     - UndecodedLocalizationTable
     range: XYZUnitEnum
-    required: false
+    required: true
   time_unit:
     name: time_unit
     description: 'Unit used to represent time intervals in this table. Allowed values
       are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
+      header. Conditionally required (metric- triggered) when any time metric is reported
+      in an optional column.'
     examples:
     - value: sec
     from_schema: https://w3id.org/fof-ct/vol
@@ -623,7 +626,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -640,8 +642,8 @@ attributes:
   intensity_unit:
     name: intensity_unit
     description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
+      as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered)
+      when any intensity metric is reported in an optional column.'
     examples:
     - value: a.u.
     - value: photons
@@ -651,7 +653,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -669,7 +670,8 @@ attributes:
     name: intensity_measurement_method
     description: 'Method used to perform intensity measurements, including how digital
       signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
+      in the file header. Conditionally required (metric-triggered) when any intensity
+      metric is reported.'
     examples:
     - value: Localization centroid intensity
     - value: Mean Fluorescence Intensity
@@ -679,7 +681,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

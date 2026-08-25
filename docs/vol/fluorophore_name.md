@@ -6,7 +6,7 @@ search:
 # Slot: fluorophore_name 
 
 
-_The name of the fluorophore used for this Spot (e.g. AlexaFluor_488). Mandatory in the Spot Quality table._
+_The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column._
 
 
 
@@ -25,7 +25,11 @@ URI: [fof_ct:fluorophore_name](https://w3id.org/fof-ct/fluorophore_name)
 
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
+| [Localization](Localization.md) | A single individual localisation event contributing to the final position of ... |  yes  |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
+| [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md) | A single row in the SM Localization Quality table |  yes  |
+| [UndecodedLocalization](UndecodedLocalization.md) | A single raw, undecoded SM localization event in a FOF-vol-CT dataset |  yes  |
 
 
 
@@ -39,7 +43,7 @@ URI: [fof_ct:fluorophore_name](https://w3id.org/fof-ct/fluorophore_name)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [Localization](Localization.md), [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md), [SMLocalizationQualityRecord](SMLocalizationQualityRecord.md), [UndecodedLocalization](UndecodedLocalization.md) |
 
 ### Cardinality and Requirements
 
@@ -92,15 +96,21 @@ URI: [fof_ct:fluorophore_name](https://w3id.org/fof-ct/fluorophore_name)
 <details>
 ```yaml
 name: fluorophore_name
-description: The name of the fluorophore used for this Spot (e.g. AlexaFluor_488).
-  Mandatory in the Spot Quality table.
+description: The name of the fluorophore whose emission was used to detect this Spot
+  / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot
+  Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded
+  SM Localization tables. Written as the Fluor column.
 examples:
 - value: AlexaFluor_488
 - value: Cy5
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
 domain_of:
+- Localization
 - SpotQualityRecord
+- RNASpotQualityRecord
+- SMLocalizationQualityRecord
+- UndecodedLocalization
 range: string
 
 ```

@@ -6,7 +6,7 @@ search:
 # Slot: chrom 
 
 
-_Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random)._
+_Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables._
 
 
 
@@ -40,7 +40,6 @@ URI: [fof_ct:chrom](https://w3id.org/fof-ct/chrom)
 | Property | Value |
 | --- | --- |
 | Range | [String](String.md) |
-| Domain | [Spot](Spot.md) |
 | Domain Of | [Spot](Spot.md), [SMLocalization](SMLocalization.md) |
 
 ### Cardinality and Requirements
@@ -95,15 +94,15 @@ URI: [fof_ct:chrom](https://w3id.org/fof-ct/chrom)
 <details>
 ```yaml
 name: chrom
-description: Chromosome name using BED (Browser Extensible Data) convention (e.g.,
-  chr3, chrY, chr2_random).
+description: Chromosome name/identifier using BED (Browser Extensible Data) convention
+  (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization)
+  tables.
 examples:
 - value: chr3
 - value: chrY
 - value: chr2_random
 from_schema: https://w3id.org/fof-ct/vol
 rank: 1000
-domain: Spot
 domain_of:
 - Spot
 - SMLocalization

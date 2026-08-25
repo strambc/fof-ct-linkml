@@ -3,11 +3,12 @@
 --     * Slot: software_title Description: Name of the software tool. Written as #Software_Title:.
 --     * Slot: software_type Description: Functional category of the software tool. Written as #Software_Type:.
 --     * Slot: software_authors Description: Author name(s) in 'Surname, Firstname' format, multiple authors separated by semicolons. Written as #Software_Authors:.
---     * Slot: software_description Description: Free-text description of the algorithm and analysis parameters, sufficient to guarantee reproducibility. Written as #Software_Description:.
+--     * Slot: software_description Description: Free-text description of the algorithm used, sufficient to guarantee reproducibility. Written as #Software_Description:.
+--     * Slot: software_parameters Description: Free-text description of the input parameters used for the specific analysis run performed using this Software. Should provide sufficient detail about the analysis parameters used to guarantee interpretation and reproducibility (e.g. input parameters used for assessing the precision of single molecule localization or drift correction in X, Y and Z). Written as #Software_Parameters:.
 --     * Slot: software_repository Description: URL of the repository where the software release can be obtained. Written as #Software_Repository:.
 --     * Slot: software_preferred_citation_id Description: Unique identifier (DOI, PMCID, ArXiv ID, etc.) for the primary publication describing this software. Written as #Software_PreferredCitationID:.
 --     * Slot: SpotTable_id Description: Autocreated FK slot
---     * Slot: LocalizationTable_id Description: Autocreated FK slot
+--     * Slot: DemultiplexingTable_id Description: Autocreated FK slot
 --     * Slot: TraceTable_id Description: Autocreated FK slot
 --     * Slot: RNASpotTable_id Description: Autocreated FK slot
 --     * Slot: SpotQualityTable_id Description: Autocreated FK slot
@@ -18,15 +19,24 @@
 --     * Slot: ExtraCellROITable_id Description: Autocreated FK slot
 --     * Slot: SubCellROITable_id Description: Autocreated FK slot
 --     * Slot: ROIMappingTable_id Description: Autocreated FK slot
--- # Class: Spot Description: A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.
---     * Slot: spot_id Description: Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.
---     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.
+--     * Slot: SMLocalizationTable_id Description: Autocreated FK slot
+--     * Slot: SMLocalizationQualityTable_id Description: Autocreated FK slot
+--     * Slot: UndecodedLocalizationTable_id Description: Autocreated FK slot
+-- # Class: LocalizationMixin Description: Mixin capturing the shared concept of a single localization event across FOF-CT modalities. Used by Localization (demultiplexing), SMLocalization (vol_core), and UndecodedLocalization (undecoded). All three classes represent the same atomic measurement unit — the sub-pixel position of a detected fluorescence emission event — but differ in context, mandatory columns, and table role.
+--     * Slot: id
+--     * Slot: loc_id Description: A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.
 --     * Slot: x Description: Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).
 --     * Slot: y Description: Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
 --     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
---     * Slot: chrom Description: Chromosome name using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random).
---     * Slot: chrom_start Description: 0-based start coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.
---     * Slot: chrom_end Description: Non-inclusive end coordinate on the chromosome for the genomic target sequence associated with this Spot, following BED convention.
+-- # Class: Spot Description: A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.
+--     * Slot: spot_id Description: Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization events rather than by direct optical detection, and every SM Localization event MUST report its associated Spot_ID.
+--     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.
+--     * Slot: x Description: Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).
+--     * Slot: y Description: Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: chrom Description: Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables.
+--     * Slot: chrom_start Description: 0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.
+--     * Slot: chrom_end Description: Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.
 --     * Slot: sub_cell_roi_id Description: Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.
 --     * Slot: cell_id Description: Unique identifier for a Cell. Links to the Cell Data table.
 --     * Slot: extra_cell_roi_id Description: Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.
@@ -36,23 +46,24 @@
 --     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
 --     * Slot: genome_assembly Description: Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: modification Description: Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##Modification= in the file header.
---     * Slot: vcf_file_name Description: Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_File_Name= in the file header.
---     * Slot: vcf_version Description: Version of the VCF format used for the accompanying VCF file. Conditionally required when genome_assembly uses the 'custom-build:' prefix. Written as ##VCF_Version= in the file header.
+--     * Slot: modification Description: Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.
+--     * Slot: vcf_file_name Description: Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.
+--     * Slot: vcf_version Description: Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.
 -- # Class: Localization Description: A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
---     * Slot: loc_id Description: A unique integer identifier for this individual localisation event. Loc_ID values are unique across the entire dataset.
---     * Slot: spot_id Description: Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table.
+--     * Slot: spot_id Description: Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization events rather than by direct optical detection, and every SM Localization event MUST report its associated Spot_ID.
+--     * Slot: channel_name Description: The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.
+--     * Slot: fluorophore_name Description: The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.
+--     * Slot: loc_id Description: A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.
 --     * Slot: x Description: Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).
 --     * Slot: y Description: Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
 --     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
---     * Slot: fluor Description: Fluorescent channel in which this individual localisation event was detected (e.g. DAPI, GFP, Cy5, Alexa647).
---     * Slot: LocalizationTable_id Description: Autocreated FK slot
--- # Class: LocalizationTable Description: The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.
+--     * Slot: DemultiplexingTable_id Description: Autocreated FK slot
+-- # Class: DemultiplexingTable Description: The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.
 --     * Slot: id
 --     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
@@ -60,12 +71,12 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: Trace Description: A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema.
---     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.
+--     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.
 --     * Slot: TraceTable_id Description: Autocreated FK slot
 -- # Class: TraceTable Description: The Trace Data table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_trace). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Traces (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended when trace-level properties are recorded.
 --     * Slot: id
@@ -75,10 +86,10 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: RNASpot Description: A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.
 --     * Slot: id
 --     * Slot: rna_spot_id Description: Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.
@@ -87,7 +98,7 @@
 --     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
 --     * Slot: rna_name Description: Official name of the gene from which the targeted RNA is transcribed (e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.
 --     * Slot: gene_id Description: Official gene identifier corresponding to rna_name. The type of identifier used (e.g. Ensembl gene ID, NCBI Gene ID) must be declared in the gene_id_type header field.
---     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table.
+--     * Slot: trace_id Description: Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.
 --     * Slot: transcript_id Description: Official transcript identifier for the specific transcript targeted by the FISH probe. Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. The type of identifier used must be declared in the transcript_id_type header field.
 --     * Slot: sub_cell_roi_id Description: Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.
 --     * Slot: cell_id Description: Unique identifier for a Cell. Links to the Cell Data table.
@@ -99,17 +110,35 @@
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
 --     * Slot: genome_assembly Description: Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.
 --     * Slot: gene_id_type Description: Type of gene identifier used in the gene_id column (e.g. Ensembl_V38, NCBI_Gene). Written as ##Gene_ID_Type= in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
 --     * Slot: transcript_id_type Description: Type of transcript identifier used in the transcript_id column (e.g. Ensembl_V38, RefSeq). Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. Written as ##Transcript_ID_Type= in the file header.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
 -- # Class: SpotQualityRecord Description: A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
 --     * Slot: spot_id Description: Unique integer identifier for the DNA bright Spot to which these quality metrics belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table.
+--     * Slot: channel_name Description: The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.
+--     * Slot: fluorophore_name Description: The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.
+--     * Slot: x_precision Description: Recommended: metric for X localization precision
+--     * Slot: y_precision Description: Metric quantifying the precision of the Y-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Y_Loc_Precision column.
+--     * Slot: z_precision Description: Metric quantifying the precision of the Z-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column.
+--     * Slot: photon_count Description: Optional standardised name for photon count
+--     * Slot: goodness_of_fit Description: Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: centroid_intensity Description: Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: peak_intensity Description: Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_x Description: X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_y Description: Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_z Description: Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: x_drift Description: Drift correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization Quality table.
+--     * Slot: y_drift Description: Drift correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Drift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: z_drift Description: Drift correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: x_chromatic_shift Description: Chromatic aberration correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: y_chromatic_shift Description: Chromatic aberration correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: z_chromatic_shift Description: Chromatic aberration correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: x_loc_error Description: Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: y_loc_error Description: Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: z_loc_error Description: Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
 --     * Slot: SpotQualityTable_id Description: Autocreated FK slot
 -- # Class: SpotQualityTable Description: The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotQualityRecord rows. Submission of this table is optional but recommended.
 --     * Slot: id
@@ -119,12 +148,33 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: time_unit Description: Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header.
 --     * Slot: intensity_unit Description: Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.
 --     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.
--- # Class: RNASpotQualityRecord Description: A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
+-- # Class: RNASpotQualityRecord Description: A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). RNA_Spot_ID, Channel and Fluor are mandatory; all other reserved quality-metric columns are conditionally required (the same reserved vocabulary as the Spot Quality table) or fully free-form; users declare the latter via #^ header lines.
 --     * Slot: rna_spot_id Description: Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.
+--     * Slot: channel_name Description: The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.
+--     * Slot: fluorophore_name Description: The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.
+--     * Slot: x_precision Description: Metric quantifying the precision of the X-axis localization estimate. Typically the Cramer-Rao lower bound or Thompson method estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Must be accompanied by a description in the file header. Written as the reserved X_Loc_Precision column.
+--     * Slot: y_precision Description: Metric quantifying the precision of the Y-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Y_Loc_Precision column.
+--     * Slot: z_precision Description: Metric quantifying the precision of the Z-axis localization estimate. Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables. Written as the reserved Z_Loc_Precision column.
+--     * Slot: photon_count Description: Number of photons detected for this localization event or Spot. Reserved, conditionally-required column name (Photon_Count) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables; highly recommended in the latter.
+--     * Slot: goodness_of_fit Description: Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: centroid_intensity Description: Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: peak_intensity Description: Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_x Description: X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_y Description: Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_z Description: Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: x_drift Description: Drift correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization Quality table.
+--     * Slot: y_drift Description: Drift correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Drift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: z_drift Description: Drift correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: x_chromatic_shift Description: Chromatic aberration correction offset applied to the X coordinate. Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: y_chromatic_shift Description: Chromatic aberration correction offset applied to the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: z_chromatic_shift Description: Chromatic aberration correction offset applied to the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Chromatic_Shift) in the Spot Quality and RNA Spot Quality tables.
+--     * Slot: x_loc_error Description: Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: y_loc_error Description: Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: z_loc_error Description: Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
 --     * Slot: RNASpotQualityTable_id Description: Autocreated FK slot
 -- # Class: RNASpotQualityTable Description: The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotQualityRecord rows. Submission of this table is optional but recommended.
 --     * Slot: id
@@ -134,7 +184,7 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used for any spatial coordinate or distance metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: time_unit Description: Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header.
 --     * Slot: intensity_unit Description: Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.
 --     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.
@@ -149,7 +199,7 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: time_unit Description: Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header.
 --     * Slot: intensity_unit Description: Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.
 --     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.
@@ -164,7 +214,7 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used for any spatial coordinate or distance metric reported in user-defined columns (e.g. distance from nuclear lamina). Conditionally required when any such metric is present. Written as ##XYZ_Unit= in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: time_unit Description: Unit used for any time metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Time_Unit= in the file header.
 --     * Slot: intensity_unit Description: Unit used for any intensity metric reported in user-defined columns. Conditionally required when any such metric is present. Written as ##Intensity_Unit= in the file header.
 --     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements. Conditionally required when any intensity metric is present. Written as #Intensity_Measurement_Method: in the file header.
@@ -176,16 +226,16 @@
 --     * Slot: id
 --     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
---     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the file header.
+--     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Primary cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file header.
 --     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
 --     * Slot: extra_cell_roi_type Description: The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: ExtraCellROI Description: A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission.
 --     * Slot: extra_cell_roi_id Description: Unique integer identifier for this extracellular structure ROI. Extra_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the RNA Spot Data table, and the Cell Data table.
 --     * Slot: ExtraCellROITable_id Description: Autocreated FK slot
@@ -198,10 +248,10 @@
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: SubCellROI Description: A single sub-cellular structure ROI (e.g. nucleolus, nuclear lamina, PML body, chromosome domain) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Sub-Cell ROI Data table. The sub_cell_roi_id field uniquely identifies each ROI and links to the core table, the Cell Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, ROI_Area). At least one such user-defined column MUST be present per submission.
 --     * Slot: sub_cell_roi_id Description: Unique integer identifier for this sub-cellular structure ROI. Sub_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Cell Data table, and the Cell/ROI Mapping table.
 --     * Slot: cell_id Description: Identifier of the Cell to which this sub-cellular ROI belongs. Conditionally required when this ROI can be associated with a Cell identified as part of this experiment and reported in a dedicated Cell Data table.
@@ -210,16 +260,16 @@
 --     * Slot: id
 --     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
---     * Slot: sub_cell_roi_type Description: The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.
+--     * Slot: sub_cell_roi_type Description: The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.
 --     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Primary cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: ROIMapping Description: A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns.
 --     * Slot: id
 --     * Slot: sub_cell_roi_id Description: Unique identifier for the Sub-Cell ROI whose boundaries are described in this row. Conditionally required when this file contains sub- cellular ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.
@@ -231,23 +281,107 @@
 --     * Slot: id
 --     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
 --     * Slot: table_namespace Description: Identifier for this table type. The required value is specific to each table. Written as ##Table_Namespace= in the file header.
---     * Slot: roi_boundaries_format Description: Description of the coordinate format used to encode boundary data in the roi_boundaries column. Examples include the OME ROI Polygon model (coordinates as "x1,y1 x2,y2 ...") and the OBJ 3D mesh format (vertex and face lists). Must be sufficient for unambiguous parsing of all roi_boundaries values in this file. Written as #ROI_Boundaries_Format: in the file header.
---     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Conditionally required when any location or distance metric is reported.
+--     * Slot: roi_boundaries_format_type Description: Controlled-vocabulary identifier of the standard used to encode ROI boundaries in global coordinates (e.g. OME_Polygon for the OME ROI data model, or Mesh_OBJ for a 3D OBJ mesh). Written as ##ROI_Boundaries_Format_Type= in the file header. Default value is OME_Polygon.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
 --     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
 --     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
 --     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
 --     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
---     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Cell in tissue" or "Cell in organoid". Written as #Cell_Type: in the file header.
---     * Slot: sub_cell_roi_type Description: The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use an EFO 'cellular_component' child term. Examples include Nucleolus, NL (nuclear lamina), NPC (nuclear pore complex), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.
+--     * Slot: roi_boundaries_format_description Description: Free-text description of how ROI boundaries are encoded, beyond what the format name alone conveys (e.g. coordinate order, dimensionality, or an external file reference). Conditionally required (content-triggered): MANDATORY when roi_boundaries_format_type is 'Other'; otherwise recommended.
+--     * Slot: cell_type Description: The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Primary cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file header.
+--     * Slot: sub_cell_roi_type Description: The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.
 --     * Slot: extra_cell_roi_type Description: The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.
---     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required when any time metric is reported.
---     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required when any intensity metric is reported.
---     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required when any intensity metric is reported.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
+-- # Class: SMLocalization Description: A single individual single-molecule (SM) localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the SM Localization Data table. The loc_id field is the primary key; spot_id links this localization to its parent Spot (if Spot/Trace post-processing was performed); trace_id links it to its parent Trace. Sub_Cell_ROI_ID, Cell_ID and Extra_Cell_ROI_ID optionally link the localization to spatial context tables.
+--     * Slot: spot_id Description: Identifier of the Spot (centroid of the SM localization cloud, derived by clustering SM Localization events) to which this localization belongs. Mandatory for every SM Localization event (see vol_core.rst: "A valid FOF-vol-CT deposition MUST mandatorily report Loc_ID together with its associated Spot_ID and Trace_ID for every SM Localization event.").
+--     * Slot: trace_id Description: Identifier of the chromatin Trace to which this localization and its parent Spot belong. Mandatory for every SM Localization event (see vol_core.rst).
+--     * Slot: chrom Description: Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables.
+--     * Slot: chrom_start Description: 0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.
+--     * Slot: chrom_end Description: Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.
+--     * Slot: sub_cell_roi_id Description: Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.
+--     * Slot: cell_id Description: Unique identifier for a Cell. Links to the Cell Data table.
+--     * Slot: extra_cell_roi_id Description: Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.
+--     * Slot: loc_id Description: Unique integer identifier for this SM localization event. Loc_ID values are unique across the entire dataset.
+--     * Slot: x Description: Sub-pixel X coordinate of this SM localization event in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: y Description: Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: SMLocalizationTable_id Description: Autocreated FK slot
+-- # Class: SMLocalizationTable Description: The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core, no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing results derived from the localization data.
+--     * Slot: id
+--     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
+--     * Slot: table_namespace Description: Identifier for this table type. Must always be 'FOF-CT_vol_core' (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.
+--     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
+--     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
+--     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
+--     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
+--     * Slot: genome_assembly Description: Genome build used for Chrom, Chrom_Start and Chrom_End coordinates. The 4DN Data Portal accepts GRCh38 (human) and GRCm38 (mouse). When the genome under study contains an INSERTION or DELETION the value must use the mandatory 'custom-build:' prefix followed by a descriptive name (e.g., custom-build:GRCm38+pJT039(insertion)). Written as ##Genome_Assembly= in the file header.
+--     * Slot: modification Description: Description of the nature and genomic position of a DNA insertion or deletion in the genome under study. Conditionally required (content- triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##Modification= in the file header.
+--     * Slot: vcf_file_name Description: Name of the Variant Call Format (VCF) file that must be submitted alongside the dataset to describe the genome insertion or deletion. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_File_Name= in the file header.
+--     * Slot: vcf_version Description: Version of the VCF format used for the accompanying VCF file. Conditionally required (content-triggered) when genome_assembly uses the 'custom-build:' prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as ##VCF_Version= in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
+-- # Class: SMLocalizationQualityRecord Description: A single row in the SM Localization Quality table. Each instance captures quality metrics for one SM localization event identified by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision, Y_Loc_Precision, Z_Loc_Precision and Photon_Count are highly recommended but not literally mandatory. All other reserved metric columns are conditionally required (use of the reserved name is optional, but mandatory if that metric is reported). Additional user-defined optional columns must be described in the file header.
+--     * Slot: loc_id Description: Unique integer identifier for the SM localization event to which these quality metrics belong. Links to the corresponding SMLocalization record in the SM Localization Data table (table 13).
+--     * Slot: channel_name Description: The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.
+--     * Slot: fluorophore_name Description: The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.
+--     * Slot: x_precision Description: Highly recommended (not literally mandatory): X_Loc_Precision.
+--     * Slot: y_precision Description: Highly recommended (not literally mandatory): Y_Loc_Precision.
+--     * Slot: z_precision Description: Highly recommended (not literally mandatory): Z_Loc_Precision.
+--     * Slot: photon_count Description: Highly recommended: number of photons detected for this localization.
+--     * Slot: goodness_of_fit Description: Metric quantifying how well the fitted model matches the observed signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: centroid_intensity Description: Signal intensity of the centroid pixel of the Spot / localization. Reserved, conditionally-required column name (Centroid_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: peak_intensity Description: Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_x Description: X coordinate before any post-processing corrections (drift correction, chromatic correction, etc.). Same unit as X. Reserved, conditionally-required column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_y Description: Y coordinate before any post-processing corrections. Same unit as Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: raw_z Description: Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: x_loc_error Description: Localization error estimate for the X coordinate (e.g. standard deviation of repeated measurements). Same unit as X. Reserved, conditionally-required column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: y_loc_error Description: Localization error estimate for the Y coordinate. Same unit as Y. Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: z_loc_error Description: Localization error estimate for the Z coordinate. Same unit as Z. Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
+--     * Slot: SMLocalizationQualityTable_id Description: Autocreated FK slot
+-- # Class: SMLocalizationQualityTable Description: The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides localization quality metrics indexed by Loc_ID when submitted.
+--     * Slot: id
+--     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
+--     * Slot: table_namespace Description: Identifier for this table type. Must always be 'FOF-CT_vol_quality' (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.
+--     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
+--     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
+--     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
+--     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
+-- # Class: UndecodedLocalization Description: A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier.
+--     * Slot: hyb_id Description: Unique identifier for the hybridization round in which this localization event was detected. Written as the Hyb_ID column. Mandatory in the Undecoded SM Localization table.
+--     * Slot: image_frame_id Description: Unique integer identifier for the imaging frame in which this undecoded localization event was detected. Written as the Image_Frame_ID column. Mandatory in the Undecoded SM Localization table.
+--     * Slot: channel_name Description: The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.
+--     * Slot: fluorophore_name Description: The name of the fluorophore whose emission was used to detect this Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Fluor column.
+--     * Slot: the_z Description: Identifier of the focal Z-plane in which this localization event was detected. Reserved, conditionally-required column name (TheZ) in the Undecoded SM Localization table: optional to use, but if the focal Z-plane is reported this exact reserved column name MUST be used.
+--     * Slot: loc_id Description: Unique integer identifier for this undecoded localization event. Loc_ID values are unique across the entire dataset.
+--     * Slot: x Description: Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).
+--     * Slot: y Description: Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: z Description: Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.
+--     * Slot: UndecodedLocalizationTable_id Description: Autocreated FK slot
+-- # Class: UndecodedLocalizationTable Description: The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_undecoded, no 4dn_ prefix). This table is optional but recommended. It records raw localization detections prior to any decoding or assignment step. Submission is recommended when the raw detections are available and reproducibility of the decoding pipeline is desired.
+--     * Slot: id
+--     * Slot: fof_ct_version Description: Version of the FOF-CT format used in this file. Always the first line of the file header (##FOF-CT_Version=).
+--     * Slot: table_namespace Description: Identifier for this table type. Must always be 'FOF-CT_undecoded' (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it). Written as ##Table_Namespace= in the file header.
+--     * Slot: lab_name Description: Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.
+--     * Slot: experimenter_name Description: Full name of the person who performed the experiment. Written as #Experimenter_Name: in the file header.
+--     * Slot: experimenter_contact Description: Email address of the person who performed the experiment. Written as #Experimenter_Contact: in the file header.
+--     * Slot: description Description: Free-text description of the experiment and of the data recorded in this table. Should provide sufficient detail for interpretation and reproducibility. Written as #Description: in the file header.
+--     * Slot: xyz_unit Description: Unit used to represent X, Y, Z spatial coordinates or distances in this table. Use 'micron' to avoid issues with Greek symbols. Values should be drawn from SI units of length. Written as ##XYZ_Unit= in the file header. Mandatory in every FOF-CT table.
+--     * Slot: time_unit Description: Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.
+--     * Slot: intensity_unit Description: Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.
+--     * Slot: intensity_measurement_method Description: Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.
 -- # Class: SpotTable_additional_tables
 --     * Slot: SpotTable_id Description: Autocreated FK slot
 --     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
--- # Class: LocalizationTable_additional_tables
---     * Slot: LocalizationTable_id Description: Autocreated FK slot
+-- # Class: DemultiplexingTable_additional_tables
+--     * Slot: DemultiplexingTable_id Description: Autocreated FK slot
 --     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
 -- # Class: TraceTable_additional_tables
 --     * Slot: TraceTable_id Description: Autocreated FK slot
@@ -279,6 +413,25 @@
 -- # Class: ROIMappingTable_additional_tables
 --     * Slot: ROIMappingTable_id Description: Autocreated FK slot
 --     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
+-- # Class: SMLocalizationTable_additional_tables
+--     * Slot: SMLocalizationTable_id Description: Autocreated FK slot
+--     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
+-- # Class: SMLocalizationQualityTable_additional_tables
+--     * Slot: SMLocalizationQualityTable_id Description: Autocreated FK slot
+--     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
+-- # Class: UndecodedLocalizationTable_additional_tables
+--     * Slot: UndecodedLocalizationTable_id Description: Autocreated FK slot
+--     * Slot: additional_tables Description: List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.
+
+CREATE TABLE "LocalizationMixin" (
+	id INTEGER NOT NULL,
+	loc_id INTEGER,
+	x FLOAT,
+	y FLOAT,
+	z FLOAT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_LocalizationMixin_id" ON "LocalizationMixin" (id);
 
 CREATE TABLE "SpotTable" (
 	id INTEGER NOT NULL,
@@ -297,7 +450,7 @@ CREATE TABLE "SpotTable" (
 );
 CREATE INDEX "ix_SpotTable_id" ON "SpotTable" (id);
 
-CREATE TABLE "LocalizationTable" (
+CREATE TABLE "DemultiplexingTable" (
 	id INTEGER NOT NULL,
 	fof_ct_version TEXT NOT NULL,
 	table_namespace TEXT NOT NULL,
@@ -305,13 +458,13 @@ CREATE TABLE "LocalizationTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_LocalizationTable_id" ON "LocalizationTable" (id);
+CREATE INDEX "ix_DemultiplexingTable_id" ON "DemultiplexingTable" (id);
 
 CREATE TABLE "TraceTable" (
 	id INTEGER NOT NULL,
@@ -321,8 +474,8 @@ CREATE TABLE "TraceTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -341,9 +494,6 @@ CREATE TABLE "RNASpotTable" (
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
 	transcript_id_type TEXT,
-	time_unit VARCHAR(3),
-	intensity_unit TEXT,
-	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_RNASpotTable_id" ON "RNASpotTable" (id);
@@ -356,8 +506,8 @@ CREATE TABLE "SpotQualityTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -372,8 +522,8 @@ CREATE TABLE "RNASpotQualityTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -388,8 +538,8 @@ CREATE TABLE "SpotBiologicalTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -404,8 +554,8 @@ CREATE TABLE "RNASpotBiologicalTable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -422,8 +572,8 @@ CREATE TABLE "CellTable" (
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
 	extra_cell_roi_type TEXT,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -439,8 +589,8 @@ CREATE TABLE "ExtraCellROITable" (
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -457,8 +607,8 @@ CREATE TABLE "SubCellROITable" (
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
 	cell_type TEXT,
-	xyz_unit VARCHAR(6),
-	time_unit VARCHAR(3),
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
@@ -469,32 +619,86 @@ CREATE TABLE "ROIMappingTable" (
 	id INTEGER NOT NULL,
 	fof_ct_version TEXT NOT NULL,
 	table_namespace TEXT NOT NULL,
-	roi_boundaries_format TEXT NOT NULL,
+	roi_boundaries_format_type VARCHAR(16) NOT NULL,
 	xyz_unit VARCHAR(6) NOT NULL,
 	lab_name TEXT NOT NULL,
 	experimenter_name TEXT NOT NULL,
 	experimenter_contact TEXT NOT NULL,
 	description TEXT NOT NULL,
+	roi_boundaries_format_description TEXT,
 	cell_type TEXT,
 	sub_cell_roi_type TEXT,
 	extra_cell_roi_type TEXT,
-	time_unit VARCHAR(3),
+	time_unit VARCHAR(4),
 	intensity_unit TEXT,
 	intensity_measurement_method TEXT,
 	PRIMARY KEY (id)
 );
 CREATE INDEX "ix_ROIMappingTable_id" ON "ROIMappingTable" (id);
 
+CREATE TABLE "SMLocalizationTable" (
+	id INTEGER NOT NULL,
+	fof_ct_version TEXT NOT NULL,
+	table_namespace TEXT NOT NULL,
+	lab_name TEXT NOT NULL,
+	experimenter_name TEXT NOT NULL,
+	experimenter_contact TEXT NOT NULL,
+	description TEXT NOT NULL,
+	genome_assembly TEXT NOT NULL,
+	modification TEXT,
+	vcf_file_name TEXT,
+	vcf_version TEXT,
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
+	intensity_unit TEXT,
+	intensity_measurement_method TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_SMLocalizationTable_id" ON "SMLocalizationTable" (id);
+
+CREATE TABLE "SMLocalizationQualityTable" (
+	id INTEGER NOT NULL,
+	fof_ct_version TEXT NOT NULL,
+	table_namespace TEXT NOT NULL,
+	lab_name TEXT NOT NULL,
+	experimenter_name TEXT NOT NULL,
+	experimenter_contact TEXT NOT NULL,
+	description TEXT NOT NULL,
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
+	intensity_unit TEXT,
+	intensity_measurement_method TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_SMLocalizationQualityTable_id" ON "SMLocalizationQualityTable" (id);
+
+CREATE TABLE "UndecodedLocalizationTable" (
+	id INTEGER NOT NULL,
+	fof_ct_version TEXT NOT NULL,
+	table_namespace TEXT NOT NULL,
+	lab_name TEXT NOT NULL,
+	experimenter_name TEXT NOT NULL,
+	experimenter_contact TEXT NOT NULL,
+	description TEXT NOT NULL,
+	xyz_unit VARCHAR(6) NOT NULL,
+	time_unit VARCHAR(4),
+	intensity_unit TEXT,
+	intensity_measurement_method TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_UndecodedLocalizationTable_id" ON "UndecodedLocalizationTable" (id);
+
 CREATE TABLE "Software" (
 	id INTEGER NOT NULL,
 	software_title TEXT NOT NULL,
-	software_type VARCHAR(15) NOT NULL,
+	software_type VARCHAR(28) NOT NULL,
 	software_authors TEXT NOT NULL,
 	software_description TEXT NOT NULL,
+	software_parameters TEXT NOT NULL,
 	software_repository TEXT NOT NULL,
 	software_preferred_citation_id TEXT NOT NULL,
 	"SpotTable_id" INTEGER,
-	"LocalizationTable_id" INTEGER,
+	"DemultiplexingTable_id" INTEGER,
 	"TraceTable_id" INTEGER,
 	"RNASpotTable_id" INTEGER,
 	"SpotQualityTable_id" INTEGER,
@@ -505,9 +709,12 @@ CREATE TABLE "Software" (
 	"ExtraCellROITable_id" INTEGER,
 	"SubCellROITable_id" INTEGER,
 	"ROIMappingTable_id" INTEGER,
+	"SMLocalizationTable_id" INTEGER,
+	"SMLocalizationQualityTable_id" INTEGER,
+	"UndecodedLocalizationTable_id" INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY("SpotTable_id") REFERENCES "SpotTable" (id),
-	FOREIGN KEY("LocalizationTable_id") REFERENCES "LocalizationTable" (id),
+	FOREIGN KEY("DemultiplexingTable_id") REFERENCES "DemultiplexingTable" (id),
 	FOREIGN KEY("TraceTable_id") REFERENCES "TraceTable" (id),
 	FOREIGN KEY("RNASpotTable_id") REFERENCES "RNASpotTable" (id),
 	FOREIGN KEY("SpotQualityTable_id") REFERENCES "SpotQualityTable" (id),
@@ -517,7 +724,10 @@ CREATE TABLE "Software" (
 	FOREIGN KEY("CellTable_id") REFERENCES "CellTable" (id),
 	FOREIGN KEY("ExtraCellROITable_id") REFERENCES "ExtraCellROITable" (id),
 	FOREIGN KEY("SubCellROITable_id") REFERENCES "SubCellROITable" (id),
-	FOREIGN KEY("ROIMappingTable_id") REFERENCES "ROIMappingTable" (id)
+	FOREIGN KEY("ROIMappingTable_id") REFERENCES "ROIMappingTable" (id),
+	FOREIGN KEY("SMLocalizationTable_id") REFERENCES "SMLocalizationTable" (id),
+	FOREIGN KEY("SMLocalizationQualityTable_id") REFERENCES "SMLocalizationQualityTable" (id),
+	FOREIGN KEY("UndecodedLocalizationTable_id") REFERENCES "UndecodedLocalizationTable" (id)
 );
 CREATE INDEX "ix_Software_id" ON "Software" (id);
 
@@ -540,15 +750,16 @@ CREATE TABLE "Spot" (
 CREATE INDEX "ix_Spot_spot_id" ON "Spot" (spot_id);
 
 CREATE TABLE "Localization" (
-	loc_id INTEGER NOT NULL,
 	spot_id INTEGER NOT NULL,
+	channel_name TEXT NOT NULL,
+	fluorophore_name TEXT NOT NULL,
+	loc_id INTEGER NOT NULL,
 	x FLOAT NOT NULL,
 	y FLOAT NOT NULL,
 	z FLOAT NOT NULL,
-	fluor TEXT NOT NULL,
-	"LocalizationTable_id" INTEGER,
+	"DemultiplexingTable_id" INTEGER,
 	PRIMARY KEY (loc_id),
-	FOREIGN KEY("LocalizationTable_id") REFERENCES "LocalizationTable" (id)
+	FOREIGN KEY("DemultiplexingTable_id") REFERENCES "DemultiplexingTable" (id)
 );
 CREATE INDEX "ix_Localization_loc_id" ON "Localization" (loc_id);
 
@@ -581,6 +792,27 @@ CREATE INDEX "ix_RNASpot_id" ON "RNASpot" (id);
 
 CREATE TABLE "SpotQualityRecord" (
 	spot_id INTEGER NOT NULL,
+	channel_name TEXT NOT NULL,
+	fluorophore_name TEXT NOT NULL,
+	x_precision FLOAT,
+	y_precision FLOAT,
+	z_precision FLOAT,
+	photon_count INTEGER,
+	goodness_of_fit FLOAT,
+	centroid_intensity FLOAT,
+	peak_intensity FLOAT,
+	raw_x FLOAT,
+	raw_y FLOAT,
+	raw_z FLOAT,
+	x_drift FLOAT,
+	y_drift FLOAT,
+	z_drift FLOAT,
+	x_chromatic_shift FLOAT,
+	y_chromatic_shift FLOAT,
+	z_chromatic_shift FLOAT,
+	x_loc_error FLOAT,
+	y_loc_error FLOAT,
+	z_loc_error FLOAT,
 	"SpotQualityTable_id" INTEGER,
 	PRIMARY KEY (spot_id),
 	FOREIGN KEY("SpotQualityTable_id") REFERENCES "SpotQualityTable" (id)
@@ -589,6 +821,27 @@ CREATE INDEX "ix_SpotQualityRecord_spot_id" ON "SpotQualityRecord" (spot_id);
 
 CREATE TABLE "RNASpotQualityRecord" (
 	rna_spot_id INTEGER NOT NULL,
+	channel_name TEXT NOT NULL,
+	fluorophore_name TEXT NOT NULL,
+	x_precision FLOAT,
+	y_precision FLOAT,
+	z_precision FLOAT,
+	photon_count INTEGER,
+	goodness_of_fit FLOAT,
+	centroid_intensity FLOAT,
+	peak_intensity FLOAT,
+	raw_x FLOAT,
+	raw_y FLOAT,
+	raw_z FLOAT,
+	x_drift FLOAT,
+	y_drift FLOAT,
+	z_drift FLOAT,
+	x_chromatic_shift FLOAT,
+	y_chromatic_shift FLOAT,
+	z_chromatic_shift FLOAT,
+	x_loc_error FLOAT,
+	y_loc_error FLOAT,
+	z_loc_error FLOAT,
 	"RNASpotQualityTable_id" INTEGER,
 	PRIMARY KEY (rna_spot_id),
 	FOREIGN KEY("RNASpotQualityTable_id") REFERENCES "RNASpotQualityTable" (id)
@@ -649,23 +902,81 @@ CREATE TABLE "ROIMapping" (
 );
 CREATE INDEX "ix_ROIMapping_id" ON "ROIMapping" (id);
 
+CREATE TABLE "SMLocalization" (
+	spot_id INTEGER NOT NULL,
+	trace_id INTEGER NOT NULL,
+	chrom TEXT NOT NULL,
+	chrom_start INTEGER NOT NULL,
+	chrom_end INTEGER NOT NULL,
+	sub_cell_roi_id INTEGER,
+	cell_id INTEGER,
+	extra_cell_roi_id INTEGER,
+	loc_id INTEGER NOT NULL,
+	x FLOAT NOT NULL,
+	y FLOAT NOT NULL,
+	z FLOAT NOT NULL,
+	"SMLocalizationTable_id" INTEGER,
+	PRIMARY KEY (loc_id),
+	FOREIGN KEY("SMLocalizationTable_id") REFERENCES "SMLocalizationTable" (id)
+);
+CREATE INDEX "ix_SMLocalization_loc_id" ON "SMLocalization" (loc_id);
+
+CREATE TABLE "SMLocalizationQualityRecord" (
+	loc_id INTEGER NOT NULL,
+	channel_name TEXT NOT NULL,
+	fluorophore_name TEXT NOT NULL,
+	x_precision FLOAT,
+	y_precision FLOAT,
+	z_precision FLOAT,
+	photon_count INTEGER,
+	goodness_of_fit FLOAT,
+	centroid_intensity FLOAT,
+	peak_intensity FLOAT,
+	raw_x FLOAT,
+	raw_y FLOAT,
+	raw_z FLOAT,
+	x_loc_error FLOAT,
+	y_loc_error FLOAT,
+	z_loc_error FLOAT,
+	"SMLocalizationQualityTable_id" INTEGER,
+	PRIMARY KEY (loc_id),
+	FOREIGN KEY("SMLocalizationQualityTable_id") REFERENCES "SMLocalizationQualityTable" (id)
+);
+CREATE INDEX "ix_SMLocalizationQualityRecord_loc_id" ON "SMLocalizationQualityRecord" (loc_id);
+
+CREATE TABLE "UndecodedLocalization" (
+	hyb_id INTEGER NOT NULL,
+	image_frame_id INTEGER NOT NULL,
+	channel_name TEXT NOT NULL,
+	fluorophore_name TEXT NOT NULL,
+	the_z INTEGER,
+	loc_id INTEGER NOT NULL,
+	x FLOAT NOT NULL,
+	y FLOAT NOT NULL,
+	z FLOAT NOT NULL,
+	"UndecodedLocalizationTable_id" INTEGER,
+	PRIMARY KEY (loc_id),
+	FOREIGN KEY("UndecodedLocalizationTable_id") REFERENCES "UndecodedLocalizationTable" (id)
+);
+CREATE INDEX "ix_UndecodedLocalization_loc_id" ON "UndecodedLocalization" (loc_id);
+
 CREATE TABLE "SpotTable_additional_tables" (
 	"SpotTable_id" INTEGER,
 	additional_tables VARCHAR(25),
 	PRIMARY KEY ("SpotTable_id", additional_tables),
 	FOREIGN KEY("SpotTable_id") REFERENCES "SpotTable" (id)
 );
-CREATE INDEX "ix_SpotTable_additional_tables_SpotTable_id" ON "SpotTable_additional_tables" ("SpotTable_id");
 CREATE INDEX "ix_SpotTable_additional_tables_additional_tables" ON "SpotTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_SpotTable_additional_tables_SpotTable_id" ON "SpotTable_additional_tables" ("SpotTable_id");
 
-CREATE TABLE "LocalizationTable_additional_tables" (
-	"LocalizationTable_id" INTEGER,
+CREATE TABLE "DemultiplexingTable_additional_tables" (
+	"DemultiplexingTable_id" INTEGER,
 	additional_tables VARCHAR(25) NOT NULL,
-	PRIMARY KEY ("LocalizationTable_id", additional_tables),
-	FOREIGN KEY("LocalizationTable_id") REFERENCES "LocalizationTable" (id)
+	PRIMARY KEY ("DemultiplexingTable_id", additional_tables),
+	FOREIGN KEY("DemultiplexingTable_id") REFERENCES "DemultiplexingTable" (id)
 );
-CREATE INDEX "ix_LocalizationTable_additional_tables_LocalizationTable_id" ON "LocalizationTable_additional_tables" ("LocalizationTable_id");
-CREATE INDEX "ix_LocalizationTable_additional_tables_additional_tables" ON "LocalizationTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_DemultiplexingTable_additional_tables_additional_tables" ON "DemultiplexingTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_DemultiplexingTable_additional_tables_DemultiplexingTable_id" ON "DemultiplexingTable_additional_tables" ("DemultiplexingTable_id");
 
 CREATE TABLE "TraceTable_additional_tables" (
 	"TraceTable_id" INTEGER,
@@ -718,8 +1029,8 @@ CREATE TABLE "RNASpotBiologicalTable_additional_tables" (
 	PRIMARY KEY ("RNASpotBiologicalTable_id", additional_tables),
 	FOREIGN KEY("RNASpotBiologicalTable_id") REFERENCES "RNASpotBiologicalTable" (id)
 );
-CREATE INDEX "ix_RNASpotBiologicalTable_additional_tables_RNASpotBiologicalTable_id" ON "RNASpotBiologicalTable_additional_tables" ("RNASpotBiologicalTable_id");
 CREATE INDEX "ix_RNASpotBiologicalTable_additional_tables_additional_tables" ON "RNASpotBiologicalTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_RNASpotBiologicalTable_additional_tables_RNASpotBiologicalTable_id" ON "RNASpotBiologicalTable_additional_tables" ("RNASpotBiologicalTable_id");
 
 CREATE TABLE "CellTable_additional_tables" (
 	"CellTable_id" INTEGER,
@@ -736,8 +1047,8 @@ CREATE TABLE "ExtraCellROITable_additional_tables" (
 	PRIMARY KEY ("ExtraCellROITable_id", additional_tables),
 	FOREIGN KEY("ExtraCellROITable_id") REFERENCES "ExtraCellROITable" (id)
 );
-CREATE INDEX "ix_ExtraCellROITable_additional_tables_additional_tables" ON "ExtraCellROITable_additional_tables" (additional_tables);
 CREATE INDEX "ix_ExtraCellROITable_additional_tables_ExtraCellROITable_id" ON "ExtraCellROITable_additional_tables" ("ExtraCellROITable_id");
+CREATE INDEX "ix_ExtraCellROITable_additional_tables_additional_tables" ON "ExtraCellROITable_additional_tables" (additional_tables);
 
 CREATE TABLE "SubCellROITable_additional_tables" (
 	"SubCellROITable_id" INTEGER,
@@ -754,5 +1065,32 @@ CREATE TABLE "ROIMappingTable_additional_tables" (
 	PRIMARY KEY ("ROIMappingTable_id", additional_tables),
 	FOREIGN KEY("ROIMappingTable_id") REFERENCES "ROIMappingTable" (id)
 );
-CREATE INDEX "ix_ROIMappingTable_additional_tables_ROIMappingTable_id" ON "ROIMappingTable_additional_tables" ("ROIMappingTable_id");
 CREATE INDEX "ix_ROIMappingTable_additional_tables_additional_tables" ON "ROIMappingTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_ROIMappingTable_additional_tables_ROIMappingTable_id" ON "ROIMappingTable_additional_tables" ("ROIMappingTable_id");
+
+CREATE TABLE "SMLocalizationTable_additional_tables" (
+	"SMLocalizationTable_id" INTEGER,
+	additional_tables VARCHAR(25) NOT NULL,
+	PRIMARY KEY ("SMLocalizationTable_id", additional_tables),
+	FOREIGN KEY("SMLocalizationTable_id") REFERENCES "SMLocalizationTable" (id)
+);
+CREATE INDEX "ix_SMLocalizationTable_additional_tables_additional_tables" ON "SMLocalizationTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_SMLocalizationTable_additional_tables_SMLocalizationTable_id" ON "SMLocalizationTable_additional_tables" ("SMLocalizationTable_id");
+
+CREATE TABLE "SMLocalizationQualityTable_additional_tables" (
+	"SMLocalizationQualityTable_id" INTEGER,
+	additional_tables VARCHAR(25) NOT NULL,
+	PRIMARY KEY ("SMLocalizationQualityTable_id", additional_tables),
+	FOREIGN KEY("SMLocalizationQualityTable_id") REFERENCES "SMLocalizationQualityTable" (id)
+);
+CREATE INDEX "ix_SMLocalizationQualityTable_additional_tables_SMLocalizationQualityTable_id" ON "SMLocalizationQualityTable_additional_tables" ("SMLocalizationQualityTable_id");
+CREATE INDEX "ix_SMLocalizationQualityTable_additional_tables_additional_tables" ON "SMLocalizationQualityTable_additional_tables" (additional_tables);
+
+CREATE TABLE "UndecodedLocalizationTable_additional_tables" (
+	"UndecodedLocalizationTable_id" INTEGER,
+	additional_tables VARCHAR(25) NOT NULL,
+	PRIMARY KEY ("UndecodedLocalizationTable_id", additional_tables),
+	FOREIGN KEY("UndecodedLocalizationTable_id") REFERENCES "UndecodedLocalizationTable" (id)
+);
+CREATE INDEX "ix_UndecodedLocalizationTable_additional_tables_additional_tables" ON "UndecodedLocalizationTable_additional_tables" (additional_tables);
+CREATE INDEX "ix_UndecodedLocalizationTable_additional_tables_UndecodedLocalizationTable_id" ON "UndecodedLocalizationTable_additional_tables" ("UndecodedLocalizationTable_id");

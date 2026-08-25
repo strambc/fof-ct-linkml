@@ -122,39 +122,10 @@ classes:
 slots:
 
   # ---- SpotTable-level: genome / modification header slots ----------------
-
-
-  modification:
-    description: >-
-      Description of the nature and genomic position of a DNA insertion or
-      deletion in the genome under study. Conditionally required when
-      genome_assembly uses the 'custom-build:' prefix. Written as
-      ##Modification= in the file header.
-    domain: SpotTable
-    range: string
-    examples:
-      - value: "pJT039:chr3(insertion 0001-2500)"
-
-  vcf_file_name:
-    description: >-
-      Name of the Variant Call Format (VCF) file that must be submitted
-      alongside the dataset to describe the genome insertion or deletion.
-      Conditionally required when genome_assembly uses the 'custom-build:'
-      prefix. Written as ##VCF_File_Name= in the file header.
-    domain: SpotTable
-    range: string
-    examples:
-      - value: pJT039:chr3.vcf
-
-  vcf_version:
-    description: >-
-      Version of the VCF format used for the accompanying VCF file.
-      Conditionally required when genome_assembly uses the 'custom-build:'
-      prefix. Written as ##VCF_Version= in the file header.
-    domain: SpotTable
-    range: string
-    examples:
-      - value: v4.2
+  # NOTE: modification, vcf_file_name, and vcf_version moved to
+  # fof_bas_ct_common.yaml (domain-agnostic) so fof_vol_ct_core.yaml's
+  # SMLocalizationTable can reuse them too — the vol_core table has the same
+  # Modification/VCF_File_Name/VCF_Version conditional header fields as core.
 
   spots:
     description: >-
@@ -166,37 +137,10 @@ slots:
     inlined_as_list: true
 
   # ---- Spot row-level slots -----------------------------------------------
-
-
-
-
-  chrom:
-    description: >-
-      Chromosome name using BED (Browser Extensible Data) convention
-      (e.g., chr3, chrY, chr2_random).
-    domain: Spot
-    range: string
-    examples:
-      - value: chr3
-      - value: chrY
-      - value: chr2_random
-
-  chrom_start:
-    description: >-
-      0-based start coordinate on the chromosome for the genomic target
-      sequence associated with this Spot, following BED convention.
-    domain: Spot
-    range: integer
-    minimum_value: 0
-    examples:
-      - value: "0"
-
-  chrom_end:
-    description: >-
-      Non-inclusive end coordinate on the chromosome for the genomic target
-      sequence associated with this Spot, following BED convention.
-    domain: Spot
-    range: integer
-    minimum_value: 0
-    examples:
-      - value: "1000"
+  # NOTE: chrom, chrom_start, chrom_end moved to fof_bas_ct_common.yaml
+  # (domain-agnostic). Previously both this file (domain: Spot) and
+  # fof_vol_ct_core.yaml (no domain) defined these same slot names
+  # independently; since fof_ct.yaml imports both schemas together, that
+  # produced two conflicting definitions of the same slot in the merged
+  # schema. Consolidating avoids the conflict and matches how every other
+  # cross-table shared slot in this schema is already handled.

@@ -1,9 +1,9 @@
 # Auto generated from fof_ct.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-05-23T03:51:23
+# Generation date: 2026-08-24T22:19:25
 # Schema: fof_ct
 #
 # id: https://w3id.org/fof-ct
-# description: Root schema for the FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT). Imports all twelve table schemas that together constitute the complete FOF-bas-CT data model. Each table schema in turn imports fof_bas_ct_common for shared slots, the Software class, and enumerations.
+# description: Root schema for the FISH Omics Format for Chromatin Tracing (FOF-CT). Covers both modalities: FOF-bas-CT (ball-and-stick, tables 1–12) and FOF-vol-CT (volumetric, tables 13–15). Imports all fifteen table schemas that together constitute the complete FOF-CT data model. Each table schema in turn imports fof_bas_ct_common for shared slots, the Software class, and enumerations.
 # license: MIT
 
 import dataclasses
@@ -108,6 +108,18 @@ class SubCellROISubCellRoiId(extended_int):
     pass
 
 
+class SMLocalizationLocId(extended_int):
+    pass
+
+
+class SMLocalizationQualityRecordLocId(extended_int):
+    pass
+
+
+class UndecodedLocalizationLocId(extended_int):
+    pass
+
+
 @dataclass(repr=False)
 class Software(YAMLRoot):
     """
@@ -126,6 +138,7 @@ class Software(YAMLRoot):
     software_type: Union[str, "SoftwareTypeEnum"] = None
     software_authors: str = None
     software_description: str = None
+    software_parameters: str = None
     software_repository: Union[str, URI] = None
     software_preferred_citation_id: Union[str, URI] = None
 
@@ -150,6 +163,11 @@ class Software(YAMLRoot):
         if not isinstance(self.software_description, str):
             self.software_description = str(self.software_description)
 
+        if self._is_empty(self.software_parameters):
+            self.MissingRequiredField("software_parameters")
+        if not isinstance(self.software_parameters, str):
+            self.software_parameters = str(self.software_parameters)
+
         if self._is_empty(self.software_repository):
             self.MissingRequiredField("software_repository")
         if not isinstance(self.software_repository, URI):
@@ -159,6 +177,42 @@ class Software(YAMLRoot):
             self.MissingRequiredField("software_preferred_citation_id")
         if not isinstance(self.software_preferred_citation_id, URI):
             self.software_preferred_citation_id = URI(self.software_preferred_citation_id)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class LocalizationMixin(YAMLRoot):
+    """
+    Mixin capturing the shared concept of a single localization event across FOF-CT modalities. Used by Localization
+    (demultiplexing), SMLocalization (vol_core), and UndecodedLocalization (undecoded). All three classes represent
+    the same atomic measurement unit — the sub-pixel position of a detected fluorescence emission event — but differ
+    in context, mandatory columns, and table role.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["LocalizationMixin"]
+    class_class_curie: ClassVar[str] = "fof_ct:LocalizationMixin"
+    class_name: ClassVar[str] = "LocalizationMixin"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.LocalizationMixin
+
+    loc_id: Optional[int] = None
+    x: Optional[float] = None
+    y: Optional[float] = None
+    z: Optional[float] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self.loc_id is not None and not isinstance(self.loc_id, int):
+            self.loc_id = int(self.loc_id)
+
+        if self.x is not None and not isinstance(self.x, float):
+            self.x = float(self.x)
+
+        if self.y is not None and not isinstance(self.y, float):
+            self.y = float(self.y)
+
+        if self.z is not None and not isinstance(self.z, float):
+            self.z = float(self.z)
 
         super().__post_init__(**kwargs)
 
@@ -181,10 +235,11 @@ class Localization(YAMLRoot):
 
     loc_id: Union[int, LocalizationLocId] = None
     spot_id: int = None
+    channel_name: str = None
+    fluorophore_name: str = None
     x: float = None
     y: float = None
     z: float = None
-    fluor: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.loc_id):
@@ -196,6 +251,16 @@ class Localization(YAMLRoot):
             self.MissingRequiredField("spot_id")
         if not isinstance(self.spot_id, int):
             self.spot_id = int(self.spot_id)
+
+        if self._is_empty(self.channel_name):
+            self.MissingRequiredField("channel_name")
+        if not isinstance(self.channel_name, str):
+            self.channel_name = str(self.channel_name)
+
+        if self._is_empty(self.fluorophore_name):
+            self.MissingRequiredField("fluorophore_name")
+        if not isinstance(self.fluorophore_name, str):
+            self.fluorophore_name = str(self.fluorophore_name)
 
         if self._is_empty(self.x):
             self.MissingRequiredField("x")
@@ -212,16 +277,11 @@ class Localization(YAMLRoot):
         if not isinstance(self.z, float):
             self.z = float(self.z)
 
-        if self._is_empty(self.fluor):
-            self.MissingRequiredField("fluor")
-        if not isinstance(self.fluor, str):
-            self.fluor = str(self.fluor)
-
         super().__post_init__(**kwargs)
 
 
 @dataclass(repr=False)
-class LocalizationTable(YAMLRoot):
+class DemultiplexingTable(YAMLRoot):
     """
     The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class
     represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV
@@ -230,10 +290,10 @@ class LocalizationTable(YAMLRoot):
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = FOF_CT["LocalizationTable"]
-    class_class_curie: ClassVar[str] = "fof_ct:LocalizationTable"
-    class_name: ClassVar[str] = "LocalizationTable"
-    class_model_uri: ClassVar[URIRef] = FOF_CT.LocalizationTable
+    class_class_uri: ClassVar[URIRef] = FOF_CT["DemultiplexingTable"]
+    class_class_curie: ClassVar[str] = "fof_ct:DemultiplexingTable"
+    class_name: ClassVar[str] = "DemultiplexingTable"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.DemultiplexingTable
 
     fof_ct_version: str = None
     table_namespace: str = None
@@ -243,8 +303,8 @@ class LocalizationTable(YAMLRoot):
     description: str = None
     softwares: Union[Union[dict, Software], list[Union[dict, Software]]] = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     localizations: Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]] = empty_dict()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -290,12 +350,14 @@ class LocalizationTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.localizations):
             self.MissingRequiredField("localizations")
         self._normalize_inlined_as_list(slot_name="localizations", slot_type=Localization, key_name="loc_id", keyed=True)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -358,9 +420,9 @@ class TraceTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     traces: Union[list[Union[int, TraceTraceId]], dict[Union[int, TraceTraceId], Union[dict, Trace]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -402,14 +464,16 @@ class TraceTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.traces):
             self.MissingRequiredField("traces")
         self._normalize_inlined_as_list(slot_name="traces", slot_type=Trace, key_name="trace_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -530,9 +594,6 @@ class RNASpotTable(YAMLRoot):
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
     rna_spots: Union[Union[dict, RNASpot], list[Union[dict, RNASpot]]] = None
     transcript_id_type: Optional[str] = None
-    time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
-    intensity_unit: Optional[str] = None
-    intensity_measurement_method: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.fof_ct_version):
@@ -597,15 +658,6 @@ class RNASpotTable(YAMLRoot):
         if self.transcript_id_type is not None and not isinstance(self.transcript_id_type, str):
             self.transcript_id_type = str(self.transcript_id_type)
 
-        if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
-            self.time_unit = TimeUnitEnum(self.time_unit)
-
-        if self.intensity_unit is not None and not isinstance(self.intensity_unit, str):
-            self.intensity_unit = str(self.intensity_unit)
-
-        if self.intensity_measurement_method is not None and not isinstance(self.intensity_measurement_method, str):
-            self.intensity_measurement_method = str(self.intensity_measurement_method)
-
         super().__post_init__(**kwargs)
 
 
@@ -624,12 +676,100 @@ class SpotQualityRecord(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.SpotQualityRecord
 
     spot_id: Union[int, SpotQualityRecordSpotId] = None
+    channel_name: str = None
+    fluorophore_name: str = None
+    x_precision: Optional[float] = None
+    y_precision: Optional[float] = None
+    z_precision: Optional[float] = None
+    photon_count: Optional[int] = None
+    goodness_of_fit: Optional[float] = None
+    centroid_intensity: Optional[float] = None
+    peak_intensity: Optional[float] = None
+    raw_x: Optional[float] = None
+    raw_y: Optional[float] = None
+    raw_z: Optional[float] = None
+    x_drift: Optional[float] = None
+    y_drift: Optional[float] = None
+    z_drift: Optional[float] = None
+    x_chromatic_shift: Optional[float] = None
+    y_chromatic_shift: Optional[float] = None
+    z_chromatic_shift: Optional[float] = None
+    x_loc_error: Optional[float] = None
+    y_loc_error: Optional[float] = None
+    z_loc_error: Optional[float] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.spot_id):
             self.MissingRequiredField("spot_id")
         if not isinstance(self.spot_id, SpotQualityRecordSpotId):
             self.spot_id = SpotQualityRecordSpotId(self.spot_id)
+
+        if self._is_empty(self.channel_name):
+            self.MissingRequiredField("channel_name")
+        if not isinstance(self.channel_name, str):
+            self.channel_name = str(self.channel_name)
+
+        if self._is_empty(self.fluorophore_name):
+            self.MissingRequiredField("fluorophore_name")
+        if not isinstance(self.fluorophore_name, str):
+            self.fluorophore_name = str(self.fluorophore_name)
+
+        if self.x_precision is not None and not isinstance(self.x_precision, float):
+            self.x_precision = float(self.x_precision)
+
+        if self.y_precision is not None and not isinstance(self.y_precision, float):
+            self.y_precision = float(self.y_precision)
+
+        if self.z_precision is not None and not isinstance(self.z_precision, float):
+            self.z_precision = float(self.z_precision)
+
+        if self.photon_count is not None and not isinstance(self.photon_count, int):
+            self.photon_count = int(self.photon_count)
+
+        if self.goodness_of_fit is not None and not isinstance(self.goodness_of_fit, float):
+            self.goodness_of_fit = float(self.goodness_of_fit)
+
+        if self.centroid_intensity is not None and not isinstance(self.centroid_intensity, float):
+            self.centroid_intensity = float(self.centroid_intensity)
+
+        if self.peak_intensity is not None and not isinstance(self.peak_intensity, float):
+            self.peak_intensity = float(self.peak_intensity)
+
+        if self.raw_x is not None and not isinstance(self.raw_x, float):
+            self.raw_x = float(self.raw_x)
+
+        if self.raw_y is not None and not isinstance(self.raw_y, float):
+            self.raw_y = float(self.raw_y)
+
+        if self.raw_z is not None and not isinstance(self.raw_z, float):
+            self.raw_z = float(self.raw_z)
+
+        if self.x_drift is not None and not isinstance(self.x_drift, float):
+            self.x_drift = float(self.x_drift)
+
+        if self.y_drift is not None and not isinstance(self.y_drift, float):
+            self.y_drift = float(self.y_drift)
+
+        if self.z_drift is not None and not isinstance(self.z_drift, float):
+            self.z_drift = float(self.z_drift)
+
+        if self.x_chromatic_shift is not None and not isinstance(self.x_chromatic_shift, float):
+            self.x_chromatic_shift = float(self.x_chromatic_shift)
+
+        if self.y_chromatic_shift is not None and not isinstance(self.y_chromatic_shift, float):
+            self.y_chromatic_shift = float(self.y_chromatic_shift)
+
+        if self.z_chromatic_shift is not None and not isinstance(self.z_chromatic_shift, float):
+            self.z_chromatic_shift = float(self.z_chromatic_shift)
+
+        if self.x_loc_error is not None and not isinstance(self.x_loc_error, float):
+            self.x_loc_error = float(self.x_loc_error)
+
+        if self.y_loc_error is not None and not isinstance(self.y_loc_error, float):
+            self.y_loc_error = float(self.y_loc_error)
+
+        if self.z_loc_error is not None and not isinstance(self.z_loc_error, float):
+            self.z_loc_error = float(self.z_loc_error)
 
         super().__post_init__(**kwargs)
 
@@ -655,9 +795,9 @@ class SpotQualityTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
-    spot_quality_records: Union[list[Union[int, SpotQualityRecordSpotId]], dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]]] = empty_dict()
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    spot_quality_records: Union[dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]], list[Union[dict, SpotQualityRecord]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -699,14 +839,16 @@ class SpotQualityTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.spot_quality_records):
             self.MissingRequiredField("spot_quality_records")
         self._normalize_inlined_as_list(slot_name="spot_quality_records", slot_type=SpotQualityRecord, key_name="spot_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -725,8 +867,9 @@ class RNASpotQualityRecord(YAMLRoot):
     """
     A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA
     bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the
-    corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be
-    present; users declare these via #^ header lines.
+    corresponding record in the RNA Spot Data table (table 4). RNA_Spot_ID, Channel and Fluor are mandatory; all other
+    reserved quality-metric columns are conditionally required (the same reserved vocabulary as the Spot Quality
+    table) or fully free-form; users declare the latter via #^ header lines.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -736,12 +879,100 @@ class RNASpotQualityRecord(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.RNASpotQualityRecord
 
     rna_spot_id: Union[int, RNASpotQualityRecordRnaSpotId] = None
+    channel_name: str = None
+    fluorophore_name: str = None
+    x_precision: Optional[float] = None
+    y_precision: Optional[float] = None
+    z_precision: Optional[float] = None
+    photon_count: Optional[int] = None
+    goodness_of_fit: Optional[float] = None
+    centroid_intensity: Optional[float] = None
+    peak_intensity: Optional[float] = None
+    raw_x: Optional[float] = None
+    raw_y: Optional[float] = None
+    raw_z: Optional[float] = None
+    x_drift: Optional[float] = None
+    y_drift: Optional[float] = None
+    z_drift: Optional[float] = None
+    x_chromatic_shift: Optional[float] = None
+    y_chromatic_shift: Optional[float] = None
+    z_chromatic_shift: Optional[float] = None
+    x_loc_error: Optional[float] = None
+    y_loc_error: Optional[float] = None
+    z_loc_error: Optional[float] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.rna_spot_id):
             self.MissingRequiredField("rna_spot_id")
         if not isinstance(self.rna_spot_id, RNASpotQualityRecordRnaSpotId):
             self.rna_spot_id = RNASpotQualityRecordRnaSpotId(self.rna_spot_id)
+
+        if self._is_empty(self.channel_name):
+            self.MissingRequiredField("channel_name")
+        if not isinstance(self.channel_name, str):
+            self.channel_name = str(self.channel_name)
+
+        if self._is_empty(self.fluorophore_name):
+            self.MissingRequiredField("fluorophore_name")
+        if not isinstance(self.fluorophore_name, str):
+            self.fluorophore_name = str(self.fluorophore_name)
+
+        if self.x_precision is not None and not isinstance(self.x_precision, float):
+            self.x_precision = float(self.x_precision)
+
+        if self.y_precision is not None and not isinstance(self.y_precision, float):
+            self.y_precision = float(self.y_precision)
+
+        if self.z_precision is not None and not isinstance(self.z_precision, float):
+            self.z_precision = float(self.z_precision)
+
+        if self.photon_count is not None and not isinstance(self.photon_count, int):
+            self.photon_count = int(self.photon_count)
+
+        if self.goodness_of_fit is not None and not isinstance(self.goodness_of_fit, float):
+            self.goodness_of_fit = float(self.goodness_of_fit)
+
+        if self.centroid_intensity is not None and not isinstance(self.centroid_intensity, float):
+            self.centroid_intensity = float(self.centroid_intensity)
+
+        if self.peak_intensity is not None and not isinstance(self.peak_intensity, float):
+            self.peak_intensity = float(self.peak_intensity)
+
+        if self.raw_x is not None and not isinstance(self.raw_x, float):
+            self.raw_x = float(self.raw_x)
+
+        if self.raw_y is not None and not isinstance(self.raw_y, float):
+            self.raw_y = float(self.raw_y)
+
+        if self.raw_z is not None and not isinstance(self.raw_z, float):
+            self.raw_z = float(self.raw_z)
+
+        if self.x_drift is not None and not isinstance(self.x_drift, float):
+            self.x_drift = float(self.x_drift)
+
+        if self.y_drift is not None and not isinstance(self.y_drift, float):
+            self.y_drift = float(self.y_drift)
+
+        if self.z_drift is not None and not isinstance(self.z_drift, float):
+            self.z_drift = float(self.z_drift)
+
+        if self.x_chromatic_shift is not None and not isinstance(self.x_chromatic_shift, float):
+            self.x_chromatic_shift = float(self.x_chromatic_shift)
+
+        if self.y_chromatic_shift is not None and not isinstance(self.y_chromatic_shift, float):
+            self.y_chromatic_shift = float(self.y_chromatic_shift)
+
+        if self.z_chromatic_shift is not None and not isinstance(self.z_chromatic_shift, float):
+            self.z_chromatic_shift = float(self.z_chromatic_shift)
+
+        if self.x_loc_error is not None and not isinstance(self.x_loc_error, float):
+            self.x_loc_error = float(self.x_loc_error)
+
+        if self.y_loc_error is not None and not isinstance(self.y_loc_error, float):
+            self.y_loc_error = float(self.y_loc_error)
+
+        if self.z_loc_error is not None and not isinstance(self.z_loc_error, float):
+            self.z_loc_error = float(self.z_loc_error)
 
         super().__post_init__(**kwargs)
 
@@ -768,9 +999,9 @@ class RNASpotQualityTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
-    rna_spot_quality_records: Union[list[Union[int, RNASpotQualityRecordRnaSpotId]], dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]]] = empty_dict()
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    rna_spot_quality_records: Union[dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]], list[Union[dict, RNASpotQualityRecord]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -812,14 +1043,16 @@ class RNASpotQualityTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.rna_spot_quality_records):
             self.MissingRequiredField("rna_spot_quality_records")
         self._normalize_inlined_as_list(slot_name="rna_spot_quality_records", slot_type=RNASpotQualityRecord, key_name="rna_spot_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -881,9 +1114,9 @@ class SpotBiologicalTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     spot_biological_records: Union[list[Union[int, SpotBiologicalRecordSpotId]], dict[Union[int, SpotBiologicalRecordSpotId], Union[dict, SpotBiologicalRecord]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -925,14 +1158,16 @@ class SpotBiologicalTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.spot_biological_records):
             self.MissingRequiredField("spot_biological_records")
         self._normalize_inlined_as_list(slot_name="spot_biological_records", slot_type=SpotBiologicalRecord, key_name="spot_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -994,9 +1229,9 @@ class RNASpotBiologicalTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     rna_spot_biological_records: Union[list[Union[int, RNASpotBiologicalRecordRnaSpotId]], dict[Union[int, RNASpotBiologicalRecordRnaSpotId], Union[dict, RNASpotBiologicalRecord]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -1038,14 +1273,16 @@ class RNASpotBiologicalTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.rna_spot_biological_records):
             self.MissingRequiredField("rna_spot_biological_records")
         self._normalize_inlined_as_list(slot_name="rna_spot_biological_records", slot_type=RNASpotBiologicalRecord, key_name="rna_spot_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -1113,10 +1350,10 @@ class CellTable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     cells: Union[dict[Union[int, CellCellId], Union[dict, Cell]], list[Union[dict, Cell]]] = empty_dict()
     extra_cell_roi_type: Optional[str] = None
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -1163,6 +1400,11 @@ class CellTable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.cells):
             self.MissingRequiredField("cells")
         self._normalize_inlined_as_list(slot_name="cells", slot_type=Cell, key_name="cell_id", keyed=True)
@@ -1171,9 +1413,6 @@ class CellTable(YAMLRoot):
             self.extra_cell_roi_type = str(self.extra_cell_roi_type)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -1237,9 +1476,9 @@ class ExtraCellROITable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     extra_cell_rois: Union[list[Union[int, ExtraCellROIExtraCellRoiId]], dict[Union[int, ExtraCellROIExtraCellRoiId], Union[dict, ExtraCellROI]]] = empty_dict()
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -1286,14 +1525,16 @@ class ExtraCellROITable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.extra_cell_rois):
             self.MissingRequiredField("extra_cell_rois")
         self._normalize_inlined_as_list(slot_name="extra_cell_rois", slot_type=ExtraCellROI, key_name="extra_cell_roi_id", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -1361,10 +1602,10 @@ class SubCellROITable(YAMLRoot):
     experimenter_contact: str = None
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
     sub_cell_rois: Union[dict[Union[int, SubCellROISubCellRoiId], Union[dict, SubCellROI]], list[Union[dict, SubCellROI]]] = empty_dict()
     cell_type: Optional[str] = None
     softwares: Optional[Union[Union[dict, Software], list[Union[dict, Software]]]] = empty_list()
-    xyz_unit: Optional[Union[str, "XYZUnitEnum"]] = None
     time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
     intensity_unit: Optional[str] = None
     intensity_measurement_method: Optional[str] = None
@@ -1411,6 +1652,11 @@ class SubCellROITable(YAMLRoot):
             self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
         self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
 
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
         if self._is_empty(self.sub_cell_rois):
             self.MissingRequiredField("sub_cell_rois")
         self._normalize_inlined_as_list(slot_name="sub_cell_rois", slot_type=SubCellROI, key_name="sub_cell_roi_id", keyed=True)
@@ -1419,9 +1665,6 @@ class SubCellROITable(YAMLRoot):
             self.cell_type = str(self.cell_type)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
-
-        if self.xyz_unit is not None and not isinstance(self.xyz_unit, XYZUnitEnum):
-            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -1493,7 +1736,7 @@ class ROIMappingTable(YAMLRoot):
 
     fof_ct_version: str = None
     table_namespace: str = None
-    roi_boundaries_format: str = None
+    roi_boundaries_format_type: Union[str, "ROIBoundariesFormatTypeEnum"] = None
     xyz_unit: Union[str, "XYZUnitEnum"] = None
     lab_name: str = None
     experimenter_name: str = None
@@ -1501,6 +1744,7 @@ class ROIMappingTable(YAMLRoot):
     description: str = None
     additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
     roi_mappings: Union[Union[dict, ROIMapping], list[Union[dict, ROIMapping]]] = None
+    roi_boundaries_format_description: Optional[str] = None
     cell_type: Optional[str] = None
     sub_cell_roi_type: Optional[str] = None
     extra_cell_roi_type: Optional[str] = None
@@ -1520,10 +1764,10 @@ class ROIMappingTable(YAMLRoot):
         if not isinstance(self.table_namespace, str):
             self.table_namespace = str(self.table_namespace)
 
-        if self._is_empty(self.roi_boundaries_format):
-            self.MissingRequiredField("roi_boundaries_format")
-        if not isinstance(self.roi_boundaries_format, str):
-            self.roi_boundaries_format = str(self.roi_boundaries_format)
+        if self._is_empty(self.roi_boundaries_format_type):
+            self.MissingRequiredField("roi_boundaries_format_type")
+        if not isinstance(self.roi_boundaries_format_type, ROIBoundariesFormatTypeEnum):
+            self.roi_boundaries_format_type = ROIBoundariesFormatTypeEnum(self.roi_boundaries_format_type)
 
         if self._is_empty(self.xyz_unit):
             self.MissingRequiredField("xyz_unit")
@@ -1560,6 +1804,9 @@ class ROIMappingTable(YAMLRoot):
             self.MissingRequiredField("roi_mappings")
         self._normalize_inlined_as_list(slot_name="roi_mappings", slot_type=ROIMapping, key_name="roi_boundaries", keyed=False)
 
+        if self.roi_boundaries_format_description is not None and not isinstance(self.roi_boundaries_format_description, str):
+            self.roi_boundaries_format_description = str(self.roi_boundaries_format_description)
+
         if self.cell_type is not None and not isinstance(self.cell_type, str):
             self.cell_type = str(self.cell_type)
 
@@ -1570,6 +1817,546 @@ class ROIMappingTable(YAMLRoot):
             self.extra_cell_roi_type = str(self.extra_cell_roi_type)
 
         self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
+
+        if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
+            self.time_unit = TimeUnitEnum(self.time_unit)
+
+        if self.intensity_unit is not None and not isinstance(self.intensity_unit, str):
+            self.intensity_unit = str(self.intensity_unit)
+
+        if self.intensity_measurement_method is not None and not isinstance(self.intensity_measurement_method, str):
+            self.intensity_measurement_method = str(self.intensity_measurement_method)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SMLocalization(YAMLRoot):
+    """
+    A single individual single-molecule (SM) localization event in a FOF-vol-CT dataset. Each instance corresponds to
+    one row in the TSV data section of the SM Localization Data table. The loc_id field is the primary key; spot_id
+    links this localization to its parent Spot (if Spot/Trace post-processing was performed); trace_id links it to its
+    parent Trace. Sub_Cell_ROI_ID, Cell_ID and Extra_Cell_ROI_ID optionally link the localization to spatial context
+    tables.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["SMLocalization"]
+    class_class_curie: ClassVar[str] = "fof_ct:SMLocalization"
+    class_name: ClassVar[str] = "SMLocalization"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.SMLocalization
+
+    loc_id: Union[int, SMLocalizationLocId] = None
+    spot_id: int = None
+    trace_id: int = None
+    chrom: str = None
+    chrom_start: int = None
+    chrom_end: int = None
+    x: float = None
+    y: float = None
+    z: float = None
+    sub_cell_roi_id: Optional[int] = None
+    cell_id: Optional[int] = None
+    extra_cell_roi_id: Optional[int] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.loc_id):
+            self.MissingRequiredField("loc_id")
+        if not isinstance(self.loc_id, SMLocalizationLocId):
+            self.loc_id = SMLocalizationLocId(self.loc_id)
+
+        if self._is_empty(self.spot_id):
+            self.MissingRequiredField("spot_id")
+        if not isinstance(self.spot_id, int):
+            self.spot_id = int(self.spot_id)
+
+        if self._is_empty(self.trace_id):
+            self.MissingRequiredField("trace_id")
+        if not isinstance(self.trace_id, int):
+            self.trace_id = int(self.trace_id)
+
+        if self._is_empty(self.chrom):
+            self.MissingRequiredField("chrom")
+        if not isinstance(self.chrom, str):
+            self.chrom = str(self.chrom)
+
+        if self._is_empty(self.chrom_start):
+            self.MissingRequiredField("chrom_start")
+        if not isinstance(self.chrom_start, int):
+            self.chrom_start = int(self.chrom_start)
+
+        if self._is_empty(self.chrom_end):
+            self.MissingRequiredField("chrom_end")
+        if not isinstance(self.chrom_end, int):
+            self.chrom_end = int(self.chrom_end)
+
+        if self._is_empty(self.x):
+            self.MissingRequiredField("x")
+        if not isinstance(self.x, float):
+            self.x = float(self.x)
+
+        if self._is_empty(self.y):
+            self.MissingRequiredField("y")
+        if not isinstance(self.y, float):
+            self.y = float(self.y)
+
+        if self._is_empty(self.z):
+            self.MissingRequiredField("z")
+        if not isinstance(self.z, float):
+            self.z = float(self.z)
+
+        if self.sub_cell_roi_id is not None and not isinstance(self.sub_cell_roi_id, int):
+            self.sub_cell_roi_id = int(self.sub_cell_roi_id)
+
+        if self.cell_id is not None and not isinstance(self.cell_id, int):
+            self.cell_id = int(self.cell_id)
+
+        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, int):
+            self.extra_cell_roi_id = int(self.extra_cell_roi_id)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SMLocalizationTable(YAMLRoot):
+    """
+    The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core, no 4dn_ prefix). This is the
+    mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event.
+    The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing
+    results derived from the localization data.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["SMLocalizationTable"]
+    class_class_curie: ClassVar[str] = "fof_ct:SMLocalizationTable"
+    class_name: ClassVar[str] = "SMLocalizationTable"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.SMLocalizationTable
+
+    fof_ct_version: str = None
+    table_namespace: str = None
+    lab_name: str = None
+    experimenter_name: str = None
+    experimenter_contact: str = None
+    description: str = None
+    softwares: Union[Union[dict, Software], list[Union[dict, Software]]] = None
+    additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    genome_assembly: str = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    sm_localizations: Union[dict[Union[int, SMLocalizationLocId], Union[dict, SMLocalization]], list[Union[dict, SMLocalization]]] = empty_dict()
+    modification: Optional[str] = None
+    vcf_file_name: Optional[str] = None
+    vcf_version: Optional[str] = None
+    time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
+    intensity_unit: Optional[str] = None
+    intensity_measurement_method: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.fof_ct_version):
+            self.MissingRequiredField("fof_ct_version")
+        if not isinstance(self.fof_ct_version, str):
+            self.fof_ct_version = str(self.fof_ct_version)
+
+        if self._is_empty(self.table_namespace):
+            self.MissingRequiredField("table_namespace")
+        if not isinstance(self.table_namespace, str):
+            self.table_namespace = str(self.table_namespace)
+
+        if self._is_empty(self.lab_name):
+            self.MissingRequiredField("lab_name")
+        if not isinstance(self.lab_name, str):
+            self.lab_name = str(self.lab_name)
+
+        if self._is_empty(self.experimenter_name):
+            self.MissingRequiredField("experimenter_name")
+        if not isinstance(self.experimenter_name, str):
+            self.experimenter_name = str(self.experimenter_name)
+
+        if self._is_empty(self.experimenter_contact):
+            self.MissingRequiredField("experimenter_contact")
+        if not isinstance(self.experimenter_contact, str):
+            self.experimenter_contact = str(self.experimenter_contact)
+
+        if self._is_empty(self.description):
+            self.MissingRequiredField("description")
+        if not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self._is_empty(self.softwares):
+            self.MissingRequiredField("softwares")
+        self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
+
+        if self._is_empty(self.additional_tables):
+            self.MissingRequiredField("additional_tables")
+        if not isinstance(self.additional_tables, list):
+            self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
+        self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
+
+        if self._is_empty(self.genome_assembly):
+            self.MissingRequiredField("genome_assembly")
+        if not isinstance(self.genome_assembly, str):
+            self.genome_assembly = str(self.genome_assembly)
+
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
+        if self._is_empty(self.sm_localizations):
+            self.MissingRequiredField("sm_localizations")
+        self._normalize_inlined_as_list(slot_name="sm_localizations", slot_type=SMLocalization, key_name="loc_id", keyed=True)
+
+        if self.modification is not None and not isinstance(self.modification, str):
+            self.modification = str(self.modification)
+
+        if self.vcf_file_name is not None and not isinstance(self.vcf_file_name, str):
+            self.vcf_file_name = str(self.vcf_file_name)
+
+        if self.vcf_version is not None and not isinstance(self.vcf_version, str):
+            self.vcf_version = str(self.vcf_version)
+
+        if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
+            self.time_unit = TimeUnitEnum(self.time_unit)
+
+        if self.intensity_unit is not None and not isinstance(self.intensity_unit, str):
+            self.intensity_unit = str(self.intensity_unit)
+
+        if self.intensity_measurement_method is not None and not isinstance(self.intensity_measurement_method, str):
+            self.intensity_measurement_method = str(self.intensity_measurement_method)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SMLocalizationQualityRecord(YAMLRoot):
+    """
+    A single row in the SM Localization Quality table. Each instance captures quality metrics for one SM localization
+    event identified by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision, Y_Loc_Precision,
+    Z_Loc_Precision and Photon_Count are highly recommended but not literally mandatory. All other reserved metric
+    columns are conditionally required (use of the reserved name is optional, but mandatory if that metric is
+    reported). Additional user-defined optional columns must be described in the file header.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["SMLocalizationQualityRecord"]
+    class_class_curie: ClassVar[str] = "fof_ct:SMLocalizationQualityRecord"
+    class_name: ClassVar[str] = "SMLocalizationQualityRecord"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.SMLocalizationQualityRecord
+
+    loc_id: Union[int, SMLocalizationQualityRecordLocId] = None
+    channel_name: str = None
+    fluorophore_name: str = None
+    x_precision: Optional[float] = None
+    y_precision: Optional[float] = None
+    z_precision: Optional[float] = None
+    photon_count: Optional[int] = None
+    goodness_of_fit: Optional[float] = None
+    centroid_intensity: Optional[float] = None
+    peak_intensity: Optional[float] = None
+    raw_x: Optional[float] = None
+    raw_y: Optional[float] = None
+    raw_z: Optional[float] = None
+    x_loc_error: Optional[float] = None
+    y_loc_error: Optional[float] = None
+    z_loc_error: Optional[float] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.loc_id):
+            self.MissingRequiredField("loc_id")
+        if not isinstance(self.loc_id, SMLocalizationQualityRecordLocId):
+            self.loc_id = SMLocalizationQualityRecordLocId(self.loc_id)
+
+        if self._is_empty(self.channel_name):
+            self.MissingRequiredField("channel_name")
+        if not isinstance(self.channel_name, str):
+            self.channel_name = str(self.channel_name)
+
+        if self._is_empty(self.fluorophore_name):
+            self.MissingRequiredField("fluorophore_name")
+        if not isinstance(self.fluorophore_name, str):
+            self.fluorophore_name = str(self.fluorophore_name)
+
+        if self.x_precision is not None and not isinstance(self.x_precision, float):
+            self.x_precision = float(self.x_precision)
+
+        if self.y_precision is not None and not isinstance(self.y_precision, float):
+            self.y_precision = float(self.y_precision)
+
+        if self.z_precision is not None and not isinstance(self.z_precision, float):
+            self.z_precision = float(self.z_precision)
+
+        if self.photon_count is not None and not isinstance(self.photon_count, int):
+            self.photon_count = int(self.photon_count)
+
+        if self.goodness_of_fit is not None and not isinstance(self.goodness_of_fit, float):
+            self.goodness_of_fit = float(self.goodness_of_fit)
+
+        if self.centroid_intensity is not None and not isinstance(self.centroid_intensity, float):
+            self.centroid_intensity = float(self.centroid_intensity)
+
+        if self.peak_intensity is not None and not isinstance(self.peak_intensity, float):
+            self.peak_intensity = float(self.peak_intensity)
+
+        if self.raw_x is not None and not isinstance(self.raw_x, float):
+            self.raw_x = float(self.raw_x)
+
+        if self.raw_y is not None and not isinstance(self.raw_y, float):
+            self.raw_y = float(self.raw_y)
+
+        if self.raw_z is not None and not isinstance(self.raw_z, float):
+            self.raw_z = float(self.raw_z)
+
+        if self.x_loc_error is not None and not isinstance(self.x_loc_error, float):
+            self.x_loc_error = float(self.x_loc_error)
+
+        if self.y_loc_error is not None and not isinstance(self.y_loc_error, float):
+            self.y_loc_error = float(self.y_loc_error)
+
+        if self.z_loc_error is not None and not isinstance(self.z_loc_error, float):
+            self.z_loc_error = float(self.z_loc_error)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SMLocalizationQualityTable(YAMLRoot):
+    """
+    The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_quality, no 4dn_ prefix).
+    Requirement level: optional (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this
+    table provides localization quality metrics indexed by Loc_ID when submitted.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["SMLocalizationQualityTable"]
+    class_class_curie: ClassVar[str] = "fof_ct:SMLocalizationQualityTable"
+    class_name: ClassVar[str] = "SMLocalizationQualityTable"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.SMLocalizationQualityTable
+
+    fof_ct_version: str = None
+    table_namespace: str = None
+    lab_name: str = None
+    experimenter_name: str = None
+    experimenter_contact: str = None
+    description: str = None
+    softwares: Union[Union[dict, Software], list[Union[dict, Software]]] = None
+    additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    sm_localization_quality_records: Union[dict[Union[int, SMLocalizationQualityRecordLocId], Union[dict, SMLocalizationQualityRecord]], list[Union[dict, SMLocalizationQualityRecord]]] = empty_dict()
+    time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
+    intensity_unit: Optional[str] = None
+    intensity_measurement_method: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.fof_ct_version):
+            self.MissingRequiredField("fof_ct_version")
+        if not isinstance(self.fof_ct_version, str):
+            self.fof_ct_version = str(self.fof_ct_version)
+
+        if self._is_empty(self.table_namespace):
+            self.MissingRequiredField("table_namespace")
+        if not isinstance(self.table_namespace, str):
+            self.table_namespace = str(self.table_namespace)
+
+        if self._is_empty(self.lab_name):
+            self.MissingRequiredField("lab_name")
+        if not isinstance(self.lab_name, str):
+            self.lab_name = str(self.lab_name)
+
+        if self._is_empty(self.experimenter_name):
+            self.MissingRequiredField("experimenter_name")
+        if not isinstance(self.experimenter_name, str):
+            self.experimenter_name = str(self.experimenter_name)
+
+        if self._is_empty(self.experimenter_contact):
+            self.MissingRequiredField("experimenter_contact")
+        if not isinstance(self.experimenter_contact, str):
+            self.experimenter_contact = str(self.experimenter_contact)
+
+        if self._is_empty(self.description):
+            self.MissingRequiredField("description")
+        if not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self._is_empty(self.softwares):
+            self.MissingRequiredField("softwares")
+        self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
+
+        if self._is_empty(self.additional_tables):
+            self.MissingRequiredField("additional_tables")
+        if not isinstance(self.additional_tables, list):
+            self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
+        self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
+
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
+        if self._is_empty(self.sm_localization_quality_records):
+            self.MissingRequiredField("sm_localization_quality_records")
+        self._normalize_inlined_as_list(slot_name="sm_localization_quality_records", slot_type=SMLocalizationQualityRecord, key_name="loc_id", keyed=True)
+
+        if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
+            self.time_unit = TimeUnitEnum(self.time_unit)
+
+        if self.intensity_unit is not None and not isinstance(self.intensity_unit, str):
+            self.intensity_unit = str(self.intensity_unit)
+
+        if self.intensity_measurement_method is not None and not isinstance(self.intensity_measurement_method, str):
+            self.intensity_measurement_method = str(self.intensity_measurement_method)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class UndecodedLocalization(YAMLRoot):
+    """
+    A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the
+    TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared
+    loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel,
+    Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["UndecodedLocalization"]
+    class_class_curie: ClassVar[str] = "fof_ct:UndecodedLocalization"
+    class_name: ClassVar[str] = "UndecodedLocalization"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.UndecodedLocalization
+
+    loc_id: Union[int, UndecodedLocalizationLocId] = None
+    hyb_id: int = None
+    image_frame_id: int = None
+    channel_name: str = None
+    fluorophore_name: str = None
+    x: float = None
+    y: float = None
+    z: float = None
+    the_z: Optional[int] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.loc_id):
+            self.MissingRequiredField("loc_id")
+        if not isinstance(self.loc_id, UndecodedLocalizationLocId):
+            self.loc_id = UndecodedLocalizationLocId(self.loc_id)
+
+        if self._is_empty(self.hyb_id):
+            self.MissingRequiredField("hyb_id")
+        if not isinstance(self.hyb_id, int):
+            self.hyb_id = int(self.hyb_id)
+
+        if self._is_empty(self.image_frame_id):
+            self.MissingRequiredField("image_frame_id")
+        if not isinstance(self.image_frame_id, int):
+            self.image_frame_id = int(self.image_frame_id)
+
+        if self._is_empty(self.channel_name):
+            self.MissingRequiredField("channel_name")
+        if not isinstance(self.channel_name, str):
+            self.channel_name = str(self.channel_name)
+
+        if self._is_empty(self.fluorophore_name):
+            self.MissingRequiredField("fluorophore_name")
+        if not isinstance(self.fluorophore_name, str):
+            self.fluorophore_name = str(self.fluorophore_name)
+
+        if self._is_empty(self.x):
+            self.MissingRequiredField("x")
+        if not isinstance(self.x, float):
+            self.x = float(self.x)
+
+        if self._is_empty(self.y):
+            self.MissingRequiredField("y")
+        if not isinstance(self.y, float):
+            self.y = float(self.y)
+
+        if self._is_empty(self.z):
+            self.MissingRequiredField("z")
+        if not isinstance(self.z, float):
+            self.z = float(self.z)
+
+        if self.the_z is not None and not isinstance(self.the_z, int):
+            self.the_z = int(self.the_z)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class UndecodedLocalizationTable(YAMLRoot):
+    """
+    The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_undecoded, no 4dn_ prefix).
+    This table is optional but recommended. It records raw localization detections prior to any decoding or assignment
+    step. Submission is recommended when the raw detections are available and reproducibility of the decoding pipeline
+    is desired.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["UndecodedLocalizationTable"]
+    class_class_curie: ClassVar[str] = "fof_ct:UndecodedLocalizationTable"
+    class_name: ClassVar[str] = "UndecodedLocalizationTable"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.UndecodedLocalizationTable
+
+    fof_ct_version: str = None
+    table_namespace: str = None
+    lab_name: str = None
+    experimenter_name: str = None
+    experimenter_contact: str = None
+    description: str = None
+    softwares: Union[Union[dict, Software], list[Union[dict, Software]]] = None
+    additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    undecoded_localizations: Union[dict[Union[int, UndecodedLocalizationLocId], Union[dict, UndecodedLocalization]], list[Union[dict, UndecodedLocalization]]] = empty_dict()
+    time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
+    intensity_unit: Optional[str] = None
+    intensity_measurement_method: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.fof_ct_version):
+            self.MissingRequiredField("fof_ct_version")
+        if not isinstance(self.fof_ct_version, str):
+            self.fof_ct_version = str(self.fof_ct_version)
+
+        if self._is_empty(self.table_namespace):
+            self.MissingRequiredField("table_namespace")
+        if not isinstance(self.table_namespace, str):
+            self.table_namespace = str(self.table_namespace)
+
+        if self._is_empty(self.lab_name):
+            self.MissingRequiredField("lab_name")
+        if not isinstance(self.lab_name, str):
+            self.lab_name = str(self.lab_name)
+
+        if self._is_empty(self.experimenter_name):
+            self.MissingRequiredField("experimenter_name")
+        if not isinstance(self.experimenter_name, str):
+            self.experimenter_name = str(self.experimenter_name)
+
+        if self._is_empty(self.experimenter_contact):
+            self.MissingRequiredField("experimenter_contact")
+        if not isinstance(self.experimenter_contact, str):
+            self.experimenter_contact = str(self.experimenter_contact)
+
+        if self._is_empty(self.description):
+            self.MissingRequiredField("description")
+        if not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self._is_empty(self.softwares):
+            self.MissingRequiredField("softwares")
+        self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
+
+        if self._is_empty(self.additional_tables):
+            self.MissingRequiredField("additional_tables")
+        if not isinstance(self.additional_tables, list):
+            self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
+        self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
+
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
+        if self._is_empty(self.undecoded_localizations):
+            self.MissingRequiredField("undecoded_localizations")
+        self._normalize_inlined_as_list(slot_name="undecoded_localizations", slot_type=UndecodedLocalization, key_name="loc_id", keyed=True)
 
         if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
             self.time_unit = TimeUnitEnum(self.time_unit)
@@ -1616,6 +2403,9 @@ class TimeUnitEnum(EnumDefinitionImpl):
     ms = PermissibleValue(
         text="ms",
         description="Milliseconds")
+    msec = PermissibleValue(
+        text="msec",
+        description="Milliseconds (alternative spelling accepted by FOF-CT)")
     min = PermissibleValue(
         text="min",
         description="Minutes")
@@ -1630,34 +2420,44 @@ class TimeUnitEnum(EnumDefinitionImpl):
 
 class SoftwareTypeEnum(EnumDefinitionImpl):
     """
-    Allowed functional categories for software tools.
+    Allowed functional categories for software tools (per the FOF-CT RTD "Allowable value lists" table for
+    Software_Type).
     """
+    DriftCorrection = PermissibleValue(
+        text="DriftCorrection",
+        description="Drift correction software")
+    Segmentation = PermissibleValue(
+        text="Segmentation",
+        description="Image segmentation software")
     SpotLoc = PermissibleValue(
         text="SpotLoc",
         description="Spot localisation software")
     Tracing = PermissibleValue(
         text="Tracing",
         description="Chromatin tracing software")
-    Segmentation = PermissibleValue(
-        text="Segmentation",
-        description="Image segmentation software")
-    QC = PermissibleValue(
-        text="QC",
-        description="Quality control software")
-    Distance = PermissibleValue(
-        text="Distance",
-        description="Distance calculation software")
     Other = PermissibleValue(
         text="Other",
         description="Other software type")
 
     _defn = EnumDefinition(
         name="SoftwareTypeEnum",
-        description="Allowed functional categories for software tools.",
+        description="""Allowed functional categories for software tools (per the FOF-CT RTD \"Allowable value lists\" table for Software_Type).""",
     )
 
     @classmethod
     def _addvals(cls):
+        setattr(cls, "Distance Calculation",
+            PermissibleValue(
+                text="Distance Calculation",
+                description="Distance calculation software"))
+        setattr(cls, "Precision Assessment",
+            PermissibleValue(
+                text="Precision Assessment",
+                description="Localization/tracing precision assessment software"))
+        setattr(cls, "Single Molecule Localization",
+            PermissibleValue(
+                text="Single Molecule Localization",
+                description="Single-molecule localization software (FOF-vol-CT)"))
         setattr(cls, "SpotLoc+Tracing",
             PermissibleValue(
                 text="SpotLoc+Tracing",
@@ -1665,11 +2465,14 @@ class SoftwareTypeEnum(EnumDefinitionImpl):
 
 class TableNamespaceEnum(EnumDefinitionImpl):
     """
-    Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field.
+    Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field. Note: per the
+    FOF-CT RTD, the three FOF-vol-CT-exclusive namespaces (vol_core, vol_quality, undecoded) intentionally omit the
+    4dn_ prefix used by the 12 shared tables, to reflect the format's continued stewardship by the broader community
+    beyond 4DN.
     """
     _defn = EnumDefinition(
         name="TableNamespaceEnum",
-        description="Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field.",
+        description="""Allowed namespace identifiers for FOF-CT tables that may be listed in the additional_tables field. Note: per the FOF-CT RTD, the three FOF-vol-CT-exclusive namespaces (vol_core, vol_quality, undecoded) intentionally omit the 4dn_ prefix used by the 12 shared tables, to reflect the format's continued stewardship by the broader community beyond 4DN.""",
     )
 
     @classmethod
@@ -1722,6 +2525,56 @@ class TableNamespaceEnum(EnumDefinitionImpl):
             PermissibleValue(
                 text="4dn_FOF-CT_mapping",
                 description="Cell/ROI Mapping table (table 12)"))
+        setattr(cls, "FOF-CT_vol_core",
+            PermissibleValue(
+                text="FOF-CT_vol_core",
+                description="""SM Localization Data table — FOF-vol-CT (table 13). No 4dn_ prefix (see enum-level note)."""))
+        setattr(cls, "FOF-CT_vol_quality",
+            PermissibleValue(
+                text="FOF-CT_vol_quality",
+                description="""SM Localization Quality table — FOF-vol-CT (table 14). No 4dn_ prefix (see enum-level note)."""))
+        setattr(cls, "FOF-CT_undecoded",
+            PermissibleValue(
+                text="FOF-CT_undecoded",
+                description="""Undecoded SM Localization Data table — FOF-vol-CT (table 15). No 4dn_ prefix (see enum-level note)."""))
+
+class ROIBoundariesFormatTypeEnum(EnumDefinitionImpl):
+    """
+    Controlled vocabulary for ##ROI_Boundaries_Format_Type= in the Cell/ROI Mapping table (per the FOF-CT RTD
+    "Allowable value lists" table). Default value is OME_Polygon.
+    """
+    OME_Polygon = PermissibleValue(
+        text="OME_Polygon",
+        description="OME ROI data model, polygon representation (default).")
+    OME_Mask = PermissibleValue(
+        text="OME_Mask",
+        description="OME ROI data model, mask representation.")
+    Mesh_OBJ = PermissibleValue(
+        text="Mesh_OBJ",
+        description="3D mesh boundary described using the Wavefront OBJ format.")
+    Mesh_STL = PermissibleValue(
+        text="Mesh_STL",
+        description="3D mesh boundary described using the STL format.")
+    Mesh_PLY = PermissibleValue(
+        text="Mesh_PLY",
+        description="3D mesh boundary described using the PLY format.")
+    GeoJSON = PermissibleValue(
+        text="GeoJSON",
+        description="Boundary described using the GeoJSON format.")
+    WKT = PermissibleValue(
+        text="WKT",
+        description="Boundary described using Well-Known Text.")
+    Label_Mask_Image = PermissibleValue(
+        text="Label_Mask_Image",
+        description="Boundary described as a labeled mask image.")
+    Other = PermissibleValue(
+        text="Other",
+        description="Any other boundary format. When used, ROI_Boundaries_Format_Description becomes mandatory.")
+
+    _defn = EnumDefinition(
+        name="ROIBoundariesFormatTypeEnum",
+        description="""Controlled vocabulary for ##ROI_Boundaries_Format_Type= in the Cell/ROI Mapping table (per the FOF-CT RTD \"Allowable value lists\" table). Default value is OME_Polygon.""",
+    )
 
 # Slots
 class slots:
@@ -1754,7 +2607,7 @@ slots.softwares = Slot(uri=FOF_CT.softwares, name="softwares", curie=FOF_CT.curi
                    model_uri=FOF_CT.softwares, domain=None, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.xyz_unit, domain=None, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.xyz_unit, domain=None, range=Union[str, "XYZUnitEnum"])
 
 slots.time_unit = Slot(uri=FOF_CT.time_unit, name="time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.time_unit, domain=None, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -1774,6 +2627,9 @@ slots.y = Slot(uri=FOF_CT.y, name="y", curie=FOF_CT.curie('y'),
 slots.z = Slot(uri=FOF_CT.z, name="z", curie=FOF_CT.curie('z'),
                    model_uri=FOF_CT.z, domain=None, range=Optional[float])
 
+slots.loc_id = Slot(uri=FOF_CT.loc_id, name="loc_id", curie=FOF_CT.curie('loc_id'),
+                   model_uri=FOF_CT.loc_id, domain=None, range=Optional[int])
+
 slots.spot_id = Slot(uri=FOF_CT.spot_id, name="spot_id", curie=FOF_CT.curie('spot_id'),
                    model_uri=FOF_CT.spot_id, domain=None, range=Optional[int])
 
@@ -1789,11 +2645,101 @@ slots.cell_id = Slot(uri=FOF_CT.cell_id, name="cell_id", curie=FOF_CT.curie('cel
 slots.extra_cell_roi_id = Slot(uri=FOF_CT.extra_cell_roi_id, name="extra_cell_roi_id", curie=FOF_CT.curie('extra_cell_roi_id'),
                    model_uri=FOF_CT.extra_cell_roi_id, domain=None, range=Optional[int])
 
+slots.chrom = Slot(uri=FOF_CT.chrom, name="chrom", curie=FOF_CT.curie('chrom'),
+                   model_uri=FOF_CT.chrom, domain=None, range=Optional[str])
+
+slots.chrom_start = Slot(uri=FOF_CT.chrom_start, name="chrom_start", curie=FOF_CT.curie('chrom_start'),
+                   model_uri=FOF_CT.chrom_start, domain=None, range=Optional[int])
+
+slots.chrom_end = Slot(uri=FOF_CT.chrom_end, name="chrom_end", curie=FOF_CT.curie('chrom_end'),
+                   model_uri=FOF_CT.chrom_end, domain=None, range=Optional[int])
+
 slots.rna_spot_id = Slot(uri=FOF_CT.rna_spot_id, name="rna_spot_id", curie=FOF_CT.curie('rna_spot_id'),
                    model_uri=FOF_CT.rna_spot_id, domain=None, range=Optional[int])
 
+slots.channel_name = Slot(uri=FOF_CT.channel_name, name="channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.channel_name, domain=None, range=Optional[str])
+
+slots.fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.fluorophore_name, domain=None, range=Optional[str])
+
+slots.x_precision = Slot(uri=FOF_CT.x_precision, name="x_precision", curie=FOF_CT.curie('x_precision'),
+                   model_uri=FOF_CT.x_precision, domain=None, range=Optional[float])
+
+slots.y_precision = Slot(uri=FOF_CT.y_precision, name="y_precision", curie=FOF_CT.curie('y_precision'),
+                   model_uri=FOF_CT.y_precision, domain=None, range=Optional[float])
+
+slots.z_precision = Slot(uri=FOF_CT.z_precision, name="z_precision", curie=FOF_CT.curie('z_precision'),
+                   model_uri=FOF_CT.z_precision, domain=None, range=Optional[float])
+
+slots.photon_count = Slot(uri=FOF_CT.photon_count, name="photon_count", curie=FOF_CT.curie('photon_count'),
+                   model_uri=FOF_CT.photon_count, domain=None, range=Optional[int])
+
+slots.goodness_of_fit = Slot(uri=FOF_CT.goodness_of_fit, name="goodness_of_fit", curie=FOF_CT.curie('goodness_of_fit'),
+                   model_uri=FOF_CT.goodness_of_fit, domain=None, range=Optional[float])
+
+slots.centroid_intensity = Slot(uri=FOF_CT.centroid_intensity, name="centroid_intensity", curie=FOF_CT.curie('centroid_intensity'),
+                   model_uri=FOF_CT.centroid_intensity, domain=None, range=Optional[float])
+
+slots.peak_intensity = Slot(uri=FOF_CT.peak_intensity, name="peak_intensity", curie=FOF_CT.curie('peak_intensity'),
+                   model_uri=FOF_CT.peak_intensity, domain=None, range=Optional[float])
+
+slots.raw_x = Slot(uri=FOF_CT.raw_x, name="raw_x", curie=FOF_CT.curie('raw_x'),
+                   model_uri=FOF_CT.raw_x, domain=None, range=Optional[float])
+
+slots.raw_y = Slot(uri=FOF_CT.raw_y, name="raw_y", curie=FOF_CT.curie('raw_y'),
+                   model_uri=FOF_CT.raw_y, domain=None, range=Optional[float])
+
+slots.raw_z = Slot(uri=FOF_CT.raw_z, name="raw_z", curie=FOF_CT.curie('raw_z'),
+                   model_uri=FOF_CT.raw_z, domain=None, range=Optional[float])
+
+slots.x_drift = Slot(uri=FOF_CT.x_drift, name="x_drift", curie=FOF_CT.curie('x_drift'),
+                   model_uri=FOF_CT.x_drift, domain=None, range=Optional[float])
+
+slots.y_drift = Slot(uri=FOF_CT.y_drift, name="y_drift", curie=FOF_CT.curie('y_drift'),
+                   model_uri=FOF_CT.y_drift, domain=None, range=Optional[float])
+
+slots.z_drift = Slot(uri=FOF_CT.z_drift, name="z_drift", curie=FOF_CT.curie('z_drift'),
+                   model_uri=FOF_CT.z_drift, domain=None, range=Optional[float])
+
+slots.x_chromatic_shift = Slot(uri=FOF_CT.x_chromatic_shift, name="x_chromatic_shift", curie=FOF_CT.curie('x_chromatic_shift'),
+                   model_uri=FOF_CT.x_chromatic_shift, domain=None, range=Optional[float])
+
+slots.y_chromatic_shift = Slot(uri=FOF_CT.y_chromatic_shift, name="y_chromatic_shift", curie=FOF_CT.curie('y_chromatic_shift'),
+                   model_uri=FOF_CT.y_chromatic_shift, domain=None, range=Optional[float])
+
+slots.z_chromatic_shift = Slot(uri=FOF_CT.z_chromatic_shift, name="z_chromatic_shift", curie=FOF_CT.curie('z_chromatic_shift'),
+                   model_uri=FOF_CT.z_chromatic_shift, domain=None, range=Optional[float])
+
+slots.x_loc_error = Slot(uri=FOF_CT.x_loc_error, name="x_loc_error", curie=FOF_CT.curie('x_loc_error'),
+                   model_uri=FOF_CT.x_loc_error, domain=None, range=Optional[float])
+
+slots.y_loc_error = Slot(uri=FOF_CT.y_loc_error, name="y_loc_error", curie=FOF_CT.curie('y_loc_error'),
+                   model_uri=FOF_CT.y_loc_error, domain=None, range=Optional[float])
+
+slots.z_loc_error = Slot(uri=FOF_CT.z_loc_error, name="z_loc_error", curie=FOF_CT.curie('z_loc_error'),
+                   model_uri=FOF_CT.z_loc_error, domain=None, range=Optional[float])
+
+slots.image_frame_id = Slot(uri=FOF_CT.image_frame_id, name="image_frame_id", curie=FOF_CT.curie('image_frame_id'),
+                   model_uri=FOF_CT.image_frame_id, domain=None, range=Optional[int])
+
+slots.hyb_id = Slot(uri=FOF_CT.hyb_id, name="hyb_id", curie=FOF_CT.curie('hyb_id'),
+                   model_uri=FOF_CT.hyb_id, domain=None, range=Optional[int])
+
+slots.the_z = Slot(uri=FOF_CT.the_z, name="the_z", curie=FOF_CT.curie('the_z'),
+                   model_uri=FOF_CT.the_z, domain=None, range=Optional[int])
+
 slots.genome_assembly = Slot(uri=FOF_CT.genome_assembly, name="genome_assembly", curie=FOF_CT.curie('genome_assembly'),
                    model_uri=FOF_CT.genome_assembly, domain=None, range=Optional[str])
+
+slots.modification = Slot(uri=FOF_CT.modification, name="modification", curie=FOF_CT.curie('modification'),
+                   model_uri=FOF_CT.modification, domain=None, range=Optional[str])
+
+slots.vcf_file_name = Slot(uri=FOF_CT.vcf_file_name, name="vcf_file_name", curie=FOF_CT.curie('vcf_file_name'),
+                   model_uri=FOF_CT.vcf_file_name, domain=None, range=Optional[str])
+
+slots.vcf_version = Slot(uri=FOF_CT.vcf_version, name="vcf_version", curie=FOF_CT.curie('vcf_version'),
+                   model_uri=FOF_CT.vcf_version, domain=None, range=Optional[str])
 
 slots.cell_type = Slot(uri=FOF_CT.cell_type, name="cell_type", curie=FOF_CT.curie('cell_type'),
                    model_uri=FOF_CT.cell_type, domain=None, range=Optional[str])
@@ -1816,20 +2762,17 @@ slots.software_authors = Slot(uri=FOF_CT.software_authors, name="software_author
 slots.software_description = Slot(uri=FOF_CT.software_description, name="software_description", curie=FOF_CT.curie('software_description'),
                    model_uri=FOF_CT.software_description, domain=None, range=str)
 
+slots.software_parameters = Slot(uri=FOF_CT.software_parameters, name="software_parameters", curie=FOF_CT.curie('software_parameters'),
+                   model_uri=FOF_CT.software_parameters, domain=None, range=str)
+
 slots.software_repository = Slot(uri=FOF_CT.software_repository, name="software_repository", curie=FOF_CT.curie('software_repository'),
                    model_uri=FOF_CT.software_repository, domain=None, range=Union[str, URI])
 
 slots.software_preferred_citation_id = Slot(uri=FOF_CT.software_preferred_citation_id, name="software_preferred_citation_id", curie=FOF_CT.curie('software_preferred_citation_id'),
                    model_uri=FOF_CT.software_preferred_citation_id, domain=None, range=Union[str, URI])
 
-slots.loc_id = Slot(uri=FOF_CT.loc_id, name="loc_id", curie=FOF_CT.curie('loc_id'),
-                   model_uri=FOF_CT.loc_id, domain=Localization, range=Union[int, LocalizationLocId])
-
-slots.fluor = Slot(uri=FOF_CT.fluor, name="fluor", curie=FOF_CT.curie('fluor'),
-                   model_uri=FOF_CT.fluor, domain=Localization, range=Optional[str])
-
 slots.localizations = Slot(uri=FOF_CT.localizations, name="localizations", curie=FOF_CT.curie('localizations'),
-                   model_uri=FOF_CT.localizations, domain=LocalizationTable, range=Optional[Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]]])
+                   model_uri=FOF_CT.localizations, domain=DemultiplexingTable, range=Optional[Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]]])
 
 slots.traces = Slot(uri=FOF_CT.traces, name="traces", curie=FOF_CT.curie('traces'),
                    model_uri=FOF_CT.traces, domain=TraceTable, range=Optional[Union[list[Union[int, TraceTraceId]], dict[Union[int, TraceTraceId], Union[dict, Trace]]]])
@@ -1853,10 +2796,10 @@ slots.rna_spots = Slot(uri=FOF_CT.rna_spots, name="rna_spots", curie=FOF_CT.curi
                    model_uri=FOF_CT.rna_spots, domain=RNASpotTable, range=Optional[Union[Union[dict, RNASpot], list[Union[dict, RNASpot]]]])
 
 slots.spot_quality_records = Slot(uri=FOF_CT.spot_quality_records, name="spot_quality_records", curie=FOF_CT.curie('spot_quality_records'),
-                   model_uri=FOF_CT.spot_quality_records, domain=SpotQualityTable, range=Optional[Union[list[Union[int, SpotQualityRecordSpotId]], dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]]]])
+                   model_uri=FOF_CT.spot_quality_records, domain=SpotQualityTable, range=Optional[Union[dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]], list[Union[dict, SpotQualityRecord]]]])
 
 slots.rna_spot_quality_records = Slot(uri=FOF_CT.rna_spot_quality_records, name="rna_spot_quality_records", curie=FOF_CT.curie('rna_spot_quality_records'),
-                   model_uri=FOF_CT.rna_spot_quality_records, domain=RNASpotQualityTable, range=Optional[Union[list[Union[int, RNASpotQualityRecordRnaSpotId]], dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]]]])
+                   model_uri=FOF_CT.rna_spot_quality_records, domain=RNASpotQualityTable, range=Optional[Union[dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]], list[Union[dict, RNASpotQualityRecord]]]])
 
 slots.spot_biological_records = Slot(uri=FOF_CT.spot_biological_records, name="spot_biological_records", curie=FOF_CT.curie('spot_biological_records'),
                    model_uri=FOF_CT.spot_biological_records, domain=SpotBiologicalTable, range=Optional[Union[list[Union[int, SpotBiologicalRecordSpotId]], dict[Union[int, SpotBiologicalRecordSpotId], Union[dict, SpotBiologicalRecord]]]])
@@ -1873,14 +2816,26 @@ slots.extra_cell_rois = Slot(uri=FOF_CT.extra_cell_rois, name="extra_cell_rois",
 slots.sub_cell_rois = Slot(uri=FOF_CT.sub_cell_rois, name="sub_cell_rois", curie=FOF_CT.curie('sub_cell_rois'),
                    model_uri=FOF_CT.sub_cell_rois, domain=SubCellROITable, range=Optional[Union[dict[Union[int, SubCellROISubCellRoiId], Union[dict, SubCellROI]], list[Union[dict, SubCellROI]]]])
 
-slots.roi_boundaries_format = Slot(uri=FOF_CT.roi_boundaries_format, name="roi_boundaries_format", curie=FOF_CT.curie('roi_boundaries_format'),
-                   model_uri=FOF_CT.roi_boundaries_format, domain=ROIMappingTable, range=Optional[str])
+slots.roi_boundaries_format_type = Slot(uri=FOF_CT.roi_boundaries_format_type, name="roi_boundaries_format_type", curie=FOF_CT.curie('roi_boundaries_format_type'),
+                   model_uri=FOF_CT.roi_boundaries_format_type, domain=ROIMappingTable, range=Optional[Union[str, "ROIBoundariesFormatTypeEnum"]])
+
+slots.roi_boundaries_format_description = Slot(uri=FOF_CT.roi_boundaries_format_description, name="roi_boundaries_format_description", curie=FOF_CT.curie('roi_boundaries_format_description'),
+                   model_uri=FOF_CT.roi_boundaries_format_description, domain=ROIMappingTable, range=Optional[str])
 
 slots.roi_boundaries = Slot(uri=FOF_CT.roi_boundaries, name="roi_boundaries", curie=FOF_CT.curie('roi_boundaries'),
                    model_uri=FOF_CT.roi_boundaries, domain=ROIMapping, range=Optional[str])
 
 slots.roi_mappings = Slot(uri=FOF_CT.roi_mappings, name="roi_mappings", curie=FOF_CT.curie('roi_mappings'),
                    model_uri=FOF_CT.roi_mappings, domain=ROIMappingTable, range=Optional[Union[Union[dict, ROIMapping], list[Union[dict, ROIMapping]]]])
+
+slots.sm_localizations = Slot(uri=FOF_CT.sm_localizations, name="sm_localizations", curie=FOF_CT.curie('sm_localizations'),
+                   model_uri=FOF_CT.sm_localizations, domain=SMLocalizationTable, range=Optional[Union[dict[Union[int, SMLocalizationLocId], Union[dict, SMLocalization]], list[Union[dict, SMLocalization]]]])
+
+slots.sm_localization_quality_records = Slot(uri=FOF_CT.sm_localization_quality_records, name="sm_localization_quality_records", curie=FOF_CT.curie('sm_localization_quality_records'),
+                   model_uri=FOF_CT.sm_localization_quality_records, domain=SMLocalizationQualityTable, range=Optional[Union[dict[Union[int, SMLocalizationQualityRecordLocId], Union[dict, SMLocalizationQualityRecord]], list[Union[dict, SMLocalizationQualityRecord]]]])
+
+slots.undecoded_localizations = Slot(uri=FOF_CT.undecoded_localizations, name="undecoded_localizations", curie=FOF_CT.curie('undecoded_localizations'),
+                   model_uri=FOF_CT.undecoded_localizations, domain=UndecodedLocalizationTable, range=Optional[Union[dict[Union[int, UndecodedLocalizationLocId], Union[dict, UndecodedLocalization]], list[Union[dict, UndecodedLocalization]]]])
 
 slots.Localization_loc_id = Slot(uri=FOF_CT.loc_id, name="Localization_loc_id", curie=FOF_CT.curie('loc_id'),
                    model_uri=FOF_CT.Localization_loc_id, domain=Localization, range=Union[int, LocalizationLocId])
@@ -1897,37 +2852,40 @@ slots.Localization_y = Slot(uri=FOF_CT.y, name="Localization_y", curie=FOF_CT.cu
 slots.Localization_z = Slot(uri=FOF_CT.z, name="Localization_z", curie=FOF_CT.curie('z'),
                    model_uri=FOF_CT.Localization_z, domain=Localization, range=float)
 
-slots.Localization_fluor = Slot(uri=FOF_CT.fluor, name="Localization_fluor", curie=FOF_CT.curie('fluor'),
-                   model_uri=FOF_CT.Localization_fluor, domain=Localization, range=str)
+slots.Localization_channel_name = Slot(uri=FOF_CT.channel_name, name="Localization_channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.Localization_channel_name, domain=Localization, range=str)
 
-slots.LocalizationTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="LocalizationTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
-                   model_uri=FOF_CT.LocalizationTable_fof_ct_version, domain=LocalizationTable, range=str,
+slots.Localization_fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="Localization_fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.Localization_fluorophore_name, domain=Localization, range=str)
+
+slots.DemultiplexingTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="DemultiplexingTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
+                   model_uri=FOF_CT.DemultiplexingTable_fof_ct_version, domain=DemultiplexingTable, range=str,
                    pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
 
-slots.LocalizationTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="LocalizationTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
-                   model_uri=FOF_CT.LocalizationTable_table_namespace, domain=LocalizationTable, range=str)
+slots.DemultiplexingTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="DemultiplexingTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
+                   model_uri=FOF_CT.DemultiplexingTable_table_namespace, domain=DemultiplexingTable, range=str)
 
-slots.LocalizationTable_lab_name = Slot(uri=FOF_CT.lab_name, name="LocalizationTable_lab_name", curie=FOF_CT.curie('lab_name'),
-                   model_uri=FOF_CT.LocalizationTable_lab_name, domain=LocalizationTable, range=str)
+slots.DemultiplexingTable_lab_name = Slot(uri=FOF_CT.lab_name, name="DemultiplexingTable_lab_name", curie=FOF_CT.curie('lab_name'),
+                   model_uri=FOF_CT.DemultiplexingTable_lab_name, domain=DemultiplexingTable, range=str)
 
-slots.LocalizationTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="LocalizationTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
-                   model_uri=FOF_CT.LocalizationTable_experimenter_name, domain=LocalizationTable, range=str)
+slots.DemultiplexingTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="DemultiplexingTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
+                   model_uri=FOF_CT.DemultiplexingTable_experimenter_name, domain=DemultiplexingTable, range=str)
 
-slots.LocalizationTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="LocalizationTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
-                   model_uri=FOF_CT.LocalizationTable_experimenter_contact, domain=LocalizationTable, range=str,
+slots.DemultiplexingTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="DemultiplexingTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
+                   model_uri=FOF_CT.DemultiplexingTable_experimenter_contact, domain=DemultiplexingTable, range=str,
                    pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
 
-slots.LocalizationTable_description = Slot(uri=FOF_CT.description, name="LocalizationTable_description", curie=FOF_CT.curie('description'),
-                   model_uri=FOF_CT.LocalizationTable_description, domain=LocalizationTable, range=str)
+slots.DemultiplexingTable_description = Slot(uri=FOF_CT.description, name="DemultiplexingTable_description", curie=FOF_CT.curie('description'),
+                   model_uri=FOF_CT.DemultiplexingTable_description, domain=DemultiplexingTable, range=str)
 
-slots.LocalizationTable_softwares = Slot(uri=FOF_CT.softwares, name="LocalizationTable_softwares", curie=FOF_CT.curie('softwares'),
-                   model_uri=FOF_CT.LocalizationTable_softwares, domain=LocalizationTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
+slots.DemultiplexingTable_softwares = Slot(uri=FOF_CT.softwares, name="DemultiplexingTable_softwares", curie=FOF_CT.curie('softwares'),
+                   model_uri=FOF_CT.DemultiplexingTable_softwares, domain=DemultiplexingTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
 
-slots.LocalizationTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="LocalizationTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
-                   model_uri=FOF_CT.LocalizationTable_additional_tables, domain=LocalizationTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
+slots.DemultiplexingTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="DemultiplexingTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
+                   model_uri=FOF_CT.DemultiplexingTable_additional_tables, domain=DemultiplexingTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
 
-slots.LocalizationTable_localizations = Slot(uri=FOF_CT.localizations, name="LocalizationTable_localizations", curie=FOF_CT.curie('localizations'),
-                   model_uri=FOF_CT.LocalizationTable_localizations, domain=LocalizationTable, range=Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]])
+slots.DemultiplexingTable_localizations = Slot(uri=FOF_CT.localizations, name="DemultiplexingTable_localizations", curie=FOF_CT.curie('localizations'),
+                   model_uri=FOF_CT.DemultiplexingTable_localizations, domain=DemultiplexingTable, range=Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]])
 
 slots.Trace_trace_id = Slot(uri=FOF_CT.trace_id, name="Trace_trace_id", curie=FOF_CT.curie('trace_id'),
                    model_uri=FOF_CT.Trace_trace_id, domain=Trace, range=Union[int, TraceTraceId])
@@ -2020,6 +2978,69 @@ slots.RNASpotTable_rna_spots = Slot(uri=FOF_CT.rna_spots, name="RNASpotTable_rna
 slots.SpotQualityRecord_spot_id = Slot(uri=FOF_CT.spot_id, name="SpotQualityRecord_spot_id", curie=FOF_CT.curie('spot_id'),
                    model_uri=FOF_CT.SpotQualityRecord_spot_id, domain=SpotQualityRecord, range=Union[int, SpotQualityRecordSpotId])
 
+slots.SpotQualityRecord_channel_name = Slot(uri=FOF_CT.channel_name, name="SpotQualityRecord_channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.SpotQualityRecord_channel_name, domain=SpotQualityRecord, range=str)
+
+slots.SpotQualityRecord_fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="SpotQualityRecord_fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.SpotQualityRecord_fluorophore_name, domain=SpotQualityRecord, range=str)
+
+slots.SpotQualityRecord_x_precision = Slot(uri=FOF_CT.x_precision, name="SpotQualityRecord_x_precision", curie=FOF_CT.curie('x_precision'),
+                   model_uri=FOF_CT.SpotQualityRecord_x_precision, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_y_precision = Slot(uri=FOF_CT.y_precision, name="SpotQualityRecord_y_precision", curie=FOF_CT.curie('y_precision'),
+                   model_uri=FOF_CT.SpotQualityRecord_y_precision, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_z_precision = Slot(uri=FOF_CT.z_precision, name="SpotQualityRecord_z_precision", curie=FOF_CT.curie('z_precision'),
+                   model_uri=FOF_CT.SpotQualityRecord_z_precision, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_photon_count = Slot(uri=FOF_CT.photon_count, name="SpotQualityRecord_photon_count", curie=FOF_CT.curie('photon_count'),
+                   model_uri=FOF_CT.SpotQualityRecord_photon_count, domain=SpotQualityRecord, range=Optional[int])
+
+slots.SpotQualityRecord_goodness_of_fit = Slot(uri=FOF_CT.goodness_of_fit, name="SpotQualityRecord_goodness_of_fit", curie=FOF_CT.curie('goodness_of_fit'),
+                   model_uri=FOF_CT.SpotQualityRecord_goodness_of_fit, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_centroid_intensity = Slot(uri=FOF_CT.centroid_intensity, name="SpotQualityRecord_centroid_intensity", curie=FOF_CT.curie('centroid_intensity'),
+                   model_uri=FOF_CT.SpotQualityRecord_centroid_intensity, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_peak_intensity = Slot(uri=FOF_CT.peak_intensity, name="SpotQualityRecord_peak_intensity", curie=FOF_CT.curie('peak_intensity'),
+                   model_uri=FOF_CT.SpotQualityRecord_peak_intensity, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_raw_x = Slot(uri=FOF_CT.raw_x, name="SpotQualityRecord_raw_x", curie=FOF_CT.curie('raw_x'),
+                   model_uri=FOF_CT.SpotQualityRecord_raw_x, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_raw_y = Slot(uri=FOF_CT.raw_y, name="SpotQualityRecord_raw_y", curie=FOF_CT.curie('raw_y'),
+                   model_uri=FOF_CT.SpotQualityRecord_raw_y, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_raw_z = Slot(uri=FOF_CT.raw_z, name="SpotQualityRecord_raw_z", curie=FOF_CT.curie('raw_z'),
+                   model_uri=FOF_CT.SpotQualityRecord_raw_z, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_x_drift = Slot(uri=FOF_CT.x_drift, name="SpotQualityRecord_x_drift", curie=FOF_CT.curie('x_drift'),
+                   model_uri=FOF_CT.SpotQualityRecord_x_drift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_y_drift = Slot(uri=FOF_CT.y_drift, name="SpotQualityRecord_y_drift", curie=FOF_CT.curie('y_drift'),
+                   model_uri=FOF_CT.SpotQualityRecord_y_drift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_z_drift = Slot(uri=FOF_CT.z_drift, name="SpotQualityRecord_z_drift", curie=FOF_CT.curie('z_drift'),
+                   model_uri=FOF_CT.SpotQualityRecord_z_drift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_x_chromatic_shift = Slot(uri=FOF_CT.x_chromatic_shift, name="SpotQualityRecord_x_chromatic_shift", curie=FOF_CT.curie('x_chromatic_shift'),
+                   model_uri=FOF_CT.SpotQualityRecord_x_chromatic_shift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_y_chromatic_shift = Slot(uri=FOF_CT.y_chromatic_shift, name="SpotQualityRecord_y_chromatic_shift", curie=FOF_CT.curie('y_chromatic_shift'),
+                   model_uri=FOF_CT.SpotQualityRecord_y_chromatic_shift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_z_chromatic_shift = Slot(uri=FOF_CT.z_chromatic_shift, name="SpotQualityRecord_z_chromatic_shift", curie=FOF_CT.curie('z_chromatic_shift'),
+                   model_uri=FOF_CT.SpotQualityRecord_z_chromatic_shift, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_x_loc_error = Slot(uri=FOF_CT.x_loc_error, name="SpotQualityRecord_x_loc_error", curie=FOF_CT.curie('x_loc_error'),
+                   model_uri=FOF_CT.SpotQualityRecord_x_loc_error, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_y_loc_error = Slot(uri=FOF_CT.y_loc_error, name="SpotQualityRecord_y_loc_error", curie=FOF_CT.curie('y_loc_error'),
+                   model_uri=FOF_CT.SpotQualityRecord_y_loc_error, domain=SpotQualityRecord, range=Optional[float])
+
+slots.SpotQualityRecord_z_loc_error = Slot(uri=FOF_CT.z_loc_error, name="SpotQualityRecord_z_loc_error", curie=FOF_CT.curie('z_loc_error'),
+                   model_uri=FOF_CT.SpotQualityRecord_z_loc_error, domain=SpotQualityRecord, range=Optional[float])
+
 slots.SpotQualityTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="SpotQualityTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
                    model_uri=FOF_CT.SpotQualityTable_fof_ct_version, domain=SpotQualityTable, range=str,
                    pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
@@ -2047,7 +3068,7 @@ slots.SpotQualityTable_softwares = Slot(uri=FOF_CT.softwares, name="SpotQualityT
                    model_uri=FOF_CT.SpotQualityTable_softwares, domain=SpotQualityTable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.SpotQualityTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SpotQualityTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.SpotQualityTable_xyz_unit, domain=SpotQualityTable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.SpotQualityTable_xyz_unit, domain=SpotQualityTable, range=Union[str, "XYZUnitEnum"])
 
 slots.SpotQualityTable_time_unit = Slot(uri=FOF_CT.time_unit, name="SpotQualityTable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.SpotQualityTable_time_unit, domain=SpotQualityTable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2059,10 +3080,73 @@ slots.SpotQualityTable_intensity_measurement_method = Slot(uri=FOF_CT.intensity_
                    model_uri=FOF_CT.SpotQualityTable_intensity_measurement_method, domain=SpotQualityTable, range=Optional[str])
 
 slots.SpotQualityTable_spot_quality_records = Slot(uri=FOF_CT.spot_quality_records, name="SpotQualityTable_spot_quality_records", curie=FOF_CT.curie('spot_quality_records'),
-                   model_uri=FOF_CT.SpotQualityTable_spot_quality_records, domain=SpotQualityTable, range=Union[list[Union[int, SpotQualityRecordSpotId]], dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]]])
+                   model_uri=FOF_CT.SpotQualityTable_spot_quality_records, domain=SpotQualityTable, range=Union[dict[Union[int, SpotQualityRecordSpotId], Union[dict, SpotQualityRecord]], list[Union[dict, SpotQualityRecord]]])
 
 slots.RNASpotQualityRecord_rna_spot_id = Slot(uri=FOF_CT.rna_spot_id, name="RNASpotQualityRecord_rna_spot_id", curie=FOF_CT.curie('rna_spot_id'),
                    model_uri=FOF_CT.RNASpotQualityRecord_rna_spot_id, domain=RNASpotQualityRecord, range=Union[int, RNASpotQualityRecordRnaSpotId])
+
+slots.RNASpotQualityRecord_channel_name = Slot(uri=FOF_CT.channel_name, name="RNASpotQualityRecord_channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_channel_name, domain=RNASpotQualityRecord, range=str)
+
+slots.RNASpotQualityRecord_fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="RNASpotQualityRecord_fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_fluorophore_name, domain=RNASpotQualityRecord, range=str)
+
+slots.RNASpotQualityRecord_x_precision = Slot(uri=FOF_CT.x_precision, name="RNASpotQualityRecord_x_precision", curie=FOF_CT.curie('x_precision'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_x_precision, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_y_precision = Slot(uri=FOF_CT.y_precision, name="RNASpotQualityRecord_y_precision", curie=FOF_CT.curie('y_precision'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_y_precision, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_z_precision = Slot(uri=FOF_CT.z_precision, name="RNASpotQualityRecord_z_precision", curie=FOF_CT.curie('z_precision'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_z_precision, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_photon_count = Slot(uri=FOF_CT.photon_count, name="RNASpotQualityRecord_photon_count", curie=FOF_CT.curie('photon_count'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_photon_count, domain=RNASpotQualityRecord, range=Optional[int])
+
+slots.RNASpotQualityRecord_goodness_of_fit = Slot(uri=FOF_CT.goodness_of_fit, name="RNASpotQualityRecord_goodness_of_fit", curie=FOF_CT.curie('goodness_of_fit'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_goodness_of_fit, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_centroid_intensity = Slot(uri=FOF_CT.centroid_intensity, name="RNASpotQualityRecord_centroid_intensity", curie=FOF_CT.curie('centroid_intensity'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_centroid_intensity, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_peak_intensity = Slot(uri=FOF_CT.peak_intensity, name="RNASpotQualityRecord_peak_intensity", curie=FOF_CT.curie('peak_intensity'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_peak_intensity, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_raw_x = Slot(uri=FOF_CT.raw_x, name="RNASpotQualityRecord_raw_x", curie=FOF_CT.curie('raw_x'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_raw_x, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_raw_y = Slot(uri=FOF_CT.raw_y, name="RNASpotQualityRecord_raw_y", curie=FOF_CT.curie('raw_y'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_raw_y, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_raw_z = Slot(uri=FOF_CT.raw_z, name="RNASpotQualityRecord_raw_z", curie=FOF_CT.curie('raw_z'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_raw_z, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_x_drift = Slot(uri=FOF_CT.x_drift, name="RNASpotQualityRecord_x_drift", curie=FOF_CT.curie('x_drift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_x_drift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_y_drift = Slot(uri=FOF_CT.y_drift, name="RNASpotQualityRecord_y_drift", curie=FOF_CT.curie('y_drift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_y_drift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_z_drift = Slot(uri=FOF_CT.z_drift, name="RNASpotQualityRecord_z_drift", curie=FOF_CT.curie('z_drift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_z_drift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_x_chromatic_shift = Slot(uri=FOF_CT.x_chromatic_shift, name="RNASpotQualityRecord_x_chromatic_shift", curie=FOF_CT.curie('x_chromatic_shift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_x_chromatic_shift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_y_chromatic_shift = Slot(uri=FOF_CT.y_chromatic_shift, name="RNASpotQualityRecord_y_chromatic_shift", curie=FOF_CT.curie('y_chromatic_shift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_y_chromatic_shift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_z_chromatic_shift = Slot(uri=FOF_CT.z_chromatic_shift, name="RNASpotQualityRecord_z_chromatic_shift", curie=FOF_CT.curie('z_chromatic_shift'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_z_chromatic_shift, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_x_loc_error = Slot(uri=FOF_CT.x_loc_error, name="RNASpotQualityRecord_x_loc_error", curie=FOF_CT.curie('x_loc_error'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_x_loc_error, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_y_loc_error = Slot(uri=FOF_CT.y_loc_error, name="RNASpotQualityRecord_y_loc_error", curie=FOF_CT.curie('y_loc_error'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_y_loc_error, domain=RNASpotQualityRecord, range=Optional[float])
+
+slots.RNASpotQualityRecord_z_loc_error = Slot(uri=FOF_CT.z_loc_error, name="RNASpotQualityRecord_z_loc_error", curie=FOF_CT.curie('z_loc_error'),
+                   model_uri=FOF_CT.RNASpotQualityRecord_z_loc_error, domain=RNASpotQualityRecord, range=Optional[float])
 
 slots.RNASpotQualityTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="RNASpotQualityTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
                    model_uri=FOF_CT.RNASpotQualityTable_fof_ct_version, domain=RNASpotQualityTable, range=str,
@@ -2091,7 +3175,7 @@ slots.RNASpotQualityTable_softwares = Slot(uri=FOF_CT.softwares, name="RNASpotQu
                    model_uri=FOF_CT.RNASpotQualityTable_softwares, domain=RNASpotQualityTable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.RNASpotQualityTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="RNASpotQualityTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.RNASpotQualityTable_xyz_unit, domain=RNASpotQualityTable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.RNASpotQualityTable_xyz_unit, domain=RNASpotQualityTable, range=Union[str, "XYZUnitEnum"])
 
 slots.RNASpotQualityTable_time_unit = Slot(uri=FOF_CT.time_unit, name="RNASpotQualityTable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.RNASpotQualityTable_time_unit, domain=RNASpotQualityTable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2103,7 +3187,7 @@ slots.RNASpotQualityTable_intensity_measurement_method = Slot(uri=FOF_CT.intensi
                    model_uri=FOF_CT.RNASpotQualityTable_intensity_measurement_method, domain=RNASpotQualityTable, range=Optional[str])
 
 slots.RNASpotQualityTable_rna_spot_quality_records = Slot(uri=FOF_CT.rna_spot_quality_records, name="RNASpotQualityTable_rna_spot_quality_records", curie=FOF_CT.curie('rna_spot_quality_records'),
-                   model_uri=FOF_CT.RNASpotQualityTable_rna_spot_quality_records, domain=RNASpotQualityTable, range=Union[list[Union[int, RNASpotQualityRecordRnaSpotId]], dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]]])
+                   model_uri=FOF_CT.RNASpotQualityTable_rna_spot_quality_records, domain=RNASpotQualityTable, range=Union[dict[Union[int, RNASpotQualityRecordRnaSpotId], Union[dict, RNASpotQualityRecord]], list[Union[dict, RNASpotQualityRecord]]])
 
 slots.SpotBiologicalRecord_spot_id = Slot(uri=FOF_CT.spot_id, name="SpotBiologicalRecord_spot_id", curie=FOF_CT.curie('spot_id'),
                    model_uri=FOF_CT.SpotBiologicalRecord_spot_id, domain=SpotBiologicalRecord, range=Union[int, SpotBiologicalRecordSpotId])
@@ -2135,7 +3219,7 @@ slots.SpotBiologicalTable_softwares = Slot(uri=FOF_CT.softwares, name="SpotBiolo
                    model_uri=FOF_CT.SpotBiologicalTable_softwares, domain=SpotBiologicalTable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.SpotBiologicalTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SpotBiologicalTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.SpotBiologicalTable_xyz_unit, domain=SpotBiologicalTable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.SpotBiologicalTable_xyz_unit, domain=SpotBiologicalTable, range=Union[str, "XYZUnitEnum"])
 
 slots.SpotBiologicalTable_time_unit = Slot(uri=FOF_CT.time_unit, name="SpotBiologicalTable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.SpotBiologicalTable_time_unit, domain=SpotBiologicalTable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2179,7 +3263,7 @@ slots.RNASpotBiologicalTable_softwares = Slot(uri=FOF_CT.softwares, name="RNASpo
                    model_uri=FOF_CT.RNASpotBiologicalTable_softwares, domain=RNASpotBiologicalTable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.RNASpotBiologicalTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="RNASpotBiologicalTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.RNASpotBiologicalTable_xyz_unit, domain=RNASpotBiologicalTable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.RNASpotBiologicalTable_xyz_unit, domain=RNASpotBiologicalTable, range=Union[str, "XYZUnitEnum"])
 
 slots.RNASpotBiologicalTable_time_unit = Slot(uri=FOF_CT.time_unit, name="RNASpotBiologicalTable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.RNASpotBiologicalTable_time_unit, domain=RNASpotBiologicalTable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2232,7 +3316,7 @@ slots.CellTable_softwares = Slot(uri=FOF_CT.softwares, name="CellTable_softwares
                    model_uri=FOF_CT.CellTable_softwares, domain=CellTable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.CellTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="CellTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.CellTable_xyz_unit, domain=CellTable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.CellTable_xyz_unit, domain=CellTable, range=Union[str, "XYZUnitEnum"])
 
 slots.CellTable_time_unit = Slot(uri=FOF_CT.time_unit, name="CellTable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.CellTable_time_unit, domain=CellTable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2279,7 +3363,7 @@ slots.ExtraCellROITable_softwares = Slot(uri=FOF_CT.softwares, name="ExtraCellRO
                    model_uri=FOF_CT.ExtraCellROITable_softwares, domain=ExtraCellROITable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.ExtraCellROITable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="ExtraCellROITable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.ExtraCellROITable_xyz_unit, domain=ExtraCellROITable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.ExtraCellROITable_xyz_unit, domain=ExtraCellROITable, range=Union[str, "XYZUnitEnum"])
 
 slots.ExtraCellROITable_time_unit = Slot(uri=FOF_CT.time_unit, name="ExtraCellROITable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.ExtraCellROITable_time_unit, domain=ExtraCellROITable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2332,7 +3416,7 @@ slots.SubCellROITable_softwares = Slot(uri=FOF_CT.softwares, name="SubCellROITab
                    model_uri=FOF_CT.SubCellROITable_softwares, domain=SubCellROITable, range=Optional[Union[Union[dict, Software], list[Union[dict, Software]]]])
 
 slots.SubCellROITable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SubCellROITable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
-                   model_uri=FOF_CT.SubCellROITable_xyz_unit, domain=SubCellROITable, range=Optional[Union[str, "XYZUnitEnum"]])
+                   model_uri=FOF_CT.SubCellROITable_xyz_unit, domain=SubCellROITable, range=Union[str, "XYZUnitEnum"])
 
 slots.SubCellROITable_time_unit = Slot(uri=FOF_CT.time_unit, name="SubCellROITable_time_unit", curie=FOF_CT.curie('time_unit'),
                    model_uri=FOF_CT.SubCellROITable_time_unit, domain=SubCellROITable, range=Optional[Union[str, "TimeUnitEnum"]])
@@ -2365,8 +3449,11 @@ slots.ROIMappingTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="ROI
 slots.ROIMappingTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="ROIMappingTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
                    model_uri=FOF_CT.ROIMappingTable_table_namespace, domain=ROIMappingTable, range=str)
 
-slots.ROIMappingTable_roi_boundaries_format = Slot(uri=FOF_CT.roi_boundaries_format, name="ROIMappingTable_roi_boundaries_format", curie=FOF_CT.curie('roi_boundaries_format'),
-                   model_uri=FOF_CT.ROIMappingTable_roi_boundaries_format, domain=ROIMappingTable, range=str)
+slots.ROIMappingTable_roi_boundaries_format_type = Slot(uri=FOF_CT.roi_boundaries_format_type, name="ROIMappingTable_roi_boundaries_format_type", curie=FOF_CT.curie('roi_boundaries_format_type'),
+                   model_uri=FOF_CT.ROIMappingTable_roi_boundaries_format_type, domain=ROIMappingTable, range=Union[str, "ROIBoundariesFormatTypeEnum"])
+
+slots.ROIMappingTable_roi_boundaries_format_description = Slot(uri=FOF_CT.roi_boundaries_format_description, name="ROIMappingTable_roi_boundaries_format_description", curie=FOF_CT.curie('roi_boundaries_format_description'),
+                   model_uri=FOF_CT.ROIMappingTable_roi_boundaries_format_description, domain=ROIMappingTable, range=Optional[str])
 
 slots.ROIMappingTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="ROIMappingTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
                    model_uri=FOF_CT.ROIMappingTable_xyz_unit, domain=ROIMappingTable, range=Union[str, "XYZUnitEnum"])
@@ -2410,3 +3497,213 @@ slots.ROIMappingTable_intensity_measurement_method = Slot(uri=FOF_CT.intensity_m
 
 slots.ROIMappingTable_roi_mappings = Slot(uri=FOF_CT.roi_mappings, name="ROIMappingTable_roi_mappings", curie=FOF_CT.curie('roi_mappings'),
                    model_uri=FOF_CT.ROIMappingTable_roi_mappings, domain=ROIMappingTable, range=Union[Union[dict, ROIMapping], list[Union[dict, ROIMapping]]])
+
+slots.SMLocalization_loc_id = Slot(uri=FOF_CT.loc_id, name="SMLocalization_loc_id", curie=FOF_CT.curie('loc_id'),
+                   model_uri=FOF_CT.SMLocalization_loc_id, domain=SMLocalization, range=Union[int, SMLocalizationLocId])
+
+slots.SMLocalization_x = Slot(uri=FOF_CT.x, name="SMLocalization_x", curie=FOF_CT.curie('x'),
+                   model_uri=FOF_CT.SMLocalization_x, domain=SMLocalization, range=float)
+
+slots.SMLocalization_y = Slot(uri=FOF_CT.y, name="SMLocalization_y", curie=FOF_CT.curie('y'),
+                   model_uri=FOF_CT.SMLocalization_y, domain=SMLocalization, range=float)
+
+slots.SMLocalization_z = Slot(uri=FOF_CT.z, name="SMLocalization_z", curie=FOF_CT.curie('z'),
+                   model_uri=FOF_CT.SMLocalization_z, domain=SMLocalization, range=float)
+
+slots.SMLocalization_spot_id = Slot(uri=FOF_CT.spot_id, name="SMLocalization_spot_id", curie=FOF_CT.curie('spot_id'),
+                   model_uri=FOF_CT.SMLocalization_spot_id, domain=SMLocalization, range=int)
+
+slots.SMLocalization_trace_id = Slot(uri=FOF_CT.trace_id, name="SMLocalization_trace_id", curie=FOF_CT.curie('trace_id'),
+                   model_uri=FOF_CT.SMLocalization_trace_id, domain=SMLocalization, range=int)
+
+slots.SMLocalization_chrom = Slot(uri=FOF_CT.chrom, name="SMLocalization_chrom", curie=FOF_CT.curie('chrom'),
+                   model_uri=FOF_CT.SMLocalization_chrom, domain=SMLocalization, range=str)
+
+slots.SMLocalization_chrom_start = Slot(uri=FOF_CT.chrom_start, name="SMLocalization_chrom_start", curie=FOF_CT.curie('chrom_start'),
+                   model_uri=FOF_CT.SMLocalization_chrom_start, domain=SMLocalization, range=int)
+
+slots.SMLocalization_chrom_end = Slot(uri=FOF_CT.chrom_end, name="SMLocalization_chrom_end", curie=FOF_CT.curie('chrom_end'),
+                   model_uri=FOF_CT.SMLocalization_chrom_end, domain=SMLocalization, range=int)
+
+slots.SMLocalization_sub_cell_roi_id = Slot(uri=FOF_CT.sub_cell_roi_id, name="SMLocalization_sub_cell_roi_id", curie=FOF_CT.curie('sub_cell_roi_id'),
+                   model_uri=FOF_CT.SMLocalization_sub_cell_roi_id, domain=SMLocalization, range=Optional[int])
+
+slots.SMLocalization_cell_id = Slot(uri=FOF_CT.cell_id, name="SMLocalization_cell_id", curie=FOF_CT.curie('cell_id'),
+                   model_uri=FOF_CT.SMLocalization_cell_id, domain=SMLocalization, range=Optional[int])
+
+slots.SMLocalization_extra_cell_roi_id = Slot(uri=FOF_CT.extra_cell_roi_id, name="SMLocalization_extra_cell_roi_id", curie=FOF_CT.curie('extra_cell_roi_id'),
+                   model_uri=FOF_CT.SMLocalization_extra_cell_roi_id, domain=SMLocalization, range=Optional[int])
+
+slots.SMLocalizationTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="SMLocalizationTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
+                   model_uri=FOF_CT.SMLocalizationTable_fof_ct_version, domain=SMLocalizationTable, range=str,
+                   pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
+
+slots.SMLocalizationTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="SMLocalizationTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
+                   model_uri=FOF_CT.SMLocalizationTable_table_namespace, domain=SMLocalizationTable, range=str)
+
+slots.SMLocalizationTable_lab_name = Slot(uri=FOF_CT.lab_name, name="SMLocalizationTable_lab_name", curie=FOF_CT.curie('lab_name'),
+                   model_uri=FOF_CT.SMLocalizationTable_lab_name, domain=SMLocalizationTable, range=str)
+
+slots.SMLocalizationTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="SMLocalizationTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
+                   model_uri=FOF_CT.SMLocalizationTable_experimenter_name, domain=SMLocalizationTable, range=str)
+
+slots.SMLocalizationTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="SMLocalizationTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
+                   model_uri=FOF_CT.SMLocalizationTable_experimenter_contact, domain=SMLocalizationTable, range=str,
+                   pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
+
+slots.SMLocalizationTable_description = Slot(uri=FOF_CT.description, name="SMLocalizationTable_description", curie=FOF_CT.curie('description'),
+                   model_uri=FOF_CT.SMLocalizationTable_description, domain=SMLocalizationTable, range=str)
+
+slots.SMLocalizationTable_softwares = Slot(uri=FOF_CT.softwares, name="SMLocalizationTable_softwares", curie=FOF_CT.curie('softwares'),
+                   model_uri=FOF_CT.SMLocalizationTable_softwares, domain=SMLocalizationTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
+
+slots.SMLocalizationTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="SMLocalizationTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
+                   model_uri=FOF_CT.SMLocalizationTable_additional_tables, domain=SMLocalizationTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
+
+slots.SMLocalizationTable_genome_assembly = Slot(uri=FOF_CT.genome_assembly, name="SMLocalizationTable_genome_assembly", curie=FOF_CT.curie('genome_assembly'),
+                   model_uri=FOF_CT.SMLocalizationTable_genome_assembly, domain=SMLocalizationTable, range=str)
+
+slots.SMLocalizationTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SMLocalizationTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
+                   model_uri=FOF_CT.SMLocalizationTable_xyz_unit, domain=SMLocalizationTable, range=Union[str, "XYZUnitEnum"])
+
+slots.SMLocalizationTable_sm_localizations = Slot(uri=FOF_CT.sm_localizations, name="SMLocalizationTable_sm_localizations", curie=FOF_CT.curie('sm_localizations'),
+                   model_uri=FOF_CT.SMLocalizationTable_sm_localizations, domain=SMLocalizationTable, range=Union[dict[Union[int, SMLocalizationLocId], Union[dict, SMLocalization]], list[Union[dict, SMLocalization]]])
+
+slots.SMLocalizationQualityRecord_loc_id = Slot(uri=FOF_CT.loc_id, name="SMLocalizationQualityRecord_loc_id", curie=FOF_CT.curie('loc_id'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_loc_id, domain=SMLocalizationQualityRecord, range=Union[int, SMLocalizationQualityRecordLocId])
+
+slots.SMLocalizationQualityRecord_channel_name = Slot(uri=FOF_CT.channel_name, name="SMLocalizationQualityRecord_channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_channel_name, domain=SMLocalizationQualityRecord, range=str)
+
+slots.SMLocalizationQualityRecord_fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="SMLocalizationQualityRecord_fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_fluorophore_name, domain=SMLocalizationQualityRecord, range=str)
+
+slots.SMLocalizationQualityRecord_x_precision = Slot(uri=FOF_CT.x_precision, name="SMLocalizationQualityRecord_x_precision", curie=FOF_CT.curie('x_precision'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_x_precision, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_y_precision = Slot(uri=FOF_CT.y_precision, name="SMLocalizationQualityRecord_y_precision", curie=FOF_CT.curie('y_precision'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_y_precision, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_z_precision = Slot(uri=FOF_CT.z_precision, name="SMLocalizationQualityRecord_z_precision", curie=FOF_CT.curie('z_precision'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_z_precision, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_photon_count = Slot(uri=FOF_CT.photon_count, name="SMLocalizationQualityRecord_photon_count", curie=FOF_CT.curie('photon_count'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_photon_count, domain=SMLocalizationQualityRecord, range=Optional[int])
+
+slots.SMLocalizationQualityRecord_goodness_of_fit = Slot(uri=FOF_CT.goodness_of_fit, name="SMLocalizationQualityRecord_goodness_of_fit", curie=FOF_CT.curie('goodness_of_fit'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_goodness_of_fit, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_centroid_intensity = Slot(uri=FOF_CT.centroid_intensity, name="SMLocalizationQualityRecord_centroid_intensity", curie=FOF_CT.curie('centroid_intensity'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_centroid_intensity, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_peak_intensity = Slot(uri=FOF_CT.peak_intensity, name="SMLocalizationQualityRecord_peak_intensity", curie=FOF_CT.curie('peak_intensity'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_peak_intensity, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_raw_x = Slot(uri=FOF_CT.raw_x, name="SMLocalizationQualityRecord_raw_x", curie=FOF_CT.curie('raw_x'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_raw_x, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_raw_y = Slot(uri=FOF_CT.raw_y, name="SMLocalizationQualityRecord_raw_y", curie=FOF_CT.curie('raw_y'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_raw_y, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_raw_z = Slot(uri=FOF_CT.raw_z, name="SMLocalizationQualityRecord_raw_z", curie=FOF_CT.curie('raw_z'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_raw_z, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_x_loc_error = Slot(uri=FOF_CT.x_loc_error, name="SMLocalizationQualityRecord_x_loc_error", curie=FOF_CT.curie('x_loc_error'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_x_loc_error, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_y_loc_error = Slot(uri=FOF_CT.y_loc_error, name="SMLocalizationQualityRecord_y_loc_error", curie=FOF_CT.curie('y_loc_error'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_y_loc_error, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityRecord_z_loc_error = Slot(uri=FOF_CT.z_loc_error, name="SMLocalizationQualityRecord_z_loc_error", curie=FOF_CT.curie('z_loc_error'),
+                   model_uri=FOF_CT.SMLocalizationQualityRecord_z_loc_error, domain=SMLocalizationQualityRecord, range=Optional[float])
+
+slots.SMLocalizationQualityTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="SMLocalizationQualityTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_fof_ct_version, domain=SMLocalizationQualityTable, range=str,
+                   pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
+
+slots.SMLocalizationQualityTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="SMLocalizationQualityTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_table_namespace, domain=SMLocalizationQualityTable, range=str)
+
+slots.SMLocalizationQualityTable_lab_name = Slot(uri=FOF_CT.lab_name, name="SMLocalizationQualityTable_lab_name", curie=FOF_CT.curie('lab_name'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_lab_name, domain=SMLocalizationQualityTable, range=str)
+
+slots.SMLocalizationQualityTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="SMLocalizationQualityTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_experimenter_name, domain=SMLocalizationQualityTable, range=str)
+
+slots.SMLocalizationQualityTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="SMLocalizationQualityTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_experimenter_contact, domain=SMLocalizationQualityTable, range=str,
+                   pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
+
+slots.SMLocalizationQualityTable_description = Slot(uri=FOF_CT.description, name="SMLocalizationQualityTable_description", curie=FOF_CT.curie('description'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_description, domain=SMLocalizationQualityTable, range=str)
+
+slots.SMLocalizationQualityTable_softwares = Slot(uri=FOF_CT.softwares, name="SMLocalizationQualityTable_softwares", curie=FOF_CT.curie('softwares'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_softwares, domain=SMLocalizationQualityTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
+
+slots.SMLocalizationQualityTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="SMLocalizationQualityTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_additional_tables, domain=SMLocalizationQualityTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
+
+slots.SMLocalizationQualityTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SMLocalizationQualityTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_xyz_unit, domain=SMLocalizationQualityTable, range=Union[str, "XYZUnitEnum"])
+
+slots.SMLocalizationQualityTable_sm_localization_quality_records = Slot(uri=FOF_CT.sm_localization_quality_records, name="SMLocalizationQualityTable_sm_localization_quality_records", curie=FOF_CT.curie('sm_localization_quality_records'),
+                   model_uri=FOF_CT.SMLocalizationQualityTable_sm_localization_quality_records, domain=SMLocalizationQualityTable, range=Union[dict[Union[int, SMLocalizationQualityRecordLocId], Union[dict, SMLocalizationQualityRecord]], list[Union[dict, SMLocalizationQualityRecord]]])
+
+slots.UndecodedLocalization_loc_id = Slot(uri=FOF_CT.loc_id, name="UndecodedLocalization_loc_id", curie=FOF_CT.curie('loc_id'),
+                   model_uri=FOF_CT.UndecodedLocalization_loc_id, domain=UndecodedLocalization, range=Union[int, UndecodedLocalizationLocId])
+
+slots.UndecodedLocalization_x = Slot(uri=FOF_CT.x, name="UndecodedLocalization_x", curie=FOF_CT.curie('x'),
+                   model_uri=FOF_CT.UndecodedLocalization_x, domain=UndecodedLocalization, range=float)
+
+slots.UndecodedLocalization_y = Slot(uri=FOF_CT.y, name="UndecodedLocalization_y", curie=FOF_CT.curie('y'),
+                   model_uri=FOF_CT.UndecodedLocalization_y, domain=UndecodedLocalization, range=float)
+
+slots.UndecodedLocalization_z = Slot(uri=FOF_CT.z, name="UndecodedLocalization_z", curie=FOF_CT.curie('z'),
+                   model_uri=FOF_CT.UndecodedLocalization_z, domain=UndecodedLocalization, range=float)
+
+slots.UndecodedLocalization_hyb_id = Slot(uri=FOF_CT.hyb_id, name="UndecodedLocalization_hyb_id", curie=FOF_CT.curie('hyb_id'),
+                   model_uri=FOF_CT.UndecodedLocalization_hyb_id, domain=UndecodedLocalization, range=int)
+
+slots.UndecodedLocalization_image_frame_id = Slot(uri=FOF_CT.image_frame_id, name="UndecodedLocalization_image_frame_id", curie=FOF_CT.curie('image_frame_id'),
+                   model_uri=FOF_CT.UndecodedLocalization_image_frame_id, domain=UndecodedLocalization, range=int)
+
+slots.UndecodedLocalization_channel_name = Slot(uri=FOF_CT.channel_name, name="UndecodedLocalization_channel_name", curie=FOF_CT.curie('channel_name'),
+                   model_uri=FOF_CT.UndecodedLocalization_channel_name, domain=UndecodedLocalization, range=str)
+
+slots.UndecodedLocalization_fluorophore_name = Slot(uri=FOF_CT.fluorophore_name, name="UndecodedLocalization_fluorophore_name", curie=FOF_CT.curie('fluorophore_name'),
+                   model_uri=FOF_CT.UndecodedLocalization_fluorophore_name, domain=UndecodedLocalization, range=str)
+
+slots.UndecodedLocalization_the_z = Slot(uri=FOF_CT.the_z, name="UndecodedLocalization_the_z", curie=FOF_CT.curie('the_z'),
+                   model_uri=FOF_CT.UndecodedLocalization_the_z, domain=UndecodedLocalization, range=Optional[int])
+
+slots.UndecodedLocalizationTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="UndecodedLocalizationTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_fof_ct_version, domain=UndecodedLocalizationTable, range=str,
+                   pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
+
+slots.UndecodedLocalizationTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="UndecodedLocalizationTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_table_namespace, domain=UndecodedLocalizationTable, range=str)
+
+slots.UndecodedLocalizationTable_lab_name = Slot(uri=FOF_CT.lab_name, name="UndecodedLocalizationTable_lab_name", curie=FOF_CT.curie('lab_name'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_lab_name, domain=UndecodedLocalizationTable, range=str)
+
+slots.UndecodedLocalizationTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="UndecodedLocalizationTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_experimenter_name, domain=UndecodedLocalizationTable, range=str)
+
+slots.UndecodedLocalizationTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="UndecodedLocalizationTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_experimenter_contact, domain=UndecodedLocalizationTable, range=str,
+                   pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
+
+slots.UndecodedLocalizationTable_description = Slot(uri=FOF_CT.description, name="UndecodedLocalizationTable_description", curie=FOF_CT.curie('description'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_description, domain=UndecodedLocalizationTable, range=str)
+
+slots.UndecodedLocalizationTable_softwares = Slot(uri=FOF_CT.softwares, name="UndecodedLocalizationTable_softwares", curie=FOF_CT.curie('softwares'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_softwares, domain=UndecodedLocalizationTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
+
+slots.UndecodedLocalizationTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="UndecodedLocalizationTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_additional_tables, domain=UndecodedLocalizationTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
+
+slots.UndecodedLocalizationTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="UndecodedLocalizationTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_xyz_unit, domain=UndecodedLocalizationTable, range=Union[str, "XYZUnitEnum"])
+
+slots.UndecodedLocalizationTable_undecoded_localizations = Slot(uri=FOF_CT.undecoded_localizations, name="UndecodedLocalizationTable_undecoded_localizations", curie=FOF_CT.curie('undecoded_localizations'),
+                   model_uri=FOF_CT.UndecodedLocalizationTable_undecoded_localizations, domain=UndecodedLocalizationTable, range=Union[dict[Union[int, UndecodedLocalizationLocId], Union[dict, UndecodedLocalization]], list[Union[dict, UndecodedLocalization]]])

@@ -49,6 +49,29 @@ URI: [fof_ct:ROIMapping](https://w3id.org/fof-ct/ROIMapping)
 | [extra_cell_roi_id](extra_cell_roi_id.md) | 0..1 <br/> [Integer](Integer.md) | Unique identifier for the extracellular structure ROI whose boundaries are de... | direct |
 | [roi_boundaries](roi_boundaries.md) | 1 <br/> [String](String.md) | Boundary coordinates for this Cell or ROI, encoded in the format specified by... | direct |
 
+<details>
+<summary>Expressions & Logic</summary>
+#### Exactly One Of
+
+The class must satisfy exactly one of:
+- AnonymousClassExpression({
+  'slot_conditions': {'sub_cell_roi_id': SlotDefinition({'name': 'sub_cell_roi_id', 'value_presence': PresenceEnum(text='PRESENT')}),
+    'cell_id': SlotDefinition({'name': 'cell_id', 'value_presence': PresenceEnum(text='ABSENT')}),
+    'extra_cell_roi_id': SlotDefinition({'name': 'extra_cell_roi_id', 'value_presence': PresenceEnum(text='ABSENT')})}
+})
+- AnonymousClassExpression({
+  'slot_conditions': {'sub_cell_roi_id': SlotDefinition({'name': 'sub_cell_roi_id', 'value_presence': PresenceEnum(text='ABSENT')}),
+    'cell_id': SlotDefinition({'name': 'cell_id', 'value_presence': PresenceEnum(text='PRESENT')}),
+    'extra_cell_roi_id': SlotDefinition({'name': 'extra_cell_roi_id', 'value_presence': PresenceEnum(text='ABSENT')})}
+})
+- AnonymousClassExpression({
+  'slot_conditions': {'sub_cell_roi_id': SlotDefinition({'name': 'sub_cell_roi_id', 'value_presence': PresenceEnum(text='ABSENT')}),
+    'cell_id': SlotDefinition({'name': 'cell_id', 'value_presence': PresenceEnum(text='ABSENT')}),
+    'extra_cell_roi_id': SlotDefinition({'name': 'extra_cell_roi_id', 'value_presence': PresenceEnum(text='PRESENT')})}
+})
+
+</details>
+
 
 
 
@@ -148,6 +171,37 @@ slot_usage:
   roi_boundaries:
     name: roi_boundaries
     required: true
+exactly_one_of:
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: PRESENT
+    cell_id:
+      name: cell_id
+      value_presence: ABSENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: ABSENT
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: ABSENT
+    cell_id:
+      name: cell_id
+      value_presence: PRESENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: ABSENT
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: ABSENT
+    cell_id:
+      name: cell_id
+      value_presence: ABSENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: PRESENT
 
 ```
 </details>
@@ -276,6 +330,37 @@ attributes:
     - ROIMapping
     range: string
     required: true
+exactly_one_of:
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: PRESENT
+    cell_id:
+      name: cell_id
+      value_presence: ABSENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: ABSENT
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: ABSENT
+    cell_id:
+      name: cell_id
+      value_presence: PRESENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: ABSENT
+- slot_conditions:
+    sub_cell_roi_id:
+      name: sub_cell_roi_id
+      value_presence: ABSENT
+    cell_id:
+      name: cell_id
+      value_presence: ABSENT
+    extra_cell_roi_id:
+      name: extra_cell_roi_id
+      value_presence: PRESENT
 
 ```
 </details></div>

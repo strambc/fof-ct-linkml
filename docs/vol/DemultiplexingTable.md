@@ -90,7 +90,7 @@ URI: [fof_ct:DemultiplexingTable](https://w3id.org/fof-ct/DemultiplexingTable)
     
         
         
-        DemultiplexingTable --> "0..1" XYZUnitEnum : xyz_unit
+        DemultiplexingTable --> "1" XYZUnitEnum : xyz_unit
         click XYZUnitEnum href "../XYZUnitEnum/"
     
 
@@ -122,7 +122,7 @@ URI: [fof_ct:DemultiplexingTable](https://w3id.org/fof-ct/DemultiplexingTable)
 | [description](description.md) | 1 <br/> [String](String.md) | Free-text description of the experiment and of the data recorded in this tabl... | direct |
 | [softwares](softwares.md) | 1..* <br/> [Software](Software.md) | One or more Software entries documenting every tool used to produce or proces... | direct |
 | [additional_tables](additional_tables.md) | 1..* <br/> [TableNamespaceEnum](TableNamespaceEnum.md) | List of additional FOF-CT table namespaces being submitted alongside this tab... | direct |
-| [xyz_unit](xyz_unit.md) | 0..1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
+| [xyz_unit](xyz_unit.md) | 1 <br/> [XYZUnitEnum](XYZUnitEnum.md) | Unit used to represent X, Y, Z spatial coordinates or distances in this table | direct |
 | [time_unit](time_unit.md) | 0..1 <br/> [TimeUnitEnum](TimeUnitEnum.md) | Unit used to represent time intervals in this table | direct |
 | [intensity_unit](intensity_unit.md) | 0..1 <br/> [String](String.md) | Unit used to represent intensity measurements in this table | direct |
 | [intensity_measurement_method](intensity_measurement_method.md) | 0..1 <br/> [String](String.md) | Method used to perform intensity measurements, including how digital signals ... | direct |
@@ -506,7 +506,7 @@ attributes:
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -529,11 +529,13 @@ attributes:
     - SMLocalizationQualityTable
     - UndecodedLocalizationTable
     range: XYZUnitEnum
+    required: true
   time_unit:
     name: time_unit
     description: 'Unit used to represent time intervals in this table. Allowed values
       are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
+      header. Conditionally required (metric- triggered) when any time metric is reported
+      in an optional column.'
     examples:
     - value: sec
     from_schema: https://w3id.org/fof-ct/vol
@@ -542,7 +544,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -558,8 +559,8 @@ attributes:
   intensity_unit:
     name: intensity_unit
     description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
+      as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered)
+      when any intensity metric is reported in an optional column.'
     examples:
     - value: a.u.
     - value: photons
@@ -569,7 +570,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -586,7 +586,8 @@ attributes:
     name: intensity_measurement_method
     description: 'Method used to perform intensity measurements, including how digital
       signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
+      in the file header. Conditionally required (metric-triggered) when any intensity
+      metric is reported.'
     examples:
     - value: Localization centroid intensity
     - value: Mean Fluorescence Intensity
@@ -596,7 +597,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

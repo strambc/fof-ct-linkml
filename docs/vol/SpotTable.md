@@ -131,9 +131,6 @@ URI: [fof_ct:SpotTable](https://w3id.org/fof-ct/SpotTable)
 | used by | used in | type | used |
 | ---  | --- | --- | --- |
 | [SpotTable](SpotTable.md) | [spots](spots.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [modification](modification.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [vcf_file_name](vcf_file_name.md) | domain | [SpotTable](SpotTable.md) |
-| [SpotTable](SpotTable.md) | [vcf_version](vcf_version.md) | domain | [SpotTable](SpotTable.md) |
 
 
 
@@ -361,7 +358,7 @@ attributes:
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -566,45 +563,49 @@ attributes:
   modification:
     name: modification
     description: 'Description of the nature and genomic position of a DNA insertion
-      or deletion in the genome under study. Conditionally required when genome_assembly
-      uses the ''custom-build:'' prefix. Written as ##Modification= in the file header.'
+      or deletion in the genome under study. Conditionally required (content- triggered)
+      when genome_assembly uses the ''custom-build:'' prefix. Applies to both the
+      core (bas) and vol_core (vol) tables. Written as ##Modification= in the file
+      header.'
     examples:
     - value: pJT039:chr3(insertion 0001-2500)
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: SpotTable
     owner: SpotTable
     domain_of:
     - SpotTable
+    - SMLocalizationTable
     range: string
   vcf_file_name:
     name: vcf_file_name
     description: 'Name of the Variant Call Format (VCF) file that must be submitted
       alongside the dataset to describe the genome insertion or deletion. Conditionally
-      required when genome_assembly uses the ''custom-build:'' prefix. Written as
+      required (content-triggered) when genome_assembly uses the ''custom-build:''
+      prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as
       ##VCF_File_Name= in the file header.'
     examples:
     - value: pJT039:chr3.vcf
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: SpotTable
     owner: SpotTable
     domain_of:
     - SpotTable
+    - SMLocalizationTable
     range: string
   vcf_version:
     name: vcf_version
     description: 'Version of the VCF format used for the accompanying VCF file. Conditionally
-      required when genome_assembly uses the ''custom-build:'' prefix. Written as
+      required (content-triggered) when genome_assembly uses the ''custom-build:''
+      prefix. Applies to both the core (bas) and vol_core (vol) tables. Written as
       ##VCF_Version= in the file header.'
     examples:
     - value: v4.2
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
-    domain: SpotTable
     owner: SpotTable
     domain_of:
     - SpotTable
+    - SMLocalizationTable
     range: string
 tree_root: true
 

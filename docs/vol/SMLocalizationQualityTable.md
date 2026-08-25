@@ -6,7 +6,7 @@ search:
 # Class: SMLocalizationQualityTable 
 
 
-_The SM Localization Quality table of a FOF-vol-CT dataset (namespace: 4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT submissions. It provides localization quality metrics indexed by Loc_ID._
+_The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides localization quality metrics indexed by Loc_ID when submitted._
 
 
 
@@ -185,8 +185,9 @@ URI: [fof_ct:SMLocalizationQualityTable](https://w3id.org/fof-ct/SMLocalizationQ
 ```yaml
 name: SMLocalizationQualityTable
 description: 'The SM Localization Quality table of a FOF-vol-CT dataset (namespace:
-  4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT submissions. It
-  provides localization quality metrics indexed by Loc_ID.'
+  FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended).
+  Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides
+  localization quality metrics indexed by Loc_ID when submitted.'
 from_schema: https://w3id.org/fof-ct/vol
 slots:
 - fof_ct_version
@@ -208,8 +209,11 @@ slot_usage:
     required: true
   table_namespace:
     name: table_namespace
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_quality''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     required: true
-    equals_string: 4dn_FOF-CT_vol_quality
+    equals_string: FOF-CT_vol_quality
   lab_name:
     name: lab_name
     required: true
@@ -247,8 +251,9 @@ tree_root: true
 ```yaml
 name: SMLocalizationQualityTable
 description: 'The SM Localization Quality table of a FOF-vol-CT dataset (namespace:
-  4dn_FOF-CT_vol_quality). This table is mandatory for FOF-vol-CT submissions. It
-  provides localization quality metrics indexed by Loc_ID.'
+  FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended).
+  Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides
+  localization quality metrics indexed by Loc_ID when submitted.'
 from_schema: https://w3id.org/fof-ct/vol
 slot_usage:
   fof_ct_version:
@@ -256,8 +261,11 @@ slot_usage:
     required: true
   table_namespace:
     name: table_namespace
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_quality''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     required: true
-    equals_string: 4dn_FOF-CT_vol_quality
+    equals_string: FOF-CT_vol_quality
   lab_name:
     name: lab_name
     required: true
@@ -315,8 +323,9 @@ attributes:
     pattern: ^v[0-9]+\.[0-9]+
   table_namespace:
     name: table_namespace
-    description: 'Identifier for this table type. The required value is specific to
-      each table. Written as ##Table_Namespace= in the file header.'
+    description: 'Identifier for this table type. Must always be ''FOF-CT_vol_quality''
+      (no 4dn_ prefix — this FOF-vol-CT-exclusive namespace intentionally omits it).
+      Written as ##Table_Namespace= in the file header.'
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: SMLocalizationQualityTable
@@ -338,7 +347,7 @@ attributes:
     - UndecodedLocalizationTable
     range: string
     required: true
-    equals_string: 4dn_FOF-CT_vol_quality
+    equals_string: FOF-CT_vol_quality
   lab_name:
     name: lab_name
     description: 'Name of the laboratory where the experiment was performed. Written
@@ -508,7 +517,7 @@ attributes:
     description: 'Unit used to represent X, Y, Z spatial coordinates or distances
       in this table. Use ''micron'' to avoid issues with Greek symbols. Values should
       be drawn from SI units of length. Written as ##XYZ_Unit= in the file header.
-      Conditionally required when any location or distance metric is reported.'
+      Mandatory in every FOF-CT table.'
     examples:
     - value: micron
     from_schema: https://w3id.org/fof-ct/vol
@@ -536,7 +545,8 @@ attributes:
     name: time_unit
     description: 'Unit used to represent time intervals in this table. Allowed values
       are SI time units plus ''min'' and ''hr''. Written as ##Time_Unit= in the file
-      header. Conditionally required when any time metric is reported.'
+      header. Conditionally required (metric- triggered) when any time metric is reported
+      in an optional column.'
     examples:
     - value: sec
     from_schema: https://w3id.org/fof-ct/vol
@@ -545,7 +555,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -561,8 +570,8 @@ attributes:
   intensity_unit:
     name: intensity_unit
     description: 'Unit used to represent intensity measurements in this table. Written
-      as ##Intensity_Unit= in the file header. Conditionally required when any intensity
-      metric is reported.'
+      as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered)
+      when any intensity metric is reported in an optional column.'
     examples:
     - value: a.u.
     - value: photons
@@ -572,7 +581,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable
@@ -589,7 +597,8 @@ attributes:
     name: intensity_measurement_method
     description: 'Method used to perform intensity measurements, including how digital
       signals were converted to photon counts. Written as #Intensity_Measurement_Method:
-      in the file header. Conditionally required when any intensity metric is reported.'
+      in the file header. Conditionally required (metric-triggered) when any intensity
+      metric is reported.'
     examples:
     - value: Localization centroid intensity
     - value: Mean Fluorescence Intensity
@@ -599,7 +608,6 @@ attributes:
     domain_of:
     - DemultiplexingTable
     - TraceTable
-    - RNASpotTable
     - SpotQualityTable
     - RNASpotQualityTable
     - SpotBiologicalTable

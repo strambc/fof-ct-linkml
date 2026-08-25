@@ -27,6 +27,23 @@ message CellTable
   string intensityMeasurementMethod = 0
  repeated  cell cells = 0
  }
+// The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.
+message DemultiplexingTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  localization localizations = 0
+ }
 // A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission.
 message ExtraCellROI
  {
@@ -53,29 +70,13 @@ message ExtraCellROITable
 // A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
 message Localization
  {
-  integer locId = 0
   integer spotId = 0
+  string channelName = 0
+  string fluorophoreName = 0
+  integer locId = 0
   float x = 0
   float y = 0
   float z = 0
-  string fluor = 0
- }
-// The Spot Demultiplexing table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_demultiplexing). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the CSV serialisation) together with the full collection of Localization events (recorded as data rows). Analogous to the MappingSet class in SSSOM. This table is optional but recommended for multiplexed FISH experiments.
-message LocalizationTable
- {
-  string fofCtVersion = 0
-  string tableNamespace = 0
-  string labName = 0
-  string experimenterName = 0
-  string experimenterContact = 0
-  string description = 0
- repeated  software softwares = 0
- repeated  tableNamespaceEnum additionalTables = 0
-  xYZUnitEnum xyzUnit = 0
-  timeUnitEnum timeUnit = 0
-  string intensityUnit = 0
-  string intensityMeasurementMethod = 0
- repeated  localization localizations = 0
  }
 // A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.
 message RNASpot
@@ -114,10 +115,31 @@ message RNASpotBiologicalTable
   string intensityMeasurementMethod = 0
  repeated  rNASpotBiologicalRecord rnaSpotBiologicalRecords = 0
  }
-// A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
+// A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). RNA_Spot_ID, Channel and Fluor are mandatory; all other reserved quality-metric columns are conditionally required (the same reserved vocabulary as the Spot Quality table) or fully free-form; users declare the latter via #^ header lines.
 message RNASpotQualityRecord
  {
   integer rnaSpotId = 0
+  string channelName = 0
+  string fluorophoreName = 0
+  float xPrecision = 0
+  float yPrecision = 0
+  float zPrecision = 0
+  integer photonCount = 0
+  float goodnessOfFit = 0
+  float centroidIntensity = 0
+  float peakIntensity = 0
+  float rawX = 0
+  float rawY = 0
+  float rawZ = 0
+  float xDrift = 0
+  float yDrift = 0
+  float zDrift = 0
+  float xChromaticShift = 0
+  float yChromaticShift = 0
+  float zChromaticShift = 0
+  float xLocError = 0
+  float yLocError = 0
+  float zLocError = 0
  }
 // The RNA Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_rna_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of RNASpotQualityRecord rows. Submission of this table is optional but recommended.
 message RNASpotQualityTable
@@ -151,9 +173,6 @@ message RNASpotTable
  repeated  software softwares = 0
  repeated  tableNamespaceEnum additionalTables = 0
   string transcriptIdType = 0
-  timeUnitEnum timeUnit = 0
-  string intensityUnit = 0
-  string intensityMeasurementMethod = 0
  repeated  rNASpot rnaSpots = 0
  }
 // A single boundary record for one Cell, Sub-Cell ROI, or Extra-Cell ROI in a FOF-bas-CT experiment. Each instance corresponds to one row in the TSV data section of the FOF-CT Cell/ROI Mapping table. Exactly one of the three identifier slots (sub_cell_roi_id, cell_id, extra_cell_roi_id) must be populated per file; the choice of identifier must be consistent across all rows of a given submission. The roi_boundaries slot holds the boundary coordinates in the format specified by roi_boundaries_format in the table header. This class accepts additional user-defined optional columns.
@@ -169,13 +188,14 @@ message ROIMappingTable
  {
   string fofCtVersion = 0
   string tableNamespace = 0
-  string roiBoundariesFormat = 0
+  rOIBoundariesFormatTypeEnum roiBoundariesFormatType = 0
   xYZUnitEnum xyzUnit = 0
   string labName = 0
   string experimenterName = 0
   string experimenterContact = 0
   string description = 0
  repeated  tableNamespaceEnum additionalTables = 0
+  string roiBoundariesFormatDescription = 0
   string cellType = 0
   string subCellRoiType = 0
   string extraCellRoiType = 0
@@ -185,6 +205,80 @@ message ROIMappingTable
   string intensityMeasurementMethod = 0
  repeated  rOIMapping roiMappings = 0
  }
+// A single individual single-molecule (SM) localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the SM Localization Data table. The loc_id field is the primary key; spot_id links this localization to its parent Spot (if Spot/Trace post-processing was performed); trace_id links it to its parent Trace. Sub_Cell_ROI_ID, Cell_ID and Extra_Cell_ROI_ID optionally link the localization to spatial context tables.
+message SMLocalization
+ {
+  integer spotId = 0
+  integer traceId = 0
+  string chrom = 0
+  integer chromStart = 0
+  integer chromEnd = 0
+  integer subCellRoiId = 0
+  integer cellId = 0
+  integer extraCellRoiId = 0
+  integer locId = 0
+  float x = 0
+  float y = 0
+  float z = 0
+ }
+// A single row in the SM Localization Quality table. Each instance captures quality metrics for one SM localization event identified by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision, Y_Loc_Precision, Z_Loc_Precision and Photon_Count are highly recommended but not literally mandatory. All other reserved metric columns are conditionally required (use of the reserved name is optional, but mandatory if that metric is reported). Additional user-defined optional columns must be described in the file header.
+message SMLocalizationQualityRecord
+ {
+  integer locId = 0
+  string channelName = 0
+  string fluorophoreName = 0
+  float xPrecision = 0
+  float yPrecision = 0
+  float zPrecision = 0
+  integer photonCount = 0
+  float goodnessOfFit = 0
+  float centroidIntensity = 0
+  float peakIntensity = 0
+  float rawX = 0
+  float rawY = 0
+  float rawZ = 0
+  float xLocError = 0
+  float yLocError = 0
+  float zLocError = 0
+ }
+// The SM Localization Quality table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_quality, no 4dn_ prefix). Requirement level: optional (recommended). Only vol_core (table 13) is mandatory for FOF-vol-CT submissions; this table provides localization quality metrics indexed by Loc_ID when submitted.
+message SMLocalizationQualityTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  sMLocalizationQualityRecord smLocalizationQualityRecords = 0
+ }
+// The SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_vol_core, no 4dn_ prefix). This is the mandatory primary data table for volumetric FOF-CT submissions. Each row corresponds to one SM localization event. The Spot/Trace Data table is optional for FOF-vol-CT submissions but may be included to report post-processing results derived from the localization data.
+message SMLocalizationTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  string genomeAssembly = 0
+  string modification = 0
+  string vcfFileName = 0
+  string vcfVersion = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  sMLocalization smLocalizations = 0
+ }
 // Provenance metadata for a single software tool used to produce or process data in a FOF-CT table. If more than one tool was used, a separate Software entry must be provided for each. Written as a repeating block of #Software_* fields in the file header.
 message Software
  {
@@ -192,6 +286,7 @@ message Software
   softwareTypeEnum softwareType = 0
   string softwareAuthors = 0
   string softwareDescription = 0
+  string softwareParameters = 0
   uri softwareRepository = 0
   uri softwarePreferredCitationId = 0
  }
@@ -221,6 +316,27 @@ message SpotBiologicalTable
 message SpotQualityRecord
  {
   integer spotId = 0
+  string channelName = 0
+  string fluorophoreName = 0
+  float xPrecision = 0
+  float yPrecision = 0
+  float zPrecision = 0
+  integer photonCount = 0
+  float goodnessOfFit = 0
+  float centroidIntensity = 0
+  float peakIntensity = 0
+  float rawX = 0
+  float rawY = 0
+  float rawZ = 0
+  float xDrift = 0
+  float yDrift = 0
+  float zDrift = 0
+  float xChromaticShift = 0
+  float yChromaticShift = 0
+  float zChromaticShift = 0
+  float xLocError = 0
+  float yLocError = 0
+  float zLocError = 0
  }
 // The Spot Quality table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_quality). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of SpotQualityRecord rows. Submission of this table is optional but recommended.
 message SpotQualityTable
@@ -285,4 +401,34 @@ message TraceTable
   string intensityUnit = 0
   string intensityMeasurementMethod = 0
  repeated  trace traces = 0
+ }
+// A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier.
+message UndecodedLocalization
+ {
+  integer hybId = 0
+  integer imageFrameId = 0
+  string channelName = 0
+  string fluorophoreName = 0
+  integer theZ = 0
+  integer locId = 0
+  float x = 0
+  float y = 0
+  float z = 0
+ }
+// The Undecoded SM Localization Data table of a FOF-vol-CT dataset (namespace: FOF-CT_undecoded, no 4dn_ prefix). This table is optional but recommended. It records raw localization detections prior to any decoding or assignment step. Submission is recommended when the raw detections are available and reproducibility of the decoding pipeline is desired.
+message UndecodedLocalizationTable
+ {
+  string fofCtVersion = 0
+  string tableNamespace = 0
+  string labName = 0
+  string experimenterName = 0
+  string experimenterContact = 0
+  string description = 0
+ repeated  software softwares = 0
+ repeated  tableNamespaceEnum additionalTables = 0
+  xYZUnitEnum xyzUnit = 0
+  timeUnitEnum timeUnit = 0
+  string intensityUnit = 0
+  string intensityMeasurementMethod = 0
+ repeated  undecodedLocalization undecodedLocalizations = 0
  }

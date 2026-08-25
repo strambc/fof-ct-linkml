@@ -6,7 +6,7 @@ search:
 # Slot: raw_z 
 
 
-_Z coordinate of this Spot before any post-processing corrections. Same unit as Z._
+_Z coordinate before any post-processing corrections. Same unit as Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:raw_z](https://w3id.org/fof-ct/raw_z)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:raw_z](https://w3id.org/fof-ct/raw_z)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,16 @@ URI: [fof_ct:raw_z](https://w3id.org/fof-ct/raw_z)
 <details>
 ```yaml
 name: raw_z
-description: Z coordinate of this Spot before any post-processing corrections. Same
-  unit as Z.
+description: Z coordinate before any post-processing corrections. Same unit as Z.
+  Reserved, conditionally-required column name (Raw_Z) in the Spot Quality, RNA Spot
+  Quality, and SM Localization Quality tables.
 examples:
 - value: '1.10'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

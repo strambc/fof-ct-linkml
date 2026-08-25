@@ -81,27 +81,27 @@ URI: [fof_ct:SpotQualityRecord](https://w3id.org/fof-ct/SpotQualityRecord)
 | Name | Cardinality and Range | Description | Inheritance |
 | ---  | --- | --- | --- |
 | [spot_id](spot_id.md) | 1 <br/> [Integer](Integer.md) | Unique integer identifier for the DNA bright Spot to which these quality metr... | direct |
-| [channel_name](channel_name.md) | 1 <br/> [String](String.md) | The name of the imaging channel used for this Spot (e | direct |
-| [fluorophore_name](fluorophore_name.md) | 1 <br/> [String](String.md) | The name of the fluorophore used for this Spot (e | direct |
+| [channel_name](channel_name.md) | 1 <br/> [String](String.md) | The wavelength characteristics of the emission channel used to image this Spo... | direct |
+| [fluorophore_name](fluorophore_name.md) | 1 <br/> [String](String.md) | The name of the fluorophore whose emission was used to detect this Spot / RNA... | direct |
 | [x_precision](x_precision.md) | 0..1 <br/> [Float](Float.md) | Recommended: metric for X localization precision | direct |
 | [y_precision](y_precision.md) | 0..1 <br/> [Float](Float.md) | Metric quantifying the precision of the Y-axis localization estimate | direct |
 | [z_precision](z_precision.md) | 0..1 <br/> [Float](Float.md) | Metric quantifying the precision of the Z-axis localization estimate | direct |
 | [photon_count](photon_count.md) | 0..1 <br/> [Integer](Integer.md) | Optional standardised name for photon count | direct |
 | [goodness_of_fit](goodness_of_fit.md) | 0..1 <br/> [Float](Float.md) | Metric quantifying how well the fitted model matches the observed signal (e | direct |
-| [centroid_intensity](centroid_intensity.md) | 0..1 <br/> [Float](Float.md) | Signal intensity of the centroid pixel of the Spot | direct |
-| [peak_intensity](peak_intensity.md) | 0..1 <br/> [Float](Float.md) | Signal intensity of the brightest pixel within the Spot boundary | direct |
-| [raw_x](raw_x.md) | 0..1 <br/> [Float](Float.md) | X coordinate of this Spot before any post-processing corrections (drift corre... | direct |
-| [raw_y](raw_y.md) | 0..1 <br/> [Float](Float.md) | Y coordinate of this Spot before any post-processing corrections | direct |
-| [raw_z](raw_z.md) | 0..1 <br/> [Float](Float.md) | Z coordinate of this Spot before any post-processing corrections | direct |
-| [x_drift](x_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the X coordinate of this Spot | direct |
-| [y_drift](y_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the Y coordinate of this Spot | direct |
-| [z_drift](z_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the Z coordinate of this Spot | direct |
-| [x_chromatic_shift](x_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the X coordinate of this Sp... | direct |
-| [y_chromatic_shift](y_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the Y coordinate of this Sp... | direct |
-| [z_chromatic_shift](z_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the Z coordinate of this Sp... | direct |
-| [x_loc_error](x_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the X coordinate of this Spot (e | direct |
-| [y_loc_error](y_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the Y coordinate of this Spot | direct |
-| [z_loc_error](z_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the Z coordinate of this Spot | direct |
+| [centroid_intensity](centroid_intensity.md) | 0..1 <br/> [Float](Float.md) | Signal intensity of the centroid pixel of the Spot / localization | direct |
+| [peak_intensity](peak_intensity.md) | 0..1 <br/> [Float](Float.md) | Signal intensity of the brightest pixel within the Spot / localization bounda... | direct |
+| [raw_x](raw_x.md) | 0..1 <br/> [Float](Float.md) | X coordinate before any post-processing corrections (drift correction, chroma... | direct |
+| [raw_y](raw_y.md) | 0..1 <br/> [Float](Float.md) | Y coordinate before any post-processing corrections | direct |
+| [raw_z](raw_z.md) | 0..1 <br/> [Float](Float.md) | Z coordinate before any post-processing corrections | direct |
+| [x_drift](x_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the X coordinate | direct |
+| [y_drift](y_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the Y coordinate | direct |
+| [z_drift](z_drift.md) | 0..1 <br/> [Float](Float.md) | Drift correction offset applied to the Z coordinate | direct |
+| [x_chromatic_shift](x_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the X coordinate | direct |
+| [y_chromatic_shift](y_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the Y coordinate | direct |
+| [z_chromatic_shift](z_chromatic_shift.md) | 0..1 <br/> [Float](Float.md) | Chromatic aberration correction offset applied to the Z coordinate | direct |
+| [x_loc_error](x_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the X coordinate (e | direct |
+| [y_loc_error](y_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the Y coordinate | direct |
+| [z_loc_error](z_loc_error.md) | 0..1 <br/> [Float](Float.md) | Localization error estimate for the Z coordinate | direct |
 
 
 
@@ -368,22 +368,28 @@ attributes:
     required: true
   channel_name:
     name: channel_name
-    description: The name of the imaging channel used for this Spot (e.g. 510/25).
-      Mandatory in the Spot Quality table.
+    description: The wavelength characteristics of the emission channel used to image
+      this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory
+      in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization
+      Quality, and Undecoded SM Localization tables. Written as the Channel column.
     examples:
     - value: 510/25
-    - value: 647/50
+    - value: 695/81
     from_schema: https://w3id.org/fof-ct/bas
     rank: 1000
     owner: SpotQualityRecord
     domain_of:
+    - Localization
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: string
     required: true
   fluorophore_name:
     name: fluorophore_name
-    description: The name of the fluorophore used for this Spot (e.g. AlexaFluor_488).
-      Mandatory in the Spot Quality table.
+    description: The name of the fluorophore whose emission was used to detect this
+      Spot / RNA Spot / localization event (e.g. AlexaFluor_488, Cy5). Mandatory in
+      the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality,
+      and Undecoded SM Localization tables. Written as the Fluor column.
     examples:
     - value: AlexaFluor_488
     - value: Cy5
@@ -391,7 +397,9 @@ attributes:
     rank: 1000
     owner: SpotQualityRecord
     domain_of:
+    - Localization
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: string
     required: true
   x_precision:
@@ -404,13 +412,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   y_precision:
     name: y_precision
     description: Metric quantifying the precision of the Y-axis localization estimate.
-      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
-      table.
+      Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality,
+      and SM Localization Quality tables. Written as the reserved Y_Loc_Precision
+      column.
     examples:
     - value: '0.01'
     from_schema: https://w3id.org/fof-ct/bas
@@ -418,13 +428,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   z_precision:
     name: z_precision
     description: Metric quantifying the precision of the Z-axis localization estimate.
-      Recommended in the Spot Quality table; mandatory in the SM Localization Quality
-      table.
+      Highly recommended (not literally mandatory) in the Spot Quality, RNA Spot Quality,
+      and SM Localization Quality tables. Written as the reserved Z_Loc_Precision
+      column.
     examples:
     - value: '0.02'
     from_schema: https://w3id.org/fof-ct/bas
@@ -432,6 +444,7 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   photon_count:
@@ -444,13 +457,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: integer
     required: false
   goodness_of_fit:
     name: goodness_of_fit
     description: Metric quantifying how well the fitted model matches the observed
-      signal (e.g. chi-squared, R-squared). Optional (but standardised name) in the
-      Spot Quality table; recommended in the SM Localization Quality table.
+      signal (e.g. chi-squared, R-squared). Reserved, conditionally-required column
+      name (Goodness_of_Fit) in the Spot Quality, RNA Spot Quality, and SM Localization
+      Quality tables.
     examples:
     - value: '0.95'
     from_schema: https://w3id.org/fof-ct/bas
@@ -458,12 +473,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   centroid_intensity:
     name: centroid_intensity
-    description: Signal intensity of the centroid pixel of the Spot. Conditionally
-      required in the Spot Quality table when intensity metrics are reported.
+    description: Signal intensity of the centroid pixel of the Spot / localization.
+      Reserved, conditionally-required column name (Centroid_Intensity) in the Spot
+      Quality, RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '2500.0'
     from_schema: https://w3id.org/fof-ct/bas
@@ -471,13 +488,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   peak_intensity:
     name: peak_intensity
-    description: Signal intensity of the brightest pixel within the Spot boundary.
-      Conditionally required in the Spot Quality table when intensity metrics are
-      reported.
+    description: Signal intensity of the brightest pixel within the Spot / localization
+      boundary. Reserved, conditionally-required column name (Peak_Intensity) in the
+      Spot Quality, RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '3200.0'
     from_schema: https://w3id.org/fof-ct/bas
@@ -485,12 +503,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   raw_x:
     name: raw_x
-    description: X coordinate of this Spot before any post-processing corrections
-      (drift correction, chromatic correction, etc.). Same unit as X.
+    description: X coordinate before any post-processing corrections (drift correction,
+      chromatic correction, etc.). Same unit as X. Reserved, conditionally-required
+      column name (Raw_X) in the Spot Quality, RNA Spot Quality, and SM Localization
+      Quality tables.
     examples:
     - value: '14.30'
     from_schema: https://w3id.org/fof-ct/bas
@@ -498,12 +519,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   raw_y:
     name: raw_y
-    description: Y coordinate of this Spot before any post-processing corrections.
-      Same unit as Y.
+    description: Y coordinate before any post-processing corrections. Same unit as
+      Y. Reserved, conditionally-required column name (Raw_Y) in the Spot Quality,
+      RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '41.20'
     from_schema: https://w3id.org/fof-ct/bas
@@ -511,12 +534,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   raw_z:
     name: raw_z
-    description: Z coordinate of this Spot before any post-processing corrections.
-      Same unit as Z.
+    description: Z coordinate before any post-processing corrections. Same unit as
+      Z. Reserved, conditionally-required column name (Raw_Z) in the Spot Quality,
+      RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '1.10'
     from_schema: https://w3id.org/fof-ct/bas
@@ -524,12 +549,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   x_drift:
     name: x_drift
-    description: Drift correction offset applied to the X coordinate of this Spot.
-      Same unit as X.
+    description: Drift correction offset applied to the X coordinate. Same unit as
+      X. Reserved, conditionally-required column name (X_Drift) in the Spot Quality
+      and RNA Spot Quality tables. Not part of the reserved vocabulary of the SM Localization
+      Quality table.
     examples:
     - value: '0.13'
     from_schema: https://w3id.org/fof-ct/bas
@@ -537,12 +565,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   y_drift:
     name: y_drift
-    description: Drift correction offset applied to the Y coordinate of this Spot.
-      Same unit as Y.
+    description: Drift correction offset applied to the Y coordinate. Same unit as
+      Y. Reserved, conditionally-required column name (Y_Drift) in the Spot Quality
+      and RNA Spot Quality tables.
     examples:
     - value: '0.23'
     from_schema: https://w3id.org/fof-ct/bas
@@ -550,12 +580,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   z_drift:
     name: z_drift
-    description: Drift correction offset applied to the Z coordinate of this Spot.
-      Same unit as Z.
+    description: Drift correction offset applied to the Z coordinate. Same unit as
+      Z. Reserved, conditionally-required column name (Z_Drift) in the Spot Quality
+      and RNA Spot Quality tables.
     examples:
     - value: '0.13'
     from_schema: https://w3id.org/fof-ct/bas
@@ -563,12 +595,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   x_chromatic_shift:
     name: x_chromatic_shift
-    description: Chromatic aberration correction offset applied to the X coordinate
-      of this Spot. Same unit as X.
+    description: Chromatic aberration correction offset applied to the X coordinate.
+      Same unit as X. Reserved, conditionally-required column name (X_Chromatic_Shift)
+      in the Spot Quality and RNA Spot Quality tables.
     examples:
     - value: '0.05'
     from_schema: https://w3id.org/fof-ct/bas
@@ -576,12 +610,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   y_chromatic_shift:
     name: y_chromatic_shift
-    description: Chromatic aberration correction offset applied to the Y coordinate
-      of this Spot. Same unit as Y.
+    description: Chromatic aberration correction offset applied to the Y coordinate.
+      Same unit as Y. Reserved, conditionally-required column name (Y_Chromatic_Shift)
+      in the Spot Quality and RNA Spot Quality tables.
     examples:
     - value: '0.04'
     from_schema: https://w3id.org/fof-ct/bas
@@ -589,12 +625,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   z_chromatic_shift:
     name: z_chromatic_shift
-    description: Chromatic aberration correction offset applied to the Z coordinate
-      of this Spot. Same unit as Z.
+    description: Chromatic aberration correction offset applied to the Z coordinate.
+      Same unit as Z. Reserved, conditionally-required column name (Z_Chromatic_Shift)
+      in the Spot Quality and RNA Spot Quality tables.
     examples:
     - value: '0.02'
     from_schema: https://w3id.org/fof-ct/bas
@@ -602,12 +640,15 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   x_loc_error:
     name: x_loc_error
-    description: Localization error estimate for the X coordinate of this Spot (e.g.
-      standard deviation of repeated measurements). Same unit as X.
+    description: Localization error estimate for the X coordinate (e.g. standard deviation
+      of repeated measurements). Same unit as X. Reserved, conditionally-required
+      column name (X_Loc_Error) in the Spot Quality, RNA Spot Quality, and SM Localization
+      Quality tables.
     examples:
     - value: '0.02'
     from_schema: https://w3id.org/fof-ct/bas
@@ -615,12 +656,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   y_loc_error:
     name: y_loc_error
-    description: Localization error estimate for the Y coordinate of this Spot. Same
-      unit as Y.
+    description: Localization error estimate for the Y coordinate. Same unit as Y.
+      Reserved, conditionally-required column name (Y_Loc_Error) in the Spot Quality,
+      RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '0.02'
     from_schema: https://w3id.org/fof-ct/bas
@@ -628,12 +671,14 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
   z_loc_error:
     name: z_loc_error
-    description: Localization error estimate for the Z coordinate of this Spot. Same
-      unit as Z.
+    description: Localization error estimate for the Z coordinate. Same unit as Z.
+      Reserved, conditionally-required column name (Z_Loc_Error) in the Spot Quality,
+      RNA Spot Quality, and SM Localization Quality tables.
     examples:
     - value: '0.05'
     from_schema: https://w3id.org/fof-ct/bas
@@ -641,6 +686,7 @@ attributes:
     owner: SpotQualityRecord
     domain_of:
     - SpotQualityRecord
+    - RNASpotQualityRecord
     range: float
     required: false
 

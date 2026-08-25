@@ -28,6 +28,8 @@ URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
         
       Software : software_description
         
+      Software : software_parameters
+        
       Software : software_preferred_citation_id
         
       Software : software_repository
@@ -60,7 +62,8 @@ URI: [fof_ct:Software](https://w3id.org/fof-ct/Software)
 | [software_title](software_title.md) | 1 <br/> [String](String.md) | Name of the software tool | direct |
 | [software_type](software_type.md) | 1 <br/> [SoftwareTypeEnum](SoftwareTypeEnum.md) | Functional category of the software tool | direct |
 | [software_authors](software_authors.md) | 1 <br/> [String](String.md) | Author name(s) in 'Surname, Firstname' format, multiple authors separated by ... | direct |
-| [software_description](software_description.md) | 1 <br/> [String](String.md) | Free-text description of the algorithm and analysis parameters, sufficient to... | direct |
+| [software_description](software_description.md) | 1 <br/> [String](String.md) | Free-text description of the algorithm used, sufficient to guarantee reproduc... | direct |
+| [software_parameters](software_parameters.md) | 1 <br/> [String](String.md) | Free-text description of the input parameters used for the specific analysis ... | direct |
 | [software_repository](software_repository.md) | 1 <br/> [Uri](Uri.md) | URL of the repository where the software release can be obtained | direct |
 | [software_preferred_citation_id](software_preferred_citation_id.md) | 1 <br/> [Uri](Uri.md) | Unique identifier (DOI, PMCID, ArXiv ID, etc | direct |
 
@@ -144,6 +147,7 @@ slots:
 - software_type
 - software_authors
 - software_description
+- software_parameters
 - software_repository
 - software_preferred_citation_id
 
@@ -200,8 +204,24 @@ attributes:
     required: true
   software_description:
     name: software_description
-    description: 'Free-text description of the algorithm and analysis parameters,
-      sufficient to guarantee reproducibility. Written as #Software_Description:.'
+    description: 'Free-text description of the algorithm used, sufficient to guarantee
+      reproducibility. Written as #Software_Description:.'
+    from_schema: https://w3id.org/fof-ct/vol
+    rank: 1000
+    owner: Software
+    domain_of:
+    - Software
+    range: string
+    required: true
+  software_parameters:
+    name: software_parameters
+    description: 'Free-text description of the input parameters used for the specific
+      analysis run performed using this Software. Should provide sufficient detail
+      about the analysis parameters used to guarantee interpretation and reproducibility
+      (e.g. input parameters used for assessing the precision of single molecule localization
+      or drift correction in X, Y and Z). Written as #Software_Parameters:.'
+    examples:
+    - value: X_Loc_Precision Parameter = 1.01
     from_schema: https://w3id.org/fof-ct/vol
     rank: 1000
     owner: Software

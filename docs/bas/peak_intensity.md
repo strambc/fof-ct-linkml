@@ -6,7 +6,7 @@ search:
 # Slot: peak_intensity 
 
 
-_Signal intensity of the brightest pixel within the Spot boundary. Conditionally required in the Spot Quality table when intensity metrics are reported._
+_Signal intensity of the brightest pixel within the Spot / localization boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot Quality, RNA Spot Quality, and SM Localization Quality tables._
 
 
 
@@ -26,6 +26,7 @@ URI: [fof_ct:peak_intensity](https://w3id.org/fof-ct/peak_intensity)
 | Name | Description | Modifies Slot |
 | --- | --- | --- |
 | [SpotQualityRecord](SpotQualityRecord.md) | A single row in the Spot Quality table |  yes  |
+| [RNASpotQualityRecord](RNASpotQualityRecord.md) | A single row in the RNA Spot Quality table |  yes  |
 
 
 
@@ -39,7 +40,7 @@ URI: [fof_ct:peak_intensity](https://w3id.org/fof-ct/peak_intensity)
 | Property | Value |
 | --- | --- |
 | Range | [Float](Float.md) |
-| Domain Of | [SpotQualityRecord](SpotQualityRecord.md) |
+| Domain Of | [SpotQualityRecord](SpotQualityRecord.md), [RNASpotQualityRecord](RNASpotQualityRecord.md) |
 
 ### Cardinality and Requirements
 
@@ -91,14 +92,16 @@ URI: [fof_ct:peak_intensity](https://w3id.org/fof-ct/peak_intensity)
 <details>
 ```yaml
 name: peak_intensity
-description: Signal intensity of the brightest pixel within the Spot boundary. Conditionally
-  required in the Spot Quality table when intensity metrics are reported.
+description: Signal intensity of the brightest pixel within the Spot / localization
+  boundary. Reserved, conditionally-required column name (Peak_Intensity) in the Spot
+  Quality, RNA Spot Quality, and SM Localization Quality tables.
 examples:
 - value: '3200.0'
 from_schema: https://w3id.org/fof-ct/bas
 rank: 1000
 domain_of:
 - SpotQualityRecord
+- RNASpotQualityRecord
 range: float
 
 ```

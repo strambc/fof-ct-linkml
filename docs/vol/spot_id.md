@@ -6,7 +6,7 @@ search:
 # Slot: spot_id 
 
 
-_Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table._
+_Unique identifier for a bright DNA Spot. Used as a primary key in quality and biological data tables, and as a foreign key linking localization events to their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization events rather than by direct optical detection, and every SM Localization event MUST report its associated Spot_ID._
 
 
 
@@ -97,7 +97,10 @@ URI: [fof_ct:spot_id](https://w3id.org/fof-ct/spot_id)
 name: spot_id
 description: Unique identifier for a bright DNA Spot. Used as a primary key in quality
   and biological data tables, and as a foreign key linking localization events to
-  their parent Spot in the demultiplexing table.
+  their parent Spot in the demultiplexing table. In FOF-vol-CT (table 13, SM Localization
+  Data), this same Spot_ID concept is derived by clustering Single-Molecule (SM) Localization
+  events rather than by direct optical detection, and every SM Localization event
+  MUST report its associated Spot_ID.
 examples:
 - value: '1'
 from_schema: https://w3id.org/fof-ct/vol

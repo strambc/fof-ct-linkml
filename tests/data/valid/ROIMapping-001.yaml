@@ -1,0 +1,6 @@
+# Example FOF-CT Cell/ROI Mapping table row: exactly one of
+# sub_cell_roi_id / cell_id / extra_cell_roi_id must be populated per row.
+# This valid example populates cell_id only.
+---
+cell_id: 1
+roi_boundaries: "[[100.0, 120.0], [140.0, 120.0], [140.0, 160.0], [100.0, 160.0]]"
