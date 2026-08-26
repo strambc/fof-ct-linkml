@@ -711,13 +711,8 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../Spot/">Spot</a></td>
-<td>A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing ...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../RNASpot/">RNASpot</a></td>
-<td>A single detected RNA bright Spot corresponding to one RNA transcript locatio...</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
+<td>Mixin capturing slots shared between DNA Spots (Spot, core table) and RNA Spo...</td>
 <td>no</td>
 </tr>
 <tr>
@@ -740,6 +735,16 @@
 <td>A single individual single-molecule (SM) localization event in a FOF-vol-CT d...</td>
 <td>yes</td>
 </tr>
+<tr>
+<td><a href="../Spot/">Spot</a></td>
+<td>A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing ...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../RNASpot/">RNASpot</a></td>
+<td>A single detected RNA bright Spot corresponding to one RNA transcript locatio...</td>
+<td>no</td>
+</tr>
 </tbody>
 </table>
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
@@ -754,11 +759,11 @@
 <tbody>
 <tr>
 <td>Range</td>
-<td><a href="../Integer/">Integer</a></td>
+<td><a href="../ExtraCellROI/">ExtraCellROI</a></td>
 </tr>
 <tr>
 <td>Domain Of</td>
-<td><a href="../Spot/">Spot</a>, <a href="../RNASpot/">RNASpot</a>, <a href="../Cell/">Cell</a>, <a href="../ExtraCellROI/">ExtraCellROI</a>, <a href="../ROIMapping/">ROIMapping</a>, <a href="../SMLocalization/">SMLocalization</a></td>
+<td><a href="../SpotMixin/">SpotMixin</a>, <a href="../Cell/">Cell</a>, <a href="../ExtraCellROI/">ExtraCellROI</a>, <a href="../ROIMapping/">ROIMapping</a>, <a href="../SMLocalization/">SMLocalization</a></td>
 </tr>
 </tbody>
 </table>
@@ -824,13 +829,13 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">domain_of</span><span class="p">:</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 </details>
 </div>

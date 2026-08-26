@@ -2,1138 +2,1146 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/about/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/erdiagram/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/erdiagram_bas/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/erdiagram_vol/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Boolean/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Cell/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/CellTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Curie/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Date/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/DateOrDatetime/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Datetime/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Decimal/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/DemultiplexingTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Double/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/ExtraCellROI/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/ExtraCellROITable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Float/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Integer/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Jsonpath/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Jsonpointer/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Localization/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/LocalizationMixin/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Ncname/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Nodeidentifier/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Objectidentifier/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpot/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpotBiologicalRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpotBiologicalTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpotQualityRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpotQualityTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/RNASpotTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/ROIBoundariesFormatTypeEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/ROIMapping/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/ROIMappingTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Software/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SoftwareTypeEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Sparqlpath/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Spot/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotBiologicalRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotBiologicalTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotMixin/</loc>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotQualityRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotQualityTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SpotTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/String/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SubCellROI/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/SubCellROITable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/TableNamespaceEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Time/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/TimeUnitEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Trace/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/TraceTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Uri/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/Uriorcurie/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/XYZUnitEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/additional_tables/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/cell_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/cell_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/cells/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/centroid_intensity/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/channel_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/chrom/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/chrom_end/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/chrom_start/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/experimenter_contact/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/experimenter_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/extra_cell_roi_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/extra_cell_roi_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/extra_cell_rois/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/fluorophore_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/fof_bas_ct/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/fof_ct_version/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/gene_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/gene_id_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/genome_assembly/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/goodness_of_fit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/hyb_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/image_frame_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/intensity_measurement_method/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/intensity_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/lab_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/loc_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/localizations/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/modification/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/peak_intensity/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/photon_count/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/raw_x/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/raw_y/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/raw_z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/rna_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/rna_spot_biological_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/rna_spot_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/rna_spot_quality_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/rna_spots/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/roi_boundaries/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/roi_boundaries_format_description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/roi_boundaries_format_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/roi_mappings/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_authors/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_parameters/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_preferred_citation_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_repository/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_title/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/software_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/softwares/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/spot_biological_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/spot_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/spot_quality_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/spots/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/sub_cell_roi_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/sub_cell_roi_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/sub_cell_rois/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/table_namespace/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/the_z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/time_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/trace_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/traces/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/transcript_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/transcript_id_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/vcf_file_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/vcf_version/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/x/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/x_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/x_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/x_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/x_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/xyz_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/y/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/y_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/y_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/y_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/y_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/z_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/z_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/z_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/bas/z_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Boolean/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Cell/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/CellTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Curie/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Date/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/DateOrDatetime/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Datetime/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Decimal/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/DemultiplexingTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Double/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/ExtraCellROI/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/ExtraCellROITable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Float/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Integer/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Jsonpath/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Jsonpointer/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Localization/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/LocalizationMixin/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Ncname/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Nodeidentifier/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Objectidentifier/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpot/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpotBiologicalRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpotBiologicalTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpotQualityRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpotQualityTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/RNASpotTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/ROIBoundariesFormatTypeEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/ROIMapping/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/ROIMappingTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SMLocalization/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SMLocalizationQualityRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SMLocalizationQualityTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SMLocalizationTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Software/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SoftwareTypeEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Sparqlpath/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Spot/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotBiologicalRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotBiologicalTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
+    </url>
+    <url>
+         <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotMixin/</loc>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotQualityRecord/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotQualityTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SpotTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/String/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SubCellROI/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/SubCellROITable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/TableNamespaceEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Time/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/TimeUnitEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Trace/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/TraceTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/UndecodedLocalization/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/UndecodedLocalizationTable/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Uri/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/Uriorcurie/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/XYZUnitEnum/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/additional_tables/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/cell_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/cell_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/cells/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/centroid_intensity/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/channel_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/chrom/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/chrom_end/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/chrom_start/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/experimenter_contact/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/experimenter_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/extra_cell_roi_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/extra_cell_roi_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/extra_cell_rois/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/fluorophore_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/fof_ct_version/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/fof_vol_ct/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/gene_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/gene_id_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/genome_assembly/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/goodness_of_fit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/hyb_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/image_frame_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/intensity_measurement_method/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/intensity_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/lab_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/loc_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/localizations/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/modification/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/peak_intensity/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/photon_count/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/raw_x/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/raw_y/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/raw_z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/rna_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/rna_spot_biological_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/rna_spot_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/rna_spot_quality_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/rna_spots/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/roi_boundaries/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/roi_boundaries_format_description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/roi_boundaries_format_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/roi_mappings/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/sm_localization_quality_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/sm_localizations/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_authors/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_description/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_parameters/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_preferred_citation_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_repository/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_title/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/software_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/softwares/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/spot_biological_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/spot_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/spot_quality_records/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/spots/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/sub_cell_roi_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/sub_cell_roi_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/sub_cell_rois/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/table_namespace/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/the_z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/time_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/trace_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/traces/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/transcript_id/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/transcript_id_type/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/undecoded_localizations/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/vcf_file_name/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/vcf_version/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/x/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/x_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/x_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/x_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/x_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/xyz_unit/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/y/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/y_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/y_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/y_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/y_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/z/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/z_chromatic_shift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/z_drift/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/z_loc_error/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
     <url>
          <loc>https://strambc.github.io/fof-ct-linkml/vol/z_precision/</loc>
-         <lastmod>2026-08-25</lastmod>
+         <lastmod>2026-08-26</lastmod>
     </url>
 </urlset>

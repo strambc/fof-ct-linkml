@@ -696,7 +696,7 @@
 
 
 <h1 id="slot-cell_type">Slot: cell_type<a class="headerlink" href="#slot-cell_type" title="Permanent link">&para;</a></h1>
-<p><em>The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include "Primary cell line", "Immortal cell line", "Induced pluripotent stem (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as #Cell_Type: in the file header.</em></p>
+<p><em>The type of cells present in this dataset, reported as an ontology term ID from the Experimental Factor Ontology (EFO), followed by its human-readable label in parentheses, e.g. "EFO:XXXXXXX (Cell in tissue)" -- look up the real EFO ID before use. "Other" is accepted as a literal value when no ontology term applies. Written as #Cell_Type: in the file header.</em></p>
 <div>
 <p>URI: <a href="https://w3id.org/fof-ct/cell_type">fof_ct:cell_type</a></p>
 <!-- no inheritance hierarchy -->
@@ -757,8 +757,22 @@
 </thead>
 <tbody>
 <tr>
+<td>### Value Constraints</td>
 <td></td>
-<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regex Pattern</td>
+<td><code>^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$</code></td>
 </tr>
 </tbody>
 </table>
@@ -771,10 +785,13 @@
 </thead>
 <tbody>
 <tr>
-<td>Cell in tissue</td>
+<td>EFO:XXXXXXX (Cell in tissue)</td>
 </tr>
 <tr>
-<td>Cell in organoid</td>
+<td>EFO:XXXXXXX (Cell in organoid)</td>
+</tr>
+<tr>
+<td>Other</td>
 </tr>
 </tbody>
 </table>
@@ -805,20 +822,23 @@
 <h2 id="linkml-source">LinkML Source<a class="headerlink" href="#linkml-source" title="Permanent link">&para;</a></h2>
 <details>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_type</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;The</span><span class="nv"> </span><span class="s">type</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">cells</span><span class="nv"> </span><span class="s">present</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">dataset,</span><span class="nv"> </span><span class="s">expressed</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">ontology</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">term</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Experimental</span><span class="nv"> </span><span class="s">Factor</span><span class="nv"> </span><span class="s">Ontology</span><span class="nv"> </span><span class="s">(EFO).</span><span class="nv"> </span><span class="s">Examples</span><span class="nv"> </span><span class="s">include</span><span class="nv"> </span><span class="s">&quot;Primary</span><span class="nv"> </span><span class="s">cell</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">line&quot;,</span><span class="nv"> </span><span class="s">&quot;Immortal</span><span class="nv"> </span><span class="s">cell</span><span class="nv"> </span><span class="s">line&quot;,</span><span class="nv"> </span><span class="s">&quot;Induced</span><span class="nv"> </span><span class="s">pluripotent</span><span class="nv"> </span><span class="s">stem</span><span class="nv"> </span><span class="s">(IPS)</span><span class="nv"> </span><span class="s">cell&quot;,</span><span class="nv"> </span><span class="s">&quot;Cell</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">tissue&quot;,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="s">&quot;Cell</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">organoid&quot;,</span><span class="nv"> </span><span class="s">&quot;Other&quot;.</span><span class="nv"> </span><span class="s">Written</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">#Cell_Type:</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.&#39;</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">examples</span><span class="p">:</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell in tissue</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell in organoid</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nt">domain_of</span><span class="p">:</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROITable</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;The</span><span class="nv"> </span><span class="s">type</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">cells</span><span class="nv"> </span><span class="s">present</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">dataset,</span><span class="nv"> </span><span class="s">reported</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">ontology</span><span class="nv"> </span><span class="s">term</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="s">ID</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Experimental</span><span class="nv"> </span><span class="s">Factor</span><span class="nv"> </span><span class="s">Ontology</span><span class="nv"> </span><span class="s">(EFO),</span><span class="nv"> </span><span class="s">followed</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">its</span><span class="nv"> </span><span class="s">human-readable</span><span class="nv"> </span><span class="s">label</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="s">in</span><span class="nv"> </span><span class="s">parentheses,</span><span class="nv"> </span><span class="s">e.g.</span><span class="nv"> </span><span class="s">&quot;EFO:XXXXXXX</span><span class="nv"> </span><span class="s">(Cell</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">tissue)&quot;</span><span class="nv"> </span><span class="s">--</span><span class="nv"> </span><span class="s">look</span><span class="nv"> </span><span class="s">up</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">real</span><span class="nv"> </span><span class="s">EFO</span><span class="nv"> </span><span class="s">ID</span><span class="nv"> </span><span class="s">before</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="s">use.</span><span class="nv"> </span><span class="s">&quot;Other&quot;</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">accepted</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">literal</span><span class="nv"> </span><span class="s">value</span><span class="nv"> </span><span class="s">when</span><span class="nv"> </span><span class="s">no</span><span class="nv"> </span><span class="s">ontology</span><span class="nv"> </span><span class="s">term</span><span class="nv"> </span><span class="s">applies.</span><span class="nv"> </span><span class="s">Written</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="s">as</span><span class="nv"> </span><span class="s">#Cell_Type:</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">file</span><span class="nv"> </span><span class="s">header.&#39;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nt">examples</span><span class="p">:</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EFO:XXXXXXX (Cell in tissue)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EFO:XXXXXXX (Cell in organoid)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Other</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="nt">domain_of</span><span class="p">:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CellTable</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROITable</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMappingTable</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$</span>
 </code></pre></div>
 </details>
 </div>

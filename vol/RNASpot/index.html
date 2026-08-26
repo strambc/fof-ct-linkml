@@ -279,6 +279,15 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#inheritance">
+<span class="md-ellipsis">
+      
+        Inheritance
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#slots">
 <span class="md-ellipsis">
       
@@ -366,15 +375,36 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="class-rnaspot">Class: RNASpot<a class="headerlink" href="#class-rnaspot" title="Permanent link">¶</a></h1>
-<p><em>A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.</em></p>
+<p><em>A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additionaluser-defined columns.</em></p>
 <div>
 <p>URI: <a href="https://w3id.org/fof-ct/RNASpot">fof_ct:RNASpot</a></p>
 <pre class="mermaid"><code> classDiagram
     class RNASpot
     click RNASpot href "../RNASpot/"
+      SpotMixin &lt;|-- RNASpot
+        click SpotMixin href "../SpotMixin/"
+
       RNASpot : cell_id
 
+
+
+
+
+        RNASpot --&gt; "0..1" Cell : cell_id
+        click Cell href "../Cell/"
+
+
+
       RNASpot : extra_cell_roi_id
+
+
+
+
+
+        RNASpot --&gt; "0..1" ExtraCellROI : extra_cell_roi_id
+        click ExtraCellROI href "../ExtraCellROI/"
+
+
 
       RNASpot : gene_id
 
@@ -384,7 +414,25 @@
 
       RNASpot : sub_cell_roi_id
 
+
+
+
+
+        RNASpot --&gt; "0..1" SubCellROI : sub_cell_roi_id
+        click SubCellROI href "../SubCellROI/"
+
+
+
       RNASpot : trace_id
+
+
+
+
+
+        RNASpot --&gt; "1" Trace : trace_id
+        click Trace href "../Trace/"
+
+
 
       RNASpot : transcript_id
 
@@ -395,7 +443,10 @@
       RNASpot : z
 
 </code></pre>
-<!-- no inheritance hierarchy -->
+<h2 id="inheritance">Inheritance<a class="headerlink" href="#inheritance" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>RNASpot</strong> [ <a href="../SpotMixin/">SpotMixin</a>]</li>
+</ul>
 <h2 id="slots">Slots<a class="headerlink" href="#slots" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -414,24 +465,6 @@
 <td>direct</td>
 </tr>
 <tr>
-<td><a href="../x/">x</a></td>
-<td>1 <br/> <a href="../Float/">Float</a></td>
-<td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
-<td>direct</td>
-</tr>
-<tr>
-<td><a href="../y/">y</a></td>
-<td>1 <br/> <a href="../Float/">Float</a></td>
-<td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
-<td>direct</td>
-</tr>
-<tr>
-<td><a href="../z/">z</a></td>
-<td>1 <br/> <a href="../Float/">Float</a></td>
-<td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
-<td>direct</td>
-</tr>
-<tr>
 <td><a href="../rna_name/">rna_name</a></td>
 <td>1 <br/> <a href="../String/">String</a></td>
 <td>Official name of the gene from which the targeted RNA is transcribed (e</td>
@@ -445,7 +478,7 @@
 </tr>
 <tr>
 <td><a href="../trace_id/">trace_id</a></td>
-<td>1 <br/> <a href="../Integer/">Integer</a></td>
+<td>1 <br/> <a href="../Trace/">Trace</a></td>
 <td>Unique identifier for a chromatin Trace</td>
 <td>direct</td>
 </tr>
@@ -456,22 +489,40 @@
 <td>direct</td>
 </tr>
 <tr>
+<td><a href="../x/">x</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel X coordinate of this detected event (Spot or localisation) in the u...</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
+</tr>
+<tr>
+<td><a href="../y/">y</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Y coordinate of this detected event (Spot or localisation) in the u...</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
+</tr>
+<tr>
+<td><a href="../z/">z</a></td>
+<td>1 <br/> <a href="../Float/">Float</a></td>
+<td>Sub-pixel Z coordinate of this detected event (Spot or localisation) in the u...</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
+</tr>
+<tr>
 <td><a href="../sub_cell_roi_id/">sub_cell_roi_id</a></td>
-<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>0..1 <br/> <a href="../SubCellROI/">SubCellROI</a></td>
 <td>Unique identifier for a sub-cellular structure ROI (e</td>
-<td>direct</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
 </tr>
 <tr>
 <td><a href="../cell_id/">cell_id</a></td>
-<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>0..1 <br/> <a href="../Cell/">Cell</a></td>
 <td>Unique identifier for a Cell</td>
-<td>direct</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
 </tr>
 <tr>
 <td><a href="../extra_cell_roi_id/">extra_cell_roi_id</a></td>
-<td>0..1 <br/> <a href="../Integer/">Integer</a></td>
+<td>0..1 <br/> <a href="../ExtraCellROI/">ExtraCellROI</a></td>
 <td>Unique identifier for an extracellular structure ROI (e</td>
-<td>direct</td>
+<td><a href="../SpotMixin/">SpotMixin</a></td>
 </tr>
 </tbody>
 </table>
@@ -507,6 +558,18 @@
 <tr>
 <td><a href="../RNASpotTable/">RNASpotTable</a></td>
 <td><a href="../rna_spots/">rna_spots</a></td>
+<td>range</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotQualityRecord/">RNASpotQualityRecord</a></td>
+<td><a href="../rna_spot_id/">rna_spot_id</a></td>
+<td>range</td>
+<td><a href="./">RNASpot</a></td>
+</tr>
+<tr>
+<td><a href="../RNASpotBiologicalRecord/">RNASpotBiologicalRecord</a></td>
+<td><a href="../rna_spot_id/">rna_spot_id</a></td>
 <td>range</td>
 <td><a href="./">RNASpot</a></td>
 </tr>
@@ -546,24 +609,24 @@
 <a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id</span>
 <a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id</span>
 <a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table.</span>
-<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">This class accepts additional user-defined optional columns via open schema.</span>
-<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="nt">slots</span><span class="p">:</span>
-<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
-<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
-<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">y</span>
-<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">z</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">placeholders); it does not accept additionaluser-defined columns.</span>
+<a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="nt">mixins</span><span class="p">:</span>
+<a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="nt">slots</span><span class="p">:</span>
+<a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
 <a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_name</span>
 <a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gene_id</span>
 <a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace_id</span>
 <a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">transcript_id</span>
-<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub_cell_roi_id</span>
-<a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="nt">slot_usage</span><span class="p">:</span>
-<a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
-<a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
-<a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="nt">slot_usage</span><span class="p">:</span>
+<a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
+<a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
+<a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="w">  </span><span class="nt">x</span><span class="p">:</span>
 <a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
 <a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
@@ -592,209 +655,215 @@
 <a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id</span>
 <a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id</span>
 <a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table.</span>
-<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">This class accepts additional user-defined optional columns via open schema.</span>
-<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nt">slot_usage</span><span class="p">:</span>
-<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
-<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
-<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="nt">x</span><span class="p">:</span>
-<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
-<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">  </span><span class="nt">y</span><span class="p">:</span>
-<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">y</span>
-<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">  </span><span class="nt">z</span><span class="p">:</span>
-<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">z</span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">placeholders); it does not accept additionaluser-defined columns.</span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="nt">mixins</span><span class="p">:</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="nt">slot_usage</span><span class="p">:</span>
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="w">  </span><span class="nt">x</span><span class="p">:</span>
+<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
 <a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">  </span><span class="nt">rna_name</span><span class="p">:</span>
-<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_name</span>
+<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a><span class="w">  </span><span class="nt">y</span><span class="p">:</span>
+<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">y</span>
 <a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">  </span><span class="nt">gene_id</span><span class="p">:</span>
-<a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gene_id</span>
+<a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a><span class="w">  </span><span class="nt">z</span><span class="p">:</span>
+<a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">z</span>
 <a href="#__codelineno-1-27" id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">  </span><span class="nt">trace_id</span><span class="p">:</span>
-<a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace_id</span>
+<a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="w">  </span><span class="nt">rna_name</span><span class="p">:</span>
+<a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_name</span>
 <a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-31" id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="nt">attributes</span><span class="p">:</span>
-<a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
-<a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
-<a href="#__codelineno-1-34" id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for an RNA bright Spot, unique across the</span>
-<a href="#__codelineno-1-35" id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign</span>
-<a href="#__codelineno-1-36" id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">key in the RNA Quality and RNA Biological Data tables.</span>
-<a href="#__codelineno-1-37" id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-38" id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<a href="#__codelineno-1-39" id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-40" id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-41" id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-42" id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-43" id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-44" id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotQualityRecord</span>
-<a href="#__codelineno-1-45" id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotBiologicalRecord</span>
-<a href="#__codelineno-1-46" id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<a href="#__codelineno-1-47" id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-48" id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="w">  </span><span class="nt">x</span><span class="p">:</span>
-<a href="#__codelineno-1-49" id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
-<a href="#__codelineno-1-50" id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel X coordinate of this detected event (Spot or localisation)</span>
-<a href="#__codelineno-1-51" id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
-<a href="#__codelineno-1-52" id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections (drift correction, chromatic correction,</span>
-<a href="#__codelineno-1-53" id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">etc.).</span>
-<a href="#__codelineno-1-54" id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-55" id="__codelineno-1-55" name="__codelineno-1-55"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'14.43'</span>
-<a href="#__codelineno-1-56" id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-57" id="__codelineno-1-57" name="__codelineno-1-57"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-58" id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-59" id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-60" id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
-<a href="#__codelineno-1-61" id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-62" id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-63" id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
-<a href="#__codelineno-1-64" id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-65" id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="w">  </span><span class="nt">y</span><span class="p">:</span>
-<a href="#__codelineno-1-66" id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">y</span>
-<a href="#__codelineno-1-67" id="__codelineno-1-67" name="__codelineno-1-67"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel Y coordinate of this detected event (Spot or localisation)</span>
-<a href="#__codelineno-1-68" id="__codelineno-1-68" name="__codelineno-1-68"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
-<a href="#__codelineno-1-69" id="__codelineno-1-69" name="__codelineno-1-69"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections.</span>
-<a href="#__codelineno-1-70" id="__codelineno-1-70" name="__codelineno-1-70"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-71" id="__codelineno-1-71" name="__codelineno-1-71"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'41.43'</span>
-<a href="#__codelineno-1-72" id="__codelineno-1-72" name="__codelineno-1-72"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-73" id="__codelineno-1-73" name="__codelineno-1-73"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-74" id="__codelineno-1-74" name="__codelineno-1-74"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-75" id="__codelineno-1-75" name="__codelineno-1-75"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-76" id="__codelineno-1-76" name="__codelineno-1-76"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
-<a href="#__codelineno-1-77" id="__codelineno-1-77" name="__codelineno-1-77"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-78" id="__codelineno-1-78" name="__codelineno-1-78"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-79" id="__codelineno-1-79" name="__codelineno-1-79"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
-<a href="#__codelineno-1-80" id="__codelineno-1-80" name="__codelineno-1-80"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-81" id="__codelineno-1-81" name="__codelineno-1-81"></a><span class="w">  </span><span class="nt">z</span><span class="p">:</span>
-<a href="#__codelineno-1-82" id="__codelineno-1-82" name="__codelineno-1-82"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">z</span>
-<a href="#__codelineno-1-83" id="__codelineno-1-83" name="__codelineno-1-83"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel Z coordinate of this detected event (Spot or localisation)</span>
-<a href="#__codelineno-1-84" id="__codelineno-1-84" name="__codelineno-1-84"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
-<a href="#__codelineno-1-85" id="__codelineno-1-85" name="__codelineno-1-85"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections.</span>
-<a href="#__codelineno-1-86" id="__codelineno-1-86" name="__codelineno-1-86"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-87" id="__codelineno-1-87" name="__codelineno-1-87"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1.23'</span>
-<a href="#__codelineno-1-88" id="__codelineno-1-88" name="__codelineno-1-88"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-89" id="__codelineno-1-89" name="__codelineno-1-89"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-90" id="__codelineno-1-90" name="__codelineno-1-90"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-91" id="__codelineno-1-91" name="__codelineno-1-91"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-92" id="__codelineno-1-92" name="__codelineno-1-92"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
-<a href="#__codelineno-1-93" id="__codelineno-1-93" name="__codelineno-1-93"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-94" id="__codelineno-1-94" name="__codelineno-1-94"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-95" id="__codelineno-1-95" name="__codelineno-1-95"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
-<a href="#__codelineno-1-96" id="__codelineno-1-96" name="__codelineno-1-96"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-97" id="__codelineno-1-97" name="__codelineno-1-97"></a><span class="w">  </span><span class="nt">rna_name</span><span class="p">:</span>
-<a href="#__codelineno-1-98" id="__codelineno-1-98" name="__codelineno-1-98"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_name</span>
-<a href="#__codelineno-1-99" id="__codelineno-1-99" name="__codelineno-1-99"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official name of the gene from which the targeted RNA is transcribed</span>
-<a href="#__codelineno-1-100" id="__codelineno-1-100" name="__codelineno-1-100"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.</span>
-<a href="#__codelineno-1-101" id="__codelineno-1-101" name="__codelineno-1-101"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-102" id="__codelineno-1-102" name="__codelineno-1-102"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ACTB</span>
-<a href="#__codelineno-1-103" id="__codelineno-1-103" name="__codelineno-1-103"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAPDH</span>
-<a href="#__codelineno-1-104" id="__codelineno-1-104" name="__codelineno-1-104"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-105" id="__codelineno-1-105" name="__codelineno-1-105"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-106" id="__codelineno-1-106" name="__codelineno-1-106"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-107" id="__codelineno-1-107" name="__codelineno-1-107"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-108" id="__codelineno-1-108" name="__codelineno-1-108"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-109" id="__codelineno-1-109" name="__codelineno-1-109"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-110" id="__codelineno-1-110" name="__codelineno-1-110"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<a href="#__codelineno-1-111" id="__codelineno-1-111" name="__codelineno-1-111"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-112" id="__codelineno-1-112" name="__codelineno-1-112"></a><span class="w">  </span><span class="nt">gene_id</span><span class="p">:</span>
-<a href="#__codelineno-1-113" id="__codelineno-1-113" name="__codelineno-1-113"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gene_id</span>
-<a href="#__codelineno-1-114" id="__codelineno-1-114" name="__codelineno-1-114"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official gene identifier corresponding to rna_name. The type of identifier</span>
-<a href="#__codelineno-1-115" id="__codelineno-1-115" name="__codelineno-1-115"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">used (e.g. Ensembl gene ID, NCBI Gene ID) must be declared in the gene_id_type</span>
-<a href="#__codelineno-1-116" id="__codelineno-1-116" name="__codelineno-1-116"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">header field.</span>
-<a href="#__codelineno-1-117" id="__codelineno-1-117" name="__codelineno-1-117"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-118" id="__codelineno-1-118" name="__codelineno-1-118"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENSG00000075624</span>
-<a href="#__codelineno-1-119" id="__codelineno-1-119" name="__codelineno-1-119"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENSG00000111640</span>
-<a href="#__codelineno-1-120" id="__codelineno-1-120" name="__codelineno-1-120"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-121" id="__codelineno-1-121" name="__codelineno-1-121"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-122" id="__codelineno-1-122" name="__codelineno-1-122"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-123" id="__codelineno-1-123" name="__codelineno-1-123"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-124" id="__codelineno-1-124" name="__codelineno-1-124"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-125" id="__codelineno-1-125" name="__codelineno-1-125"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-126" id="__codelineno-1-126" name="__codelineno-1-126"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<a href="#__codelineno-1-127" id="__codelineno-1-127" name="__codelineno-1-127"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-128" id="__codelineno-1-128" name="__codelineno-1-128"></a><span class="w">  </span><span class="nt">trace_id</span><span class="p">:</span>
-<a href="#__codelineno-1-129" id="__codelineno-1-129" name="__codelineno-1-129"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace_id</span>
-<a href="#__codelineno-1-130" id="__codelineno-1-130" name="__codelineno-1-130"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a chromatin Trace. Used as a primary key in</span>
-<a href="#__codelineno-1-131" id="__codelineno-1-131" name="__codelineno-1-131"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily)</span>
-<a href="#__codelineno-1-132" id="__codelineno-1-132" name="__codelineno-1-132"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the FOF-vol-CT SM Localization Data table.</span>
-<a href="#__codelineno-1-133" id="__codelineno-1-133" name="__codelineno-1-133"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-134" id="__codelineno-1-134" name="__codelineno-1-134"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<a href="#__codelineno-1-135" id="__codelineno-1-135" name="__codelineno-1-135"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-136" id="__codelineno-1-136" name="__codelineno-1-136"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-137" id="__codelineno-1-137" name="__codelineno-1-137"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-138" id="__codelineno-1-138" name="__codelineno-1-138"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-139" id="__codelineno-1-139" name="__codelineno-1-139"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-140" id="__codelineno-1-140" name="__codelineno-1-140"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trace</span>
-<a href="#__codelineno-1-141" id="__codelineno-1-141" name="__codelineno-1-141"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-142" id="__codelineno-1-142" name="__codelineno-1-142"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
-<a href="#__codelineno-1-143" id="__codelineno-1-143" name="__codelineno-1-143"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<a href="#__codelineno-1-144" id="__codelineno-1-144" name="__codelineno-1-144"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<a href="#__codelineno-1-145" id="__codelineno-1-145" name="__codelineno-1-145"></a><span class="w">  </span><span class="nt">transcript_id</span><span class="p">:</span>
-<a href="#__codelineno-1-146" id="__codelineno-1-146" name="__codelineno-1-146"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">transcript_id</span>
-<a href="#__codelineno-1-147" id="__codelineno-1-147" name="__codelineno-1-147"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official transcript identifier for the specific transcript targeted</span>
-<a href="#__codelineno-1-148" id="__codelineno-1-148" name="__codelineno-1-148"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">by the FISH probe. Conditionally required when multiple transcripts share the</span>
-<a href="#__codelineno-1-149" id="__codelineno-1-149" name="__codelineno-1-149"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">same gene_id and the FISH probe can distinguish among them. The type of identifier</span>
-<a href="#__codelineno-1-150" id="__codelineno-1-150" name="__codelineno-1-150"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">used must be declared in the transcript_id_type header field.</span>
-<a href="#__codelineno-1-151" id="__codelineno-1-151" name="__codelineno-1-151"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-152" id="__codelineno-1-152" name="__codelineno-1-152"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENST00000331789</span>
-<a href="#__codelineno-1-153" id="__codelineno-1-153" name="__codelineno-1-153"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NM_001101.5</span>
-<a href="#__codelineno-1-154" id="__codelineno-1-154" name="__codelineno-1-154"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-155" id="__codelineno-1-155" name="__codelineno-1-155"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-156" id="__codelineno-1-156" name="__codelineno-1-156"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-157" id="__codelineno-1-157" name="__codelineno-1-157"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-158" id="__codelineno-1-158" name="__codelineno-1-158"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-159" id="__codelineno-1-159" name="__codelineno-1-159"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-160" id="__codelineno-1-160" name="__codelineno-1-160"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
-<a href="#__codelineno-1-161" id="__codelineno-1-161" name="__codelineno-1-161"></a><span class="w">  </span><span class="nt">sub_cell_roi_id</span><span class="p">:</span>
-<a href="#__codelineno-1-162" id="__codelineno-1-162" name="__codelineno-1-162"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub_cell_roi_id</span>
-<a href="#__codelineno-1-163" id="__codelineno-1-163" name="__codelineno-1-163"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a sub-cellular structure ROI (e.g., nucleus,</span>
-<a href="#__codelineno-1-164" id="__codelineno-1-164" name="__codelineno-1-164"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">nucleolus). Links to the Sub-Cell ROI Data table.</span>
-<a href="#__codelineno-1-165" id="__codelineno-1-165" name="__codelineno-1-165"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-166" id="__codelineno-1-166" name="__codelineno-1-166"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<a href="#__codelineno-1-167" id="__codelineno-1-167" name="__codelineno-1-167"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-168" id="__codelineno-1-168" name="__codelineno-1-168"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-169" id="__codelineno-1-169" name="__codelineno-1-169"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-170" id="__codelineno-1-170" name="__codelineno-1-170"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-171" id="__codelineno-1-171" name="__codelineno-1-171"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-172" id="__codelineno-1-172" name="__codelineno-1-172"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-173" id="__codelineno-1-173" name="__codelineno-1-173"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
-<a href="#__codelineno-1-174" id="__codelineno-1-174" name="__codelineno-1-174"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<a href="#__codelineno-1-175" id="__codelineno-1-175" name="__codelineno-1-175"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
-<a href="#__codelineno-1-176" id="__codelineno-1-176" name="__codelineno-1-176"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<a href="#__codelineno-1-177" id="__codelineno-1-177" name="__codelineno-1-177"></a><span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
-<a href="#__codelineno-1-178" id="__codelineno-1-178" name="__codelineno-1-178"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
-<a href="#__codelineno-1-179" id="__codelineno-1-179" name="__codelineno-1-179"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a Cell. Links to the Cell Data table.</span>
-<a href="#__codelineno-1-180" id="__codelineno-1-180" name="__codelineno-1-180"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-181" id="__codelineno-1-181" name="__codelineno-1-181"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<a href="#__codelineno-1-182" id="__codelineno-1-182" name="__codelineno-1-182"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-183" id="__codelineno-1-183" name="__codelineno-1-183"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-184" id="__codelineno-1-184" name="__codelineno-1-184"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-185" id="__codelineno-1-185" name="__codelineno-1-185"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-186" id="__codelineno-1-186" name="__codelineno-1-186"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-187" id="__codelineno-1-187" name="__codelineno-1-187"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-188" id="__codelineno-1-188" name="__codelineno-1-188"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<a href="#__codelineno-1-189" id="__codelineno-1-189" name="__codelineno-1-189"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
-<a href="#__codelineno-1-190" id="__codelineno-1-190" name="__codelineno-1-190"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<a href="#__codelineno-1-191" id="__codelineno-1-191" name="__codelineno-1-191"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
-<a href="#__codelineno-1-192" id="__codelineno-1-192" name="__codelineno-1-192"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
-<a href="#__codelineno-1-193" id="__codelineno-1-193" name="__codelineno-1-193"></a><span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
-<a href="#__codelineno-1-194" id="__codelineno-1-194" name="__codelineno-1-194"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
-<a href="#__codelineno-1-195" id="__codelineno-1-195" name="__codelineno-1-195"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for an extracellular structure ROI (e.g., tissue,</span>
-<a href="#__codelineno-1-196" id="__codelineno-1-196" name="__codelineno-1-196"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid). Links to the Extra-Cell ROI Data table.</span>
-<a href="#__codelineno-1-197" id="__codelineno-1-197" name="__codelineno-1-197"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
-<a href="#__codelineno-1-198" id="__codelineno-1-198" name="__codelineno-1-198"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
-<a href="#__codelineno-1-199" id="__codelineno-1-199" name="__codelineno-1-199"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
-<a href="#__codelineno-1-200" id="__codelineno-1-200" name="__codelineno-1-200"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
-<a href="#__codelineno-1-201" id="__codelineno-1-201" name="__codelineno-1-201"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-202" id="__codelineno-1-202" name="__codelineno-1-202"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
-<a href="#__codelineno-1-203" id="__codelineno-1-203" name="__codelineno-1-203"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
-<a href="#__codelineno-1-204" id="__codelineno-1-204" name="__codelineno-1-204"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
-<a href="#__codelineno-1-205" id="__codelineno-1-205" name="__codelineno-1-205"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
-<a href="#__codelineno-1-206" id="__codelineno-1-206" name="__codelineno-1-206"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
-<a href="#__codelineno-1-207" id="__codelineno-1-207" name="__codelineno-1-207"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
-<a href="#__codelineno-1-208" id="__codelineno-1-208" name="__codelineno-1-208"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
-<a href="#__codelineno-1-209" id="__codelineno-1-209" name="__codelineno-1-209"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-31" id="__codelineno-1-31" name="__codelineno-1-31"></a><span class="w">  </span><span class="nt">gene_id</span><span class="p">:</span>
+<a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gene_id</span>
+<a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-34" id="__codelineno-1-34" name="__codelineno-1-34"></a><span class="w">  </span><span class="nt">trace_id</span><span class="p">:</span>
+<a href="#__codelineno-1-35" id="__codelineno-1-35" name="__codelineno-1-35"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace_id</span>
+<a href="#__codelineno-1-36" id="__codelineno-1-36" name="__codelineno-1-36"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-37" id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="nt">attributes</span><span class="p">:</span>
+<a href="#__codelineno-1-38" id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="w">  </span><span class="nt">rna_spot_id</span><span class="p">:</span>
+<a href="#__codelineno-1-39" id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_spot_id</span>
+<a href="#__codelineno-1-40" id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique integer identifier for an RNA bright Spot, unique across the</span>
+<a href="#__codelineno-1-41" id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign</span>
+<a href="#__codelineno-1-42" id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">key in the RNA Quality and RNA Biological Data tables.</span>
+<a href="#__codelineno-1-43" id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-44" id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-45" id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-46" id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-47" id="__codelineno-1-47" name="__codelineno-1-47"></a><span class="w">    </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-48" id="__codelineno-1-48" name="__codelineno-1-48"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-49" id="__codelineno-1-49" name="__codelineno-1-49"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-50" id="__codelineno-1-50" name="__codelineno-1-50"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-51" id="__codelineno-1-51" name="__codelineno-1-51"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotQualityRecord</span>
+<a href="#__codelineno-1-52" id="__codelineno-1-52" name="__codelineno-1-52"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpotBiologicalRecord</span>
+<a href="#__codelineno-1-53" id="__codelineno-1-53" name="__codelineno-1-53"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<a href="#__codelineno-1-54" id="__codelineno-1-54" name="__codelineno-1-54"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-55" id="__codelineno-1-55" name="__codelineno-1-55"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-56" id="__codelineno-1-56" name="__codelineno-1-56"></a><span class="w">  </span><span class="nt">rna_name</span><span class="p">:</span>
+<a href="#__codelineno-1-57" id="__codelineno-1-57" name="__codelineno-1-57"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rna_name</span>
+<a href="#__codelineno-1-58" id="__codelineno-1-58" name="__codelineno-1-58"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official name of the gene from which the targeted RNA is transcribed</span>
+<a href="#__codelineno-1-59" id="__codelineno-1-59" name="__codelineno-1-59"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">(e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.</span>
+<a href="#__codelineno-1-60" id="__codelineno-1-60" name="__codelineno-1-60"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-61" id="__codelineno-1-61" name="__codelineno-1-61"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ACTB</span>
+<a href="#__codelineno-1-62" id="__codelineno-1-62" name="__codelineno-1-62"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GAPDH</span>
+<a href="#__codelineno-1-63" id="__codelineno-1-63" name="__codelineno-1-63"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-64" id="__codelineno-1-64" name="__codelineno-1-64"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-65" id="__codelineno-1-65" name="__codelineno-1-65"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-66" id="__codelineno-1-66" name="__codelineno-1-66"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-67" id="__codelineno-1-67" name="__codelineno-1-67"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-68" id="__codelineno-1-68" name="__codelineno-1-68"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-69" id="__codelineno-1-69" name="__codelineno-1-69"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a href="#__codelineno-1-70" id="__codelineno-1-70" name="__codelineno-1-70"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-71" id="__codelineno-1-71" name="__codelineno-1-71"></a><span class="w">  </span><span class="nt">gene_id</span><span class="p">:</span>
+<a href="#__codelineno-1-72" id="__codelineno-1-72" name="__codelineno-1-72"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gene_id</span>
+<a href="#__codelineno-1-73" id="__codelineno-1-73" name="__codelineno-1-73"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official gene identifier corresponding to rna_name. The type of identifier</span>
+<a href="#__codelineno-1-74" id="__codelineno-1-74" name="__codelineno-1-74"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">used (e.g. Ensembl gene ID, NCBI Gene ID) must be declared in the gene_id_type</span>
+<a href="#__codelineno-1-75" id="__codelineno-1-75" name="__codelineno-1-75"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">header field.</span>
+<a href="#__codelineno-1-76" id="__codelineno-1-76" name="__codelineno-1-76"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-77" id="__codelineno-1-77" name="__codelineno-1-77"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENSG00000075624</span>
+<a href="#__codelineno-1-78" id="__codelineno-1-78" name="__codelineno-1-78"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENSG00000111640</span>
+<a href="#__codelineno-1-79" id="__codelineno-1-79" name="__codelineno-1-79"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-80" id="__codelineno-1-80" name="__codelineno-1-80"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-81" id="__codelineno-1-81" name="__codelineno-1-81"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-82" id="__codelineno-1-82" name="__codelineno-1-82"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-83" id="__codelineno-1-83" name="__codelineno-1-83"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-84" id="__codelineno-1-84" name="__codelineno-1-84"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-85" id="__codelineno-1-85" name="__codelineno-1-85"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a href="#__codelineno-1-86" id="__codelineno-1-86" name="__codelineno-1-86"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-87" id="__codelineno-1-87" name="__codelineno-1-87"></a><span class="w">  </span><span class="nt">trace_id</span><span class="p">:</span>
+<a href="#__codelineno-1-88" id="__codelineno-1-88" name="__codelineno-1-88"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trace_id</span>
+<a href="#__codelineno-1-89" id="__codelineno-1-89" name="__codelineno-1-89"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a chromatin Trace. Used as a primary key in</span>
+<a href="#__codelineno-1-90" id="__codelineno-1-90" name="__codelineno-1-90"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily)</span>
+<a href="#__codelineno-1-91" id="__codelineno-1-91" name="__codelineno-1-91"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the FOF-vol-CT SM Localization Data table.</span>
+<a href="#__codelineno-1-92" id="__codelineno-1-92" name="__codelineno-1-92"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-93" id="__codelineno-1-93" name="__codelineno-1-93"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-94" id="__codelineno-1-94" name="__codelineno-1-94"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-95" id="__codelineno-1-95" name="__codelineno-1-95"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-96" id="__codelineno-1-96" name="__codelineno-1-96"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-97" id="__codelineno-1-97" name="__codelineno-1-97"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-98" id="__codelineno-1-98" name="__codelineno-1-98"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Spot</span>
+<a href="#__codelineno-1-99" id="__codelineno-1-99" name="__codelineno-1-99"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trace</span>
+<a href="#__codelineno-1-100" id="__codelineno-1-100" name="__codelineno-1-100"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-101" id="__codelineno-1-101" name="__codelineno-1-101"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
+<a href="#__codelineno-1-102" id="__codelineno-1-102" name="__codelineno-1-102"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Trace</span>
+<a href="#__codelineno-1-103" id="__codelineno-1-103" name="__codelineno-1-103"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-104" id="__codelineno-1-104" name="__codelineno-1-104"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-105" id="__codelineno-1-105" name="__codelineno-1-105"></a><span class="w">  </span><span class="nt">transcript_id</span><span class="p">:</span>
+<a href="#__codelineno-1-106" id="__codelineno-1-106" name="__codelineno-1-106"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">transcript_id</span>
+<a href="#__codelineno-1-107" id="__codelineno-1-107" name="__codelineno-1-107"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Official transcript identifier for the specific transcript targeted</span>
+<a href="#__codelineno-1-108" id="__codelineno-1-108" name="__codelineno-1-108"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">by the FISH probe. Conditionally required when multiple transcripts share the</span>
+<a href="#__codelineno-1-109" id="__codelineno-1-109" name="__codelineno-1-109"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">same gene_id and the FISH probe can distinguish among them. The type of identifier</span>
+<a href="#__codelineno-1-110" id="__codelineno-1-110" name="__codelineno-1-110"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">used must be declared in the transcript_id_type header field.</span>
+<a href="#__codelineno-1-111" id="__codelineno-1-111" name="__codelineno-1-111"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-112" id="__codelineno-1-112" name="__codelineno-1-112"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENST00000331789</span>
+<a href="#__codelineno-1-113" id="__codelineno-1-113" name="__codelineno-1-113"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NM_001101.5</span>
+<a href="#__codelineno-1-114" id="__codelineno-1-114" name="__codelineno-1-114"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-115" id="__codelineno-1-115" name="__codelineno-1-115"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-116" id="__codelineno-1-116" name="__codelineno-1-116"></a><span class="w">    </span><span class="nt">domain</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-117" id="__codelineno-1-117" name="__codelineno-1-117"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-118" id="__codelineno-1-118" name="__codelineno-1-118"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-119" id="__codelineno-1-119" name="__codelineno-1-119"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-120" id="__codelineno-1-120" name="__codelineno-1-120"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">string</span>
+<a href="#__codelineno-1-121" id="__codelineno-1-121" name="__codelineno-1-121"></a><span class="w">  </span><span class="nt">x</span><span class="p">:</span>
+<a href="#__codelineno-1-122" id="__codelineno-1-122" name="__codelineno-1-122"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x</span>
+<a href="#__codelineno-1-123" id="__codelineno-1-123" name="__codelineno-1-123"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel X coordinate of this detected event (Spot or localisation)</span>
+<a href="#__codelineno-1-124" id="__codelineno-1-124" name="__codelineno-1-124"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
+<a href="#__codelineno-1-125" id="__codelineno-1-125" name="__codelineno-1-125"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections (drift correction, chromatic correction,</span>
+<a href="#__codelineno-1-126" id="__codelineno-1-126" name="__codelineno-1-126"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">etc.).</span>
+<a href="#__codelineno-1-127" id="__codelineno-1-127" name="__codelineno-1-127"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-128" id="__codelineno-1-128" name="__codelineno-1-128"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'14.43'</span>
+<a href="#__codelineno-1-129" id="__codelineno-1-129" name="__codelineno-1-129"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-130" id="__codelineno-1-130" name="__codelineno-1-130"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-131" id="__codelineno-1-131" name="__codelineno-1-131"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-132" id="__codelineno-1-132" name="__codelineno-1-132"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-133" id="__codelineno-1-133" name="__codelineno-1-133"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
+<a href="#__codelineno-1-134" id="__codelineno-1-134" name="__codelineno-1-134"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-135" id="__codelineno-1-135" name="__codelineno-1-135"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
+<a href="#__codelineno-1-136" id="__codelineno-1-136" name="__codelineno-1-136"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-137" id="__codelineno-1-137" name="__codelineno-1-137"></a><span class="w">  </span><span class="nt">y</span><span class="p">:</span>
+<a href="#__codelineno-1-138" id="__codelineno-1-138" name="__codelineno-1-138"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">y</span>
+<a href="#__codelineno-1-139" id="__codelineno-1-139" name="__codelineno-1-139"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel Y coordinate of this detected event (Spot or localisation)</span>
+<a href="#__codelineno-1-140" id="__codelineno-1-140" name="__codelineno-1-140"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
+<a href="#__codelineno-1-141" id="__codelineno-1-141" name="__codelineno-1-141"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections.</span>
+<a href="#__codelineno-1-142" id="__codelineno-1-142" name="__codelineno-1-142"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-143" id="__codelineno-1-143" name="__codelineno-1-143"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'41.43'</span>
+<a href="#__codelineno-1-144" id="__codelineno-1-144" name="__codelineno-1-144"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-145" id="__codelineno-1-145" name="__codelineno-1-145"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-146" id="__codelineno-1-146" name="__codelineno-1-146"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-147" id="__codelineno-1-147" name="__codelineno-1-147"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-148" id="__codelineno-1-148" name="__codelineno-1-148"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
+<a href="#__codelineno-1-149" id="__codelineno-1-149" name="__codelineno-1-149"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-150" id="__codelineno-1-150" name="__codelineno-1-150"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
+<a href="#__codelineno-1-151" id="__codelineno-1-151" name="__codelineno-1-151"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-152" id="__codelineno-1-152" name="__codelineno-1-152"></a><span class="w">  </span><span class="nt">z</span><span class="p">:</span>
+<a href="#__codelineno-1-153" id="__codelineno-1-153" name="__codelineno-1-153"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">z</span>
+<a href="#__codelineno-1-154" id="__codelineno-1-154" name="__codelineno-1-154"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sub-pixel Z coordinate of this detected event (Spot or localisation)</span>
+<a href="#__codelineno-1-155" id="__codelineno-1-155" name="__codelineno-1-155"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">in the unit specified by xyz_unit. The reported value is the final position</span>
+<a href="#__codelineno-1-156" id="__codelineno-1-156" name="__codelineno-1-156"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">after all post-processing corrections.</span>
+<a href="#__codelineno-1-157" id="__codelineno-1-157" name="__codelineno-1-157"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-158" id="__codelineno-1-158" name="__codelineno-1-158"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1.23'</span>
+<a href="#__codelineno-1-159" id="__codelineno-1-159" name="__codelineno-1-159"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-160" id="__codelineno-1-160" name="__codelineno-1-160"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-161" id="__codelineno-1-161" name="__codelineno-1-161"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-162" id="__codelineno-1-162" name="__codelineno-1-162"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-163" id="__codelineno-1-163" name="__codelineno-1-163"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalizationMixin</span>
+<a href="#__codelineno-1-164" id="__codelineno-1-164" name="__codelineno-1-164"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-165" id="__codelineno-1-165" name="__codelineno-1-165"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">float</span>
+<a href="#__codelineno-1-166" id="__codelineno-1-166" name="__codelineno-1-166"></a><span class="w">    </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-167" id="__codelineno-1-167" name="__codelineno-1-167"></a><span class="w">  </span><span class="nt">sub_cell_roi_id</span><span class="p">:</span>
+<a href="#__codelineno-1-168" id="__codelineno-1-168" name="__codelineno-1-168"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sub_cell_roi_id</span>
+<a href="#__codelineno-1-169" id="__codelineno-1-169" name="__codelineno-1-169"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a sub-cellular structure ROI (e.g., nucleus,</span>
+<a href="#__codelineno-1-170" id="__codelineno-1-170" name="__codelineno-1-170"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">nucleolus). Links to the Sub-Cell ROI Data table.</span>
+<a href="#__codelineno-1-171" id="__codelineno-1-171" name="__codelineno-1-171"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-172" id="__codelineno-1-172" name="__codelineno-1-172"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-173" id="__codelineno-1-173" name="__codelineno-1-173"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-174" id="__codelineno-1-174" name="__codelineno-1-174"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-175" id="__codelineno-1-175" name="__codelineno-1-175"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-176" id="__codelineno-1-176" name="__codelineno-1-176"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-177" id="__codelineno-1-177" name="__codelineno-1-177"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-178" id="__codelineno-1-178" name="__codelineno-1-178"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
+<a href="#__codelineno-1-179" id="__codelineno-1-179" name="__codelineno-1-179"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a href="#__codelineno-1-180" id="__codelineno-1-180" name="__codelineno-1-180"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
+<a href="#__codelineno-1-181" id="__codelineno-1-181" name="__codelineno-1-181"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
+<a href="#__codelineno-1-182" id="__codelineno-1-182" name="__codelineno-1-182"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-183" id="__codelineno-1-183" name="__codelineno-1-183"></a><span class="w">  </span><span class="nt">cell_id</span><span class="p">:</span>
+<a href="#__codelineno-1-184" id="__codelineno-1-184" name="__codelineno-1-184"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell_id</span>
+<a href="#__codelineno-1-185" id="__codelineno-1-185" name="__codelineno-1-185"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for a Cell. Links to the Cell Data table.</span>
+<a href="#__codelineno-1-186" id="__codelineno-1-186" name="__codelineno-1-186"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-187" id="__codelineno-1-187" name="__codelineno-1-187"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-188" id="__codelineno-1-188" name="__codelineno-1-188"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-189" id="__codelineno-1-189" name="__codelineno-1-189"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-190" id="__codelineno-1-190" name="__codelineno-1-190"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-191" id="__codelineno-1-191" name="__codelineno-1-191"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-192" id="__codelineno-1-192" name="__codelineno-1-192"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-193" id="__codelineno-1-193" name="__codelineno-1-193"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-194" id="__codelineno-1-194" name="__codelineno-1-194"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SubCellROI</span>
+<a href="#__codelineno-1-195" id="__codelineno-1-195" name="__codelineno-1-195"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a href="#__codelineno-1-196" id="__codelineno-1-196" name="__codelineno-1-196"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
+<a href="#__codelineno-1-197" id="__codelineno-1-197" name="__codelineno-1-197"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-198" id="__codelineno-1-198" name="__codelineno-1-198"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-1-199" id="__codelineno-1-199" name="__codelineno-1-199"></a><span class="w">  </span><span class="nt">extra_cell_roi_id</span><span class="p">:</span>
+<a href="#__codelineno-1-200" id="__codelineno-1-200" name="__codelineno-1-200"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">extra_cell_roi_id</span>
+<a href="#__codelineno-1-201" id="__codelineno-1-201" name="__codelineno-1-201"></a><span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Unique identifier for an extracellular structure ROI (e.g., tissue,</span>
+<a href="#__codelineno-1-202" id="__codelineno-1-202" name="__codelineno-1-202"></a><span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">organoid). Links to the Extra-Cell ROI Data table.</span>
+<a href="#__codelineno-1-203" id="__codelineno-1-203" name="__codelineno-1-203"></a><span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
+<a href="#__codelineno-1-204" id="__codelineno-1-204" name="__codelineno-1-204"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'1'</span>
+<a href="#__codelineno-1-205" id="__codelineno-1-205" name="__codelineno-1-205"></a><span class="w">    </span><span class="nt">from_schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://w3id.org/fof-ct/vol</span>
+<a href="#__codelineno-1-206" id="__codelineno-1-206" name="__codelineno-1-206"></a><span class="w">    </span><span class="nt">rank</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span>
+<a href="#__codelineno-1-207" id="__codelineno-1-207" name="__codelineno-1-207"></a><span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RNASpot</span>
+<a href="#__codelineno-1-208" id="__codelineno-1-208" name="__codelineno-1-208"></a><span class="w">    </span><span class="nt">domain_of</span><span class="p">:</span>
+<a href="#__codelineno-1-209" id="__codelineno-1-209" name="__codelineno-1-209"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SpotMixin</span>
+<a href="#__codelineno-1-210" id="__codelineno-1-210" name="__codelineno-1-210"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cell</span>
+<a href="#__codelineno-1-211" id="__codelineno-1-211" name="__codelineno-1-211"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
+<a href="#__codelineno-1-212" id="__codelineno-1-212" name="__codelineno-1-212"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ROIMapping</span>
+<a href="#__codelineno-1-213" id="__codelineno-1-213" name="__codelineno-1-213"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SMLocalization</span>
+<a href="#__codelineno-1-214" id="__codelineno-1-214" name="__codelineno-1-214"></a><span class="w">    </span><span class="nt">range</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ExtraCellROI</span>
+<a href="#__codelineno-1-215" id="__codelineno-1-215" name="__codelineno-1-215"></a><span class="w">    </span><span class="nt">inlined</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 </details>
 </div>
