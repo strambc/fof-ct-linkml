@@ -36,18 +36,14 @@ classes:
       in the TSV data section of the FOF-CT core table and represents a
       specific genomic target sequence localised in 3D space and assigned to
       a chromatin Trace.
+    mixins:
+      - SpotMixin
     slots:
       - spot_id
       - trace_id
-      - x
-      - y
-      - z
       - chrom
       - chrom_start
       - chrom_end
-      - sub_cell_roi_id
-      - cell_id
-      - extra_cell_roi_id
     slot_usage:
       spot_id:
         identifier: true

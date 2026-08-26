@@ -54,6 +54,23 @@ classes:
       - y
       - z
 
+  SpotMixin:
+    mixin: true
+    description: >-
+      Mixin capturing slots shared between DNA Spots (Spot, core table) and
+      RNA Spots (RNASpot, RNA Spot Data table): 3D position and the optional
+      spatial-context cross-references. Does NOT include the identifier
+      slot, since Spot and RNASpot use different RTD-aligned identifier
+      column names (Spot_ID vs. RNA_Spot_ID) and LinkML cannot rename an
+      inherited identifier slot per subclass.
+    slots:
+      - x
+      - y
+      - z
+      - sub_cell_roi_id
+      - cell_id
+      - extra_cell_roi_id
+
 # ---------------------------------------------------------------------------
 # Shared slots
 # ---------------------------------------------------------------------------
@@ -240,7 +257,8 @@ slots:
       in the Trace Data table and as a foreign key in the RNA Spot
       Data table and (mandatorily) in the FOF-vol-CT SM Localization
       Data table.
-    range: integer
+    range: Trace
+    inlined: false
     examples:
       - value: "1"
 
@@ -248,14 +266,16 @@ slots:
     description: >-
       Unique identifier for a sub-cellular structure ROI (e.g., nucleus,
       nucleolus). Links to the Sub-Cell ROI Data table.
-    range: integer
+    range: SubCellROI
+    inlined: false
     examples:
       - value: "1"
 
   cell_id:
     description: >-
       Unique identifier for a Cell. Links to the Cell Data table.
-    range: integer
+    range: Cell
+    inlined: false
     examples:
       - value: "1"
 
@@ -263,7 +283,8 @@ slots:
     description: >-
       Unique identifier for an extracellular structure ROI (e.g., tissue,
       organoid). Links to the Extra-Cell ROI Data table.
-    range: integer
+    range: ExtraCellROI
+    inlined: false
     examples:
       - value: "1"
 
@@ -305,7 +326,8 @@ slots:
       Unique integer identifier for an RNA bright Spot, unique across the
       entire dataset. Used as a primary key in the RNA Spot Data table
       and as a foreign key in the RNA Quality and RNA Biological Data tables.
-    range: integer
+    range: RNASpot
+    inlined: false
     examples:
       - value: "1"
 
@@ -607,41 +629,50 @@ slots:
 
   cell_type:
     description: >-
-      The type of cells present in this dataset, expressed using an ontology
-      term from the Experimental Factor Ontology (EFO). Examples include
-      "Primary cell line", "Immortal cell line", "Induced pluripotent stem
-      (IPS) cell", "Cell in tissue", "Cell in organoid", "Other". Written as
+      The type of cells present in this dataset, reported as an ontology
+      term ID from the Experimental Factor Ontology (EFO), followed by its
+      human-readable label in parentheses, e.g. "EFO:XXXXXXX (Cell in
+      tissue)" -- look up the real EFO ID before use. "Other" is accepted
+      as a literal value when no ontology term applies. Written as
       #Cell_Type: in the file header.
     range: string
+    pattern: "^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \\(.+\\))?)$"
     examples:
-      - value: Cell in tissue
-      - value: Cell in organoid
+      - value: "EFO:XXXXXXX (Cell in tissue)"
+      - value: "EFO:XXXXXXX (Cell in organoid)"
+      - value: Other
 
   extra_cell_roi_type:
     description: >-
       The type of extracellular structure ROI within which cells are embedded,
-      expressed using an EFO 'organism part' child term (e.g. Tissue,
-      Organoid). Conditionally required when extracellular structure ROIs are
-      identified and reported in a dedicated Extra-Cell ROI Data table. Written
+      reported as an ontology term ID from EFO's 'organism part' branch,
+      followed by its human-readable label in parentheses, e.g.
+      "EFO:XXXXXXX (Tissue)" -- look up the real EFO ID before use.
+      Conditionally required when extracellular structure ROIs are
+      identified and reported in a dedicated Extra-Cell ROI Data table. "Other"
+      is accepted as a literal value when no ontology term applies. Written
       as #Extra_Cell_ROI_Type: in the file header.
     range: string
+    pattern: "^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \\(.+\\))?)$"
     examples:
-      - value: Tissue
-      - value: Organoid
+      - value: "EFO:XXXXXXX (Tissue)"
+      - value: "EFO:XXXXXXX (Organoid)"
+      - value: Other
 
   sub_cell_roi_type:
     description: >-
       The type of sub-cellular structure ROI documented in this table or
-      mapping file. It is recommended to use a GO 'cellular_component'
-      child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear
-      Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain.
-      Written as #Sub_Cell_ROI_Type: in the file header.
+      mapping file, reported as an ontology term ID from GO's
+      'cellular_component' branch, followed by its human-readable label in
+      parentheses, e.g. "GO:XXXXXXX (Nucleolus)" -- look up the real GO ID
+      before use. "Other" is accepted as a literal value when no ontology
+      term applies. Written as #Sub_Cell_ROI_Type: in the file header.
     range: string
+    pattern: "^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \\(.+\\))?)$"
     examples:
-      - value: Nucleolus
-      - value: Nuclear Lamina (NL)
-      - value: Nuclear Pore Complex (NPC)
-      - value: Chromosome_Domain
+      - value: "GO:XXXXXXX (Nucleolus)"
+      - value: "GO:XXXXXXX (Nuclear Lamina (NL))"
+      - value: "GO:XXXXXXX (Chromosome_Domain)"
 
   # ---- Software slots -----------------------------------------------------
 

@@ -41,12 +41,16 @@ classes:
       column describing trace-level properties (e.g., Allele, RNA_Expression,
       Lamina_Distance). User-defined columns are accommodated via
       open schema.
+    extra_slots:
+      allowed: true
     slots:
       - trace_id
     slot_usage:
       trace_id:
         required: true
         identifier: true
+        range: integer
+        inlined: false
 
   TraceTable:
     description: >-

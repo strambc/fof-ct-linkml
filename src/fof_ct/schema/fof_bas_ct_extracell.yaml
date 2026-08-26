@@ -42,6 +42,8 @@ classes:
       table. This class accepts additional user-defined optional columns (e.g.
       ROI_Volume, Cell_Count). At least one
       such user-defined column MUST be present per submission.
+    extra_slots:
+      allowed: true
     slots:
       - extra_cell_roi_id
     slot_usage:
@@ -49,6 +51,7 @@ classes:
         identifier: true
         required: true
         range: integer
+        inlined: false
         description: >-
           Unique integer identifier for this extracellular structure ROI.
           Extra_Cell_ROI_ID values are unique across the entire dataset,

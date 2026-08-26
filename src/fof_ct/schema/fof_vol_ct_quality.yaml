@@ -39,6 +39,8 @@ classes:
       columns are conditionally required (use of the reserved name is
       optional, but mandatory if that metric is reported). Additional
       user-defined optional columns must be described in the file header.
+    extra_slots:
+      allowed: true
     slots:
       - loc_id
       - channel_name
