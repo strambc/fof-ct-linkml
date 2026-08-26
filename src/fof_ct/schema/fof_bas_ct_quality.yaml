@@ -34,6 +34,8 @@ classes:
       more quality metrics for a specific DNA bright Spot identified by
       Spot_ID. At least one user-defined quality metric column MUST be
       present; users declare these via #^ header lines.
+    extra_slots:
+      allowed: true
     slots:
       - spot_id
       - channel_name

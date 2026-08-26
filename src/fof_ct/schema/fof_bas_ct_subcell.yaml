@@ -42,6 +42,8 @@ classes:
       Cell Data table, and the Cell/ROI Mapping table. This class accepts
       additional user-defined optional columns (e.g. ROI_Volume, ROI_Area).
       At least one such user-defined column MUST be present per submission.
+    extra_slots:
+      allowed: true
     slots:
       - sub_cell_roi_id
       - cell_id
@@ -50,6 +52,7 @@ classes:
         identifier: true
         required: true
         range: integer
+        inlined: false
         description: >-
           Unique integer identifier for this sub-cellular structure ROI.
           Sub_Cell_ROI_ID values are unique across the entire dataset,

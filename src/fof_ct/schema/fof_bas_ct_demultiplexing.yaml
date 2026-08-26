@@ -42,6 +42,8 @@ classes:
       Brightness, Fit_Quality).
     mixins:
       - LocalizationMixin
+    extra_slots:
+      allowed: true
     slots:
       - spot_id
       - channel_name

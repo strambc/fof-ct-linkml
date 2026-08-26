@@ -38,6 +38,8 @@ classes:
       quality-metric columns are conditionally required (the same reserved
       vocabulary as the Spot Quality table) or fully free-form; users declare
       the latter via #^ header lines.
+    extra_slots:
+      allowed: true
     slots:
       - rna_spot_id
       - channel_name

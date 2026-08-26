@@ -38,6 +38,8 @@ classes:
       conditionally-required column for the focal Z-plane identifier.
     mixins:
       - LocalizationMixin
+    extra_slots:
+      allowed: true
     slots:
       - hyb_id
       - image_frame_id

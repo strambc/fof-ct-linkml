@@ -37,6 +37,8 @@ classes:
       dataset, linking to the corresponding Spot record in the core table
       (table 1). At least one user-defined biological property column MUST
       be present; users declare these via #^ header lines.
+    extra_slots:
+      allowed: true
     slots:
       - spot_id
     slot_usage:

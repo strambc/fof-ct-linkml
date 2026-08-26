@@ -332,19 +332,48 @@ class LocalizationMixin(ConfiguredBaseModel):
 
     loc_id: Optional[int] = Field(default=None, description="""A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SMLocalizationQualityRecord'],
          'examples': [{'value': '1'}]} })
-    x: Optional[float] = Field(default=None, description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    x: Optional[float] = Field(default=None, description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '14.43'}]} })
-    y: Optional[float] = Field(default=None, description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    y: Optional[float] = Field(default=None, description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '41.43'}]} })
-    z: Optional[float] = Field(default=None, description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    z: Optional[float] = Field(default=None, description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '1.23'}]} })
 
 
-class Spot(ConfiguredBaseModel):
+class SpotMixin(ConfiguredBaseModel):
+    """
+    Mixin capturing slots shared between DNA Spots (Spot, core table) and RNA Spots (RNASpot, RNA Spot Data table): 3D position and the optional spatial-context cross-references. Does NOT include the identifier slot, since Spot and RNASpot use different RTD-aligned identifier column names (Spot_ID vs. RNA_Spot_ID) and LinkML cannot rename an inherited identifier slot per subclass.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/common', 'mixin': True})
+
+    x: Optional[float] = Field(default=None, description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '14.43'}]} })
+    y: Optional[float] = Field(default=None, description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '41.43'}]} })
+    z: Optional[float] = Field(default=None, description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '1.23'}]} })
+    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+         'examples': [{'value': '1'}]} })
+    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
+                       'Cell',
+                       'SubCellROI',
+                       'ROIMapping',
+                       'SMLocalization'],
+         'examples': [{'value': '1'}]} })
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
+                       'Cell',
+                       'ExtraCellROI',
+                       'ROIMapping',
+                       'SMLocalization'],
+         'examples': [{'value': '1'}]} })
+
+
+class Spot(SpotMixin):
     """
     A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct',
+         'mixins': ['SpotMixin'],
          'slot_usage': {'chrom': {'name': 'chrom', 'required': True},
                         'chrom_end': {'name': 'chrom_end', 'required': True},
                         'chrom_start': {'name': 'chrom_start', 'required': True},
@@ -364,27 +393,25 @@ class Spot(ConfiguredBaseModel):
          'examples': [{'value': '1'}]} })
     trace_id: int = Field(default=..., description="""Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'Trace', 'RNASpot', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '14.43'}]} })
-    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '41.43'}]} })
-    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '1.23'}]} })
     chrom: str = Field(default=..., description="""Chromosome name/identifier using BED (Browser Extensible Data) convention (e.g., chr3, chrY, chr2_random). Used by both the core (Spot) and vol_core (SMLocalization) tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'SMLocalization'],
          'examples': [{'value': 'chr3'}, {'value': 'chrY'}, {'value': 'chr2_random'}]} })
     chrom_start: int = Field(default=..., description="""0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'SMLocalization'], 'examples': [{'value': '0'}]} })
     chrom_end: int = Field(default=..., description="""Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'SMLocalization'], 'examples': [{'value': '1000'}]} })
-    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'RNASpot', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '14.43'}]} })
+    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '41.43'}]} })
+    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '1.23'}]} })
+    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
                        'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -597,7 +624,8 @@ class Localization(LocalizationMixin):
     """
     A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/demultiplexing',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/demultiplexing',
          'mixins': ['LocalizationMixin'],
          'slot_usage': {'channel_name': {'name': 'channel_name', 'required': True},
                         'fluorophore_name': {'name': 'fluorophore_name',
@@ -630,11 +658,11 @@ class Localization(LocalizationMixin):
          'examples': [{'value': 'AlexaFluor_488'}, {'value': 'Cy5'}]} })
     loc_id: int = Field(default=..., description="""A unique integer identifier for an individual localization event. Loc_ID values are unique across the entire dataset. Serves as primary key in the Spot Demultiplexing, SM Localization Data, SM Localization Quality, and Undecoded SM Localization tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SMLocalizationQualityRecord'],
          'examples': [{'value': '1'}]} })
-    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '14.43'}]} })
-    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '41.43'}]} })
-    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '1.23'}]} })
 
 
@@ -879,9 +907,12 @@ class Trace(ConfiguredBaseModel):
     """
     A single chromatin Trace representing global properties associated with an entire polymeric trace rather than with individual Spots. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Trace Data table. The trace_id links each Trace to the core table and to the RNA Spot Data table. IMPORTANT: this class MUST contain at least one user-defined optional column describing trace-level properties (e.g., Allele, RNA_Expression, Lamina_Distance). User-defined columns are accommodated via open schema.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/trace',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/trace',
          'slot_usage': {'trace_id': {'identifier': True,
+                                     'inlined': False,
                                      'name': 'trace_id',
+                                     'range': 'integer',
                                      'required': True}}})
 
     trace_id: int = Field(default=..., description="""Unique identifier for a chromatin Trace. Used as a primary key in the Trace Data table and as a foreign key in the RNA Spot Data table and (mandatorily) in the FOF-vol-CT SM Localization Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'Trace', 'RNASpot', 'SMLocalization'],
@@ -1121,14 +1152,19 @@ class TraceTable(ConfiguredBaseModel):
         return v
 
 
-class RNASpot(ConfiguredBaseModel):
+class RNASpot(SpotMixin):
     """
-    A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This class accepts additional user-defined optional columns via open schema.
+    A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additionaluser-defined columns.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/rna',
+         'mixins': ['SpotMixin'],
          'slot_usage': {'gene_id': {'name': 'gene_id', 'required': True},
                         'rna_name': {'name': 'rna_name', 'required': True},
-                        'rna_spot_id': {'name': 'rna_spot_id', 'required': True},
+                        'rna_spot_id': {'identifier': True,
+                                        'inlined': False,
+                                        'name': 'rna_spot_id',
+                                        'range': 'integer',
+                                        'required': True},
                         'trace_id': {'name': 'trace_id', 'required': True},
                         'x': {'name': 'x', 'required': True},
                         'y': {'name': 'y', 'required': True},
@@ -1136,12 +1172,6 @@ class RNASpot(ConfiguredBaseModel):
 
     rna_spot_id: int = Field(default=..., description="""Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
          'examples': [{'value': '1'}]} })
-    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '14.43'}]} })
-    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '41.43'}]} })
-    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
-         'examples': [{'value': '1.23'}]} })
     rna_name: str = Field(default=..., description="""Official name of the gene from which the targeted RNA is transcribed (e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.""", json_schema_extra = { "linkml_meta": {'domain': 'RNASpot',
          'domain_of': ['RNASpot'],
          'examples': [{'value': 'ACTB'}, {'value': 'GAPDH'}]} })
@@ -1153,17 +1183,21 @@ class RNASpot(ConfiguredBaseModel):
     transcript_id: Optional[str] = Field(default=None, description="""Official transcript identifier for the specific transcript targeted by the FISH probe. Conditionally required when multiple transcripts share the same gene_id and the FISH probe can distinguish among them. The type of identifier used must be declared in the transcript_id_type header field.""", json_schema_extra = { "linkml_meta": {'domain': 'RNASpot',
          'domain_of': ['RNASpot'],
          'examples': [{'value': 'ENST00000331789'}, {'value': 'NM_001101.5'}]} })
-    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'RNASpot', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '14.43'}]} })
+    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '41.43'}]} })
+    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
+         'examples': [{'value': '1.23'}]} })
+    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
                        'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -1382,7 +1416,8 @@ class SpotQualityRecord(ConfiguredBaseModel):
     """
     A single row in the Spot Quality table. Each instance captures one or more quality metrics for a specific DNA bright Spot identified by Spot_ID. At least one user-defined quality metric column MUST be present; users declare these via #^ header lines.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/quality',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/quality',
          'slot_usage': {'centroid_intensity': {'name': 'centroid_intensity',
                                                'required': False},
                         'channel_name': {'name': 'channel_name', 'required': True},
@@ -1799,7 +1834,8 @@ class RNASpotQualityRecord(ConfiguredBaseModel):
     """
     A single row in the RNA Spot Quality table. Each instance captures one or more quality metrics for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). RNA_Spot_ID, Channel and Fluor are mandatory; all other reserved quality-metric columns are conditionally required (the same reserved vocabulary as the Spot Quality table) or fully free-form; users declare the latter via #^ header lines.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/rna_quality',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/rna_quality',
          'slot_usage': {'centroid_intensity': {'name': 'centroid_intensity',
                                                'required': False},
                         'channel_name': {'name': 'channel_name', 'required': True},
@@ -2200,7 +2236,8 @@ class SpotBiologicalRecord(ConfiguredBaseModel):
     """
     A single row in the Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific DNA bright Spot identified by Spot_ID. Spot_ID values must be unique across the dataset, linking to the corresponding Spot record in the core table (table 1). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/bio',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/bio',
          'slot_usage': {'spot_id': {'description': 'Unique integer identifier for the '
                                                    'DNA bright Spot to which these '
                                                    'biological properties belong. '
@@ -2509,7 +2546,8 @@ class RNASpotBiologicalRecord(ConfiguredBaseModel):
     """
     A single row in the RNA Spot Biological Data table. Each instance captures one or more user-defined biological properties for a specific RNA bright Spot identified by RNA_Spot_ID. RNA_Spot_ID values must be unique across the dataset, linking to the corresponding record in the RNA Spot Data table (table 4). At least one user-defined biological property column MUST be present; users declare these via #^ header lines.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/rna_bio',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/rna_bio',
          'slot_usage': {'rna_spot_id': {'identifier': True,
                                         'name': 'rna_spot_id',
                                         'required': True}}})
@@ -2807,7 +2845,8 @@ class Cell(ConfiguredBaseModel):
     """
     A single Cell identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Cell Data table. The cell_id field uniquely identifies each Cell and links to the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via open schema. At least one such user-defined column MUST be present per submission.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/cell',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/cell',
          'slot_usage': {'cell_id': {'description': 'Unique integer identifier for this '
                                                    'Cell. Cell_ID values are unique '
                                                    'across the entire dataset, '
@@ -2817,6 +2856,7 @@ class Cell(ConfiguredBaseModel):
                                                    'table, and the Cell/ROI Mapping '
                                                    'table.',
                                     'identifier': True,
+                                    'inlined': False,
                                     'name': 'cell_id',
                                     'range': 'integer',
                                     'required': True},
@@ -2838,15 +2878,13 @@ class Cell(ConfiguredBaseModel):
                                               'range': 'integer',
                                               'required': False}}})
 
-    cell_id: int = Field(default=..., description="""Unique integer identifier for this Cell. Cell_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: int = Field(default=..., description="""Unique integer identifier for this Cell. Cell_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
                        'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Identifier of the extracellular structure ROI (e.g. tissue section, organoid) that contains this Cell. Conditionally required when this Cell can be associated with an extracellular ROI identified as part of this experiment and reported in a dedicated Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Identifier of the extracellular structure ROI (e.g. tissue section, organoid) that contains this Cell. Conditionally required when this Cell can be associated with an extracellular ROI identified as part of this experiment and reported in a dedicated Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -2918,8 +2956,10 @@ class CellTable(ConfiguredBaseModel):
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'equals_string': '4dn_FOF-CT_cell'} })
-    cell_type: str = Field(default=..., description="""The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Cell in tissue'}, {'value': 'Cell in organoid'}]} })
+    cell_type: str = Field(default=..., description="""The type of cells present in this dataset, reported as an ontology term ID from the Experimental Factor Ontology (EFO), followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Cell in tissue)\" -- look up the real EFO ID before use. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Cell in tissue)'},
+                      {'value': 'EFO:XXXXXXX (Cell in organoid)'},
+                      {'value': 'Other'}]} })
     lab_name: str = Field(default=..., description="""Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -2998,8 +3038,10 @@ class CellTable(ConfiguredBaseModel):
                        'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable']} })
-    extra_cell_roi_type: Optional[str] = Field(default=None, description="""The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Tissue'}, {'value': 'Organoid'}]} })
+    extra_cell_roi_type: Optional[str] = Field(default=None, description="""The type of extracellular structure ROI within which cells are embedded, reported as an ontology term ID from EFO's 'organism part' branch, followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Tissue)\" -- look up the real EFO ID before use. Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Tissue)'},
+                      {'value': 'EFO:XXXXXXX (Organoid)'},
+                      {'value': 'Other'}]} })
     softwares: Optional[list[Software]] = Field(default=None, description="""One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -3089,6 +3131,19 @@ class CellTable(ConfiguredBaseModel):
             raise ValueError(err_msg)
         return v
 
+    @field_validator('cell_type')
+    def pattern_cell_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid cell_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid cell_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
     @field_validator('experimenter_contact')
     def pattern_experimenter_contact(cls, v):
         pattern=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -3102,12 +3157,26 @@ class CellTable(ConfiguredBaseModel):
             raise ValueError(err_msg)
         return v
 
+    @field_validator('extra_cell_roi_type')
+    def pattern_extra_cell_roi_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid extra_cell_roi_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid extra_cell_roi_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
 
 class ExtraCellROI(ConfiguredBaseModel):
     """
     A single extracellular structure ROI (e.g. a tissue section or organoid) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Extra-Cell ROI Data table. The extra_cell_roi_id field uniquely identifies each ROI and links to the core table, the RNA Spot Data table, and the Cell Data table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, Cell_Count). At least one such user-defined column MUST be present per submission.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/extracell',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/extracell',
          'slot_usage': {'extra_cell_roi_id': {'description': 'Unique integer '
                                                              'identifier for this '
                                                              'extracellular structure '
@@ -3120,12 +3189,12 @@ class ExtraCellROI(ConfiguredBaseModel):
                                                              'Spot Data table, and the '
                                                              'Cell Data table.',
                                               'identifier': True,
+                                              'inlined': False,
                                               'name': 'extra_cell_roi_id',
                                               'range': 'integer',
                                               'required': True}}})
 
-    extra_cell_roi_id: int = Field(default=..., description="""Unique integer identifier for this extracellular structure ROI. Extra_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the RNA Spot Data table, and the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: int = Field(default=..., description="""Unique integer identifier for this extracellular structure ROI. Extra_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the RNA Spot Data table, and the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -3197,8 +3266,10 @@ class ExtraCellROITable(ConfiguredBaseModel):
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'equals_string': '4dn_FOF-CT_extracell'} })
-    extra_cell_roi_type: str = Field(default=..., description="""The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Tissue'}, {'value': 'Organoid'}]} })
+    extra_cell_roi_type: str = Field(default=..., description="""The type of extracellular structure ROI within which cells are embedded, reported as an ontology term ID from EFO's 'organism part' branch, followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Tissue)\" -- look up the real EFO ID before use. Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Tissue)'},
+                      {'value': 'EFO:XXXXXXX (Organoid)'},
+                      {'value': 'Other'}]} })
     lab_name: str = Field(default=..., description="""Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -3366,6 +3437,19 @@ class ExtraCellROITable(ConfiguredBaseModel):
             raise ValueError(err_msg)
         return v
 
+    @field_validator('extra_cell_roi_type')
+    def pattern_extra_cell_roi_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid extra_cell_roi_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid extra_cell_roi_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
     @field_validator('experimenter_contact')
     def pattern_experimenter_contact(cls, v):
         pattern=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -3384,7 +3468,8 @@ class SubCellROI(ConfiguredBaseModel):
     """
     A single sub-cellular structure ROI (e.g. nucleolus, nuclear lamina, PML body, chromosome domain) identified in a FOF-bas-CT experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT Sub-Cell ROI Data table. The sub_cell_roi_id field uniquely identifies each ROI and links to the core table, the Cell Data table, and the Cell/ROI Mapping table. This class accepts additional user-defined optional columns (e.g. ROI_Volume, ROI_Area). At least one such user-defined column MUST be present per submission.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/subcell',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/subcell',
          'slot_usage': {'cell_id': {'description': 'Identifier of the Cell to which '
                                                    'this sub-cellular ROI belongs. '
                                                    'Conditionally required when this '
@@ -3407,14 +3492,14 @@ class SubCellROI(ConfiguredBaseModel):
                                                            'table, and the Cell/ROI '
                                                            'Mapping table.',
                                             'identifier': True,
+                                            'inlined': False,
                                             'name': 'sub_cell_roi_id',
                                             'range': 'integer',
                                             'required': True}}})
 
-    sub_cell_roi_id: int = Field(default=..., description="""Unique integer identifier for this sub-cellular structure ROI. Sub_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Cell Data table, and the Cell/ROI Mapping table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'RNASpot', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+    sub_cell_roi_id: int = Field(default=..., description="""Unique integer identifier for this sub-cellular structure ROI. Sub_Cell_ROI_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Cell Data table, and the Cell/ROI Mapping table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    cell_id: Optional[int] = Field(default=None, description="""Identifier of the Cell to which this sub-cellular ROI belongs. Conditionally required when this ROI can be associated with a Cell identified as part of this experiment and reported in a dedicated Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: Optional[int] = Field(default=None, description="""Identifier of the Cell to which this sub-cellular ROI belongs. Conditionally required when this ROI can be associated with a Cell identified as part of this experiment and reported in a dedicated Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
@@ -3486,11 +3571,10 @@ class SubCellROITable(ConfiguredBaseModel):
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'equals_string': '4dn_FOF-CT_subcell'} })
-    sub_cell_roi_type: str = Field(default=..., description="""The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Nucleolus'},
-                      {'value': 'Nuclear Lamina (NL)'},
-                      {'value': 'Nuclear Pore Complex (NPC)'},
-                      {'value': 'Chromosome_Domain'}]} })
+    sub_cell_roi_type: str = Field(default=..., description="""The type of sub-cellular structure ROI documented in this table or mapping file, reported as an ontology term ID from GO's 'cellular_component' branch, followed by its human-readable label in parentheses, e.g. \"GO:XXXXXXX (Nucleolus)\" -- look up the real GO ID before use. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Sub_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'GO:XXXXXXX (Nucleolus)'},
+                      {'value': 'GO:XXXXXXX (Nuclear Lamina (NL))'},
+                      {'value': 'GO:XXXXXXX (Chromosome_Domain)'}]} })
     lab_name: str = Field(default=..., description="""Name of the laboratory where the experiment was performed. Written as #Lab_Name: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -3569,8 +3653,10 @@ class SubCellROITable(ConfiguredBaseModel):
                        'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable']} })
-    cell_type: Optional[str] = Field(default=None, description="""The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Cell in tissue'}, {'value': 'Cell in organoid'}]} })
+    cell_type: Optional[str] = Field(default=None, description="""The type of cells present in this dataset, reported as an ontology term ID from the Experimental Factor Ontology (EFO), followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Cell in tissue)\" -- look up the real EFO ID before use. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Cell in tissue)'},
+                      {'value': 'EFO:XXXXXXX (Cell in organoid)'},
+                      {'value': 'Other'}]} })
     softwares: Optional[list[Software]] = Field(default=None, description="""One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -3660,6 +3746,19 @@ class SubCellROITable(ConfiguredBaseModel):
             raise ValueError(err_msg)
         return v
 
+    @field_validator('sub_cell_roi_type')
+    def pattern_sub_cell_roi_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid sub_cell_roi_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid sub_cell_roi_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
     @field_validator('experimenter_contact')
     def pattern_experimenter_contact(cls, v):
         pattern=re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -3670,6 +3769,19 @@ class SubCellROITable(ConfiguredBaseModel):
                     raise ValueError(err_msg)
         elif isinstance(v, str) and not pattern.match(v):
             err_msg = f"Invalid experimenter_contact format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+    @field_validator('cell_type')
+    def pattern_cell_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid cell_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid cell_type format: {v}"
             raise ValueError(err_msg)
         return v
 
@@ -3696,6 +3808,7 @@ class ROIMapping(ConfiguredBaseModel):
                                                                        'value_presence': 'PRESENT'},
                                                  'sub_cell_roi_id': {'name': 'sub_cell_roi_id',
                                                                      'value_presence': 'ABSENT'}}}],
+         'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/fof-ct/mapping',
          'slot_usage': {'cell_id': {'description': 'Unique identifier for the Cell '
                                                    'whose boundaries are described in '
@@ -3742,17 +3855,15 @@ class ROIMapping(ConfiguredBaseModel):
                                             'range': 'integer',
                                             'required': False}}})
 
-    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for the Sub-Cell ROI whose boundaries are described in this row. Conditionally required when this file contains sub- cellular ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'RNASpot', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for the Sub-Cell ROI whose boundaries are described in this row. Conditionally required when this file contains sub- cellular ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for the Cell whose boundaries are described in this row. Conditionally required when this file contains Cell boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for the Cell whose boundaries are described in this row. Conditionally required when this file contains Cell boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
                        'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for the extracellular structure ROI whose boundaries are described in this row. Conditionally required when this file contains Extra-Cell ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for the extracellular structure ROI whose boundaries are described in this row. Conditionally required when this file contains Extra-Cell ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -3968,15 +4079,18 @@ class ROIMappingTable(ConfiguredBaseModel):
                                 'lists of comma separated x,y coordinates separated by '
                                 'spaces like "x1,y1 x2,y2 x3,y3" (e.g. "0,0 1,2 '
                                 '3,5").'}]} })
-    cell_type: Optional[str] = Field(default=None, description="""The type of cells present in this dataset, expressed using an ontology term from the Experimental Factor Ontology (EFO). Examples include \"Primary cell line\", \"Immortal cell line\", \"Induced pluripotent stem (IPS) cell\", \"Cell in tissue\", \"Cell in organoid\", \"Other\". Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Cell in tissue'}, {'value': 'Cell in organoid'}]} })
-    sub_cell_roi_type: Optional[str] = Field(default=None, description="""The type of sub-cellular structure ROI documented in this table or mapping file. It is recommended to use a GO 'cellular_component' child term. Examples include Nucleolus, Nuclear Lamina (NL), Nuclear Pore Complex (NPC), PML_body, Cajal_body, Chromosome_Domain. Written as #Sub_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Nucleolus'},
-                      {'value': 'Nuclear Lamina (NL)'},
-                      {'value': 'Nuclear Pore Complex (NPC)'},
-                      {'value': 'Chromosome_Domain'}]} })
-    extra_cell_roi_type: Optional[str] = Field(default=None, description="""The type of extracellular structure ROI within which cells are embedded, expressed using an EFO 'organism part' child term (e.g. Tissue, Organoid). Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
-         'examples': [{'value': 'Tissue'}, {'value': 'Organoid'}]} })
+    cell_type: Optional[str] = Field(default=None, description="""The type of cells present in this dataset, reported as an ontology term ID from the Experimental Factor Ontology (EFO), followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Cell in tissue)\" -- look up the real EFO ID before use. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Cell_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'SubCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Cell in tissue)'},
+                      {'value': 'EFO:XXXXXXX (Cell in organoid)'},
+                      {'value': 'Other'}]} })
+    sub_cell_roi_type: Optional[str] = Field(default=None, description="""The type of sub-cellular structure ROI documented in this table or mapping file, reported as an ontology term ID from GO's 'cellular_component' branch, followed by its human-readable label in parentheses, e.g. \"GO:XXXXXXX (Nucleolus)\" -- look up the real GO ID before use. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Sub_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SubCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'GO:XXXXXXX (Nucleolus)'},
+                      {'value': 'GO:XXXXXXX (Nuclear Lamina (NL))'},
+                      {'value': 'GO:XXXXXXX (Chromosome_Domain)'}]} })
+    extra_cell_roi_type: Optional[str] = Field(default=None, description="""The type of extracellular structure ROI within which cells are embedded, reported as an ontology term ID from EFO's 'organism part' branch, followed by its human-readable label in parentheses, e.g. \"EFO:XXXXXXX (Tissue)\" -- look up the real EFO ID before use. Conditionally required when extracellular structure ROIs are identified and reported in a dedicated Extra-Cell ROI Data table. \"Other\" is accepted as a literal value when no ontology term applies. Written as #Extra_Cell_ROI_Type: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellTable', 'ExtraCellROITable', 'ROIMappingTable'],
+         'examples': [{'value': 'EFO:XXXXXXX (Tissue)'},
+                      {'value': 'EFO:XXXXXXX (Organoid)'},
+                      {'value': 'Other'}]} })
     softwares: Optional[list[Software]] = Field(default=None, description="""One or more Software entries documenting every tool used to produce or process data in this table. Written as repeating #Software_* blocks in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
@@ -4063,6 +4177,45 @@ class ROIMappingTable(ConfiguredBaseModel):
             raise ValueError(err_msg)
         return v
 
+    @field_validator('cell_type')
+    def pattern_cell_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid cell_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid cell_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+    @field_validator('sub_cell_roi_type')
+    def pattern_sub_cell_roi_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid sub_cell_roi_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid sub_cell_roi_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
+    @field_validator('extra_cell_roi_type')
+    def pattern_extra_cell_roi_type(cls, v):
+        pattern=re.compile(r"^(Other|[A-Za-z][A-Za-z0-9_]*:[A-Za-z0-9_]+( \(.+\))?)$")
+        if isinstance(v, list):
+            for element in v:
+                if isinstance(element, str) and not pattern.match(element):
+                    err_msg = f"Invalid extra_cell_roi_type format: {element}"
+                    raise ValueError(err_msg)
+        elif isinstance(v, str) and not pattern.match(v):
+            err_msg = f"Invalid extra_cell_roi_type format: {v}"
+            raise ValueError(err_msg)
+        return v
+
 
 class SMLocalization(LocalizationMixin):
     """
@@ -4128,17 +4281,15 @@ class SMLocalization(LocalizationMixin):
          'examples': [{'value': 'chr3'}, {'value': 'chrY'}, {'value': 'chr2_random'}]} })
     chrom_start: int = Field(default=..., description="""0-based start coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'SMLocalization'], 'examples': [{'value': '0'}]} })
     chrom_end: int = Field(default=..., description="""Non-inclusive end coordinate on the chromosome for the genomic target sequence, following BED convention. Used by both the core (Spot) and vol_core (SMLocalization) tables.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'SMLocalization'], 'examples': [{'value': '1000'}]} })
-    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot', 'RNASpot', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
+    sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for a sub-cellular structure ROI (e.g., nucleus, nucleolus). Links to the Sub-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    cell_id: Optional[int] = Field(default=None, description="""Unique identifier for a Cell. Links to the Cell Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'SubCellROI',
                        'ROIMapping',
                        'SMLocalization'],
          'examples': [{'value': '1'}]} })
-    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
-                       'RNASpot',
+    extra_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for an extracellular structure ROI (e.g., tissue, organoid). Links to the Extra-Cell ROI Data table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
                        'Cell',
                        'ExtraCellROI',
                        'ROIMapping',
@@ -4146,11 +4297,11 @@ class SMLocalization(LocalizationMixin):
          'examples': [{'value': '1'}]} })
     loc_id: int = Field(default=..., description="""Unique integer identifier for this SM localization event. Loc_ID values are unique across the entire dataset.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SMLocalizationQualityRecord'],
          'examples': [{'value': '1'}]} })
-    x: float = Field(default=..., description="""Sub-pixel X coordinate of this SM localization event in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    x: float = Field(default=..., description="""Sub-pixel X coordinate of this SM localization event in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '14.43'}]} })
-    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '41.43'}]} })
-    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '1.23'}]} })
 
 
@@ -4417,7 +4568,8 @@ class SMLocalizationQualityRecord(ConfiguredBaseModel):
     """
     A single row in the SM Localization Quality table. Each instance captures quality metrics for one SM localization event identified by Loc_ID. Loc_ID, Channel and Fluor are mandatory. X_Loc_Precision, Y_Loc_Precision, Z_Loc_Precision and Photon_Count are highly recommended but not literally mandatory. All other reserved metric columns are conditionally required (use of the reserved name is optional, but mandatory if that metric is reported). Additional user-defined optional columns must be described in the file header.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/vol_quality',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/vol_quality',
          'slot_usage': {'centroid_intensity': {'name': 'centroid_intensity',
                                                'required': False},
                         'channel_name': {'name': 'channel_name', 'required': True},
@@ -4783,7 +4935,8 @@ class UndecodedLocalization(LocalizationMixin):
     """
     A single raw, undecoded SM localization event in a FOF-vol-CT dataset. Each instance corresponds to one row in the TSV data section of the Undecoded SM Localization Data table. This class uses LocalizationMixin for the shared loc_id, x, y, z slots. The 8 mandatory columns, in order, are: Loc_ID, Hyb_ID, Image_Frame_ID, X, Y, Z, Channel, Fluor. TheZ (the_z) is a reserved, conditionally-required column for the focal Z-plane identifier.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/undecoded',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/fof-ct/undecoded',
          'mixins': ['LocalizationMixin'],
          'slot_usage': {'channel_name': {'name': 'channel_name', 'required': True},
                         'fluorophore_name': {'name': 'fluorophore_name',
@@ -4819,11 +4972,11 @@ class UndecodedLocalization(LocalizationMixin):
     the_z: Optional[int] = Field(default=None, description="""Identifier of the focal Z-plane in which this localization event was detected. Reserved, conditionally-required column name (TheZ) in the Undecoded SM Localization table: optional to use, but if the focal Z-plane is reported this exact reserved column name MUST be used.""", json_schema_extra = { "linkml_meta": {'domain_of': ['UndecodedLocalization'], 'examples': [{'value': '10'}]} })
     loc_id: int = Field(default=..., description="""Unique integer identifier for this undecoded localization event. Loc_ID values are unique across the entire dataset.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SMLocalizationQualityRecord'],
          'examples': [{'value': '1'}]} })
-    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    x: float = Field(default=..., description="""Sub-pixel X coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections (drift correction, chromatic correction, etc.).""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '14.43'}]} })
-    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    y: float = Field(default=..., description="""Sub-pixel Y coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '41.43'}]} })
-    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'Spot', 'RNASpot'],
+    z: float = Field(default=..., description="""Sub-pixel Z coordinate of this detected event (Spot or localisation) in the unit specified by xyz_unit. The reported value is the final position after all post-processing corrections.""", json_schema_extra = { "linkml_meta": {'domain_of': ['LocalizationMixin', 'SpotMixin'],
          'examples': [{'value': '1.23'}]} })
 
 
@@ -5080,6 +5233,7 @@ class UndecodedLocalizationTable(ConfiguredBaseModel):
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 Software.model_rebuild()
 LocalizationMixin.model_rebuild()
+SpotMixin.model_rebuild()
 Spot.model_rebuild()
 SpotTable.model_rebuild()
 Localization.model_rebuild()

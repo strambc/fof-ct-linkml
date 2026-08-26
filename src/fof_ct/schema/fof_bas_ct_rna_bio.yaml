@@ -37,6 +37,8 @@ classes:
       unique across the dataset, linking to the corresponding record in the
       RNA Spot Data table (table 4). At least one user-defined biological
       property column MUST be present; users declare these via #^ header lines.
+    extra_slots:
+      allowed: true
     slots:
       - rna_spot_id
     slot_usage:

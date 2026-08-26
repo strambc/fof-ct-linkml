@@ -41,6 +41,8 @@ classes:
       (e.g. Cell_Size, Cell_Volume, Cell_Cycle_State, RNA_Spot_Count) via
       open schema. At least one such user-defined column MUST
       be present per submission.
+    extra_slots:
+      allowed: true
     slots:
       - cell_id
       - extra_cell_roi_id
@@ -49,6 +51,7 @@ classes:
         identifier: true
         required: true
         range: integer
+        inlined: false
         description: >-
           Unique integer identifier for this Cell. Cell_ID values are unique
           across the entire dataset, enabling unambiguous cross-referencing

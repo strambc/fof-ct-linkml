@@ -50,6 +50,8 @@ classes:
       boundary coordinates in the format specified by roi_boundaries_format in
       the table header. This class accepts additional user-defined optional
       columns.
+    extra_slots:
+      allowed: true
     exactly_one_of:
       - slot_conditions:
           sub_cell_roi_id:
