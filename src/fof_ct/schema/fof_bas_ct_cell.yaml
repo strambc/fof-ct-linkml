@@ -59,7 +59,6 @@ classes:
           Mapping table.
       extra_cell_roi_id:
         required: false
-        range: integer
         description: >-
           Identifier of the extracellular structure ROI (e.g. tissue section,
           organoid) that contains this Cell. Conditionally required when this

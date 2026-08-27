@@ -372,13 +372,15 @@ class Spot(SpotMixin):
     """
     A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic target sequence localised in 3D space and assigned to a chromatin Trace.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct',
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/core',
          'mixins': ['SpotMixin'],
          'slot_usage': {'chrom': {'name': 'chrom', 'required': True},
                         'chrom_end': {'name': 'chrom_end', 'required': True},
                         'chrom_start': {'name': 'chrom_start', 'required': True},
                         'spot_id': {'identifier': True,
+                                    'inlined': False,
                                     'name': 'spot_id',
+                                    'range': 'integer',
                                     'required': True},
                         'trace_id': {'name': 'trace_id', 'required': True},
                         'x': {'name': 'x', 'required': True},
@@ -423,8 +425,10 @@ class SpotTable(ConfiguredBaseModel):
     """
     The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation) together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct',
-         'slot_usage': {'description': {'name': 'description', 'required': True},
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/core',
+         'slot_usage': {'additional_tables': {'name': 'additional_tables',
+                                              'required': True},
+                        'description': {'name': 'description', 'required': True},
                         'experimenter_contact': {'name': 'experimenter_contact',
                                                  'required': True},
                         'experimenter_name': {'name': 'experimenter_name',
@@ -570,7 +574,7 @@ class SpotTable(ConfiguredBaseModel):
                        'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable']} })
-    additional_tables: Optional[list[TableNamespaceEnum]] = Field(default=None, description="""List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
+    additional_tables: list[TableNamespaceEnum] = Field(default=..., description="""List of additional FOF-CT table namespaces being submitted alongside this table, separated by commas in the TSV header. Written as #Additional_Tables: in the file header.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotTable',
                        'DemultiplexingTable',
                        'TraceTable',
                        'RNASpotTable',
@@ -622,7 +626,7 @@ class SpotTable(ConfiguredBaseModel):
 
 class Localization(LocalizationMixin):
     """
-    A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
+    A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table (or RNA Spot Data table). This class accepts additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/fof-ct/demultiplexing',
@@ -841,7 +845,6 @@ class DemultiplexingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -855,7 +858,6 @@ class DemultiplexingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -869,7 +871,6 @@ class DemultiplexingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -1090,7 +1091,6 @@ class TraceTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -1104,7 +1104,6 @@ class TraceTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -1118,7 +1117,6 @@ class TraceTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -1154,7 +1152,7 @@ class TraceTable(ConfiguredBaseModel):
 
 class RNASpot(SpotMixin):
     """
-    A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additionaluser-defined columns.
+    A single detected RNA bright Spot corresponding to one RNA transcript location detected alongside Chromatin Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This table's column list is fixed by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additional user-defined columns.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/fof-ct/rna',
          'mixins': ['SpotMixin'],
@@ -1768,7 +1766,6 @@ class SpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -1782,7 +1779,6 @@ class SpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -1796,7 +1792,6 @@ class SpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -2170,7 +2165,6 @@ class RNASpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -2184,7 +2178,6 @@ class RNASpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -2198,7 +2191,6 @@ class RNASpotQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -2480,7 +2472,6 @@ class SpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -2494,7 +2485,6 @@ class SpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -2508,7 +2498,6 @@ class SpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -2779,7 +2768,6 @@ class RNASpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -2793,7 +2781,6 @@ class RNASpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -2807,7 +2794,6 @@ class RNASpotBiologicalTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -2875,7 +2861,6 @@ class Cell(ConfiguredBaseModel):
                                                              'Extra-Cell ROI Data '
                                                              'table.',
                                               'name': 'extra_cell_roi_id',
-                                              'range': 'integer',
                                               'required': False}}})
 
     cell_id: int = Field(default=..., description="""Unique integer identifier for this Cell. Cell_ID values are unique across the entire dataset, enabling unambiguous cross-referencing with the core table, the Sub-Cell ROI Data table, and the Cell/ROI Mapping table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin',
@@ -3083,7 +3068,6 @@ class CellTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -3097,7 +3081,6 @@ class CellTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -3111,7 +3094,6 @@ class CellTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -3389,7 +3371,6 @@ class ExtraCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -3403,7 +3384,6 @@ class ExtraCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -3417,7 +3397,6 @@ class ExtraCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -3478,7 +3457,6 @@ class SubCellROI(ConfiguredBaseModel):
                                                    'experiment and reported in a '
                                                    'dedicated Cell Data table.',
                                     'name': 'cell_id',
-                                    'range': 'integer',
                                     'required': False},
                         'sub_cell_roi_id': {'description': 'Unique integer identifier '
                                                            'for this sub-cellular '
@@ -3698,7 +3676,6 @@ class SubCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -3712,7 +3689,6 @@ class SubCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -3726,7 +3702,6 @@ class SubCellROITable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -3819,7 +3794,6 @@ class ROIMapping(ConfiguredBaseModel):
                                                    'extra_cell_roi_id must be used '
                                                    'consistently throughout the file.',
                                     'name': 'cell_id',
-                                    'range': 'integer',
                                     'required': False},
                         'extra_cell_roi_id': {'description': 'Unique identifier for '
                                                              'the extracellular '
@@ -3836,7 +3810,6 @@ class ROIMapping(ConfiguredBaseModel):
                                                              'be used consistently '
                                                              'throughout the file.',
                                               'name': 'extra_cell_roi_id',
-                                              'range': 'integer',
                                               'required': False},
                         'roi_boundaries': {'name': 'roi_boundaries', 'required': True},
                         'sub_cell_roi_id': {'description': 'Unique identifier for the '
@@ -3852,7 +3825,6 @@ class ROIMapping(ConfiguredBaseModel):
                                                            'used consistently '
                                                            'throughout the file.',
                                             'name': 'sub_cell_roi_id',
-                                            'range': 'integer',
                                             'required': False}}})
 
     sub_cell_roi_id: Optional[int] = Field(default=None, description="""Unique identifier for the Sub-Cell ROI whose boundaries are described in this row. Conditionally required when this file contains sub- cellular ROI boundary data. Exactly one of sub_cell_roi_id, cell_id, or extra_cell_roi_id must be used consistently throughout the file.""", json_schema_extra = { "linkml_meta": {'domain_of': ['SpotMixin', 'SubCellROI', 'ROIMapping', 'SMLocalization'],
@@ -4116,7 +4088,6 @@ class ROIMappingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -4130,7 +4101,6 @@ class ROIMappingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -4144,7 +4114,6 @@ class ROIMappingTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -4492,49 +4461,6 @@ class SMLocalizationTable(ConfiguredBaseModel):
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'micron'}]} })
-    time_unit: Optional[TimeUnitEnum] = Field(default=None, description="""Unit used to represent time intervals in this table. Allowed values are SI time units plus 'min' and 'hr'. Written as ##Time_Unit= in the file header. Conditionally required (metric- triggered) when any time metric is reported in an optional column.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DemultiplexingTable',
-                       'TraceTable',
-                       'SpotQualityTable',
-                       'RNASpotQualityTable',
-                       'SpotBiologicalTable',
-                       'RNASpotBiologicalTable',
-                       'CellTable',
-                       'ExtraCellROITable',
-                       'SubCellROITable',
-                       'ROIMappingTable',
-                       'SMLocalizationTable',
-                       'SMLocalizationQualityTable',
-                       'UndecodedLocalizationTable'],
-         'examples': [{'value': 'sec'}]} })
-    intensity_unit: Optional[str] = Field(default=None, description="""Unit used to represent intensity measurements in this table. Written as ##Intensity_Unit= in the file header. Conditionally required (metric-triggered) when any intensity metric is reported in an optional column.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DemultiplexingTable',
-                       'TraceTable',
-                       'SpotQualityTable',
-                       'RNASpotQualityTable',
-                       'SpotBiologicalTable',
-                       'RNASpotBiologicalTable',
-                       'CellTable',
-                       'ExtraCellROITable',
-                       'SubCellROITable',
-                       'ROIMappingTable',
-                       'SMLocalizationTable',
-                       'SMLocalizationQualityTable',
-                       'UndecodedLocalizationTable'],
-         'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
-    intensity_measurement_method: Optional[str] = Field(default=None, description="""Method used to perform intensity measurements, including how digital signals were converted to photon counts. Written as #Intensity_Measurement_Method: in the file header. Conditionally required (metric-triggered) when any intensity metric is reported.""", json_schema_extra = { "linkml_meta": {'domain_of': ['DemultiplexingTable',
-                       'TraceTable',
-                       'SpotQualityTable',
-                       'RNASpotQualityTable',
-                       'SpotBiologicalTable',
-                       'RNASpotBiologicalTable',
-                       'CellTable',
-                       'ExtraCellROITable',
-                       'SubCellROITable',
-                       'ROIMappingTable',
-                       'SMLocalizationTable',
-                       'SMLocalizationQualityTable',
-                       'UndecodedLocalizationTable'],
-         'examples': [{'value': 'Localization centroid intensity'},
-                      {'value': 'Mean Fluorescence Intensity'}]} })
     sm_localizations: list[SMLocalization] = Field(default=..., description="""The complete collection of SMLocalization events constituting this dataset. Each entry corresponds to one data row in the TSV serialisation.""", json_schema_extra = { "linkml_meta": {'domain': 'SMLocalizationTable', 'domain_of': ['SMLocalizationTable']} })
 
     @field_validator('fof_ct_version')
@@ -4868,7 +4794,6 @@ class SMLocalizationQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -4882,7 +4807,6 @@ class SMLocalizationQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -4896,7 +4820,6 @@ class SMLocalizationQualityTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},
@@ -5166,7 +5089,6 @@ class UndecodedLocalizationTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'sec'}]} })
@@ -5180,7 +5102,6 @@ class UndecodedLocalizationTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'a.u.'}, {'value': 'photons'}]} })
@@ -5194,7 +5115,6 @@ class UndecodedLocalizationTable(ConfiguredBaseModel):
                        'ExtraCellROITable',
                        'SubCellROITable',
                        'ROIMappingTable',
-                       'SMLocalizationTable',
                        'SMLocalizationQualityTable',
                        'UndecodedLocalizationTable'],
          'examples': [{'value': 'Localization centroid intensity'},

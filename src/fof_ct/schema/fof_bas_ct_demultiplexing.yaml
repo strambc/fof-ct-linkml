@@ -36,8 +36,7 @@ classes:
       of a bright DNA Spot in a multiplexed FISH experiment (e.g. MERFISH).
       Each instance of this class corresponds to one row in the CSV data section
       of the FOF-CT Spot Demultiplexing table. The spot_id field links each
-      Localization to its parent Spot in the core table (or RNA Spot Data table);
-      it may be NA when the localisation could not be assigned to any Spot.
+      Localization to its parent Spot in the core table (or RNA Spot Data table).
       This class accepts additional user-defined optional columns (e.g. Hyb,
       Brightness, Fit_Quality).
     mixins:

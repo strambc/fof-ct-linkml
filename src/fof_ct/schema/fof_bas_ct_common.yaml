@@ -247,7 +247,8 @@ slots:
       Single-Molecule (SM) Localization events rather than by direct
       optical detection, and every SM Localization event MUST report
       its associated Spot_ID.
-    range: integer
+    range: Spot
+    inlined: false
     examples:
       - value: "1"
 

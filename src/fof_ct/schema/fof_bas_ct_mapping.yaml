@@ -82,7 +82,6 @@ classes:
     slot_usage:
       sub_cell_roi_id:
         required: false
-        range: integer
         description: >-
           Unique identifier for the Sub-Cell ROI whose boundaries are described
           in this row. Conditionally required when this file contains sub-
@@ -90,7 +89,6 @@ classes:
           or extra_cell_roi_id must be used consistently throughout the file.
       cell_id:
         required: false
-        range: integer
         description: >-
           Unique identifier for the Cell whose boundaries are described in this
           row. Conditionally required when this file contains Cell boundary
@@ -98,7 +96,6 @@ classes:
           must be used consistently throughout the file.
       extra_cell_roi_id:
         required: false
-        range: integer
         description: >-
           Unique identifier for the extracellular structure ROI whose
           boundaries are described in this row. Conditionally required when
