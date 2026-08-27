@@ -1,5 +1,5 @@
 # Auto generated from fof_ct.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-08-26T16:03:56
+# Generation date: 2026-08-27T15:40:53
 # Schema: fof_ct
 #
 # id: https://w3id.org/fof-ct
@@ -72,6 +72,10 @@ DEFAULT_ = FOF_CT
 # Types
 
 # Class references
+class SpotSpotId(extended_int):
+    pass
+
+
 class LocalizationLocId(extended_int):
     pass
 
@@ -84,7 +88,7 @@ class RNASpotRnaSpotId(extended_int):
     pass
 
 
-class SpotQualityRecordSpotId(extended_int):
+class SpotQualityRecordSpotId(SpotSpotId):
     pass
 
 
@@ -92,7 +96,7 @@ class RNASpotQualityRecordRnaSpotId(RNASpotRnaSpotId):
     pass
 
 
-class SpotBiologicalRecordSpotId(extended_int):
+class SpotBiologicalRecordSpotId(SpotSpotId):
     pass
 
 
@@ -266,13 +270,188 @@ class SpotMixin(YAMLRoot):
 
 
 @dataclass(repr=False)
+class Spot(YAMLRoot):
+    """
+    A single DNA-FISH bright Spot detected in a ball-and-stick Chromatin Tracing experiment. Each instance of this
+    class corresponds to one row in the TSV data section of the FOF-CT core table and represents a specific genomic
+    target sequence localised in 3D space and assigned to a chromatin Trace.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["Spot"]
+    class_class_curie: ClassVar[str] = "fof_ct:Spot"
+    class_name: ClassVar[str] = "Spot"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.Spot
+
+    spot_id: Union[int, SpotSpotId] = None
+    trace_id: Union[int, TraceTraceId] = None
+    chrom: str = None
+    chrom_start: int = None
+    chrom_end: int = None
+    x: float = None
+    y: float = None
+    z: float = None
+    sub_cell_roi_id: Optional[Union[int, SubCellROISubCellRoiId]] = None
+    cell_id: Optional[Union[int, CellCellId]] = None
+    extra_cell_roi_id: Optional[Union[int, ExtraCellROIExtraCellRoiId]] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.spot_id):
+            self.MissingRequiredField("spot_id")
+        if not isinstance(self.spot_id, SpotSpotId):
+            self.spot_id = SpotSpotId(self.spot_id)
+
+        if self._is_empty(self.trace_id):
+            self.MissingRequiredField("trace_id")
+        if not isinstance(self.trace_id, TraceTraceId):
+            self.trace_id = TraceTraceId(self.trace_id)
+
+        if self._is_empty(self.chrom):
+            self.MissingRequiredField("chrom")
+        if not isinstance(self.chrom, str):
+            self.chrom = str(self.chrom)
+
+        if self._is_empty(self.chrom_start):
+            self.MissingRequiredField("chrom_start")
+        if not isinstance(self.chrom_start, int):
+            self.chrom_start = int(self.chrom_start)
+
+        if self._is_empty(self.chrom_end):
+            self.MissingRequiredField("chrom_end")
+        if not isinstance(self.chrom_end, int):
+            self.chrom_end = int(self.chrom_end)
+
+        if self._is_empty(self.x):
+            self.MissingRequiredField("x")
+        if not isinstance(self.x, float):
+            self.x = float(self.x)
+
+        if self._is_empty(self.y):
+            self.MissingRequiredField("y")
+        if not isinstance(self.y, float):
+            self.y = float(self.y)
+
+        if self._is_empty(self.z):
+            self.MissingRequiredField("z")
+        if not isinstance(self.z, float):
+            self.z = float(self.z)
+
+        if self.sub_cell_roi_id is not None and not isinstance(self.sub_cell_roi_id, SubCellROISubCellRoiId):
+            self.sub_cell_roi_id = SubCellROISubCellRoiId(self.sub_cell_roi_id)
+
+        if self.cell_id is not None and not isinstance(self.cell_id, CellCellId):
+            self.cell_id = CellCellId(self.cell_id)
+
+        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, ExtraCellROIExtraCellRoiId):
+            self.extra_cell_roi_id = ExtraCellROIExtraCellRoiId(self.extra_cell_roi_id)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
+class SpotTable(YAMLRoot):
+    """
+    The DNA-Spot/Trace Data core table of a FOF-bas-CT dataset (namespace: 4dn_FOF-CT_core). This class represents the
+    entire file: it holds all dataset-level provenance metadata (recorded as header lines in the TSV serialisation)
+    together with the full collection of Spots (recorded as data rows). Analogous to the MappingSet class in SSSOM.
+    """
+    _inherited_slots: ClassVar[list[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = FOF_CT["SpotTable"]
+    class_class_curie: ClassVar[str] = "fof_ct:SpotTable"
+    class_name: ClassVar[str] = "SpotTable"
+    class_model_uri: ClassVar[URIRef] = FOF_CT.SpotTable
+
+    fof_ct_version: str = None
+    table_namespace: str = None
+    genome_assembly: str = None
+    xyz_unit: Union[str, "XYZUnitEnum"] = None
+    lab_name: str = None
+    experimenter_name: str = None
+    experimenter_contact: str = None
+    description: str = None
+    softwares: Union[Union[dict, Software], list[Union[dict, Software]]] = None
+    additional_tables: Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]] = None
+    spots: Union[dict[Union[int, SpotSpotId], Union[dict, Spot]], list[Union[dict, Spot]]] = empty_dict()
+    modification: Optional[str] = None
+    vcf_file_name: Optional[str] = None
+    vcf_version: Optional[str] = None
+
+    def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.fof_ct_version):
+            self.MissingRequiredField("fof_ct_version")
+        if not isinstance(self.fof_ct_version, str):
+            self.fof_ct_version = str(self.fof_ct_version)
+
+        if self._is_empty(self.table_namespace):
+            self.MissingRequiredField("table_namespace")
+        if not isinstance(self.table_namespace, str):
+            self.table_namespace = str(self.table_namespace)
+
+        if self._is_empty(self.genome_assembly):
+            self.MissingRequiredField("genome_assembly")
+        if not isinstance(self.genome_assembly, str):
+            self.genome_assembly = str(self.genome_assembly)
+
+        if self._is_empty(self.xyz_unit):
+            self.MissingRequiredField("xyz_unit")
+        if not isinstance(self.xyz_unit, XYZUnitEnum):
+            self.xyz_unit = XYZUnitEnum(self.xyz_unit)
+
+        if self._is_empty(self.lab_name):
+            self.MissingRequiredField("lab_name")
+        if not isinstance(self.lab_name, str):
+            self.lab_name = str(self.lab_name)
+
+        if self._is_empty(self.experimenter_name):
+            self.MissingRequiredField("experimenter_name")
+        if not isinstance(self.experimenter_name, str):
+            self.experimenter_name = str(self.experimenter_name)
+
+        if self._is_empty(self.experimenter_contact):
+            self.MissingRequiredField("experimenter_contact")
+        if not isinstance(self.experimenter_contact, str):
+            self.experimenter_contact = str(self.experimenter_contact)
+
+        if self._is_empty(self.description):
+            self.MissingRequiredField("description")
+        if not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self._is_empty(self.softwares):
+            self.MissingRequiredField("softwares")
+        self._normalize_inlined_as_list(slot_name="softwares", slot_type=Software, key_name="software_title", keyed=False)
+
+        if self._is_empty(self.additional_tables):
+            self.MissingRequiredField("additional_tables")
+        if not isinstance(self.additional_tables, list):
+            self.additional_tables = [self.additional_tables] if self.additional_tables is not None else []
+        self.additional_tables = [v if isinstance(v, TableNamespaceEnum) else TableNamespaceEnum(v) for v in self.additional_tables]
+
+        if self._is_empty(self.spots):
+            self.MissingRequiredField("spots")
+        self._normalize_inlined_as_list(slot_name="spots", slot_type=Spot, key_name="spot_id", keyed=True)
+
+        if self.modification is not None and not isinstance(self.modification, str):
+            self.modification = str(self.modification)
+
+        if self.vcf_file_name is not None and not isinstance(self.vcf_file_name, str):
+            self.vcf_file_name = str(self.vcf_file_name)
+
+        if self.vcf_version is not None and not isinstance(self.vcf_version, str):
+            self.vcf_version = str(self.vcf_version)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass(repr=False)
 class Localization(YAMLRoot):
     """
     A single individual localisation event contributing to the final position of a bright DNA Spot in a multiplexed
     FISH experiment (e.g. MERFISH). Each instance of this class corresponds to one row in the CSV data section of the
     FOF-CT Spot Demultiplexing table. The spot_id field links each Localization to its parent Spot in the core table
-    (or RNA Spot Data table); it may be NA when the localisation could not be assigned to any Spot. This class accepts
-    additional user-defined optional columns (e.g. Hyb, Brightness, Fit_Quality).
+    (or RNA Spot Data table). This class accepts additional user-defined optional columns (e.g. Hyb, Brightness,
+    Fit_Quality).
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -282,7 +461,7 @@ class Localization(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.Localization
 
     loc_id: Union[int, LocalizationLocId] = None
-    spot_id: int = None
+    spot_id: Union[int, SpotSpotId] = None
     channel_name: str = None
     fluorophore_name: str = None
     x: float = None
@@ -297,8 +476,8 @@ class Localization(YAMLRoot):
 
         if self._is_empty(self.spot_id):
             self.MissingRequiredField("spot_id")
-        if not isinstance(self.spot_id, int):
-            self.spot_id = int(self.spot_id)
+        if not isinstance(self.spot_id, SpotSpotId):
+            self.spot_id = SpotSpotId(self.spot_id)
 
         if self._is_empty(self.channel_name):
             self.MissingRequiredField("channel_name")
@@ -542,7 +721,7 @@ class RNASpot(YAMLRoot):
     Tracing. Each instance of this class corresponds to one row in the CSV data section of the FOF-CT RNA Spot Data
     table. The rna_spot_id links each RNASpot to the RNA Quality and RNA Biological Data tables; the trace_id links
     this RNA Spot to a DNA chromatin Trace in the core table and Trace Data table. This table's column list is fixed
-    by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additionaluser-defined
+    by the RTD (rna_columns.csv defines no Optional_Column placeholders); it does not accept additional user-defined
     columns.
     """
     _inherited_slots: ClassVar[list[str]] = []
@@ -1362,7 +1541,7 @@ class Cell(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.Cell
 
     cell_id: Union[int, CellCellId] = None
-    extra_cell_roi_id: Optional[int] = None
+    extra_cell_roi_id: Optional[Union[int, ExtraCellROIExtraCellRoiId]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cell_id):
@@ -1370,8 +1549,8 @@ class Cell(YAMLRoot):
         if not isinstance(self.cell_id, CellCellId):
             self.cell_id = CellCellId(self.cell_id)
 
-        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, int):
-            self.extra_cell_roi_id = int(self.extra_cell_roi_id)
+        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, ExtraCellROIExtraCellRoiId):
+            self.extra_cell_roi_id = ExtraCellROIExtraCellRoiId(self.extra_cell_roi_id)
 
         super().__post_init__(**kwargs)
 
@@ -1614,7 +1793,7 @@ class SubCellROI(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.SubCellROI
 
     sub_cell_roi_id: Union[int, SubCellROISubCellRoiId] = None
-    cell_id: Optional[int] = None
+    cell_id: Optional[Union[int, CellCellId]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.sub_cell_roi_id):
@@ -1622,8 +1801,8 @@ class SubCellROI(YAMLRoot):
         if not isinstance(self.sub_cell_roi_id, SubCellROISubCellRoiId):
             self.sub_cell_roi_id = SubCellROISubCellRoiId(self.sub_cell_roi_id)
 
-        if self.cell_id is not None and not isinstance(self.cell_id, int):
-            self.cell_id = int(self.cell_id)
+        if self.cell_id is not None and not isinstance(self.cell_id, CellCellId):
+            self.cell_id = CellCellId(self.cell_id)
 
         super().__post_init__(**kwargs)
 
@@ -1745,9 +1924,9 @@ class ROIMapping(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.ROIMapping
 
     roi_boundaries: str = None
-    sub_cell_roi_id: Optional[int] = None
-    cell_id: Optional[int] = None
-    extra_cell_roi_id: Optional[int] = None
+    sub_cell_roi_id: Optional[Union[int, SubCellROISubCellRoiId]] = None
+    cell_id: Optional[Union[int, CellCellId]] = None
+    extra_cell_roi_id: Optional[Union[int, ExtraCellROIExtraCellRoiId]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.roi_boundaries):
@@ -1755,14 +1934,14 @@ class ROIMapping(YAMLRoot):
         if not isinstance(self.roi_boundaries, str):
             self.roi_boundaries = str(self.roi_boundaries)
 
-        if self.sub_cell_roi_id is not None and not isinstance(self.sub_cell_roi_id, int):
-            self.sub_cell_roi_id = int(self.sub_cell_roi_id)
+        if self.sub_cell_roi_id is not None and not isinstance(self.sub_cell_roi_id, SubCellROISubCellRoiId):
+            self.sub_cell_roi_id = SubCellROISubCellRoiId(self.sub_cell_roi_id)
 
-        if self.cell_id is not None and not isinstance(self.cell_id, int):
-            self.cell_id = int(self.cell_id)
+        if self.cell_id is not None and not isinstance(self.cell_id, CellCellId):
+            self.cell_id = CellCellId(self.cell_id)
 
-        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, int):
-            self.extra_cell_roi_id = int(self.extra_cell_roi_id)
+        if self.extra_cell_roi_id is not None and not isinstance(self.extra_cell_roi_id, ExtraCellROIExtraCellRoiId):
+            self.extra_cell_roi_id = ExtraCellROIExtraCellRoiId(self.extra_cell_roi_id)
 
         super().__post_init__(**kwargs)
 
@@ -1896,7 +2075,7 @@ class SMLocalization(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = FOF_CT.SMLocalization
 
     loc_id: Union[int, SMLocalizationLocId] = None
-    spot_id: int = None
+    spot_id: Union[int, SpotSpotId] = None
     trace_id: Union[int, TraceTraceId] = None
     chrom: str = None
     chrom_start: int = None
@@ -1916,8 +2095,8 @@ class SMLocalization(YAMLRoot):
 
         if self._is_empty(self.spot_id):
             self.MissingRequiredField("spot_id")
-        if not isinstance(self.spot_id, int):
-            self.spot_id = int(self.spot_id)
+        if not isinstance(self.spot_id, SpotSpotId):
+            self.spot_id = SpotSpotId(self.spot_id)
 
         if self._is_empty(self.trace_id):
             self.MissingRequiredField("trace_id")
@@ -1995,9 +2174,6 @@ class SMLocalizationTable(YAMLRoot):
     modification: Optional[str] = None
     vcf_file_name: Optional[str] = None
     vcf_version: Optional[str] = None
-    time_unit: Optional[Union[str, "TimeUnitEnum"]] = None
-    intensity_unit: Optional[str] = None
-    intensity_measurement_method: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.fof_ct_version):
@@ -2062,15 +2238,6 @@ class SMLocalizationTable(YAMLRoot):
 
         if self.vcf_version is not None and not isinstance(self.vcf_version, str):
             self.vcf_version = str(self.vcf_version)
-
-        if self.time_unit is not None and not isinstance(self.time_unit, TimeUnitEnum):
-            self.time_unit = TimeUnitEnum(self.time_unit)
-
-        if self.intensity_unit is not None and not isinstance(self.intensity_unit, str):
-            self.intensity_unit = str(self.intensity_unit)
-
-        if self.intensity_measurement_method is not None and not isinstance(self.intensity_measurement_method, str):
-            self.intensity_measurement_method = str(self.intensity_measurement_method)
 
         super().__post_init__(**kwargs)
 
@@ -2680,7 +2847,7 @@ slots.loc_id = Slot(uri=FOF_CT.loc_id, name="loc_id", curie=FOF_CT.curie('loc_id
                    model_uri=FOF_CT.loc_id, domain=None, range=Optional[int])
 
 slots.spot_id = Slot(uri=FOF_CT.spot_id, name="spot_id", curie=FOF_CT.curie('spot_id'),
-                   model_uri=FOF_CT.spot_id, domain=None, range=Optional[int])
+                   model_uri=FOF_CT.spot_id, domain=None, range=Optional[Union[int, SpotSpotId]])
 
 slots.trace_id = Slot(uri=FOF_CT.trace_id, name="trace_id", curie=FOF_CT.curie('trace_id'),
                    model_uri=FOF_CT.trace_id, domain=None, range=Optional[Union[int, TraceTraceId]])
@@ -2823,6 +2990,9 @@ slots.software_repository = Slot(uri=FOF_CT.software_repository, name="software_
 slots.software_preferred_citation_id = Slot(uri=FOF_CT.software_preferred_citation_id, name="software_preferred_citation_id", curie=FOF_CT.curie('software_preferred_citation_id'),
                    model_uri=FOF_CT.software_preferred_citation_id, domain=None, range=Union[str, URI])
 
+slots.spots = Slot(uri=FOF_CT.spots, name="spots", curie=FOF_CT.curie('spots'),
+                   model_uri=FOF_CT.spots, domain=SpotTable, range=Optional[Union[dict[Union[int, SpotSpotId], Union[dict, Spot]], list[Union[dict, Spot]]]])
+
 slots.localizations = Slot(uri=FOF_CT.localizations, name="localizations", curie=FOF_CT.curie('localizations'),
                    model_uri=FOF_CT.localizations, domain=DemultiplexingTable, range=Optional[Union[dict[Union[int, LocalizationLocId], Union[dict, Localization]], list[Union[dict, Localization]]]])
 
@@ -2889,11 +3059,70 @@ slots.sm_localization_quality_records = Slot(uri=FOF_CT.sm_localization_quality_
 slots.undecoded_localizations = Slot(uri=FOF_CT.undecoded_localizations, name="undecoded_localizations", curie=FOF_CT.curie('undecoded_localizations'),
                    model_uri=FOF_CT.undecoded_localizations, domain=UndecodedLocalizationTable, range=Optional[Union[dict[Union[int, UndecodedLocalizationLocId], Union[dict, UndecodedLocalization]], list[Union[dict, UndecodedLocalization]]]])
 
+slots.Spot_spot_id = Slot(uri=FOF_CT.spot_id, name="Spot_spot_id", curie=FOF_CT.curie('spot_id'),
+                   model_uri=FOF_CT.Spot_spot_id, domain=Spot, range=Union[int, SpotSpotId])
+
+slots.Spot_trace_id = Slot(uri=FOF_CT.trace_id, name="Spot_trace_id", curie=FOF_CT.curie('trace_id'),
+                   model_uri=FOF_CT.Spot_trace_id, domain=Spot, range=Union[int, TraceTraceId])
+
+slots.Spot_x = Slot(uri=FOF_CT.x, name="Spot_x", curie=FOF_CT.curie('x'),
+                   model_uri=FOF_CT.Spot_x, domain=Spot, range=float)
+
+slots.Spot_y = Slot(uri=FOF_CT.y, name="Spot_y", curie=FOF_CT.curie('y'),
+                   model_uri=FOF_CT.Spot_y, domain=Spot, range=float)
+
+slots.Spot_z = Slot(uri=FOF_CT.z, name="Spot_z", curie=FOF_CT.curie('z'),
+                   model_uri=FOF_CT.Spot_z, domain=Spot, range=float)
+
+slots.Spot_chrom = Slot(uri=FOF_CT.chrom, name="Spot_chrom", curie=FOF_CT.curie('chrom'),
+                   model_uri=FOF_CT.Spot_chrom, domain=Spot, range=str)
+
+slots.Spot_chrom_start = Slot(uri=FOF_CT.chrom_start, name="Spot_chrom_start", curie=FOF_CT.curie('chrom_start'),
+                   model_uri=FOF_CT.Spot_chrom_start, domain=Spot, range=int)
+
+slots.Spot_chrom_end = Slot(uri=FOF_CT.chrom_end, name="Spot_chrom_end", curie=FOF_CT.curie('chrom_end'),
+                   model_uri=FOF_CT.Spot_chrom_end, domain=Spot, range=int)
+
+slots.SpotTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="SpotTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
+                   model_uri=FOF_CT.SpotTable_fof_ct_version, domain=SpotTable, range=str,
+                   pattern=re.compile(r'^v[0-9]+\.[0-9]+'))
+
+slots.SpotTable_table_namespace = Slot(uri=FOF_CT.table_namespace, name="SpotTable_table_namespace", curie=FOF_CT.curie('table_namespace'),
+                   model_uri=FOF_CT.SpotTable_table_namespace, domain=SpotTable, range=str)
+
+slots.SpotTable_genome_assembly = Slot(uri=FOF_CT.genome_assembly, name="SpotTable_genome_assembly", curie=FOF_CT.curie('genome_assembly'),
+                   model_uri=FOF_CT.SpotTable_genome_assembly, domain=SpotTable, range=str)
+
+slots.SpotTable_xyz_unit = Slot(uri=FOF_CT.xyz_unit, name="SpotTable_xyz_unit", curie=FOF_CT.curie('xyz_unit'),
+                   model_uri=FOF_CT.SpotTable_xyz_unit, domain=SpotTable, range=Union[str, "XYZUnitEnum"])
+
+slots.SpotTable_lab_name = Slot(uri=FOF_CT.lab_name, name="SpotTable_lab_name", curie=FOF_CT.curie('lab_name'),
+                   model_uri=FOF_CT.SpotTable_lab_name, domain=SpotTable, range=str)
+
+slots.SpotTable_experimenter_name = Slot(uri=FOF_CT.experimenter_name, name="SpotTable_experimenter_name", curie=FOF_CT.curie('experimenter_name'),
+                   model_uri=FOF_CT.SpotTable_experimenter_name, domain=SpotTable, range=str)
+
+slots.SpotTable_experimenter_contact = Slot(uri=FOF_CT.experimenter_contact, name="SpotTable_experimenter_contact", curie=FOF_CT.curie('experimenter_contact'),
+                   model_uri=FOF_CT.SpotTable_experimenter_contact, domain=SpotTable, range=str,
+                   pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
+
+slots.SpotTable_description = Slot(uri=FOF_CT.description, name="SpotTable_description", curie=FOF_CT.curie('description'),
+                   model_uri=FOF_CT.SpotTable_description, domain=SpotTable, range=str)
+
+slots.SpotTable_softwares = Slot(uri=FOF_CT.softwares, name="SpotTable_softwares", curie=FOF_CT.curie('softwares'),
+                   model_uri=FOF_CT.SpotTable_softwares, domain=SpotTable, range=Union[Union[dict, Software], list[Union[dict, Software]]])
+
+slots.SpotTable_additional_tables = Slot(uri=FOF_CT.additional_tables, name="SpotTable_additional_tables", curie=FOF_CT.curie('additional_tables'),
+                   model_uri=FOF_CT.SpotTable_additional_tables, domain=SpotTable, range=Union[Union[str, "TableNamespaceEnum"], list[Union[str, "TableNamespaceEnum"]]])
+
+slots.SpotTable_spots = Slot(uri=FOF_CT.spots, name="SpotTable_spots", curie=FOF_CT.curie('spots'),
+                   model_uri=FOF_CT.SpotTable_spots, domain=SpotTable, range=Union[dict[Union[int, SpotSpotId], Union[dict, Spot]], list[Union[dict, Spot]]])
+
 slots.Localization_loc_id = Slot(uri=FOF_CT.loc_id, name="Localization_loc_id", curie=FOF_CT.curie('loc_id'),
                    model_uri=FOF_CT.Localization_loc_id, domain=Localization, range=Union[int, LocalizationLocId])
 
 slots.Localization_spot_id = Slot(uri=FOF_CT.spot_id, name="Localization_spot_id", curie=FOF_CT.curie('spot_id'),
-                   model_uri=FOF_CT.Localization_spot_id, domain=Localization, range=int)
+                   model_uri=FOF_CT.Localization_spot_id, domain=Localization, range=Union[int, SpotSpotId])
 
 slots.Localization_x = Slot(uri=FOF_CT.x, name="Localization_x", curie=FOF_CT.curie('x'),
                    model_uri=FOF_CT.Localization_x, domain=Localization, range=float)
@@ -3333,7 +3562,7 @@ slots.Cell_cell_id = Slot(uri=FOF_CT.cell_id, name="Cell_cell_id", curie=FOF_CT.
                    model_uri=FOF_CT.Cell_cell_id, domain=Cell, range=Union[int, CellCellId])
 
 slots.Cell_extra_cell_roi_id = Slot(uri=FOF_CT.extra_cell_roi_id, name="Cell_extra_cell_roi_id", curie=FOF_CT.curie('extra_cell_roi_id'),
-                   model_uri=FOF_CT.Cell_extra_cell_roi_id, domain=Cell, range=Optional[int])
+                   model_uri=FOF_CT.Cell_extra_cell_roi_id, domain=Cell, range=Optional[Union[int, ExtraCellROIExtraCellRoiId]])
 
 slots.CellTable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="CellTable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
                    model_uri=FOF_CT.CellTable_fof_ct_version, domain=CellTable, range=str,
@@ -3436,7 +3665,7 @@ slots.SubCellROI_sub_cell_roi_id = Slot(uri=FOF_CT.sub_cell_roi_id, name="SubCel
                    model_uri=FOF_CT.SubCellROI_sub_cell_roi_id, domain=SubCellROI, range=Union[int, SubCellROISubCellRoiId])
 
 slots.SubCellROI_cell_id = Slot(uri=FOF_CT.cell_id, name="SubCellROI_cell_id", curie=FOF_CT.curie('cell_id'),
-                   model_uri=FOF_CT.SubCellROI_cell_id, domain=SubCellROI, range=Optional[int])
+                   model_uri=FOF_CT.SubCellROI_cell_id, domain=SubCellROI, range=Optional[Union[int, CellCellId]])
 
 slots.SubCellROITable_fof_ct_version = Slot(uri=FOF_CT.fof_ct_version, name="SubCellROITable_fof_ct_version", curie=FOF_CT.curie('fof_ct_version'),
                    model_uri=FOF_CT.SubCellROITable_fof_ct_version, domain=SubCellROITable, range=str,
@@ -3488,13 +3717,13 @@ slots.SubCellROITable_sub_cell_rois = Slot(uri=FOF_CT.sub_cell_rois, name="SubCe
                    model_uri=FOF_CT.SubCellROITable_sub_cell_rois, domain=SubCellROITable, range=Union[dict[Union[int, SubCellROISubCellRoiId], Union[dict, SubCellROI]], list[Union[dict, SubCellROI]]])
 
 slots.ROIMapping_sub_cell_roi_id = Slot(uri=FOF_CT.sub_cell_roi_id, name="ROIMapping_sub_cell_roi_id", curie=FOF_CT.curie('sub_cell_roi_id'),
-                   model_uri=FOF_CT.ROIMapping_sub_cell_roi_id, domain=ROIMapping, range=Optional[int])
+                   model_uri=FOF_CT.ROIMapping_sub_cell_roi_id, domain=ROIMapping, range=Optional[Union[int, SubCellROISubCellRoiId]])
 
 slots.ROIMapping_cell_id = Slot(uri=FOF_CT.cell_id, name="ROIMapping_cell_id", curie=FOF_CT.curie('cell_id'),
-                   model_uri=FOF_CT.ROIMapping_cell_id, domain=ROIMapping, range=Optional[int])
+                   model_uri=FOF_CT.ROIMapping_cell_id, domain=ROIMapping, range=Optional[Union[int, CellCellId]])
 
 slots.ROIMapping_extra_cell_roi_id = Slot(uri=FOF_CT.extra_cell_roi_id, name="ROIMapping_extra_cell_roi_id", curie=FOF_CT.curie('extra_cell_roi_id'),
-                   model_uri=FOF_CT.ROIMapping_extra_cell_roi_id, domain=ROIMapping, range=Optional[int])
+                   model_uri=FOF_CT.ROIMapping_extra_cell_roi_id, domain=ROIMapping, range=Optional[Union[int, ExtraCellROIExtraCellRoiId]])
 
 slots.ROIMapping_roi_boundaries = Slot(uri=FOF_CT.roi_boundaries, name="ROIMapping_roi_boundaries", curie=FOF_CT.curie('roi_boundaries'),
                    model_uri=FOF_CT.ROIMapping_roi_boundaries, domain=ROIMapping, range=str)
@@ -3571,7 +3800,7 @@ slots.SMLocalization_z = Slot(uri=FOF_CT.z, name="SMLocalization_z", curie=FOF_C
                    model_uri=FOF_CT.SMLocalization_z, domain=SMLocalization, range=float)
 
 slots.SMLocalization_spot_id = Slot(uri=FOF_CT.spot_id, name="SMLocalization_spot_id", curie=FOF_CT.curie('spot_id'),
-                   model_uri=FOF_CT.SMLocalization_spot_id, domain=SMLocalization, range=int)
+                   model_uri=FOF_CT.SMLocalization_spot_id, domain=SMLocalization, range=Union[int, SpotSpotId])
 
 slots.SMLocalization_trace_id = Slot(uri=FOF_CT.trace_id, name="SMLocalization_trace_id", curie=FOF_CT.curie('trace_id'),
                    model_uri=FOF_CT.SMLocalization_trace_id, domain=SMLocalization, range=Union[int, TraceTraceId])

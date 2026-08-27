@@ -115,9 +115,6 @@ classes:
       - vcf_file_name
       - vcf_version
       - xyz_unit
-      - time_unit
-      - intensity_unit
-      - intensity_measurement_method
       - sm_localizations
     slot_usage:
       fof_ct_version:

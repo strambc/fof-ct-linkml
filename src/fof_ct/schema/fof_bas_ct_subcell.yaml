@@ -60,7 +60,6 @@ classes:
           Cell Data table, and the Cell/ROI Mapping table.
       cell_id:
         required: false
-        range: integer
         description: >-
           Identifier of the Cell to which this sub-cellular ROI belongs.
           Conditionally required when this ROI can be associated with a Cell

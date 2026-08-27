@@ -1,4 +1,4 @@
-id: https://w3id.org/fof-ct
+id: https://w3id.org/fof-ct/core
 name: fof_bas_ct_core
 description: >-
   FISH Omics Format for Chromatin Tracing - Ball-and-Stick modality (FOF-bas-CT).
@@ -48,6 +48,8 @@ classes:
       spot_id:
         identifier: true
         required: true
+        range: integer
+        inlined: false
       trace_id:
         required: true
       x:
@@ -107,6 +109,8 @@ classes:
       description:
         required: true
       softwares:
+        required: true
+      additional_tables:
         required: true
       spots:
         required: true

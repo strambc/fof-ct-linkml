@@ -38,7 +38,7 @@ classes:
       and RNA Biological Data tables; the trace_id links this RNA Spot to a
       DNA chromatin Trace in the core table and Trace Data table.
       This table's column list is fixed by the RTD (rna_columns.csv defines no
-      Optional_Column placeholders); it does not accept additionaluser-defined columns.
+      Optional_Column placeholders); it does not accept additional user-defined columns.
     mixins:
       - SpotMixin
     slots:
