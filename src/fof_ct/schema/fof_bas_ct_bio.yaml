@@ -46,7 +46,7 @@ classes:
         required: true
         identifier: true
         description: >-
-          Unique integer identifier for the DNA bright Spot to which these
+          Unique identifier for the DNA bright Spot to which these
           biological properties belong. Links to the corresponding Spot record
           in the core table (table 1). Must be unique within this table and
           across the entire dataset.

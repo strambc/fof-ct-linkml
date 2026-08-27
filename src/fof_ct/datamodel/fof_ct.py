@@ -1,5 +1,5 @@
 # Auto generated from fof_ct.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-08-27T15:40:53
+# Generation date: 2026-08-27T17:28:26
 # Schema: fof_ct
 #
 # id: https://w3id.org/fof-ct

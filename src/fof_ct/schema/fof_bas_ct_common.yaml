@@ -324,7 +324,7 @@ slots:
 
   rna_spot_id:
     description: >-
-      Unique integer identifier for an RNA bright Spot, unique across the
+      Unique identifier for an RNA bright Spot, unique across the
       entire dataset. Used as a primary key in the RNA Spot Data table
       and as a foreign key in the RNA Quality and RNA Biological Data tables.
     range: RNASpot

@@ -1168,7 +1168,7 @@ class RNASpot(SpotMixin):
                         'y': {'name': 'y', 'required': True},
                         'z': {'name': 'z', 'required': True}}})
 
-    rna_spot_id: int = Field(default=..., description="""Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
+    rna_spot_id: int = Field(default=..., description="""Unique identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
          'examples': [{'value': '1'}]} })
     rna_name: str = Field(default=..., description="""Official name of the gene from which the targeted RNA is transcribed (e.g. ACTB, GAPDH). Should follow HGNC (human) or MGI (mouse) gene nomenclature.""", json_schema_extra = { "linkml_meta": {'domain': 'RNASpot',
          'domain_of': ['RNASpot'],
@@ -1431,11 +1431,11 @@ class SpotQualityRecord(ConfiguredBaseModel):
                         'raw_x': {'name': 'raw_x', 'required': False},
                         'raw_y': {'name': 'raw_y', 'required': False},
                         'raw_z': {'name': 'raw_z', 'required': False},
-                        'spot_id': {'description': 'Unique integer identifier for the '
-                                                   'DNA bright Spot to which these '
-                                                   'quality metrics belong. Links to '
-                                                   'the corresponding Spot record in '
-                                                   'the core table (table 1). Must be '
+                        'spot_id': {'description': 'Unique identifier for the DNA '
+                                                   'bright Spot to which these quality '
+                                                   'metrics belong. Links to the '
+                                                   'corresponding Spot record in the '
+                                                   'core table (table 1). Must be '
                                                    'unique within this table.',
                                     'identifier': True,
                                     'name': 'spot_id',
@@ -1459,7 +1459,7 @@ class SpotQualityRecord(ConfiguredBaseModel):
                         'z_loc_error': {'name': 'z_loc_error', 'required': False},
                         'z_precision': {'name': 'z_precision', 'required': False}}})
 
-    spot_id: int = Field(default=..., description="""Unique integer identifier for the DNA bright Spot to which these quality metrics belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
+    spot_id: int = Field(default=..., description="""Unique identifier for the DNA bright Spot to which these quality metrics belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
                        'Localization',
                        'SpotQualityRecord',
                        'SpotBiologicalRecord',
@@ -1862,7 +1862,7 @@ class RNASpotQualityRecord(ConfiguredBaseModel):
                         'z_loc_error': {'name': 'z_loc_error', 'required': False},
                         'z_precision': {'name': 'z_precision', 'required': False}}})
 
-    rna_spot_id: int = Field(default=..., description="""Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
+    rna_spot_id: int = Field(default=..., description="""Unique identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
          'examples': [{'value': '1'}]} })
     channel_name: str = Field(default=..., description="""The wavelength characteristics of the emission channel used to image this Spot / RNA Spot / localization event (e.g. '510/25', '695/81'). Mandatory in the Spot Demultiplexing, Spot Quality, RNA Spot Quality, SM Localization Quality, and Undecoded SM Localization tables. Written as the Channel column.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Localization',
                        'SpotQualityRecord',
@@ -2230,8 +2230,8 @@ class SpotBiologicalRecord(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/fof-ct/bio',
-         'slot_usage': {'spot_id': {'description': 'Unique integer identifier for the '
-                                                   'DNA bright Spot to which these '
+         'slot_usage': {'spot_id': {'description': 'Unique identifier for the DNA '
+                                                   'bright Spot to which these '
                                                    'biological properties belong. '
                                                    'Links to the corresponding Spot '
                                                    'record in the core table (table '
@@ -2242,7 +2242,7 @@ class SpotBiologicalRecord(ConfiguredBaseModel):
                                     'name': 'spot_id',
                                     'required': True}}})
 
-    spot_id: int = Field(default=..., description="""Unique integer identifier for the DNA bright Spot to which these biological properties belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table and across the entire dataset.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
+    spot_id: int = Field(default=..., description="""Unique identifier for the DNA bright Spot to which these biological properties belong. Links to the corresponding Spot record in the core table (table 1). Must be unique within this table and across the entire dataset.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Spot',
                        'Localization',
                        'SpotQualityRecord',
                        'SpotBiologicalRecord',
@@ -2541,7 +2541,7 @@ class RNASpotBiologicalRecord(ConfiguredBaseModel):
                                         'name': 'rna_spot_id',
                                         'required': True}}})
 
-    rna_spot_id: int = Field(default=..., description="""Unique integer identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
+    rna_spot_id: int = Field(default=..., description="""Unique identifier for an RNA bright Spot, unique across the entire dataset. Used as a primary key in the RNA Spot Data table and as a foreign key in the RNA Quality and RNA Biological Data tables.""", json_schema_extra = { "linkml_meta": {'domain_of': ['RNASpot', 'RNASpotQualityRecord', 'RNASpotBiologicalRecord'],
          'examples': [{'value': '1'}]} })
 
 
