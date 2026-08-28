@@ -62,6 +62,8 @@ classes:
       loc_id:
         required: true
         identifier: true
+        range: SMLocalization
+        inlined: false
         description: >-
           Unique integer identifier for the SM localization event to which
           these quality metrics belong. Links to the corresponding
