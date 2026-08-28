@@ -1,5 +1,5 @@
 # Auto generated from fof_ct.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-08-27T17:28:26
+# Generation date: 2026-08-28T13:28:13
 # Schema: fof_ct
 #
 # id: https://w3id.org/fof-ct
@@ -120,7 +120,7 @@ class SMLocalizationLocId(extended_int):
     pass
 
 
-class SMLocalizationQualityRecordLocId(extended_int):
+class SMLocalizationQualityRecordLocId(SMLocalizationLocId):
     pass
 
 

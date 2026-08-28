@@ -4510,7 +4510,9 @@ class SMLocalizationQualityRecord(ConfiguredBaseModel):
                                                   'record in the SM Localization Data '
                                                   'table (table 13).',
                                    'identifier': True,
+                                   'inlined': False,
                                    'name': 'loc_id',
+                                   'range': 'SMLocalization',
                                    'required': True},
                         'peak_intensity': {'name': 'peak_intensity', 'required': False},
                         'photon_count': {'description': 'Highly recommended: number of '
